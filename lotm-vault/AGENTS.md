@@ -1,5 +1,7 @@
 # Maintenance Rules - LOTM Wiki
 
+> New session? Start at [[NAVIGATION]] (vault root) — it tells you whether this file even applies to your task.
+
 This vault stores traceable knowledge about *Lord of the Mysteries*. These rules are mandatory.
 
 ## Normative language
@@ -171,7 +173,7 @@ Missing metadata blocks ingestion. Never guess a value to satisfy the schema.
 8. Add all required graph links.
 9. Record every uncertainty, conflict, incomplete map, or missing Sequence in [[Pending Review]].
 10. Update affected indexes and audited counts.
-11. Add one concise entry to `log.md` describing evidence, structural changes, and remaining debt.
+11. Add one concise entry to [[Lore Log]] (`Lore Log.md` at vault root — lore changes only; do not confuse with `10-Project/Log.md`, which is a separate log for project/business decisions) describing evidence, structural changes, and remaining debt.
 12. Run the hard completion gate.
 
 ## Review queue

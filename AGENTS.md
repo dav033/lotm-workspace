@@ -46,6 +46,10 @@ delante de ellos.
 
 ## Lectura del vault (lotm-vault)
 
-Nunca leas `lotm-vault/` completo. Usa la herramienta de búsqueda del MCP de
-Obsidian (`search_notes`) para traer únicamente las notas relevantes a la
-tarea en curso.
+Nunca leas `lotm-vault/` completo. Empieza siempre por `lotm-vault/NAVIGATION.md`
+— enruta entre trabajo de lore (`AGENTS.md` del vault, estricto) y trabajo de
+proyecto (`10-Project/README.md`, reglas ligeras), y explica cuándo usar la
+herramienta de búsqueda del MCP de Obsidian (`search_notes`) frente a pedir un
+archivo conocido por ruta exacta. Esta instrucción vivía antes solo aquí; ahora
+también está duplicada dentro del propio vault para que cualquier sesión que
+abra `lotm-vault/` directamente (sin pasar por este repo) la vea igual.
