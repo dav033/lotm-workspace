@@ -1,0 +1,234 @@
+import { useState } from 'react'
+import LiveCardPreview from '../LiveCardPreview.jsx'
+import DurationBadge from './DurationBadge.jsx'
+
+// Horizontal strip of saved cards (Canva-style "pages"). Click to edit, drag a
+// thumbnail onto another to reorder, "+" to add a new card.
+//
+// Cada miniatura es la carta de verdad pintada a escala, no una captura: se ve
+// sin haberla abierto y sigue al dia sola, incluso si la edita el MCP.
+// Las cartas llegan ya ordenadas por universo, seccion y posicion, asi que las
+// de una misma seccion son siempre consecutivas.
+function groupBySection(batch) {
+  const groups = []
+  batch.forEach((item, index) => {
+    const current = groups[groups.length - 1]
+    if (current && current.partId === item.part.id) current.items.push({ item, index })
+    else groups.push({ partId: item.part.id, universe: item.universe, part: item.part, items: [{ item, index }] })
+  })
+  return groups
+}
+
+// La etiqueta del grupo se edita en el sitio para renombrar la seccion. Quien
+// esta en edicion lo guarda el padre: la biblioteca se relee cada segundo y un
+// estado local aqui se perderia a media escritura si React remontara la etiqueta.
+function SectionLabel({ text, name, editing, draft, onStart, onDraft, onCommit, onCancel }) {
+  if (!editing) {
+    return (
+      <button
+        className="film-group-label"
+        title={`${name} — clic para renombrar`}
+        onClick={() => onStart(name)}
+      >
+        {text}
+      </button>
+    )
+  }
+
+  return (
+    <input
+      className="film-group-input"
+      value={draft}
+      autoFocus
+      onChange={(e) => onDraft(e.target.value)}
+      onBlur={onCommit}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') e.currentTarget.blur()
+        if (e.key === 'Escape') onCancel()
+      }}
+    />
+  )
+}
+
+export default function Filmstrip({
+  batch, editingId, accent, busy,
+  onLoadCard, onNewCard, onRemoveFromBatch, onReorder, onDownloadZip, onRenameSection,
+  onDownloadSection, onDownloadSectionVideo, videoError, seconds, onSeconds,
+  onCardDuration,
+}) {
+  const [dragIndex, setDragIndex] = useState(null)
+  const [overIndex, setOverIndex] = useState(null)
+  const [renaming, setRenaming] = useState(null) // { partId, draft }
+
+  const commitRename = async () => {
+    const pending = renaming
+    setRenaming(null)
+    if (pending?.draft.trim()) await onRenameSection(pending.partId, pending.draft.trim())
+  }
+
+  const handleDrop = (to) => {
+    if (dragIndex !== null) onReorder(batch[dragIndex].id, batch[to].id)
+    setDragIndex(null)
+    setOverIndex(null)
+  }
+
+  const groups = groupBySection(batch)
+  // El universo solo se nombra si hay mas de uno; con uno solo seria ruido.
+  const showUniverse = new Set(batch.map((item) => item.universe.id)).size > 1
+
+  return (
+    <div className="filmstrip">
+      <div className="filmstrip-rail">
+        {groups.map((group) => (
+          <div className="film-group" key={group.partId}>
+            <div className="film-group-head">
+            <SectionLabel
+              name={group.part.name}
+              text={
+                (showUniverse ? `${group.universe.name} · ` : '') +
+                (group.part.number === null ? '' : `${group.part.number}. `) +
+                group.part.name
+              }
+              editing={renaming?.partId === group.partId}
+              draft={renaming?.draft ?? ''}
+              onStart={(name) => setRenaming({ partId: group.partId, draft: name })}
+              onDraft={(draft) => setRenaming((current) => ({ ...current, draft }))}
+              onCommit={commitRename}
+              onCancel={() => setRenaming(null)}
+            />
+              <button
+                className="film-group-zip"
+                title={`Descargar "${group.part.name}" en ZIP (${group.items.length} cartas)`}
+                disabled={busy}
+                onClick={() => onDownloadSection(group.partId)}
+              >ZIP</button>
+              <button
+                className="film-group-video"
+                title={
+                  `Exportar "${group.part.name}" en MP4 · ${group.items.length} cartas · ` +
+                  `${formatDuration(totalSeconds(group.items, seconds))} · ` +
+                  'baja 2 archivos: carta (3:4) y vertical para Shorts (9:16)'
+                }
+                disabled={busy}
+                onClick={() => onDownloadSectionVideo(group.partId, seconds)}
+              >MP4</button>
+            </div>
+            {/* El arrastre escribe en dataTransfer porque Firefox lo cancela si
+                nadie lo hace, y viaja por id: el indice es el de esta tira, que
+                solo lleva el proyecto activo, no el de la sesion entera. */}
+            <div className="film-group-cards">
+              {group.items.map(({ item, index: i }) => (
+                <div
+                  key={item.id}
+                  className={
+                    'film-thumb' +
+                    (item.id === editingId ? ' active' : '') +
+                    (overIndex === i && dragIndex !== null ? ' over' : '')
+                  }
+                  title={item.label}
+                  draggable
+                  onClick={() => onLoadCard(item.id)}
+                  onDragStart={(e) => { e.dataTransfer.setData('text/plain', item.id); setDragIndex(i) }}
+                  onDragOver={(e) => { e.preventDefault(); setOverIndex(i) }}
+                  onDragLeave={() => setOverIndex((o) => (o === i ? null : o))}
+                  onDrop={(e) => { e.preventDefault(); handleDrop(i) }}
+                  onDragEnd={() => { setDragIndex(null); setOverIndex(null) }}
+                >
+                  <span className="film-no">{i + 1}</span>
+                  <div className="film-preview">
+                    <LiveCardPreview state={item.state} />
+                  </div>
+                  {/* Mismo camino que el arrastre, pero de a un paso: cambiar el
+                      orden no deberia obligar a acertarle a un blanco de 78px. */}
+                  {i > 0 && (
+                    <button
+                      className="film-move left"
+                      disabled={busy}
+                      title="Mover una posición a la izquierda"
+                      aria-label={`Mover "${item.label}" una posición a la izquierda`}
+                      onClick={(e) => { e.stopPropagation(); onReorder(item.id, batch[i - 1].id) }}
+                    >‹</button>
+                  )}
+                  {i < batch.length - 1 && (
+                    <button
+                      className="film-move right"
+                      disabled={busy}
+                      title="Mover una posición a la derecha"
+                      aria-label={`Mover "${item.label}" una posición a la derecha`}
+                      onClick={(e) => { e.stopPropagation(); onReorder(item.id, batch[i + 1].id) }}
+                    >›</button>
+                  )}
+                  <button
+                    className="film-rm"
+                    onClick={(e) => { e.stopPropagation(); onRemoveFromBatch(item.id) }}
+                    aria-label="Remove"
+                  >×</button>
+                  <DurationBadge
+                    value={item.durationSeconds}
+                    fallback={seconds}
+                    disabled={busy}
+                    onChange={(value) => onCardDuration(item.id, value)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <button className="film-add" onClick={onNewCard} disabled={busy} title="New card">
+          +
+        </button>
+      </div>
+
+      <div className="film-actions">
+        <button
+          className="btn-zip"
+          style={{ background: accent.c }}
+          disabled={batch.length === 0 || busy}
+          onClick={() => onDownloadZip()}
+        >
+          Download all ({batch.length})
+        </button>
+
+        <label className="film-seconds" title="Segundos que dura cada carta en el MP4">
+          <span>Seg. por carta</span>
+          <input
+            type="number"
+            min={MIN_SECONDS}
+            max={MAX_SECONDS}
+            step="0.5"
+            value={seconds}
+            disabled={busy}
+            onChange={(e) => onSeconds(clampSeconds(Number(e.target.value)))}
+          />
+        </label>
+      </div>
+
+      {videoError ? <p className="film-video-error">{videoError}</p> : null}
+    </div>
+  )
+}
+
+// Tiene que coincidir con los limites de src/cards/video.ts; el servidor los
+// valida igual, esto solo evita mandar un valor que va a rebotar.
+const DEFAULT_SECONDS = 4
+const MIN_SECONDS = 0.5
+const MAX_SECONDS = 60
+
+function clampSeconds(value) {
+  if (!Number.isFinite(value)) return DEFAULT_SECONDS
+  return Math.min(MAX_SECONDS, Math.max(MIN_SECONDS, value))
+}
+
+// Lo que va a durar la seccion de verdad: cada carta con su duracion propia si
+// la tiene, y la global para el resto.
+function totalSeconds(items, fallback) {
+  return items.reduce((sum, { item }) => sum + (item.durationSeconds ?? fallback), 0)
+}
+
+function formatDuration(total) {
+  const rounded = Math.round(total)
+  const minutes = Math.floor(rounded / 60)
+  const seconds = rounded % 60
+  return minutes ? `${minutes}m ${seconds}s` : `${seconds}s`
+}
