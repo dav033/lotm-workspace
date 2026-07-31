@@ -8,7 +8,7 @@ import { IconoElemento } from './IconoElemento'
 import { useJuegoStore } from './store'
 import { ghostNodeRef, ultimaPosicion } from './useArrastre'
 
-const ANUNCIO_PAR_FALLIDO = 'Combinación intentada anteriormente sin resultado.'
+const ANUNCIO_PAR_FALLIDO = 'Combination previously attempted without result.'
 
 // Ficha que sigue al puntero durante el arrastre. El contenedor exterior lo
 // mueve useArrastre escribiendo el transform directo en el DOM (60 fps sin
@@ -86,7 +86,7 @@ export function GhostArrastre() {
               <span className="text-xs text-parchment">{arrastre.payload.name}</span>
               {previouslyFailed && (
                 <span className="rounded-full border border-wine px-2 py-0.5 text-[9px] uppercase tracking-widest text-wine">
-                  Ya intentada
+                  Already tried
                 </span>
               )}
             </motion.div>

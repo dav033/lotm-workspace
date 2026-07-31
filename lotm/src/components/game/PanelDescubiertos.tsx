@@ -56,23 +56,23 @@ export function PanelDescubiertos({ iniciarArrastre }: { iniciarArrastre: Inicia
   return (
     <aside aria-label="Elementos descubiertos">
       <h2 className="mb-3 font-[family-name:var(--font-arcana)] text-xl text-brass">
-        Archivo personal
+        Personal Archive
       </h2>
 
       <div className="mb-4 flex flex-col gap-2">
         <label className="relative block">
           <Search className="pointer-events-none absolute left-3 top-2.5 h-4 w-4 text-fog" aria-hidden />
-          <span className="sr-only">Buscar elemento por nombre</span>
+          <span className="sr-only">Search element by name</span>
           <input
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar por nombre…"
+            placeholder="Search by name…"
             className="w-full rounded-md border border-line bg-panel py-2 pl-9 pr-3 text-sm text-parchment placeholder:text-fog/60 focus:border-brass-deep focus:outline-none"
           />
         </label>
         <div className="flex gap-2">
           <label className="flex-1">
-            <span className="sr-only">Filtrar por tipo</span>
+            <span className="sr-only">Filter by type</span>
             <select
               value={filtroTipo}
               onChange={(e) => setFiltroTipo(e.target.value)}
@@ -80,32 +80,32 @@ export function PanelDescubiertos({ iniciarArrastre }: { iniciarArrastre: Inicia
             >
               {FILTROS_TIPO.map((t) => (
                 <option key={t} value={t}>
-                  {t === 'TODOS' ? 'Todos los tipos' : etiquetaTipo(t)}
+                  {t === 'TODOS' ? 'All types' : etiquetaTipo(t)}
                 </option>
               ))}
             </select>
           </label>
           <label className="flex-1">
-            <span className="sr-only">Ordenar elementos</span>
+            <span className="sr-only">Sort elements</span>
             <select
               value={orden}
               onChange={(e) => setOrden(e.target.value as Orden)}
               className="w-full rounded-md border border-line bg-panel px-2 py-2 text-sm text-parchment focus:border-brass-deep focus:outline-none"
             >
-              <option value="descubrimiento">Por descubrimiento</option>
-              <option value="nombre">Por nombre</option>
-              <option value="nivel">Por nivel</option>
+              <option value="descubrimiento">By discovery</option>
+              <option value="nombre">By name</option>
+              <option value="nivel">By level</option>
             </select>
           </label>
         </div>
       </div>
 
-      {!estado && !errorCarga && <p className="text-sm italic text-fog">Abriendo el archivo…</p>}
+      {!estado && !errorCarga && <p className="text-sm italic text-fog">Opening the archive…</p>}
       {errorCarga && (
         <p className="text-sm text-wine">
-          No se pudo cargar tu progreso.{' '}
+          Could not load your progress.{' '}
           <button onClick={() => void cargarEstado()} className="underline hover:text-parchment">
-            Reintentar
+            Retry
           </button>
         </p>
       )}
@@ -116,7 +116,7 @@ export function PanelDescubiertos({ iniciarArrastre }: { iniciarArrastre: Inicia
         ))}
       </ul>
       {estado && visibles.length === 0 && (
-        <p className="mt-2 text-sm italic text-fog">Ningún elemento coincide con la búsqueda.</p>
+        <p className="mt-2 text-sm italic text-fog">No element matches the search.</p>
       )}
     </aside>
   )
@@ -160,7 +160,7 @@ function TarjetaElemento({
   const enModoVidente = modoInteraccion === 'vidente-objetivo'
   const esAnalizable = el.kind === 'ELEMENT'
   const etiquetaPotencial = tier
-    ? `Potencial ${NUMERAL_TIER[tier]}: ${POTENTIAL_TIER_LABELS[tier]}`
+    ? `Potential ${NUMERAL_TIER[tier]}: ${POTENTIAL_TIER_LABELS[tier]}`
     : null
 
   return (
@@ -195,15 +195,15 @@ function TarjetaElemento({
         aria-label={
           enModoVidente
             ? esAnalizable
-              ? `Analizar ${el.name} con la Adivinación del Vidente`
-              : `${el.name}: los avances enmascarados no pueden analizarse`
-            : `${el.name}: arrastra sobre otro elemento para combinar, o pulsa para colocar en el círculo${
+              ? `Analyze ${el.name} with Seer Divination`
+              : `${el.name}: masked advances cannot be analyzed`
+            : `${el.name}: drag onto another element to combine, or press to place in the circle${
                 etiquetaPotencial ? `, ${etiquetaPotencial}` : ''
-              }${esApertura ? '. Apertura de la nueva fase.' : ''}${previouslyFailed ? '. Combinación intentada anteriormente sin resultado.' : ''}`
+              }${esApertura ? '. New phase opening.' : ''}${previouslyFailed ? '. Combination previously attempted without result.' : ''}`
         }
         title={
           enModoVidente && esAnalizable
-            ? `Analizar ${el.name}`
+            ? `Analyze ${el.name}`
             : etiquetaPotencial ?? el.derivationLabel ?? el.description ?? el.name
         }
         animate={esObjetivo ? { scale: 1.07 } : { scale: 1 }}
@@ -230,12 +230,12 @@ function TarjetaElemento({
           </span>
         )}
         {esApertura ? (
-          <span className="badge-nuevo border-spectral text-spectral" aria-label="Apertura de la nueva fase">
-            ✦ Nueva fase
+          <span className="badge-nuevo border-spectral text-spectral" aria-label="New phase opening">
+            ✦ New phase
           </span>
         ) : esNuevo && (
-          <span className="badge-nuevo" aria-label="Descubierto recientemente">
-            ✦ Nuevo
+          <span className="badge-nuevo" aria-label="Recently discovered">
+            ✦ New
           </span>
         )}
         {esAnalizable && tier && (
@@ -254,7 +254,7 @@ function TarjetaElemento({
           <span className="text-[9px] leading-tight text-brass-deep">{el.derivationLabel}</span>
         )}
         {(el.quantity ?? 1) > 1 && (
-          <span className="text-[9px] text-fog">Disponibles: {el.quantity}</span>
+          <span className="text-[9px] text-fog">Available: {el.quantity}</span>
         )}
       </motion.button>
     </motion.li>

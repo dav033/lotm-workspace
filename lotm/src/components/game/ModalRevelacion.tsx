@@ -26,7 +26,7 @@ export function ModalRevelacion({
         <div>{reveal.pathwayName}</div>
       </div>
       <p className="anim-rise-2 mt-5 font-[family-name:var(--font-display)] text-xl text-brass">
-        Secuencia {reveal.sequenceNumber}: {reveal.sequenceName}
+        Sequence {reveal.sequenceNumber}: {reveal.sequenceName}
       </p>
       <p className="anim-rise-3 mt-4 italic text-fog">«{reveal.text}»</p>
       <button
@@ -34,7 +34,7 @@ export function ModalRevelacion({
         onClick={onCerrar}
         className="anim-rise-4 btn-brass mt-8 px-8"
       >
-        Continuar
+        Continue
       </button>
     </ModalOculto>
   )

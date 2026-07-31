@@ -12,9 +12,9 @@ export function ModalLogro({
   onCerrar: () => void
 }) {
   return (
-    <ModalOculto titulo={`Logro desbloqueado: ${logro.name}`} onCerrar={onCerrar}>
+    <ModalOculto titulo={`Achievement unlocked: ${logro.name}`} onCerrar={onCerrar}>
       <span className="text-xs uppercase tracking-[0.25em] text-spectral">
-        Logro desbloqueado
+        Achievement unlocked
       </span>
       <div className="anim-glow mx-auto my-5 flex h-24 w-24 items-center justify-center rounded-full border border-brass-deep">
         <IconoElemento iconKey={logro.iconKey} className="h-12 w-12 text-brass" />
@@ -24,7 +24,7 @@ export function ModalLogro({
       </h2>
       {logro.description && <p className="mt-4 italic text-fog">{logro.description}</p>}
       <button autoFocus type="button" onClick={onCerrar} className="btn-brass mt-7">
-        Continuar
+        Continue
       </button>
     </ModalOculto>
   )

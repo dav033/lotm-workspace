@@ -16,8 +16,8 @@ export function localizedElement<T extends ElementPublicData>(
 }
 
 export function browserLanguage(): AppLanguage {
-  if (typeof document === 'undefined') return 'es'
-  return document.cookie.split('; ').some((part) => part === 'am-language=en') ? 'en' : 'es'
+  if (typeof document === 'undefined') return 'en'
+  return document.cookie.split('; ').some((part) => part === 'am-language=es') ? 'es' : 'en'
 }
 
 export function localizedRitualState(

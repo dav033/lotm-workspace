@@ -81,6 +81,7 @@ type JuegoState = {
   mysteryCargando: boolean
   potencialPorElemento: Record<string, PotentialTier>
   memoriaAprendiz: EstadoMemoriaAprendiz
+  cinematicMode: boolean
 
   iniciar: (esAdmin: boolean) => void
   cargarEstado: () => Promise<void>
@@ -118,6 +119,7 @@ type JuegoState = {
   cargarMemoriaAprendiz: () => Promise<void>
   aplicarDeltaMemoriaAprendiz: (delta: ApprenticeMemoryDelta) => void
   alternarModoRapido: () => void
+  toggleCinematicMode: () => void
   agregarABandeja: (slug: string, x: number, y: number) => void
   moverEnBandeja: (instanceId: string, x: number, y: number) => void
   combinarEnBandeja: (
@@ -298,7 +300,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       })
     }
     for (const key of nuevasFacultades) {
-      get().mostrarAviso(`Nueva facultad: ${ABILITY_DEFINITIONS[key].nombre}.`)
+      get().mostrarAviso(`New ability: ${ABILITY_DEFINITIONS[key].nombre}.`)
     }
   }
 
@@ -347,6 +349,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
     objetivo: null,
     modoRapido: true,
     bandeja: [],
+    cinematicMode: false,
     ritualState: { status: 'HIDDEN', groups: [] },
     pendingRitualRisk: null,
     ritualActionLoading: false,
@@ -386,7 +389,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         }))
         if (estadoAnterior) {
           for (const key of desbloqueosNuevos(abilitiesAnteriores, data.abilities)) {
-            get().mostrarAviso(`Nueva facultad: ${ABILITY_DEFINITIONS[key].nombre}.`)
+            get().mostrarAviso(`New ability: ${ABILITY_DEFINITIONS[key].nombre}.`)
           }
         }
         if (get().mysteryActivo) void get().refrescarPotencial()
@@ -419,7 +422,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
     colocar: (el) => {
       const { slots, mostrarAviso, marcarVisto, combinando, modoRapido } = get()
       if (combinando) {
-        mostrarAviso('El círculo aún está resolviendo la combinación.')
+        mostrarAviso('The circle is still resolving the combination.')
         return
       }
       const libre = slots.findIndex((x) => x === null)
@@ -431,7 +434,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
           void get().ejecutarCombinacion(slots[0].slug, el.slug, { origen: 'mesa' })
           return
         }
-        mostrarAviso('El círculo está completo. Retira un elemento o pulsa Limpiar.')
+        mostrarAviso('The circle is full. Remove an element or press Clear.')
         return
       }
       const next = [...slots]
@@ -525,7 +528,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
             set({ pendingRitualRisk: null })
             await get().cargarEstado()
           }
-          get().mostrarAviso(data?.error ?? 'El archivo guarda silencio.', 'peligro')
+          get().mostrarAviso(data?.error ?? 'The archive remains silent.', 'peligro')
           return
         }
         const rawResult = data as CombineResult
@@ -579,7 +582,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
 
         set((prev) => ({ resultado: r, sello: prev.sello + 1 }))
         if (r.success && r.results.length > 0) {
-          // El modo rápido conserva la base (salvo que haya sido consumida)
+          // El modo rápido holds la base (salvo que haya sido consumida)
           // y deja el segundo hueco listo para el siguiente toque.
           if (opts.origen === 'mesa') {
             const baseDisponible =
@@ -633,7 +636,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
           void get().refrescarPotencial()
         }
       } catch {
-        get().mostrarAviso('No hay conexión con el archivo. Inténtalo de nuevo.', 'peligro')
+        get().mostrarAviso('No connection to the archive. Try again.', 'peligro')
       } finally {
         combinandoEnCurso = false
         set({ combinando: false })
@@ -647,12 +650,12 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
 
     reiniciar: async () => {
       if (get().combinando) {
-        get().mostrarAviso('Espera a que el archivo resuelva la combinación actual.')
+        get().mostrarAviso('Wait for the archive to resolve the current combination.')
         return
       }
       if (
         !window.confirm(
-          '¿Reiniciar tu progreso? Perderás todos tus descubrimientos y volverás a empezar con Ojo, Moneda y Humano.',
+          'Reset your progress? You will lose all discoveries and start over.',
         )
       )
         return
@@ -679,9 +682,9 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         // Al empezar de cero, el tutorial del primer avance vuelve a mostrarse.
         window.localStorage.removeItem(TUTORIAL_AVANCE_KEY)
         await get().cargarEstado()
-        get().mostrarAviso('El archivo ha sido restaurado. Empiezas de nuevo.')
+        get().mostrarAviso('The archive has been restored. You start anew.')
       } catch {
-        get().mostrarAviso('No se pudo reiniciar el progreso.', 'peligro')
+        get().mostrarAviso('Could not reset progress.', 'peligro')
       } finally {
         set({ reiniciando: false })
       }
@@ -699,7 +702,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         })
         const data = await response.json()
         if (!response.ok) {
-          get().mostrarAviso(data?.error ?? 'No se pudo avanzar de fase.', 'peligro')
+          get().mostrarAviso(data?.error ?? 'Could not advance phase.', 'peligro')
           if (response.status === 409) await get().cargarEstado()
           return
         }
@@ -727,7 +730,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         programarCargaPendientes()
         void get().refrescarPotencial()
       } catch {
-        get().mostrarAviso('No se pudo avanzar de fase. Inténtalo de nuevo.', 'peligro')
+        get().mostrarAviso('Could not advance phase. Try again.', 'peligro')
       } finally {
         set({ faseAvanzando: false })
       }
@@ -747,7 +750,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         const data = await response.json()
         if (!response.ok) {
           set({ ritualState: { status: 'HIDDEN', groups: [] } })
-          get().mostrarAviso(data?.error ?? 'El ritual no responde.', 'peligro')
+          get().mostrarAviso(data?.error ?? 'The ritual does not respond.', 'peligro')
           await get().cargarEstado()
           return
         }
@@ -757,11 +760,11 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
             browserLanguage(),
           ),
         })
-        get().mostrarAviso('La preparación ritual ha quedado completada.')
+        get().mostrarAviso('The ritual preparation has been completed.')
         void get().refrescarPotencial()
       } catch {
         set({ ritualState: { status: 'HIDDEN', groups: [] } })
-        get().mostrarAviso('No se pudo completar el ritual.', 'peligro')
+        get().mostrarAviso('Could not complete the ritual.', 'peligro')
         await get().cargarEstado()
       } finally {
         set({ ritualActionLoading: false })
@@ -828,7 +831,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       )
       if (!elemento) {
         set({ modoInteraccion: 'normal' })
-        get().mostrarAviso('Ese elemento no puede ser analizado.', 'peligro')
+        get().mostrarAviso('That element cannot be analyzed.', 'peligro')
         return
       }
 
@@ -843,7 +846,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         })
         const data = await response.json()
         if (!response.ok) {
-          get().mostrarAviso(data?.error ?? 'La adivinación no responde.', 'peligro')
+          get().mostrarAviso(data?.error ?? 'The divination does not respond.', 'peligro')
           return
         }
         const count = Number(data.availableCombinationCount)
@@ -858,15 +861,15 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         set({ seerResultado: resultado })
         get().mostrarAviso(
           resultado.availableCombinationCount === 0
-            ? `«${elemento.name}» no presenta combinaciones pendientes que puedas ejecutar ahora.`
-            : `«${elemento.name}» conserva ${resultado.availableCombinationCount} ${
+            ? `«${elemento.name}» has no pending combinations you can execute now.`
+            : `«${elemento.name}» holds ${resultado.availableCombinationCount} ${
                 resultado.availableCombinationCount === 1
-                  ? 'combinación pendiente'
-                  : 'combinaciones pendientes'
-              } con tu conocimiento actual.`,
+                  ? 'pending combination'
+                  : 'pending combinations'
+              } with your current knowledge.`,
         )
       } catch {
-        get().mostrarAviso('La adivinación no responde. Inténtalo de nuevo.', 'peligro')
+        get().mostrarAviso('The divination does not respond. Try again.', 'peligro')
       } finally {
         set({ seerCargando: false })
       }
@@ -896,7 +899,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       try {
         const response = await fetch('/api/habilidades/potencial')
         const data = await response.json()
-        if (!response.ok) throw new Error(data?.error ?? 'La visión no responde.')
+        if (!response.ok) throw new Error(data?.error ?? 'The vision does not respond.')
         const potencial: Record<string, PotentialTier> = {}
         for (const entry of data.potential ?? []) {
           if (
@@ -914,7 +917,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       } catch {
         set({ mysteryActivo: false, potencialPorElemento: {} })
         get().mostrarAviso(
-          'La visión del Mystery Pryer se ha desvanecido. Inténtalo de nuevo.',
+          'The Mystery Pryer vision has faded. Try again.',
           'peligro',
         )
       } finally {
@@ -937,7 +940,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       try {
         const response = await fetch('/api/habilidades/aprendiz/memoria')
         const data = await response.json()
-        if (!response.ok) throw new Error(data?.error ?? 'La memoria no responde.')
+        if (!response.ok) throw new Error(data?.error ?? 'The memory does not respond.')
         const failedInputKeys = new Set<string>(
           Array.isArray(data.failedInputKeys) ? data.failedInputKeys : [],
         )
@@ -952,7 +955,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         })
       } catch {
         set((prev) => ({ memoriaAprendiz: { ...prev.memoriaAprendiz, status: 'error' } }))
-        get().mostrarAviso('La Memoria del Aprendiz no responde por ahora.', 'peligro')
+        get().mostrarAviso('The Apprentice Memory is not responding right now.', 'peligro')
       }
     },
 
@@ -967,6 +970,10 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
     alternarModoRapido: () => {
       if (get().combinando) return
       set((prev) => ({ modoRapido: !prev.modoRapido }))
+    },
+
+    toggleCinematicMode: () => {
+      set((prev) => ({ cinematicMode: !prev.cinematicMode }))
     },
 
     agregarABandeja: (slug, x, y) => {

@@ -28,17 +28,17 @@ export function PanelRituales({
           </div>
           <div>
             <p className="mb-1 text-[10px] uppercase tracking-[0.2em] text-fog">
-              Conocimiento bloqueado
+              Knowledge locked
             </p>
             <h2
               id="ritual-sellado-titulo"
               className="font-[family-name:var(--font-arcana)] text-lg text-parchment"
             >
-              Conocimiento ritual sellado
+              Ritual knowledge sealed
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-fog">
-              Has alcanzado una frontera que un avance por sí solo no puede superar. El método
-              necesario permanece fuera de tu comprensión.
+              You have reached a border that an advance alone cannot cross. The required
+              method remains beyond your understanding.
             </p>
           </div>
         </div>
@@ -52,10 +52,10 @@ export function PanelRituales({
         id="rituales-titulo"
         className="font-[family-name:var(--font-arcana)] text-lg text-brass"
       >
-        Preparaciones rituales
+        Ritual preparations
       </h2>
       <p className="mt-1 text-xs text-fog">
-        Prepara una protección antes de aplicar el avance correspondiente.
+        Prepare protection before applying the corresponding advance.
       </p>
 
       <div className="mt-5 space-y-5">
@@ -70,23 +70,23 @@ export function PanelRituales({
               </div>
               <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-parchment">
-                  Preparación para la siguiente ascensión de {group.sourceSequence.name}
+                  Preparation for the next ascension of {group.sourceSequence.name}
                 </h3>
                 <p className="mt-0.5 text-xs text-fog">
-                  Secuencia {group.sourceSequence.number} · {group.sourceSequence.pathwayName}
+                  Sequence {group.sourceSequence.number} · {group.sourceSequence.pathwayName}
                 </p>
               </div>
               {group.protected && (
                 <span className="flex items-center gap-1.5 rounded-full border border-spectral px-2.5 py-1 text-[10px] uppercase tracking-wider text-spectral">
                   <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
-                  Ascensión protegida
+                  Ascension protected
                 </span>
               )}
             </div>
 
             {group.options.length > 1 && !group.protected && (
               <p className="mt-4 text-xs italic text-fog">
-                Completa una de estas preparaciones.
+                Complete one of these preparations.
               </p>
             )}
 
@@ -106,7 +106,7 @@ export function PanelRituales({
                       {option.completed && (
                         <span className="flex items-center gap-1 text-xs text-spectral">
                           <Check className="h-3.5 w-3.5" aria-hidden />
-                          Preparación completada
+                          Preparation completed
                         </span>
                       )}
                     </div>
@@ -125,14 +125,14 @@ export function PanelRituales({
                             {ingredient.name} × {ingredient.quantity}
                           </span>
                           <span className={ingredient.discovered ? 'text-spectral' : 'text-fog'}>
-                            {ingredient.discovered ? 'Descubierto' : 'No descubierto'}
+                            {ingredient.discovered ? 'Discovered' : 'Not discovered'}
                           </span>
                         </li>
                       ))}
                     </ul>
 
                     <p className="mt-3 text-xs text-fog">
-                      Ingredientes descubiertos: {discovered}/{option.ingredients.length}
+                      Discovered ingredients: {discovered}/{option.ingredients.length}
                     </p>
 
                     {!option.completed && !group.protected && (
@@ -141,9 +141,9 @@ export function PanelRituales({
                         disabled={!option.canPerform || actionLoading}
                         onClick={() => onRealizar(option.ritualId)}
                         className="btn-brass mt-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass disabled:cursor-not-allowed disabled:opacity-40"
-                        aria-label={`Preparar ${option.optionLabel}`}
+                        aria-label={`Prepare ${option.optionLabel}`}
                       >
-                        {actionLoading ? 'Preparando…' : 'Preparar ritual'}
+                        {actionLoading ? 'Preparing…' : 'Prepare ritual'}
                       </button>
                     )}
                   </section>

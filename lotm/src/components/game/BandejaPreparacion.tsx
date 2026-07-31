@@ -26,16 +26,16 @@ export function BandejaPreparacion({ iniciarArrastre }: { iniciarArrastre: Inici
       id="lienzo-transmutacion"
       tabIndex={-1}
       className="mt-7 scroll-mt-28 focus:outline-none"
-      aria-label="Lienzo de transmutación"
+      aria-label="Transmutation canvas"
       aria-busy={combinando}
     >
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <ArchiveRestore className="h-4 w-4 text-brass" aria-hidden />
         <h3 className="font-[family-name:var(--font-display)] text-sm uppercase tracking-[0.18em] text-parchment">
-          Lienzo de transmutación
+          Transmutation canvas
         </h3>
         <span className="rounded-full border border-line2 px-2 py-px text-[10px] text-fog">
-          {bandeja.length} {bandeja.length === 1 ? 'ficha' : 'fichas'}
+          {bandeja.length} {bandeja.length === 1 ? 'piece' : 'pieces'}
         </span>
         {bandeja.length > 0 && (
           <button
@@ -45,13 +45,13 @@ export function BandejaPreparacion({ iniciarArrastre }: { iniciarArrastre: Inici
             className="ml-auto flex items-center gap-1 text-[11px] text-fog transition hover:text-wine disabled:cursor-wait disabled:opacity-40"
           >
             <Trash2 className="h-3.5 w-3.5" aria-hidden />
-            Vaciar lienzo
+            Clear canvas
           </button>
         )}
       </div>
       <p className="mb-3 text-xs leading-relaxed text-fog/80">
-        Arrastra conceptos desde el Archivo, distribúyelos libremente y superpón dos fichas
-        para combinarlas. Los intentos fallidos no alteran el lienzo.
+        Drag concepts from the Archive, distribute them freely and overlap two pieces
+        to combine them. Failed attempts do not alter the canvas.
       </p>
 
       <div
@@ -70,7 +70,7 @@ export function BandejaPreparacion({ iniciarArrastre }: { iniciarArrastre: Inici
               ☿ · ☽ · ♄
             </span>
             <p className="mt-3 max-w-xs text-xs italic leading-relaxed text-fog/65">
-              Deposita aquí un concepto para abrir tu espacio de experimentación.
+              Deposit a concept here to open your experimentation space.
             </p>
           </div>
         )}
@@ -89,7 +89,7 @@ export function BandejaPreparacion({ iniciarArrastre }: { iniciarArrastre: Inici
 
         {bandeja.length > 0 && (
           <p className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-line/70 bg-ink/75 px-3 py-1 text-[9px] uppercase tracking-widest text-fog/60">
-            Mueve · superpone · descubre
+            Move · overlap · discover
           </p>
         )}
       </div>
@@ -166,7 +166,7 @@ function ElementoBandeja({
         }}
         whileHover={combinando ? undefined : { y: -3 }}
         whileTap={combinando ? undefined : { scale: 0.95 }}
-        aria-label={`${elemento.name}${esApertura ? ', apertura de la nueva fase' : ''}: pulsa para colocar en el círculo o arrastra para mover y combinar`}
+        aria-label={`${elemento.name}${esApertura ? ', new phase opening' : ''}: press to place in the circle or drag to move and combine`}
         className={`flex min-h-16 w-20 touch-none select-none flex-col items-center justify-center gap-1 rounded-lg border bg-panel/95 px-2 py-2 text-center shadow-lg backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-brass disabled:cursor-wait disabled:opacity-50 ${
           esObjetivo
             ? 'border-spectral ring-2 ring-spectral shadow-[0_0_22px_-7px_var(--color-spectral)]'
@@ -177,7 +177,7 @@ function ElementoBandeja({
       >
         {esApertura && (
           <span className="absolute -top-3 rounded-full border border-spectral bg-ink px-2 py-0.5 text-[8px] uppercase tracking-wider text-spectral">
-            Nueva fase
+            New phase
           </span>
         )}
         <IconoElemento iconKey={elemento.iconKey} className="h-6 w-6 text-brass" />
@@ -190,7 +190,7 @@ function ElementoBandeja({
         disabled={combinando}
         onPointerDown={(e) => e.stopPropagation()}
         onClick={() => quitar(instancia.instanceId)}
-        aria-label={`Quitar ${elemento.name} del lienzo`}
+        aria-label={`Remove ${elemento.name} from the canvas`}
         className="absolute -right-2 -top-2 rounded-full border border-line bg-ink p-1.5 text-fog transition hover:border-wine hover:text-wine disabled:opacity-40"
       >
         <X className="h-3 w-3" aria-hidden />

@@ -7,35 +7,35 @@ import { ModalOculto } from './ModalOculto'
 // que rompe las reglas aprendidas hasta entonces (los avances sí se consumen).
 export function ModalTutorialAvance({ onCerrar }: { onCerrar: () => void }) {
   return (
-    <ModalOculto titulo="Has obtenido tu primer avance" onCerrar={onCerrar}>
+    <ModalOculto titulo="You have obtained your first advance" onCerrar={onCerrar}>
       <span className="text-xs uppercase tracking-[0.25em] text-spectral">
-        Tu primer avance
+        Your first advance
       </span>
       <div className="anim-glow mx-auto my-5 flex h-24 w-24 items-center justify-center rounded-full border border-brass-deep">
         <IconoElemento iconKey="wand-sparkles" className="h-12 w-12 text-brass" />
       </div>
       <div className="space-y-3 text-left text-sm text-fog">
         <p>
-          Los avances son distintos a todo lo demás:{' '}
-          <span className="text-parchment">se consumen al usarse</span>, mientras que los
-          conceptos nunca se gastan.
+          Advances are different from everything else:{' '}
+          <span className="text-parchment">they are consumed when used</span>, while
+          concepts are never spent.
         </p>
         <p>
-          Para usarlo, combínalo con el elemento de secuencia correcto. Reconocerás las
-          secuencias en tu archivo por su insignia{' '}
+          To use it, combine it with the correct sequence element. You will recognize
+          sequences in your archive by their badge{' '}
           <span className="rounded-full border border-brass-deep px-2 py-0.5 text-[10px] text-brass">
-            Secuencia N · Camino
+            Sequence N · Pathway
           </span>
-          ; el icono del avance señala su camino de origen.
+          ; the advance icon points to its origin pathway.
         </p>
         <p>
-          Algunos avances exigen haber{' '}
-          <span className="text-parchment">preparado antes un ritual</span>. Fracasar sin él
-          tiene consecuencias.
+          Some advances require having{' '}
+          <span className="text-parchment">prepared a ritual beforehand</span>. Failing without it
+          has consequences.
         </p>
       </div>
       <button autoFocus type="button" onClick={onCerrar} className="btn-brass mt-7">
-        Entendido
+        Understood
       </button>
     </ModalOculto>
   )

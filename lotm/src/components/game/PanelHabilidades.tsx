@@ -36,7 +36,7 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
           id="titulo-facultades"
           className="font-[family-name:var(--font-arcana)] text-lg text-brass"
         >
-          Facultades de secuencia
+          Sequence faculties
         </h2>
       </div>
 
@@ -47,11 +47,11 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
               <Eye className="mt-0.5 h-5 w-5 shrink-0 text-spectral" aria-hidden />
               <div>
                 <h3 className="font-[family-name:var(--font-display)] text-sm text-parchment">
-                  Adivinación del Vidente
+                  Seer Divination
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-fog">
-                  Selecciona un elemento para percibir cuántas combinaciones pendientes
-                  resuenan con tu conocimiento actual.
+                  Select an element to perceive how many pending combinations
+                  resonate with your current knowledge.
                 </p>
               </div>
             </div>
@@ -62,17 +62,17 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
               className="btn-ghost mt-3 flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {seerCargando && <LoaderCircle className="h-3.5 w-3.5 animate-spin" aria-hidden />}
-              {seerCargando ? 'Adivinando…' : 'Adivinar'}
+              {seerCargando ? 'Divining…' : 'Divine'}
             </button>
             <p aria-live="polite" className="mt-3 text-xs text-fog">
               {seerResultado && (
                 <>
-                  Última adivinación: «{seerResultado.nombre}» ·{' '}
+                  Last divination: «{seerResultado.nombre}» ·{' '}
                   <span className="text-brass">
                     {seerResultado.availableCombinationCount}{' '}
                     {seerResultado.availableCombinationCount === 1
-                      ? 'combinación pendiente'
-                      : 'combinaciones pendientes'}
+                      ? 'pending combination'
+                      : 'pending combinations'}
                   </span>
                 </>
               )}
@@ -86,10 +86,10 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
               <ScanEye className="mt-0.5 h-5 w-5 shrink-0 text-spectral" aria-hidden />
               <div>
                 <h3 className="font-[family-name:var(--font-display)] text-sm text-parchment">
-                  Visión del Mystery Pryer
+                  Mystery Pryer Vision
                 </h3>
                 <p className="mt-1 text-xs leading-relaxed text-fog">
-                  Revela el potencial latente de cada elemento sin mostrar sus fórmulas.
+                  Reveals the latent potential of each element without showing its formulas.
                 </p>
               </div>
             </div>
@@ -102,10 +102,10 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
             >
               {mysteryCargando && <LoaderCircle className="h-3.5 w-3.5 animate-spin" aria-hidden />}
               {mysteryCargando
-                ? 'Descifrando…'
+                ? 'Deciphering…'
                 : mysteryActivo
-                  ? 'Ocultar potencial'
-                  : 'Revelar potencial'}
+                  ? 'Hide potential'
+                  : 'Reveal potential'}
             </button>
           </article>
         )}
@@ -117,15 +117,15 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="font-[family-name:var(--font-display)] text-sm text-parchment">
-                    Archivo del Savant
+                    Savant Archive
                   </h3>
                   <span className="rounded-full border border-line2 px-2 py-0.5 text-[10px] text-fog">
                     {abilities.savant.used}/{abilities.savant.capacity}
                   </span>
                 </div>
                 <p className="mt-1 text-xs leading-relaxed text-fog">
-                  Esta facultad conservará fórmulas que el conocimiento actual todavía no
-                  permite ejecutar.
+                  This faculty will preserve formulas that your current knowledge does not yet
+                  allow you to execute.
                 </p>
               </div>
             </div>
@@ -140,10 +140,10 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
             </div>
             <div className="mt-3 flex flex-wrap items-center gap-3">
               <button type="button" disabled className="btn-ghost cursor-not-allowed opacity-50">
-                Guardar combinación
+                Save combination
               </button>
               <span className="text-[10px] uppercase tracking-widest text-fog">
-                Facultad en desarrollo
+                Faculty in development
               </span>
             </div>
           </article>
@@ -152,7 +152,7 @@ export function PanelHabilidades({ abilitiesOverride }: { abilitiesOverride?: Pl
 
       {mysteryActivo && (
         <div className="mt-4 rounded-md border border-line bg-panel/50 p-3" aria-label="Leyenda de potencial">
-          <p className="mb-2 text-[10px] uppercase tracking-widest text-fog">Escala de potencial</p>
+          <p className="mb-2 text-[10px] uppercase tracking-widest text-fog">Potential scale</p>
           <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-[11px]">
             {TIERS.map((tier) => (
               <span key={tier} data-pot-color={tier} className="pot-leyenda">

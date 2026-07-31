@@ -24,6 +24,51 @@ import {
 import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from './ritualKnowledge'
 import { featuresParaFase } from './featureGates'
 
+async function autoUnlockNextSequenceIngredients(
+  tx: PrismaClient,
+  profileId: string,
+  newlyDiscoveredSequences: Array<{ id: string; number: number; pathwayId: string }>,
+  availablePhaseIds: ReadonlySet<string>,
+  now: Date,
+): Promise<Array<{ element: ReturnType<typeof toPublicElement>; quantity: number; isNewDiscovery: boolean }>> {
+  const autoResults: Array<{ element: ReturnType<typeof toPublicElement>; quantity: number; isNewDiscovery: boolean }> = []
+  for (const seq of newlyDiscoveredSequences) {
+    const nextSeq = await tx.sequence.findFirst({
+      where: { pathwayId: seq.pathwayId, number: seq.number - 1 },
+      include: { element: true, pathway: true },
+    })
+    if (!nextSeq) continue
+    const recipe = await tx.recipe.findFirst({
+      where: { isActive: true, outputs: { some: { elementId: nextSeq.elementId } } },
+      include: {
+        ingredients: {
+          include: { element: { include: { sequence: { include: { pathway: true } } } } },
+        },
+      },
+    })
+    if (!recipe) continue
+    for (const ing of recipe.ingredients) {
+      const ingEl = ing.element
+      if (ingEl.sequence) continue
+      if (!elementoDisponiblePorPhaseId(ingEl, availablePhaseIds)) continue
+      const existing = await tx.playerDiscovery.findUnique({
+        where: { profileId_elementId: { profileId, elementId: ingEl.id } },
+      })
+      if (!existing) {
+        await tx.playerDiscovery.create({
+          data: { profileId, elementId: ingEl.id, firstDiscoveredAt: now, lastCreatedAt: now },
+        })
+        autoResults.push({
+          element: toPublicElement(ingEl),
+          quantity: 1,
+          isNewDiscovery: true,
+        })
+      }
+    }
+  }
+  return autoResults
+}
+
 // Error de reglas del juego: su mensaje sí es apto para mostrarse al jugador.
 export class CombinationError extends Error {}
 
@@ -56,9 +101,9 @@ async function combinarAvanceConSecuencia(
   const advanceToken = slugs[advanceIndex]
   const advanceId = advanceIdFromToken(advanceToken)
   const sequenceSlug = slugs[advanceIndex === 0 ? 1 : 0]
-  if (!advanceId || advanceIdFromToken(sequenceSlug)) {
-    throw new CombinationError('Solo puedes combinar un avance con una secuencia.')
-  }
+    if (!advanceId || advanceIdFromToken(sequenceSlug)) {
+      throw new CombinationError('You can only combine an advance with a sequence.')
+    }
 
   return db.$transaction(async (tx) => {
   const [advance, sequenceElement, owned, ritualKnowledge] = await Promise.all([
@@ -115,14 +160,14 @@ async function combinarAvanceConSecuencia(
   ])
 
   if (!advance || !advance.isActive || !owned || owned.quantity < 1) {
-    throw new CombinationError('No posees ese avance o ya no está disponible.')
+    throw new CombinationError('You do not own that advance or it is no longer available.')
   }
   if (!sequenceElement || !elementoDisponiblePorPhaseId(sequenceElement, availablePhaseIds)) {
-    throw new CombinationError('La secuencia seleccionada no está disponible.')
+    throw new CombinationError('The selected sequence is not available.')
   }
 
   if (sequenceElement.discoveries.length === 0) {
-    throw new CombinationError('Aún no has descubierto esa secuencia.')
+    throw new CombinationError('You have not yet discovered that sequence.')
   }
 
   const inputKey = buildRecipeInputKey([
@@ -136,7 +181,7 @@ async function combinarAvanceConSecuencia(
     advance.targetSequence.element.discoveries.length === 0
   const activeRituals = advance.rituals.filter((ritual) => ritual.isActive)
   if (isValid && activeRituals.length > 0 && !advancementRitualsEnabled) {
-    throw new CombinationError('Los rituales de avance aún no están disponibles.')
+    throw new CombinationError('Advancement rituals are not yet available.')
   }
   const ritualDecision = isValid
     ? decidirAplicacionRitual(
@@ -152,21 +197,21 @@ async function combinarAvanceConSecuencia(
     return {
       kind: 'RITUAL_KNOWLEDGE_REQUIRED',
       message:
-        'El avance responde, pero no comprendes la preparación necesaria para aplicarlo con seguridad.',
+        'The advance responds, but you do not understand the preparation needed to apply it safely.',
     }
   }
   if (ritualDecision === 'PREPARATION_REQUIRED') {
     return {
       kind: 'RITUAL_PREPARATION_REQUIRED',
       confirmationRequired: true,
-      message: 'Esta ascensión no está protegida. Intentarla puede tener consecuencias.',
+      message: 'This ascension is not protected. Attempting it may have consequences.',
     }
   }
   if (confirmRitualRisk && !isValid) {
     return {
       kind: 'RESOLVED',
       success: false,
-      message: 'La ascensión ya no puede intentarse en estas condiciones.',
+      message: 'The ascension can no longer be attempted under these conditions.',
       inputKey,
       results: [],
       isNewPathwayUnlock: false,
@@ -202,7 +247,7 @@ async function combinarAvanceConSecuencia(
       return {
         kind: 'RESOLVED',
         success: false,
-        message: 'El avance no reconoce esa secuencia.',
+        message: 'The advance does not recognize that sequence.',
         inputKey,
         results: [],
         isNewPathwayUnlock: false,
@@ -274,7 +319,7 @@ async function combinarAvanceConSecuencia(
       return {
         kind: 'RESOLVED',
         success: false,
-        message: 'El avance fracasa: falta preparar el ritual correspondiente.',
+        message: 'The advance fails: the corresponding ritual must be prepared.',
         inputKey,
         results,
         isNewPathwayUnlock: false,
@@ -329,8 +374,8 @@ async function combinarAvanceConSecuencia(
           pathwayName: pathway.name,
           sequenceNumber: advance.targetSequence.number,
           sequenceName: advance.targetSequence.name,
-          title: target.revealTitle ?? 'El avance se completa',
-          text: target.revealText ?? 'Una nueva secuencia se abre ante ti.',
+          title: target.revealTitle ?? 'The advance is completed',
+          text: target.revealText ?? 'A new sequence opens before you.',
         }
       : null
     const results: RecipeOutputData[] = [
@@ -363,8 +408,8 @@ async function combinarAvanceConSecuencia(
       kind: 'RESOLVED',
       success: true,
       message: isNewDiscovery
-        ? `Has descubierto la secuencia ${advance.targetSequence.name}.`
-        : `${advance.targetSequence.name} vuelve a revelarse.`,
+        ? `You have discovered the sequence ${advance.targetSequence.name}.`
+        : `${advance.targetSequence.name} reveals itself again.`,
       inputKey,
       results,
       isNewPathwayUnlock,
@@ -389,7 +434,7 @@ export async function combinarParaPerfil(
   options: { confirmRitualRisk?: boolean } = {},
 ): Promise<CombineResult> {
   if (slugs.length !== 2) {
-    throw new CombinationError('Debes colocar exactamente dos elementos.')
+    throw new CombinationError('You must place exactly two elements.')
   }
   const phaseState = await faseActualParaPerfil(db, profileId)
   const { availablePhaseIds } = phaseState
@@ -399,7 +444,7 @@ export async function combinarParaPerfil(
     .filter((index) => index >= 0)
   if (advanceIndexes.length > 0) {
     if (advanceIndexes.length !== 1) {
-      throw new CombinationError('Solo puedes combinar un avance con una secuencia.')
+      throw new CombinationError('You can only combine one advance with a sequence.')
     }
     const features = await featuresParaFase(db, phaseState.sortOrder)
     return combinarAvanceConSecuencia(
@@ -422,16 +467,16 @@ export async function combinarParaPerfil(
   })
 
   if (elements.length !== uniqueSlugs.length) {
-    throw new CombinationError('Alguno de los elementos no existe en el archivo.')
+    throw new CombinationError('Some of the elements do not exist in the archive.')
   }
   if (elements.some((element) => !elementoDisponiblePorPhaseId(element, availablePhaseIds))) {
-    throw new CombinationError('Alguno de los elementos no está disponible.')
+    throw new CombinationError('Some of the elements are not available.')
   }
 
   // El jugador solo puede usar lo que ya descubrió: se verifica SIEMPRE en el
   // servidor, sin confiar en lo que el navegador afirme.
   if (elements.some((element) => element.discoveries.length === 0)) {
-    throw new CombinationError('Aún no has descubierto ese elemento.')
+    throw new CombinationError('You have not yet discovered that element.')
   }
 
   const inputKey = buildRecipeInputKey(slugs.map((s) => ({ slug: s, quantity: 1 })))
@@ -570,7 +615,7 @@ export async function combinarParaPerfil(
         return {
           kind: 'RESOLVED',
           success: true,
-          message: 'Has obtenido un avance desconocido.',
+          message: 'You have obtained an unknown advance.',
           inputKey,
           results: [advanceResult],
           isNewPathwayUnlock: false,
@@ -637,8 +682,8 @@ export async function combinarParaPerfil(
               pathwayName: seq.pathway.name,
               sequenceNumber: seq.number,
               sequenceName: seq.name,
-              title: output.revealTitle ?? 'Un velo se descorre',
-              text: output.revealText ?? 'Has traspasado la frontera de lo mundano.',
+              title: output.revealTitle ?? 'A veil is lifted',
+              text: output.revealText ?? 'You have crossed the border of the mundane.',
             }
           }
         }
@@ -649,6 +694,27 @@ export async function combinarParaPerfil(
         quantity: ro.quantity,
         isNewDiscovery,
       })
+    }
+
+    // Auto-unlock ingredients for next sequence
+    const newlyDiscoveredSequences = recipeOutputs
+      .filter((ro) => ro.element.sequence?.pathway.isActive && !ro.element.sequence?.pathway.isHiddenUntilDiscovered)
+      .map((ro) => ({
+        id: ro.element.id,
+        number: ro.element.sequence!.number,
+        pathwayId: ro.element.sequence!.pathwayId,
+      }))
+    if (newlyDiscoveredSequences.length > 0) {
+      const autoUnlocked = await autoUnlockNextSequenceIngredients(
+        tx,
+        profileId,
+        newlyDiscoveredSequences,
+        availablePhaseIds,
+        now,
+      )
+      for (const au of autoUnlocked) {
+        results.push({ element: au.element, quantity: au.quantity, isNewDiscovery: au.isNewDiscovery })
+      }
     }
 
     // Descubrimientos espontáneos: conceptos que se revelan al producir
@@ -680,16 +746,16 @@ export async function combinarParaPerfil(
     if (advanceResult) {
       message =
         newDiscoveries.length > 0
-          ? `Has obtenido un avance desconocido y descubierto ${newDiscoveries.map((result) => result.element.name).join(', ')}.`
-          : 'Has obtenido un avance desconocido.'
+          ? `You have obtained an unknown advance and discovered ${newDiscoveries.map((result) => result.element.name).join(', ')}.`
+          : 'You have obtained an unknown advance.'
     } else if (newDiscoveries.length === 0) {
-      const names = craftedElements.map((result) => result.element.name).join(' y ')
-      message = `${names} vuelve a formarse entre tus manos.`
+      const names = craftedElements.map((result) => result.element.name).join(' and ')
+      message = `${names} forms again between your hands.`
     } else if (newDiscoveries.length === 1) {
-      message = `Has descubierto ${newDiscoveries[0].element.name}.`
+      message = `You have discovered ${newDiscoveries[0].element.name}.`
     } else {
       const names = newDiscoveries.map((d) => d.element.name).join(', ')
-      message = `Has descubierto ${names}.`
+      message = `You have discovered ${names}.`
     }
 
     return {

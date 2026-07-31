@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { AnimatePresence, MotionConfig } from 'framer-motion'
-import { RotateCcw, Sparkles } from 'lucide-react'
+import { RotateCcw, Sparkles, Film } from 'lucide-react'
 import { Ambiente } from './Ambiente'
 import { Avisos } from './Avisos'
 import { GhostArrastre } from './GhostArrastre'
@@ -95,9 +95,9 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
           <h1 className="sr-only">Archivo de Misterios — Juego</h1>
           <span
             className="rounded-full border border-line2 px-3 py-0.5 text-sm text-fog"
-            title="Porcentaje del archivo descubierto"
+            title="Percentage of archive discovered"
           >
-            Archivo descubierto:{' '}
+            Archive discovered:{' '}
             <span className="text-brass">
               {descubiertos !== undefined && totalElementos !== undefined
                 ? `${descubiertos}/${totalElementos} · ${porcentaje}%`
@@ -106,11 +106,11 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
           </span>
           <span
             className="rounded-full border border-line2 px-3 py-0.5 text-sm text-fog"
-            title="Fase de progresión actual"
+            title="Current progression phase"
           >
-            Fase actual:{' '}
+            Current phase:{' '}
             <span className="text-brass">
-              {phaseName ?? (estadoCargado ? 'Sin fase disponible' : '…')}
+              {phaseName ?? (estadoCargado ? 'No phase available' : '…')}
             </span>
           </span>
           <div className="ml-auto flex flex-wrap items-center gap-4 text-sm">
@@ -123,7 +123,7 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
                 className="flex min-h-11 items-center gap-1.5 rounded-md border border-brass-deep bg-brass/10 px-3 text-brass transition-colors hover:border-brass hover:bg-brass/15 focus-visible:ring-2 focus-visible:ring-brass disabled:cursor-wait disabled:opacity-50"
               >
                 <Sparkles className="h-4 w-4" aria-hidden />
-                {faseAvanzando ? 'Abriendo fase…' : `Avanzar a ${nextPhase.name}`}
+                {faseAvanzando ? 'Opening phase…' : `Advance to ${nextPhase.name}`}
               </button>
             )}
             <button
@@ -133,8 +133,9 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
               className="flex items-center gap-1.5 text-fog transition hover:text-brass disabled:opacity-50"
             >
               <RotateCcw className="h-4 w-4" aria-hidden />
-              {reiniciando ? 'Reiniciando…' : 'Reiniciar progreso'}
+              {reiniciando ? 'Resetting…' : 'Reset progress'}
             </button>
+            <CinematicToggle />
           </div>
         </div>
         <div
@@ -143,7 +144,7 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
           aria-valuenow={porcentaje}
           aria-valuemin={0}
           aria-valuemax={100}
-          aria-label="Progreso del archivo descubierto"
+          aria-label="Archive discovery progress"
         >
           <div
             className="progreso-arcano h-full transition-[width] duration-700 ease-out"
@@ -159,14 +160,14 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
           className="anim-rise fixed left-1/2 top-24 z-[45] flex w-[calc(100%-2rem)] max-w-xl -translate-x-1/2 items-center gap-3 rounded-md border border-spectral bg-panel2/95 px-4 py-3 text-sm text-parchment shadow-xl backdrop-blur"
         >
           <span className="flex-1">
-            Selecciona un elemento descubierto. Pulsa Esc para cancelar.
+            Select a discovered element. Press Esc to cancel.
           </span>
           <button
             type="button"
             onClick={cancelarModoVidente}
             className="shrink-0 rounded border border-line2 px-3 py-1 text-fog hover:border-brass hover:text-brass"
           >
-            Cancelar
+            Cancel
           </button>
         </div>
       )}
@@ -203,7 +204,7 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
           <ModalRiesgoRitual
             key="riesgo-ritual"
             cargando={combinando}
-            onCancelar={cancelarRiesgoRitual}
+            onCancel={cancelarRiesgoRitual}
             onConfirmar={() => void confirmarRiesgoRitual()}
           />
         )}
@@ -229,5 +230,26 @@ export default function Juego({ esAdmin = false }: { esAdmin?: boolean }) {
       </AnimatePresence>
     </div>
     </MotionConfig>
+  )
+}
+
+function CinematicToggle() {
+  const cinematicMode = useJuegoStore((s) => s.cinematicMode)
+  const toggle = useJuegoStore((s) => s.toggleCinematicMode)
+  return (
+    <button
+      type="button"
+      aria-pressed={cinematicMode}
+      onClick={toggle}
+      title="Toggle cinematic effects"
+      className={`flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition ${
+        cinematicMode
+          ? 'border-spectral text-spectral shadow-[0_0_10px_-5px_var(--color-spectral)]'
+          : 'border-line2 text-fog hover:text-parchment'
+      }`}
+    >
+      <Film className="h-3.5 w-3.5" aria-hidden />
+      Cinematic {cinematicMode ? 'on' : 'off'}
+    </button>
   )
 }

@@ -18,16 +18,16 @@ export function RecetasPendientes({
   if (pendientes.length === 0) return null
 
   return (
-    <section aria-label="Recetas pendientes (admin)" className="mb-8 rounded-lg border border-line2 p-4">
+    <section aria-label="Pending recipes (admin)" className="mb-8 rounded-lg border border-line2 p-4">
       <h2 className="mb-2 flex items-center gap-2 text-sm uppercase tracking-widest text-fog">
-        Recetas pendientes
+        Pending recipes
         <span className="rounded-full border border-line2 px-2 py-0.5 text-xs text-fog">
           {pendientes.length}
         </span>
       </h2>
       <p className="mb-3 text-xs text-fog">
-        Solo tú la ves (sesión de admin). Clic: cargar los ingredientes en la mesa · Doble
-        clic: combinar al instante.
+        Only you see this (admin session). Click: load ingredients onto the table · Double-click:
+        combine instantly.
       </p>
       <ul className="max-h-64 space-y-1 overflow-y-auto">
         {pendientes.map((r) => {
@@ -39,7 +39,7 @@ export function RecetasPendientes({
                 disabled={!disponible}
                 onClick={() => onAutocompletar(r.recipeId)}
                 onDoubleClick={() => onCombinar(r.recipeId)}
-                title={disponible ? undefined : 'Aún te falta descubrir alguno de estos ingredientes.'}
+                title={disponible ? undefined : 'You have not yet discovered some of these ingredients.'}
                 className="flex w-full flex-wrap items-center gap-1.5 rounded-md px-2 py-1.5 text-left text-xs text-fog hover:bg-panel2 hover:text-parchment disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent"
               >
                 {r.ingredientes.map((ing, idx) => (

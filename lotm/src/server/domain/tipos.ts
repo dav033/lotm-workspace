@@ -18,19 +18,19 @@ export const elementTypeSchema = z.enum(ELEMENT_TYPES)
 
 // Etiquetas en castellano para mostrar cada tipo en la interfaz.
 export const ELEMENT_TYPE_LABELS: Record<ElementType, string> = {
-  MUNDANO: 'Mundano',
-  CONCEPTO: 'Concepto',
-  MISTICISMO: 'Misticismo',
+  MUNDANO: 'Mundane',
+  CONCEPTO: 'Concept',
+  MISTICISMO: 'Mysticism',
   BEYONDER: 'Beyonder',
-  CRIATURA: 'Criatura',
-  OBJETO: 'Objeto',
-  OTRO: 'Otro',
+  CRIATURA: 'Creature',
+  OBJETO: 'Object',
+  OTRO: 'Other',
 }
 
 // En la base el tipo viaja como texto plano; si llega un valor desconocido se
 // muestra tal cual en lugar de romper la interfaz.
 export function etiquetaTipo(type: string): string {
-  if (type === 'AVANCE') return 'Avance'
+  if (type === 'AVANCE') return 'Advance'
   return (ELEMENT_TYPE_LABELS as Record<string, string>)[type] ?? type
 }
 
@@ -123,7 +123,7 @@ export type CombineResult =
   | RitualKnowledgeRequiredResult
   | RitualPreparationRequiredResult
 
-export const MENSAJE_SIN_RECETA = 'La combinación no responde.'
+export const MENSAJE_SIN_RECETA = 'The combination yields no response.'
 
 // Panel de depuración (solo admin): receta activa aún no descubierta por
 // completo, con sus ingredientes y resultados (pueden estar ocultos).

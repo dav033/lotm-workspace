@@ -30,6 +30,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
   const usarResultado = useJuegoStore((s) => s.usarResultado)
   const modoRapido = useJuegoStore((s) => s.modoRapido)
   const alternarModoRapido = useJuegoStore((s) => s.alternarModoRapido)
+  const cinematicMode = useJuegoStore((s) => s.cinematicMode)
   const [fase, setFase] = useState(0)
 
   useEffect(() => {
@@ -48,17 +49,17 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
   const exito = resultado !== null && resultado.success && resultado.results.length > 0
 
   return (
-    <section aria-label="Círculo de invocación" aria-busy={combinando}>
+    <section aria-label="Invocation circle" aria-busy={combinando}>
       <div className="mb-1 flex flex-wrap items-center gap-3">
         <h2 className="font-[family-name:var(--font-arcana)] text-xl text-brass">
-          Círculo de Invocación
+          Invocation Circle
         </h2>
         <button
           type="button"
           aria-pressed={modoRapido}
           disabled={combinando}
           onClick={alternarModoRapido}
-          title="Conserva el primer elemento después de cada intento"
+          title="Keeps the first element after each attempt"
           className={`ml-auto flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs transition disabled:cursor-wait disabled:opacity-50 ${
             modoRapido
               ? 'border-spectral text-spectral shadow-[0_0_10px_-5px_var(--color-spectral)]'
@@ -66,15 +67,15 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
           }`}
         >
           <Gauge className="h-3.5 w-3.5" aria-hidden />
-          Ritmo rápido {modoRapido ? 'activo' : 'inactivo'}
+          Rapid rhythm {modoRapido ? 'active' : 'inactive'}
         </button>
       </div>
       <p className="mb-5 text-sm text-fog">
-        Arrastra un elemento <span className="text-brass">sobre otro</span> para invocar su
-        unión: al instante en la lista, o depositándolos en estos dos receptáculos.
+        Drag an element <span className="text-brass">onto another</span> to invoke their
+        union: instantly from the list, or by depositing them in these two receptacles.
         {modoRapido && (
           <span className="mt-1 block text-xs text-spectral">
-            El primer elemento quedará como base; toca otro para encadenar pruebas.
+            The first element will remain as the base; tap another to chain attempts.
           </span>
         )}
       </p>
@@ -85,7 +86,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
           fallo > 0 && !exito ? 'anim-shake' : ''
         }`}
       >
-        <GrabadoRitual resonando={combinando} fallido={fallo > 0 && !exito} />
+        <GrabadoRitual resonando={combinando} fallido={fallo > 0 && !exito} cinematic={cinematicMode} />
 
         <div className="absolute inset-0 flex items-center justify-center gap-3 sm:gap-5">
           {[0, 1].map((i) => (
@@ -94,9 +95,14 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
         </div>
 
         <AnimatePresence>
-          {combinando && <Canalizacion key="canalizacion" />}
+          {combinando && <Canalizacion key="canalizacion" cinematic={cinematicMode} />}
         </AnimatePresence>
-        {exito && <Particulas key={sello} semilla={`${sello}:${resultado.inputKey}`} />}
+        {exito && (
+          <>
+            <Particulas key={sello} semilla={`${sello}:${resultado.inputKey}`} />
+            {cinematicMode && <Particulas key={`${sello}-c`} semilla={`c:${sello}:${resultado.inputKey}`} />}
+          </>
+        )}
       </div>
 
       <BandejaPreparacion iniciarArrastre={iniciarArrastre} />
@@ -108,7 +114,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
             disabled={combinando}
             className="rounded-md border border-line2 px-5 py-2.5 text-sm text-fog transition hover:border-brass-deep hover:text-parchment disabled:cursor-wait disabled:opacity-40"
           >
-            Limpiar el círculo
+            Clear the circle
           </button>
         </div>
       )}
@@ -119,10 +125,10 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
             <LoaderCircle className="h-4 w-4 animate-spin motion-reduce:animate-none" aria-hidden />
             <span>
               {fase === 0
-                ? 'Trazando la fórmula…'
+                ? 'Tracing the formula…'
                 : fase === 1
-                  ? 'Consultando el archivo…'
-                  : 'La fórmula exige una lectura más profunda…'}
+                  ? 'Consulting the archive…'
+                  : 'The formula demands a deeper reading…'}
             </span>
           </div>
         )}
@@ -139,7 +145,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
                 key={idx}
                 type="button"
                 onClick={() => usarResultado(r.element.id)}
-                aria-label={`Usar ${r.element.name} en el primer receptáculo del círculo`}
+                aria-label={`Use ${r.element.name} in the first receptacle of the circle`}
                 initial={{ opacity: 0, scale: 0.7, y: 22 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 whileHover={{ y: -4 }}
@@ -149,7 +155,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
               >
                 {r.isNewDiscovery && (
                   <span className="mb-2 inline-block rounded-full border border-spectral px-3 py-0.5 text-xs uppercase tracking-widest text-spectral">
-                    {r.element.kind === 'ADVANCE' ? '¡Nuevo avance!' : '¡Nuevo descubrimiento!'}
+                    {r.element.kind === 'ADVANCE' ? 'New advance!' : 'New discovery!'}
                   </span>
                 )}
                 <div className="anim-glow mx-auto my-3 flex h-20 w-20 items-center justify-center rounded-full border border-brass-deep">
@@ -169,7 +175,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
                 )}
                 {r.element.derivationLabel && (
                   <p className="mt-2 text-xs text-brass-deep">
-                    Derivado de: {r.element.derivationLabel}
+                    Derived from: {r.element.derivationLabel}
                   </p>
                 )}
               </motion.button>
@@ -183,7 +189,7 @@ export function MesaCombinacion({ iniciarArrastre }: { iniciarArrastre: IniciarA
 
 // Grabado estático del círculo: órbita de glifos, anillo punteado interior,
 // pentagrama y núcleo. Todo decorativo; los receptáculos van por encima.
-function GrabadoRitual({ resonando, fallido }: { resonando: boolean; fallido: boolean }) {
+function GrabadoRitual({ resonando, fallido, cinematic }: { resonando: boolean; fallido: boolean; cinematic?: boolean }) {
   return (
     <svg
       viewBox="0 0 400 400"
@@ -191,10 +197,14 @@ function GrabadoRitual({ resonando, fallido }: { resonando: boolean; fallido: bo
       aria-hidden
       style={{
         filter: resonando
-          ? 'drop-shadow(0 0 18px rgba(201, 163, 92, 0.35))'
+          ? cinematic
+            ? 'drop-shadow(0 0 32px rgba(201, 163, 92, 0.65)) drop-shadow(0 0 64px rgba(139, 118, 201, 0.35))'
+            : 'drop-shadow(0 0 18px rgba(201, 163, 92, 0.35))'
           : fallido
             ? 'drop-shadow(0 0 14px rgba(110, 36, 50, 0.5))'
-            : undefined,
+            : cinematic
+              ? 'drop-shadow(0 0 12px rgba(201, 163, 92, 0.25))'
+              : undefined,
         transition: 'filter 0.4s ease',
       }}
     >
@@ -335,20 +345,20 @@ function Receptaculo({
             onPointerDown={(e) => e.stopPropagation()}
             onClick={() => retirar(index)}
             disabled={combinando}
-            aria-label={`Retirar ${el.name} del receptáculo ${index + 1}`}
+            aria-label={`Remove ${el.name} from receptacle ${index + 1}`}
             className="absolute -right-1 -top-1 rounded-full border border-line bg-panel p-1.5 text-fog transition hover:border-brass-deep hover:text-parchment disabled:cursor-wait disabled:opacity-40"
           >
             <X className="h-3.5 w-3.5" aria-hidden />
           </button>
           {modoRapido && index === 0 && !combinando && (
             <span className="absolute -bottom-2 rounded-full border border-spectral/60 bg-ink px-2 py-0.5 text-[8px] uppercase tracking-widest text-spectral">
-              Base fija
+              Fixed base
             </span>
           )}
         </>
       ) : (
         <span className="px-5 text-center text-[10px] uppercase tracking-[0.2em] text-fog/70">
-          Receptáculo {index + 1}
+          Receptacle {index + 1}
         </span>
       )}
     </motion.div>
@@ -357,7 +367,7 @@ function Receptaculo({
 
 // Mientras el archivo delibera: anillo de energía girando sobre un núcleo
 // que respira en el centro del círculo.
-function Canalizacion() {
+function Canalizacion({ cinematic }: { cinematic?: boolean }) {
   const sinMovimiento = useReducedMotion()
   return (
     <motion.div
@@ -369,15 +379,23 @@ function Canalizacion() {
       aria-hidden
     >
       <motion.div
-        className="canal-nucleo absolute h-32 w-32"
+        className={`canal-nucleo absolute ${cinematic ? 'h-40 w-40' : 'h-32 w-32'}`}
         animate={
           sinMovimiento
             ? { opacity: [0.55, 1, 0.55] }
-            : { scale: [1, 1.22, 1], opacity: [0.55, 1, 0.55] }
+            : cinematic
+              ? { scale: [1, 1.35, 1], opacity: [0.45, 1, 0.45] }
+              : { scale: [1, 1.22, 1], opacity: [0.55, 1, 0.55] }
         }
-        transition={{ repeat: Infinity, duration: 1.15, ease: 'easeInOut' }}
+        transition={{ repeat: Infinity, duration: cinematic ? 1.6 : 1.15, ease: 'easeInOut' }}
       />
-      <div className="canal-anillo absolute h-36 w-36" />
+      <div className={`canal-anillo absolute ${cinematic ? 'h-44 w-44' : 'h-36 w-36'}`} />
+      {cinematic && (
+        <>
+          <div className="canal-anillo absolute h-52 w-52" style={{ animationDirection: 'reverse', animationDuration: '2s' }} />
+          <div className="canal-anillo absolute h-60 w-60" style={{ animationDuration: '3s' }} />
+        </>
+      )}
     </motion.div>
   )
 }

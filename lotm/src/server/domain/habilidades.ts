@@ -13,21 +13,21 @@ export type AbilityKey = 'seer' | 'savant' | 'mysteryPryer' | 'apprenticeMemory'
 export const ABILITY_DEFINITIONS = {
   seer: {
     requiredElementSlug: 'seer',
-    nombre: 'Adivinación del Vidente',
+    nombre: 'Seer Divination',
   },
   savant: {
     requiredElementSlug: 'savant',
-    nombre: 'Archivo del Savant',
+    nombre: 'Savant Archive',
     implemented: false,
     capacity: 5,
   },
   mysteryPryer: {
     requiredElementSlug: 'mystery-pryer',
-    nombre: 'Visión del Mystery Pryer',
+    nombre: 'Mystery Pryer Vision',
   },
   apprenticeMemory: {
     requiredElementSlug: 'aprendiz',
-    nombre: 'Memoria del Aprendiz',
+    nombre: 'Apprentice Memory',
   },
 } as const
 
@@ -208,11 +208,11 @@ export const NUMERAL_TIER: Record<PotentialTier, string> = {
 }
 
 export const POTENTIAL_TIER_LABELS: Record<PotentialTier, string> = {
-  1: 'Tenue',
-  2: 'Latente',
-  3: 'Resonante',
-  4: 'Excepcional',
-  5: 'Desbordante',
+  1: 'Faint',
+  2: 'Latent',
+  3: 'Resonant',
+  4: 'Exceptional',
+  5: 'Overflowing',
 }
 
 // Rango público del tier ("0–3", "4–12", …): parte de la mecánica, se muestra

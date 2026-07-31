@@ -17,8 +17,8 @@ export function ModalAvanceFase({
   onVerLienzo: () => void
 }) {
   return (
-    <ModalOculto titulo={`Nueva fase: ${transicion.phase.name}`} onCerrar={onCerrar}>
-      <span className="text-xs uppercase tracking-[0.25em] text-spectral">Nueva fase alcanzada</span>
+    <ModalOculto titulo={`New phase: ${transicion.phase.name}`} onCerrar={onCerrar}>
+      <span className="text-xs uppercase tracking-[0.25em] text-spectral">New phase reached</span>
       <div className="anim-glow mx-auto my-5 flex h-24 w-24 items-center justify-center rounded-full border border-brass-deep">
         <Sparkles className="h-12 w-12 text-brass" aria-hidden />
       </div>
@@ -32,7 +32,7 @@ export function ModalAvanceFase({
       )}
       {aperturas.length > 0 && (
         <div className="mt-6 rounded-lg border border-line bg-black/15 p-3 text-left">
-          <p className="text-xs uppercase tracking-[0.18em] text-brass">Nuevas aperturas</p>
+          <p className="text-xs uppercase tracking-[0.18em] text-brass">New openings</p>
           <ul className="mt-3 grid max-h-48 grid-cols-2 gap-2 overflow-y-auto">
             {aperturas.map((elemento) => (
               <li key={elemento.id} className="flex min-w-0 items-center gap-2 rounded-md border border-line2 px-2 py-2 text-xs text-parchment">
@@ -41,17 +41,17 @@ export function ModalAvanceFase({
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-xs text-fog">Se colocaron en el lienzo de transmutación.</p>
+          <p className="mt-3 text-xs text-fog">Placed on the transmutation canvas.</p>
         </div>
       )}
       <div className="mt-7 flex flex-wrap justify-center gap-3">
         {aperturas.length > 0 && (
           <button autoFocus type="button" onClick={onVerLienzo} className="btn-brass">
-            Ver en el lienzo
+            View on canvas
           </button>
         )}
         <button type="button" onClick={onCerrar} className="btn-ghost">
-          Continuar
+          Continue
         </button>
       </div>
     </ModalOculto>
