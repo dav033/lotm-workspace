@@ -9,7 +9,7 @@ const ENLACES = [
   { href: '/', label: ['Juego', 'Game'], icon: WandSparkles, exact: true },
   { href: '/coleccion', label: ['Colección', 'Collection'], icon: BookMarked, exact: false },
   { href: '/logros', label: ['Logros', 'Achievements'], icon: Trophy, exact: false },
-  { href: '/cartas', label: ['Cartas', 'Cards'], icon: Layers, exact: false },
+  { href: process.env.NEXT_PUBLIC_CARDS_URL ?? '/cartas', label: ['Cartas', 'Cards'], icon: Layers, exact: false },
   { href: '/admin', label: ['Archivista', 'Archivist'], icon: KeyRound, exact: false },
 ]
 

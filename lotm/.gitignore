@@ -18,7 +18,7 @@ next-env.d.ts
 *.db-journal
 
 # Prisma (cliente generado)
-/src/generated
+/apps/game/src/generated
 
 # Entorno
 .env

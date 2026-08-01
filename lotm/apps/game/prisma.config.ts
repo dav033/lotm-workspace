@@ -4,9 +4,7 @@ import { defineConfig } from 'prisma/config'
 export default defineConfig({
   schema: 'prisma/schema.prisma',
   migrations: {
-    // El historial SQLite se conserva en prisma/migrations como referencia.
-    // PostgreSQL parte de una línea base propia porque ambos dialectos SQL no
-    // comparten archivos de migración.
+    // PostgreSQL usa línea base propia; migraciones SQLite fueron retiradas.
     path: 'prisma/migrations-postgresql',
   },
   datasource: {
