@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import React, { type ComponentType } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import { chromium, type Browser, type BrowserContext, type Page } from 'playwright'
@@ -46,6 +47,7 @@ const StaticTarotMemberCard = TarotMemberCard as unknown as ComponentType<Record
 const FONT_STYLESHEET =
   'https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Space+Grotesk:wght@400;500;700' +
   '&family=Playfair+Display:wght@700;900&family=Archivo:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap'
+const CARD_STUDIO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
 type RenderAssets = {
   css: string
@@ -62,7 +64,7 @@ export class CardPngRenderer {
     private readonly publicDir: string,
   ) {}
 
-  static async create(projectRoot = process.env.CARDS_PROJECT_ROOT || process.cwd()): Promise<CardPngRenderer> {
+  static async create(projectRoot = process.env.CARDS_PROJECT_ROOT || CARD_STUDIO_ROOT): Promise<CardPngRenderer> {
     const root = path.resolve(projectRoot)
     const publicDir = path.join(root, 'public')
     const css = await fs.readFile(path.join(root, 'src', 'builder', 'styles.css'), 'utf8')

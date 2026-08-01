@@ -6,7 +6,7 @@
       "args": [
         "--import",
         "tsx",
-        "mcp/cards-stdio.ts"
+        "apps/card-studio/mcp/cards-stdio.ts"
       ],
       "env": {}
     }

@@ -1,6 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
+import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import {
   CardContentSchema,
@@ -127,7 +128,8 @@ export type CardLibrary = Array<{
 }>
 
 export function resolveCardsDbPath(): string {
-  return path.resolve(process.env.CARDS_DB_PATH || path.join('data', 'cards.db'))
+  const workspaceDataDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../data')
+  return path.resolve(process.env.CARDS_DB_PATH || path.join(workspaceDataDir, 'cards.db'))
 }
 
 export class CardRepository {

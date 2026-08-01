@@ -3,7 +3,7 @@
   "mcp": {
     "cards": {
       "type": "local",
-      "command": ["node", "--import", "tsx", "mcp/cards-stdio.ts"],
+      "command": ["node", "--import", "tsx", "apps/card-studio/mcp/cards-stdio.ts"],
       "enabled": true
     }
   }

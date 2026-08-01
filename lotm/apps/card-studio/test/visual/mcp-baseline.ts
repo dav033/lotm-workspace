@@ -5,13 +5,14 @@ import { fileURLToPath } from 'node:url'
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js'
 
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+const workspaceRoot = path.resolve(appRoot, '../..')
 const scratchDir = await mkdtemp(path.join(os.tmpdir(), 'lotm-mcp-baseline-'))
 const dbPath = path.join(scratchDir, 'cards.db')
 const transport = new StdioClientTransport({
   command: process.execPath,
   args: ['--import', 'tsx', 'mcp/cards-stdio.ts'],
-  cwd: projectRoot,
+  cwd: appRoot,
   env: { ...process.env, CARDS_DB_PATH: dbPath, CARDS_LIVE_VIEW_URL: '' },
   stderr: 'pipe',
 })
@@ -44,8 +45,8 @@ try {
       export_cards_zip: summarizeResult(exported),
     },
   }
-  await mkdir(path.join(projectRoot, 'docs'), { recursive: true })
-  await writeFile(path.join(projectRoot, 'docs', 'mcp-surface-2026-08.json'), `${JSON.stringify(report, null, 2)}\n`)
+  await mkdir(path.join(workspaceRoot, 'docs'), { recursive: true })
+  await writeFile(path.join(workspaceRoot, 'docs', 'mcp-surface-2026-08.json'), `${JSON.stringify(report, null, 2)}\n`)
   console.log(JSON.stringify({
     toolNames: tools.tools.map(({ name }) => name),
     smoke: Object.fromEntries(Object.entries(report.smoke).map(([name, result]) => [name, {

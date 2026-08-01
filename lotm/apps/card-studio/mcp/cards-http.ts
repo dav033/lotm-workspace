@@ -1,12 +1,20 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
 import { CardRepository } from '../src/cards/repository'
 import { resolveCardExportDir } from '../src/cards/export'
 import { createCardsMcpServer } from '../src/cards/mcp'
 
-try { process.loadEnvFile() } catch { /* .env is optional */ }
+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const workspaceRoot = path.resolve(appRoot, '../..')
+for (const envFile of [path.join(appRoot, '.env'), path.join(workspaceRoot, '.env')]) {
+  try {
+    process.loadEnvFile(envFile)
+    break
+  } catch { /* .env is optional */ }
+}
 
 const host = process.env.CARDS_MCP_HOST || '127.0.0.1'
 const port = Number(process.env.CARDS_MCP_PORT || 3_101)
@@ -32,7 +40,7 @@ const publicBaseUrl = process.env.CARDS_MCP_PUBLIC_URL || `http://${publicHost}:
 // Solo tiene sentido abrir un navegador en la maquina donde corre este proceso
 // si ese proceso efectivamente corre en la maquina del usuario (host local).
 const liveViewUrl = localHosts.has(host)
-  ? process.env.CARDS_LIVE_VIEW_URL || 'http://localhost:3000/cartas/vivo'
+  ? process.env.CARDS_LIVE_VIEW_URL || 'http://localhost:3002/cartas/vivo'
   : undefined
 
 app.get('/health', (_request, response) => {

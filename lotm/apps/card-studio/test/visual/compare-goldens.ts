@@ -3,12 +3,13 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import pixelmatch from 'pixelmatch'
 import { PNG } from 'pngjs'
-import { CardPngRenderer } from '../src/cards/render'
-import { CardContentSchema, filenameForCard, type CardContent } from '../src/cards/schema'
+import { CardPngRenderer } from '../../src/cards/render'
+import { CardContentSchema, filenameForCard, type CardContent } from '../../src/cards/schema'
 
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const fixturePath = path.join(projectRoot, 'test-visual', 'fixtures.json')
-const goldenDir = path.join(projectRoot, 'data', 'card-goldens')
+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+const workspaceRoot = path.resolve(appRoot, '../..')
+const fixturePath = path.join(appRoot, 'test', 'visual', 'fixtures.json')
+const goldenDir = path.join(workspaceRoot, 'data', 'card-goldens')
 const MAX_DIFFERING_PIXELS = 0.005
 
 function decodePng(buffer: Buffer): PNG {
@@ -21,7 +22,7 @@ async function loadFixtures(): Promise<CardContent[]> {
 }
 
 const fixtures = await loadFixtures()
-const renderer = await CardPngRenderer.create(projectRoot)
+const renderer = await CardPngRenderer.create(appRoot)
 const failures: string[] = []
 
 try {

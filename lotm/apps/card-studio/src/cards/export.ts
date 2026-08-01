@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
-import { pathToFileURL } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import JSZip from 'jszip'
 import { CardPngRenderer } from './render'
 import { filenameForCard, slugify, type CardContent } from './schema'
@@ -17,7 +17,8 @@ export type CardExportResult = {
 }
 
 export function resolveCardExportDir(): string {
-  return path.resolve(process.env.CARDS_EXPORT_DIR || path.join('data', 'card-exports'))
+  const workspaceDataDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../data')
+  return path.resolve(process.env.CARDS_EXPORT_DIR || path.join(workspaceDataDir, 'card-exports'))
 }
 
 export async function createCardsZip(

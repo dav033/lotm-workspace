@@ -1,11 +1,20 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { CardRepository } from '../src/cards/repository'
 import { createCardsMcpServer } from '../src/cards/mcp'
 
-try { process.loadEnvFile() } catch { /* .env is optional */ }
+const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
+const workspaceRoot = path.resolve(appRoot, '../..')
+for (const envFile of [path.join(appRoot, '.env'), path.join(workspaceRoot, '.env')]) {
+  try {
+    process.loadEnvFile(envFile)
+    break
+  } catch { /* .env is optional */ }
+}
 
 const repository = new CardRepository()
-const liveViewUrl = process.env.CARDS_LIVE_VIEW_URL || 'http://localhost:3000/cartas/vivo'
+const liveViewUrl = process.env.CARDS_LIVE_VIEW_URL || 'http://localhost:3002/cartas/vivo'
 const server = createCardsMcpServer({ repository, liveViewUrl })
 
 async function shutdown() {
