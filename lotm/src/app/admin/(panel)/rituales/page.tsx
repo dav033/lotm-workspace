@@ -28,6 +28,7 @@ export default async function PaginaRitualesAdmin({ searchParams }: { searchPara
         ritual={editing ? {
           id: editing.id,
           name: editing.name,
+          nameEn: editing.nameEn,
           ingredientAId: ingredientIds[0] ?? '',
           ingredientBId: ingredientIds[1] ?? '',
           advanceId: editing.advanceId,

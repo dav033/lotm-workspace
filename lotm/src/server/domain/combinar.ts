@@ -25,7 +25,7 @@ import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from './ritualKnowledge'
 import { featuresParaFase } from './featureGates'
 
 async function autoUnlockNextSequenceIngredients(
-  tx: PrismaClient,
+  tx: Db,
   profileId: string,
   newlyDiscoveredSequences: Array<{ id: string; number: number; pathwayId: string }>,
   availablePhaseIds: ReadonlySet<string>,

@@ -22,10 +22,10 @@ describe('PanelRituales', () => {
 
   it('muestra una tarjeta genérica sin contenido ritual en estado sellado', () => {
     const html = render({ status: 'SEALED', groups: [] })
-    assert.match(html, /Conocimiento ritual sellado/)
-    assert.match(html, /fuera de tu comprensión/)
-    assert.doesNotMatch(html, /Preparar ritual/)
-    assert.doesNotMatch(html, /Ingrediente/)
+    assert.match(html, /Ritual knowledge sealed/)
+    assert.match(html, /beyond your understanding/)
+    assert.doesNotMatch(html, /Preparation completed/)
+    assert.doesNotMatch(html, /Discovered ingredients/)
   })
 
   it('muestra ingredientes y protección sin nombrar la secuencia destino', () => {
@@ -61,10 +61,10 @@ describe('PanelRituales', () => {
         },
       ],
     })
-    assert.match(html, /siguiente ascensión de Escriba/)
+    assert.match(html, /Preparation for the next ascension of Escriba/)
     assert.match(html, /Constelación/)
-    assert.match(html, /Descubierto/)
-    assert.match(html, /Ascensión protegida/)
+    assert.match(html, /Discovered/)
+    assert.match(html, /Ascension protected/)
     assert.doesNotMatch(html, /Traveler/)
   })
 })

@@ -41,8 +41,7 @@ Variables:
 | --- | --- |
 | `DATABASE_URL` | URL de conexión al pool PostgreSQL de la base del juego |
 | `DIRECT_URL` | URL directa PostgreSQL para migraciones Prisma |
-| `ADMIN_PASSWORD` | Contraseña del panel de administración |
-| `ADMIN_SESSION_SECRET` | Secreto (mínimo 16 caracteres) que firma la cookie de sesión admin |
+| `ADMIN_PASSWORD` / `ADMIN_SESSION_SECRET` | Valores heredados. El despliegue actual omite la autenticación administrativa; no son necesarios mientras siga vigente esa decisión del propietario. |
 | `CARDS_DB_PATH` | SQLite textual independiente de cartas; por defecto `./data/cards.db` |
 | `CARDS_EXPORT_DIR` | Carpeta de ZIP generados; por defecto `./data/card-exports` |
 | `CARDS_IMAGE_DIR` | Carpeta de imágenes subidas desde el editor; por defecto `./data/card-images` |
@@ -77,7 +76,7 @@ Rutas principales:
 | `/` | El juego |
 | `/coleccion` | Enciclopedia y progreso |
 | `/cartas` | Generador de cartas (en migración a `apps/card-studio`) |
-| `/admin/login` | Acceso del administrador |
+| `/admin` | Panel administrativo; acceso sin login en el despliegue local y de usuario único actual |
 
 ## MCP del generador de cartas
 
@@ -205,12 +204,12 @@ https://mcp.tu-dominio.com/mcp
 
 Usa como autenticación el esquema Bearer y el valor de `CARDS_MCP_TOKEN`.
 
-## 6 · Entrar al panel administrativo
+## 6 · Abrir el panel administrativo
 
-1. Abre `http://localhost:3000/admin/login` (también hay un icono de llave
-   discreto en la cabecera del juego).
-2. Introduce la `ADMIN_PASSWORD` de tu `.env`.
-3. La sesión dura 8 horas y se guarda en una cookie firmada HTTP-only.
+Abre `http://localhost:3000/admin`. La autenticación administrativa está
+desactivada por decisión explícita del propietario para este despliegue local,
+confiable y de un solo usuario. No expongas el panel públicamente ni reactives
+la autenticación dentro de esta refactorización sin aprobación expresa.
 
 ## 7 · Crear un elemento
 
@@ -284,8 +283,6 @@ Con Docker:
 docker build -t archivo-de-misterios .
 docker run -p 3000:3000 \
   -v archivo_datos:/app/data \
-  -e ADMIN_PASSWORD="una-contrasena-fuerte" \
-  -e ADMIN_SESSION_SECRET="un-secreto-largo-y-aleatorio" \
   archivo-de-misterios
 ```
 

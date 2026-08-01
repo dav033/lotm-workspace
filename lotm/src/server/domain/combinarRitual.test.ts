@@ -174,7 +174,7 @@ describe('aplicación de avances con ritual', () => {
     await assert.rejects(
       () => apply(fixture, true),
       (error: unknown) =>
-        error instanceof CombinationError && /aún no están disponibles/.test(error.message),
+        error instanceof CombinationError && /not yet available/.test(error.message),
     )
     assert.deepEqual(fixture.writes, {
       profile: 0,

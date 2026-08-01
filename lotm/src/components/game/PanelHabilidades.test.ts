@@ -29,11 +29,11 @@ describe('PanelHabilidades — marcador Savant', () => {
           abilitiesOverride: facultadesDesdeSlugs(new Set(['savant'])),
         }),
       )
-      assert.match(html, /Archivo del Savant/)
+      assert.match(html, /Savant Archive/)
       assert.match(html, /0\/5/)
-      assert.match(html, /Guardar combinación/)
+      assert.match(html, /Save combination/)
       assert.match(html, /disabled=""/)
-      assert.match(html, /Facultad en desarrollo/)
+      assert.match(html, /Faculty in development/)
       assert.equal(peticiones, 0)
     } finally {
       globalThis.fetch = fetchOriginal
