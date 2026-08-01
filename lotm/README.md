@@ -5,14 +5,14 @@ esotérica, inspirado en la mecánica de Little Alchemy. Combinas dos elementos
 (que nunca se gastan: son conceptos) para descubrir otros nuevos, hasta cruzar
 la frontera de lo mundano.
 
-El proyecto también incluye, en `/cartas`, el generador de cartas para TikTok
-que ya existía en este repositorio.
+El proyecto también incluye el generador de cartas para TikTok en `/cartas`.
+Está migrando a `apps/card-studio` (ver `REFACTOR_PLAN.md`).
 
 ## Stack
 
 - Next.js (App Router) + React + TypeScript estricto
 - Tailwind CSS 4
-- Prisma ORM 7 + SQLite (`@prisma/adapter-better-sqlite3`)
+- Prisma ORM 7 + PostgreSQL mediante `@prisma/adapter-pg` (Supabase en producción)
 - Zod para validación
 - `node:test` + `tsx` para pruebas
 - MCP de cartas por `stdio` y Streamable HTTP
@@ -39,7 +39,8 @@ Variables:
 
 | Variable | Descripción |
 | --- | --- |
-| `DATABASE_URL` | Ruta del archivo SQLite. Por defecto `file:./data/game.db` |
+| `DATABASE_URL` | URL de conexión al pool PostgreSQL de la base del juego |
+| `DIRECT_URL` | URL directa PostgreSQL para migraciones Prisma |
 | `ADMIN_PASSWORD` | Contraseña del panel de administración |
 | `ADMIN_SESSION_SECRET` | Secreto (mínimo 16 caracteres) que firma la cookie de sesión admin |
 | `CARDS_DB_PATH` | SQLite textual independiente de cartas; por defecto `./data/cards.db` |
@@ -51,24 +52,15 @@ Variables:
 | `CARDS_MCP_ALLOWED_HOSTS` | Hostnames publicos del MCP, separados por comas |
 | `CARDS_LIVE_VIEW_URL` | Pagina que se abre en el navegador al primer guardado/edicion de la sesion; por defecto `http://localhost:3000/cartas/vivo` (requiere `npm run dev` activo) |
 
-## 3 · Crear la base de datos
+## 3 · Crear o migrar la base de datos
 
 ```bash
 npm run db:migrate
 ```
 
-Esto crea `data/game.db` y aplica todas las migraciones.
-
-## 4 · Cargar los datos iniciales
-
-```bash
-npm run db:seed
-```
-
-El seed es **idempotente**: puedes ejecutarlo las veces que quieras sin
-duplicar datos. Crea las categorías (Mundano, Conceptos, Misticismo,
-Beyonder), los 8 elementos, el Camino del Vidente con su Secuencia 9 y las 5
-recetas iniciales.
+Esto aplica las migraciones PostgreSQL configuradas en Prisma. El sistema
+actual no tiene script `db:seed`; el contenido se administra mediante el panel
+administrativo y las herramientas de importación/exportación.
 
 ## 5 · Iniciar la aplicación
 
@@ -84,7 +76,7 @@ Rutas principales:
 | --- | --- |
 | `/` | El juego |
 | `/coleccion` | Enciclopedia y progreso |
-| `/cartas` | Generador de cartas (app anterior) |
+| `/cartas` | Generador de cartas (en migración a `apps/card-studio`) |
 | `/admin/login` | Acceso del administrador |
 
 ## MCP del generador de cartas
@@ -262,12 +254,12 @@ misma expresión en una forma orientada a lectura humana o LLM.
 - **Contenido del juego** (fases, reglas, elementos, recetas, categorías, caminos): Panel →
   **Importar / Exportar** → «Descargar JSON». Ese archivo se puede volver a
   importar en modo *fusionar* o *reemplazar*.
-- **Todo, incluido el progreso de jugadores**: copia el archivo SQLite
-  completo (con la aplicación detenida): `data/game.db`.
+- **Todo, incluido el progreso de jugadores**: usa `pg_dump` o las copias de
+  seguridad de Supabase sobre la base PostgreSQL configurada.
 
-## 10 · ¿Dónde están los archivos SQLite?
+## 10 · ¿Dónde están los datos persistentes?
 
-- Juego y progresión: `./data/game.db` (configurable con `DATABASE_URL`).
+- Juego y progresión: PostgreSQL (configurable con `DATABASE_URL`).
 - Biblioteca textual del MCP de cartas: `./data/cards.db` (configurable con
   `CARDS_DB_PATH`). Los PNG y ZIP quedan en `./data/card-exports`.
 
@@ -278,8 +270,8 @@ La carpeta `data/` está fuera del control de versiones.
 - Como jugador: botón «Reiniciar progreso» en la cabecera del juego (borra
   descubrimientos, desbloqueos y estadísticas de TU perfil y vuelve a
   entregar Ojo, Moneda, Tierra y Humano).
-- Base de datos completa desde cero: borra `data/game.db` y repite los pasos
-  3 y 4.
+- Reinicio completo del juego: usa una operación explícita de mantenimiento
+  PostgreSQL; no existe un archivo local `game.db` que borrar.
 
 ## 12 · Despliegue con almacenamiento persistente
 
@@ -297,9 +289,9 @@ docker run -p 3000:3000 \
   archivo-de-misterios
 ```
 
-El contenedor aplica las migraciones y el seed (idempotente) al arrancar. En
-cualquier VPS o PaaS que soporte volúmenes (Fly.io, Railway con volumen,
-etc.) el requisito es el mismo: persistir `/app/data`.
+El contenedor aplica las migraciones PostgreSQL al arrancar. En cualquier VPS
+o PaaS que soporte volúmenes (Fly.io, Railway con volumen, etc.), persiste
+`/app/data` para el estado de Card Studio; el juego usa PostgreSQL.
 
 ## Scripts
 
@@ -315,7 +307,6 @@ etc.) el requisito es el mismo: persistir `/app/data`.
 | `npm run cards:browser` | Instalar Chromium para renderizar los ZIP |
 | `npm run db:migrate` | Crear/actualizar la base de datos (desarrollo) |
 | `npm run db:deploy` | Aplicar migraciones (producción) |
-| `npm run db:seed` | Datos iniciales (idempotente) |
 | `npm run db:studio` | Prisma Studio para inspeccionar la BD |
 
 ## Arquitectura (resumen)
@@ -324,8 +315,10 @@ etc.) el requisito es el mismo: persistir `/app/data`.
   combinación, diagnóstico). No conoce Next ni la base concreta.
 - `src/server/services/` — casos de uso de administración (recetas,
   import/export).
-- `src/server/actions/` — Server Actions; **cada mutación revalida la sesión
-  admin** por su cuenta.
+- `src/server/actions/` — Server Actions. La autenticación administrativa está
+  desactivada intencionalmente por decisión del propietario; no la re-actives
+  dentro de esta refactorización.
 - `src/app/api/` — Route Handlers del juego (perfil por cookie HTTP-only).
-- SQLite entra únicamente por `src/server/db.ts` (adaptador Prisma):
-  sustituirlo por PostgreSQL no toca la lógica del juego.
+- PostgreSQL entra por `src/server/db.ts` mediante `@prisma/adapter-pg`.
+- SQLite queda aislado en Card Studio (`src/cards/repository.ts` y
+  `data/cards.db`).
