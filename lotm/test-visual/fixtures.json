@@ -1,0 +1,129 @@
+[
+  {
+    "type": "Character",
+    "name": "Klein Moretti",
+    "pathway": "Fool",
+    "sequence": 0,
+    "power": "True God",
+    "modifier": "The World",
+    "alterDomain": "Mysteries",
+    "imageUrl": "/pathway-icons/fool.webp"
+  },
+  {
+    "type": "Artifact",
+    "name": "0-08",
+    "pathway": "Visionary",
+    "sequence": 0,
+    "grade": "0",
+    "modifier": "Quill of Alzuhod",
+    "imageUrl": "/cover-default.jpg"
+  },
+  {
+    "type": "Cover",
+    "title": "Mysteries of the Tarot Club",
+    "partNumber": "01",
+    "topImageUrl": "/pathway-icons/fool.webp",
+    "mainImageUrl": "/cover-default.jpg"
+  },
+  {
+    "type": "Full Image Cover",
+    "title": "The Fool Awakens",
+    "imageUrl": "/cover-default.jpg"
+  },
+  {
+    "type": "Tier",
+    "pathway": "Fool",
+    "rank": "S",
+    "points": ["Mysteries bend around the Seer.", "Miracles answer the prepared mind."],
+    "footerText": "A pathway of layered identities.",
+    "backgroundImageUrl": "/pathway-back/fool.jpg",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Tier",
+    "pathway": "Door",
+    "sequence": 2,
+    "rank": "A",
+    "points": ["Travel becomes a form of scholarship.", "Every threshold hides another route."],
+    "footerText": "Sequence 2 · Scribe",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Pathway",
+    "pathway": "Error",
+    "sequence": 3,
+    "points": ["Steal a moment, then rewrite its owner.", "Every shortcut leaves a trace."],
+    "footerText": "Sequence 3 · Cryptologist",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Tier Explanation",
+    "rank": "S",
+    "description": "Apex rank: the card holds the strongest expression of a pathway.",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Tier Explanation",
+    "rank": "B",
+    "description": "A reliable middle rank with room for dangerous specialization.",
+    "backgroundImageUrl": "/pathway-back/door.jpg",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "General Explanation",
+    "title": "What Is a Pathway?",
+    "description": "A pathway is a route of powers, rituals, and escalating risks.",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "General Explanation",
+    "title": "The Door Sequence",
+    "description": "The Door pathway rewards preparation, distance, and impossible exits.",
+    "pathway": "Door",
+    "backgroundImageUrl": "/pathway-back/door.jpg",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Pathway Explanation",
+    "pathway": "Darkness",
+    "title": "The *quiet* between stars",
+    "description": "Concealment is not absence; it is control of what can be perceived.",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Breakdown",
+    "kicker": "Authority",
+    "title": "Misdirection",
+    "does": "Redirect attention until a false route feels inevitable.",
+    "doesNot": "Erase every consequence or replace careful planning.",
+    "edgeLabel": "Limit",
+    "edgeText": "A sharp observer still finds the seam.",
+    "backgroundImageUrl": "/pathway-back/error.jpg",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Map",
+    "title": "Where Power Comes From",
+    "entries": [
+      { "tags": "Pathway · Sequence", "value": "A route through escalating power" },
+      { "tags": "Ritual · Cost", "value": "Preparation before transformation" },
+      { "tags": "Anchor", "value": "Identity under pressure" }
+    ],
+    "footerText": "Three roots. Seven powers.",
+    "pathway": "Door",
+    "backgroundOpacity": 65
+  },
+  {
+    "type": "Tarot Member",
+    "variant": "Contrast",
+    "name": "The Hanged Man",
+    "tarotTitle": "Tarot Member",
+    "description": "The Club sees a quiet scholar with dangerous patience.",
+    "detailLabel": "Hidden role",
+    "detailText": "A shepherd who knows what the shadows conceal.",
+    "footerText": "The truth has more than one face.",
+    "pathway": "Hanged Man",
+    "imageUrl": "/pathway-back/hangedman.jpg",
+    "backgroundOpacity": 65
+  }
+]

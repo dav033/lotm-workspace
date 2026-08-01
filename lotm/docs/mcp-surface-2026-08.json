@@ -1,0 +1,2152 @@
+{
+  "tools": [
+    {
+      "name": "save_card_batch",
+      "title": "Guardar lote de cartas",
+      "description": "Crea o reutiliza un anime/universo y una parte, y agrega hasta 100 cartas. Acepta Character, Artifact, Cover, Full Image Cover, Tier, Pathway, Tier Explanation, General Explanation, Pathway Explanation, Breakdown, Map y Tarot Member. Las explicaciones pueden ser generales o asociarse a uno de los 22 pathways. Pathway Explanation es una carta corta por pathway: titulo con una palabra resaltada entre *asteriscos*, regla y descripcion breve; el contador \"N / 22 PATHWAYS\" se calcula solo a partir del pathway, no se guarda. Breakdown es una carta de concepto o autoridad con kicker opcional (p. ej. \"Authority\", o compuesto como \"Authority · From Bizarreness\" ya que es texto libre), titulo y tres secciones: does, doesNot y una tercera con etiqueta libre (edgeLabel, p. ej. \"Edge\" o \"Caps at\") resaltada en color tier. Map es una carta resumen: titulo, hasta 8 filas (entries) con etiquetas opcionales (tags, unidas por \" · \") y un valor en negrita, mas un footerText opcional bajo una regla; con un pathway opcional toma el color y el fondo de ese camino. Las cartas con arte de fondo aceptan backgroundOpacity de 0 a 100 para controlar su visibilidad. Pathway Explanation, Breakdown y Map aceptan ademas backgroundImageUrl propio; en Map tiene prioridad sobre el fondo del pathway. Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. Las imagenes son solo URLs o rutas de /public.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "universe": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "Nombre del anime o universo."
+              },
+              "description": {
+                "description": "Contexto textual opcional para la IA.",
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "part": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "Nombre de la parte, arco o lote."
+              },
+              "number": {
+                "description": "Orden numerico opcional dentro del universo.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "description": {
+                "description": "Contexto textual opcional de esta parte.",
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "cards": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "description": "Nombre visible de la carta."
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "sequence": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9,
+                      "description": "Secuencia principal entre 0 y 9."
+                    },
+                    "secondSequence": {
+                      "description": "Segundo pathway y secuencia para personajes o artefactos duales.",
+                      "type": "object",
+                      "properties": {
+                        "pathway": {
+                          "type": "string",
+                          "enum": [
+                            "Fool",
+                            "Door",
+                            "Error",
+                            "Visionary",
+                            "Sun",
+                            "Tyrant",
+                            "White Tower",
+                            "Hanged Man",
+                            "Darkness",
+                            "Death",
+                            "Twilight Giant",
+                            "Demoness",
+                            "Red Priest",
+                            "Hermit",
+                            "Paragon",
+                            "Wheel of Fortune",
+                            "Mother",
+                            "Moon",
+                            "Abyss",
+                            "Chained",
+                            "Black Emperor",
+                            "Justiciar"
+                          ],
+                          "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                        },
+                        "sequence": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9,
+                          "description": "Secuencia entre 0 y 9."
+                        }
+                      },
+                      "required": [
+                        "pathway",
+                        "sequence"
+                      ]
+                    },
+                    "modifier": {
+                      "description": "Modificador opcional del poder o grado.",
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "alterDomain": {
+                      "description": "Dominio alternativo; por defecto, None.",
+                      "type": "string",
+                      "maxLength": 120
+                    },
+                    "imageUrl": {
+                      "description": "Ilustracion principal opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "type": {
+                      "type": "string",
+                      "const": "Character"
+                    },
+                    "power": {
+                      "type": "string",
+                      "enum": [
+                        "Human",
+                        "Low Sequence",
+                        "Mid Sequence",
+                        "Saint",
+                        "Angel",
+                        "King of Angels",
+                        "True God"
+                      ],
+                      "description": "Nivel de poder mostrado en una carta de personaje."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "pathway",
+                    "sequence",
+                    "type",
+                    "power"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "description": "Nombre visible de la carta."
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "sequence": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9,
+                      "description": "Secuencia principal entre 0 y 9."
+                    },
+                    "secondSequence": {
+                      "description": "Segundo pathway y secuencia para personajes o artefactos duales.",
+                      "type": "object",
+                      "properties": {
+                        "pathway": {
+                          "type": "string",
+                          "enum": [
+                            "Fool",
+                            "Door",
+                            "Error",
+                            "Visionary",
+                            "Sun",
+                            "Tyrant",
+                            "White Tower",
+                            "Hanged Man",
+                            "Darkness",
+                            "Death",
+                            "Twilight Giant",
+                            "Demoness",
+                            "Red Priest",
+                            "Hermit",
+                            "Paragon",
+                            "Wheel of Fortune",
+                            "Mother",
+                            "Moon",
+                            "Abyss",
+                            "Chained",
+                            "Black Emperor",
+                            "Justiciar"
+                          ],
+                          "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                        },
+                        "sequence": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 9,
+                          "description": "Secuencia entre 0 y 9."
+                        }
+                      },
+                      "required": [
+                        "pathway",
+                        "sequence"
+                      ]
+                    },
+                    "modifier": {
+                      "description": "Modificador opcional del poder o grado.",
+                      "type": "string",
+                      "maxLength": 80
+                    },
+                    "alterDomain": {
+                      "description": "Dominio alternativo; por defecto, None.",
+                      "type": "string",
+                      "maxLength": 120
+                    },
+                    "imageUrl": {
+                      "description": "Ilustracion principal opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "type": {
+                      "type": "string",
+                      "const": "Artifact"
+                    },
+                    "grade": {
+                      "type": "string",
+                      "enum": [
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5"
+                      ],
+                      "description": "Grado del artefacto, de 5 a 0."
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "pathway",
+                    "sequence",
+                    "type",
+                    "grade"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Cover"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "description": "Anime o universo que cruza con Lord of Mysteries."
+                    },
+                    "partNumber": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20,
+                      "description": "Numero o identificador visible de la parte."
+                    },
+                    "topImageUrl": {
+                      "description": "Imagen superior opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "mainImageUrl": {
+                      "description": "Imagen principal opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "partNumber"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Full Image Cover"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "description": "Titulo mostrado al pie de la portada."
+                    },
+                    "imageUrl": {
+                      "description": "Imagen de cuerpo completo opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Tier"
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "sequence": {
+                      "description": "Secuencia concreta opcional entre 0 y 9. Si se omite, aplica al pathway completo.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9
+                    },
+                    "rank": {
+                      "type": "string",
+                      "enum": [
+                        "S",
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "F"
+                      ],
+                      "description": "Rango de tier: S, A, B, C, D o F."
+                    },
+                    "points": {
+                      "maxItems": 14,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 180
+                      },
+                      "description": "Puntos de explicacion, uno por linea en la carta."
+                    },
+                    "footerText": {
+                      "description": "Texto destacado opcional mostrado al pie de la carta.",
+                      "type": "string",
+                      "maxLength": 240
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "pathway",
+                    "rank",
+                    "points"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Pathway"
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "sequence": {
+                      "description": "Secuencia concreta opcional entre 0 y 9. Si se omite, aplica al pathway completo.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9
+                    },
+                    "points": {
+                      "maxItems": 14,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 180
+                      },
+                      "description": "Puntos de explicacion, uno por linea en la carta."
+                    },
+                    "footerText": {
+                      "description": "Texto destacado opcional mostrado al pie de la carta.",
+                      "type": "string",
+                      "maxLength": 240
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "pathway",
+                    "points"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Tier Explanation"
+                    },
+                    "rank": {
+                      "type": "string",
+                      "enum": [
+                        "S",
+                        "A",
+                        "B",
+                        "C",
+                        "D",
+                        "F"
+                      ],
+                      "description": "Rango de tier: S, A, B, C, D o F."
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240,
+                      "description": "Descripcion breve mostrada debajo del tier."
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "rank",
+                    "description"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "General Explanation"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "description": "Titulo principal de la explicacion."
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 800,
+                      "description": "Texto explicativo general."
+                    },
+                    "pathway": {
+                      "description": "Pathway concreto opcional. Si se omite, la explicacion es general.",
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ]
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo propia. Si se omite y hay pathway, la carta usa el arte de ese pathway.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "description"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Pathway Explanation"
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "description": "Titulo de la carta. Envuelve la palabra o frase clave en *asteriscos* para resaltarla en color tier."
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240,
+                      "description": "Texto breve mostrado bajo la regla."
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo propia. Si se omite, la carta usa el arte de su pathway.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "pathway",
+                    "title",
+                    "description"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Breakdown"
+                    },
+                    "kicker": {
+                      "description": "Etiqueta opcional sobre el titulo para agrupar cartas, p. ej. \"Authority\".",
+                      "type": "string",
+                      "maxLength": 40
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 60,
+                      "description": "Nombre del concepto o autoridad explicada."
+                    },
+                    "does": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240,
+                      "description": "Que hace este concepto (seccion DOES)."
+                    },
+                    "doesNot": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240,
+                      "description": "Que no hace, para evitar confusiones (seccion DOESN'T)."
+                    },
+                    "edgeLabel": {
+                      "default": "Edge",
+                      "description": "Etiqueta de la tercera seccion, p. ej. \"Edge\" o \"Caps at\".",
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20
+                    },
+                    "edgeText": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 240,
+                      "description": "Limite, matiz o dato clave de la tercera seccion, resaltado en color tier."
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo opcional, mostrada bajo un velo oscuro.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "does",
+                    "doesNot",
+                    "edgeText"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Map"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 100,
+                      "description": "Titulo de la carta, p. ej. \"Where the powers come from\"."
+                    },
+                    "entries": {
+                      "minItems": 1,
+                      "maxItems": 8,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "tags": {
+                            "type": "string",
+                            "maxLength": 120,
+                            "description": "Etiquetas de la fila unidas por \" · \", p. ej. \"Door · Change · King of Space-Time\". Puede ir vacio."
+                          },
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 120,
+                            "description": "El valor o resultado que corresponde a esas etiquetas."
+                          }
+                        },
+                        "required": [
+                          "tags",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "description": "Filas de la carta, cada una con su etiqueta opcional y su valor."
+                    },
+                    "footerText": {
+                      "description": "Texto final opcional bajo una regla, p. ej. \"Three roots. Seven powers.\"",
+                      "type": "string",
+                      "maxLength": 160
+                    },
+                    "pathway": {
+                      "description": "Pathway opcional del que la carta toma su color y su imagen de fondo. Si se omite, usa el dorado neutro.",
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ]
+                    },
+                    "backgroundImageUrl": {
+                      "description": "Imagen de fondo propia. Tiene prioridad sobre el fondo que aporta el pathway.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "title",
+                    "entries"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Tarot Member"
+                    },
+                    "variant": {
+                      "default": "Portrait",
+                      "description": "Composicion visual: Portrait prioriza imagen y nombre; Dossier parece un expediente; Contrast divide percepcion y realidad.",
+                      "type": "string",
+                      "enum": [
+                        "Portrait",
+                        "Dossier",
+                        "Contrast"
+                      ]
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80,
+                      "description": "Nombre o identidad que se explica."
+                    },
+                    "tarotTitle": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40,
+                      "description": "Arcano o rol visible, p. ej. The Hanged Man."
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 360,
+                      "description": "Descripcion principal; en Contrast es lo que el Club percibe."
+                    },
+                    "detailLabel": {
+                      "default": "Club function",
+                      "description": "Etiqueta de la segunda idea; en Contrast encabeza la realidad.",
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 36
+                    },
+                    "detailText": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 280,
+                      "description": "Segunda idea, funcion o contraste del personaje."
+                    },
+                    "footerText": {
+                      "description": "Remate final breve, divertido pero veraz.",
+                      "type": "string",
+                      "maxLength": 180
+                    },
+                    "pathway": {
+                      "description": "Pathway opcional que aporta el color de acento.",
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ]
+                    },
+                    "imageUrl": {
+                      "description": "Retrato o arte de fondo opcional.",
+                      "type": "string",
+                      "maxLength": 2048
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "name",
+                    "tarotTitle",
+                    "description",
+                    "detailText"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "description": "Cartas que se agregaran en orden."
+          }
+        },
+        "required": [
+          "universe",
+          "part",
+          "cards"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "list_card_library",
+      "title": "Listar biblioteca de cartas",
+      "description": "Lista la biblioteca SQLite agrupada por anime/universo y parte. Puede filtrar por nombre o slug.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "universe": {
+            "description": "Nombre o slug del universo.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "part": {
+            "description": "Nombre o slug de la parte.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "includeContent": {
+            "default": true,
+            "description": "Incluye el contenido completo de cada carta.",
+            "type": "boolean"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "update_card",
+      "title": "Actualizar una carta",
+      "description": "Reemplaza el contenido de una carta existente sin cambiar su universo, parte ni posicion.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$",
+            "description": "ID de la carta que se reemplazara."
+          },
+          "card": {
+            "oneOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "Nombre visible de la carta."
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "sequence": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9,
+                    "description": "Secuencia principal entre 0 y 9."
+                  },
+                  "secondSequence": {
+                    "description": "Segundo pathway y secuencia para personajes o artefactos duales.",
+                    "type": "object",
+                    "properties": {
+                      "pathway": {
+                        "type": "string",
+                        "enum": [
+                          "Fool",
+                          "Door",
+                          "Error",
+                          "Visionary",
+                          "Sun",
+                          "Tyrant",
+                          "White Tower",
+                          "Hanged Man",
+                          "Darkness",
+                          "Death",
+                          "Twilight Giant",
+                          "Demoness",
+                          "Red Priest",
+                          "Hermit",
+                          "Paragon",
+                          "Wheel of Fortune",
+                          "Mother",
+                          "Moon",
+                          "Abyss",
+                          "Chained",
+                          "Black Emperor",
+                          "Justiciar"
+                        ],
+                        "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                      },
+                      "sequence": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9,
+                        "description": "Secuencia entre 0 y 9."
+                      }
+                    },
+                    "required": [
+                      "pathway",
+                      "sequence"
+                    ]
+                  },
+                  "modifier": {
+                    "description": "Modificador opcional del poder o grado.",
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "alterDomain": {
+                    "description": "Dominio alternativo; por defecto, None.",
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "imageUrl": {
+                    "description": "Ilustracion principal opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "Character"
+                  },
+                  "power": {
+                    "type": "string",
+                    "enum": [
+                      "Human",
+                      "Low Sequence",
+                      "Mid Sequence",
+                      "Saint",
+                      "Angel",
+                      "King of Angels",
+                      "True God"
+                    ],
+                    "description": "Nivel de poder mostrado en una carta de personaje."
+                  }
+                },
+                "required": [
+                  "name",
+                  "pathway",
+                  "sequence",
+                  "type",
+                  "power"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "Nombre visible de la carta."
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "sequence": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9,
+                    "description": "Secuencia principal entre 0 y 9."
+                  },
+                  "secondSequence": {
+                    "description": "Segundo pathway y secuencia para personajes o artefactos duales.",
+                    "type": "object",
+                    "properties": {
+                      "pathway": {
+                        "type": "string",
+                        "enum": [
+                          "Fool",
+                          "Door",
+                          "Error",
+                          "Visionary",
+                          "Sun",
+                          "Tyrant",
+                          "White Tower",
+                          "Hanged Man",
+                          "Darkness",
+                          "Death",
+                          "Twilight Giant",
+                          "Demoness",
+                          "Red Priest",
+                          "Hermit",
+                          "Paragon",
+                          "Wheel of Fortune",
+                          "Mother",
+                          "Moon",
+                          "Abyss",
+                          "Chained",
+                          "Black Emperor",
+                          "Justiciar"
+                        ],
+                        "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                      },
+                      "sequence": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9,
+                        "description": "Secuencia entre 0 y 9."
+                      }
+                    },
+                    "required": [
+                      "pathway",
+                      "sequence"
+                    ]
+                  },
+                  "modifier": {
+                    "description": "Modificador opcional del poder o grado.",
+                    "type": "string",
+                    "maxLength": 80
+                  },
+                  "alterDomain": {
+                    "description": "Dominio alternativo; por defecto, None.",
+                    "type": "string",
+                    "maxLength": 120
+                  },
+                  "imageUrl": {
+                    "description": "Ilustracion principal opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "type": {
+                    "type": "string",
+                    "const": "Artifact"
+                  },
+                  "grade": {
+                    "type": "string",
+                    "enum": [
+                      "0",
+                      "1",
+                      "2",
+                      "3",
+                      "4",
+                      "5"
+                    ],
+                    "description": "Grado del artefacto, de 5 a 0."
+                  }
+                },
+                "required": [
+                  "name",
+                  "pathway",
+                  "sequence",
+                  "type",
+                  "grade"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Cover"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "Anime o universo que cruza con Lord of Mysteries."
+                  },
+                  "partNumber": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20,
+                    "description": "Numero o identificador visible de la parte."
+                  },
+                  "topImageUrl": {
+                    "description": "Imagen superior opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "mainImageUrl": {
+                    "description": "Imagen principal opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "partNumber"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Full Image Cover"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Titulo mostrado al pie de la portada."
+                  },
+                  "imageUrl": {
+                    "description": "Imagen de cuerpo completo opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  }
+                },
+                "required": [
+                  "type",
+                  "title"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Tier"
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "sequence": {
+                    "description": "Secuencia concreta opcional entre 0 y 9. Si se omite, aplica al pathway completo.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9
+                  },
+                  "rank": {
+                    "type": "string",
+                    "enum": [
+                      "S",
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "F"
+                    ],
+                    "description": "Rango de tier: S, A, B, C, D o F."
+                  },
+                  "points": {
+                    "maxItems": 14,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 180
+                    },
+                    "description": "Puntos de explicacion, uno por linea en la carta."
+                  },
+                  "footerText": {
+                    "description": "Texto destacado opcional mostrado al pie de la carta.",
+                    "type": "string",
+                    "maxLength": 240
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "pathway",
+                  "rank",
+                  "points"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Pathway"
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "sequence": {
+                    "description": "Secuencia concreta opcional entre 0 y 9. Si se omite, aplica al pathway completo.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9
+                  },
+                  "points": {
+                    "maxItems": 14,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 180
+                    },
+                    "description": "Puntos de explicacion, uno por linea en la carta."
+                  },
+                  "footerText": {
+                    "description": "Texto destacado opcional mostrado al pie de la carta.",
+                    "type": "string",
+                    "maxLength": 240
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "pathway",
+                  "points"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Tier Explanation"
+                  },
+                  "rank": {
+                    "type": "string",
+                    "enum": [
+                      "S",
+                      "A",
+                      "B",
+                      "C",
+                      "D",
+                      "F"
+                    ],
+                    "description": "Rango de tier: S, A, B, C, D o F."
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "description": "Descripcion breve mostrada debajo del tier."
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo opcional, mostrada bajo un overlay oscuro.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "rank",
+                  "description"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "General Explanation"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Titulo principal de la explicacion."
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 800,
+                    "description": "Texto explicativo general."
+                  },
+                  "pathway": {
+                    "description": "Pathway concreto opcional. Si se omite, la explicacion es general.",
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ]
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo propia. Si se omite y hay pathway, la carta usa el arte de ese pathway.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "description"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Pathway Explanation"
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Titulo de la carta. Envuelve la palabra o frase clave en *asteriscos* para resaltarla en color tier."
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "description": "Texto breve mostrado bajo la regla."
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo propia. Si se omite, la carta usa el arte de su pathway.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "pathway",
+                  "title",
+                  "description"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Breakdown"
+                  },
+                  "kicker": {
+                    "description": "Etiqueta opcional sobre el titulo para agrupar cartas, p. ej. \"Authority\".",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 60,
+                    "description": "Nombre del concepto o autoridad explicada."
+                  },
+                  "does": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "description": "Que hace este concepto (seccion DOES)."
+                  },
+                  "doesNot": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "description": "Que no hace, para evitar confusiones (seccion DOESN'T)."
+                  },
+                  "edgeLabel": {
+                    "default": "Edge",
+                    "description": "Etiqueta de la tercera seccion, p. ej. \"Edge\" o \"Caps at\".",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 20
+                  },
+                  "edgeText": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 240,
+                    "description": "Limite, matiz o dato clave de la tercera seccion, resaltado en color tier."
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo opcional, mostrada bajo un velo oscuro.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "does",
+                  "doesNot",
+                  "edgeText"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Map"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 100,
+                    "description": "Titulo de la carta, p. ej. \"Where the powers come from\"."
+                  },
+                  "entries": {
+                    "minItems": 1,
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "tags": {
+                          "type": "string",
+                          "maxLength": 120,
+                          "description": "Etiquetas de la fila unidas por \" · \", p. ej. \"Door · Change · King of Space-Time\". Puede ir vacio."
+                        },
+                        "value": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 120,
+                          "description": "El valor o resultado que corresponde a esas etiquetas."
+                        }
+                      },
+                      "required": [
+                        "tags",
+                        "value"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "Filas de la carta, cada una con su etiqueta opcional y su valor."
+                  },
+                  "footerText": {
+                    "description": "Texto final opcional bajo una regla, p. ej. \"Three roots. Seven powers.\"",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "pathway": {
+                    "description": "Pathway opcional del que la carta toma su color y su imagen de fondo. Si se omite, usa el dorado neutro.",
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ]
+                  },
+                  "backgroundImageUrl": {
+                    "description": "Imagen de fondo propia. Tiene prioridad sobre el fondo que aporta el pathway.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "title",
+                  "entries"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Tarot Member"
+                  },
+                  "variant": {
+                    "default": "Portrait",
+                    "description": "Composicion visual: Portrait prioriza imagen y nombre; Dossier parece un expediente; Contrast divide percepcion y realidad.",
+                    "type": "string",
+                    "enum": [
+                      "Portrait",
+                      "Dossier",
+                      "Contrast"
+                    ]
+                  },
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80,
+                    "description": "Nombre o identidad que se explica."
+                  },
+                  "tarotTitle": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40,
+                    "description": "Arcano o rol visible, p. ej. The Hanged Man."
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 360,
+                    "description": "Descripcion principal; en Contrast es lo que el Club percibe."
+                  },
+                  "detailLabel": {
+                    "default": "Club function",
+                    "description": "Etiqueta de la segunda idea; en Contrast encabeza la realidad.",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 36
+                  },
+                  "detailText": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 280,
+                    "description": "Segunda idea, funcion o contraste del personaje."
+                  },
+                  "footerText": {
+                    "description": "Remate final breve, divertido pero veraz.",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "pathway": {
+                    "description": "Pathway opcional que aporta el color de acento.",
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ]
+                  },
+                  "imageUrl": {
+                    "description": "Retrato o arte de fondo opcional.",
+                    "type": "string",
+                    "maxLength": 2048
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "name",
+                  "tarotTitle",
+                  "description",
+                  "detailText"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "required": [
+          "cardId",
+          "card"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "save_card_image",
+      "title": "Guardar una imagen para una carta",
+      "description": "Guarda una imagen y devuelve la ruta que hay que poner en imageUrl, topImageUrl, mainImageUrl o backgroundImageUrl al crear o actualizar una carta. Es el unico modo de usar una imagen propia: los campos de imagen solo aceptan URLs http(s) o rutas del sitio, nunca el binario en linea. El archivo se guarda junto a la base; en la carta queda solo su ruta.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mimeType": {
+            "type": "string",
+            "enum": [
+              "image/png",
+              "image/jpeg",
+              "image/webp",
+              "image/gif",
+              "image/avif"
+            ],
+            "description": "Tipo de la imagen que se envia."
+          },
+          "data": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Contenido de la imagen en base64, sin el prefijo \"data:...;base64,\". Hasta 15 MB ya decodificados."
+          }
+        },
+        "required": [
+          "mimeType",
+          "data"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "move_cards",
+      "title": "Mover cartas a otra seccion",
+      "description": "Reagrupa cartas ya guardadas en otra seccion (parte) del mismo universo o de otro, creandola si no existe. Sirve para dividir una seccion grande en varias o para reordenarlas, sin borrar ni recrear: las cartas conservan su id y su contenido. El orden de cardIds es el que tendran dentro de la seccion.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cardIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "description": "IDs de las cartas que se moveran, en el orden que tendran dentro de la seccion."
+          },
+          "universe": {
+            "description": "Universo destino. Si se omite, las cartas se quedan en el universo que ya tenian.",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "Nombre del anime o universo."
+              },
+              "description": {
+                "description": "Contexto textual opcional para la IA.",
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false
+          },
+          "part": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "Nombre de la parte, arco o lote."
+              },
+              "number": {
+                "description": "Orden numerico opcional dentro del universo.",
+                "type": "integer",
+                "exclusiveMinimum": 0,
+                "maximum": 9007199254740991
+              },
+              "description": {
+                "description": "Contexto textual opcional de esta parte.",
+                "type": "string",
+                "maxLength": 4000
+              }
+            },
+            "required": [
+              "name"
+            ],
+            "additionalProperties": false,
+            "description": "Seccion destino. Se crea si no existe."
+          }
+        },
+        "required": [
+          "cardIds",
+          "part"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "delete_cards",
+      "title": "Eliminar cartas",
+      "description": "Elimina definitivamente las cartas indicadas. No elimina universos ni partes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "cardIds": {
+            "minItems": 1,
+            "maxItems": 100,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "description": "IDs de las cartas que se eliminaran."
+          }
+        },
+        "required": [
+          "cardIds"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "export_cards_zip",
+      "title": "Exportar cartas a ZIP",
+      "description": "Renderiza todas las cartas que coincidan con el filtro y genera un ZIP con PNG de 960x1280 (3:4, foto de TikTok) organizados por universo/parte, mas manifest.json.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "universe": {
+            "description": "Nombre o slug del universo.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "part": {
+            "description": "Nombre o slug de la parte.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "filename": {
+            "description": "Nombre opcional del ZIP, sin ruta.",
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "additionalProperties": false
+      }
+    }
+  ],
+  "smoke": {
+    "save_card_batch": {
+      "isError": false,
+      "contentTypes": [
+        "text"
+      ],
+      "saved": 1
+    },
+    "list_card_library": {
+      "isError": false,
+      "contentTypes": [
+        "text"
+      ],
+      "universeCount": 1
+    },
+    "export_cards_zip": {
+      "isError": false,
+      "contentTypes": [
+        "text"
+      ],
+      "cardCount": 1
+    }
+  }
+}

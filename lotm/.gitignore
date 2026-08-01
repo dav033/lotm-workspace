@@ -12,6 +12,7 @@ next-env.d.ts
 
 # Base de datos SQLite (persistente, fuera del repo)
 /data
+/data/card-goldens/
 *.db
 *.db-journal
 
