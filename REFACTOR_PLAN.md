@@ -525,7 +525,7 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 
 - [x] P0.1 baseline recorded · [x] P0.2 harness built · [x] P0.3 goldens deterministic · [x] P0.4 MCP surface baselined
 - [x] P1.1–P1.5 junk removed · [x] P1.6 root README · [x] P1.7 README lies fixed · [x] P1.8 decisions.md · [ ] **M1 merged**
-- [ ] P2.1–P2.6 workspaces scaffolded, lockfile regenerated
+- [x] P2.1–P2.6 workspaces scaffolded, lockfile regenerated
 - [ ] P3.1 moves · [ ] P3.2 studio layout+fonts · [ ] P3.3 render root fix · [ ] P3.4 data-dir anchoring · [ ] P3.5 MCP configs · [ ] P3.6 env split · [ ] P3.7 tests moved · [ ] studio gate green
 - [ ] P4.1–P4.8 game slimmed · [ ] game gate green
 - [ ] P7.1–P7.6 Docker/compose/README/AGENTS updated · [ ] **M2 merged (coordinated deploy)**
