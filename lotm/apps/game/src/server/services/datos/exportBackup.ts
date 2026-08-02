@@ -1,5 +1,5 @@
 import 'server-only'
-// Copia de seguridad completa (v3): estructura fiel para restaurar.
+// Copia de seguridad completa (v5): estructura fiel para restaurar.
 
 import type { PrismaClient } from '@/generated/prisma/client'
 import { parsePhaseRule, type PhaseRule } from '@/shared/phaseRules'

@@ -71,6 +71,12 @@ npm run test -w @lotm/game
 npm run build -w @lotm/game
 ```
 
+Always run the suite through the npm script, never `npx tsx --test` directly.
+The script loads `test/server-only-loader.mjs`, which neutralises the
+`server-only` import; without it every test that reaches a server module dies
+with "This module cannot be imported from a Client Component module" and it
+looks like a real failure.
+
 Boundary checks worth running after touching `server/` or `components/`:
 `server-only` present in every non-action server module, and zero imports of
 `@/server/domain` or `@/server/services` from `components/**`.
