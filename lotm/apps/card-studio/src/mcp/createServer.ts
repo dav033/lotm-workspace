@@ -71,6 +71,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         'Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. ' +
         'Corruption File explica chistes internos en formatos Warning, Evidence y Quote. ' +
         'Ritual Logic explica un ritual como requisito, peligro de la pocion y preparacion conceptual; ' +
+        'ofrece tres composiciones realmente distintas: Chain, Split y Casefile, para dividir la lectura y evitar una serie visualmente repetitiva; ' +
         'certainty distingue canon, evidencia mixta y teoria, y uncertainty expone el limite de la evidencia. ' +
         'Las imagenes son solo URLs o rutas de /public.',
       inputSchema: SaveCardBatchSchema,

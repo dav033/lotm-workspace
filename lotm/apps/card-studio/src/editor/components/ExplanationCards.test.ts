@@ -11,6 +11,7 @@ import FullImageCoverCard from '../../cards-ui/FullImageCoverCard'
 import TierCard from '../../cards-ui/TierCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
+import RitualLogicCard from '../../cards-ui/RitualLogicCard'
 import Panel from './Panel'
 import { CardContentSchema, toBuilderCardState } from '../../domain/schema'
 
@@ -23,6 +24,7 @@ const FullImageCover = FullImageCoverCard as ComponentType<Record<string, unknow
 const Tier = TierCard as ComponentType<Record<string, unknown>>
 const Pathway = PathwayCard as ComponentType<Record<string, unknown>>
 const TarotMember = TarotMemberCard as ComponentType<Record<string, unknown>>
+const RitualLogic = RitualLogicCard as ComponentType<Record<string, unknown>>
 const Panel_ = Panel as unknown as ComponentType<Record<string, unknown>>
 
 test('Tarot Member produce composiciones distintas para retrato, expediente y contraste', () => {
@@ -38,6 +40,26 @@ test('Tarot Member produce composiciones distintas para retrato, expediente y co
   assert.match(dossier, /Restricted/)
   assert.match(contrast, /tarot-member-contrast/)
   assert.match(contrast, /What the Club sees/)
+})
+
+test('Ritual Logic produce composiciones distintas para cadena, division y expediente', () => {
+  const common = {
+    pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist',
+    ritual: 'A mermaid sings while the potion is consumed.',
+    survival: 'The potion strains Spirit Body Threads.',
+    preparation: 'The aspirant rehearses control without losing self.',
+    certainty: 'Mixed', uncertainty: 'The causal link is inferred.',
+  }
+  const chain = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Chain' }))
+  const split = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Split' }))
+  const casefile = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Casefile' }))
+  assert.match(chain, /ritual-logic-chain/)
+  assert.match(split, /ritual-logic-split/)
+  assert.match(split, /What it trains/)
+  assert.match(casefile, /ritual-logic-casefile/)
+  assert.match(casefile, /Observed requirement/)
+  assert.notEqual(chain, split)
+  assert.notEqual(split, casefile)
 })
 
 test('Tier Explanation muestra solo tier y descripción general', () => {

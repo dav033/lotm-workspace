@@ -2,7 +2,10 @@ import type { CardContent } from './schema/content'
 import { slugify } from './slug'
 
 export function titleForCard(content: CardContent): string {
-  if (content.type === 'Ritual Logic') return `${content.pathway} Sequence ${content.sequence} — ${content.sequenceName}`
+  if (content.type === 'Ritual Logic') {
+    const base = `${content.pathway} Sequence ${content.sequence} — ${content.sequenceName}`
+    return content.variant === 'Chain' ? base : `${base} · ${content.variant}`
+  }
   if (content.type === 'Corruption File') return `Corruption File: ${content.incident}`
   if (content.type === 'Cover') return 'Pathways in ' + content.title + ' - Part ' + content.partNumber
   if (content.type === 'Full Image Cover') return content.title
@@ -32,7 +35,10 @@ export function titleForCard(content: CardContent): string {
 }
 
 export function filenameForCard(content: CardContent): string {
-  if (content.type === 'Ritual Logic') return `ritual-logic_${slugify(content.pathway)}_seq${content.sequence}`
+  if (content.type === 'Ritual Logic') {
+    const suffix = content.variant === 'Chain' ? '' : `_${slugify(content.variant)}`
+    return `ritual-logic_${slugify(content.pathway)}_seq${content.sequence}${suffix}`
+  }
   if (content.type === 'Corruption File') return `corruption-file_${slugify(content.incident)}`
   if (content.type === 'Cover') return slugify(content.title) + '_part-' + slugify(content.partNumber)
   if (content.type === 'Full Image Cover') return 'full-cover_' + slugify(content.title)

@@ -260,7 +260,7 @@ export function cardPropsFromBuilderState(
   if (state.type === 'Ritual Logic') {
     const pathway = asPathway(state.ritualPathway) ?? 'Fool'
     return { kind: 'Ritual Logic', props: {
-      pathway, sequence: state.ritualSequence, sequenceName: state.ritualSequenceName,
+      variant: state.ritualVariant, pathway, sequence: state.ritualSequence, sequenceName: state.ritualSequenceName,
       ritual: state.ritualText, survival: state.ritualSurvival, preparation: state.ritualPreparation,
       certainty: state.ritualCertainty, uncertainty: state.ritualUncertainty,
       footerText: state.ritualFooterText, tier: PATHWAY_COLORS[pathway],

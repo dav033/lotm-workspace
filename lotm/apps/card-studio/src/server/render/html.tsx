@@ -10,6 +10,7 @@ import PathwayExplanationCard from '../../cards-ui/PathwayExplanationCard'
 import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
+import RitualLogicCard from '../../cards-ui/RitualLogicCard'
 import { cardPropsFromBuilderState } from '../../cards-ui/cardProps'
 import type { CardUiProps } from '../../cards-ui/types'
 import { type RenderState } from './assets'
@@ -25,6 +26,7 @@ const StaticPathwayExplanationCard = PathwayExplanationCard as unknown as Compon
 const StaticBreakdownCard = BreakdownCard as unknown as ComponentType<Record<string, unknown>>
 const StaticMapCard = MapCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTarotMemberCard = TarotMemberCard as unknown as ComponentType<Record<string, unknown>>
+const StaticRitualLogicCard = RitualLogicCard as unknown as ComponentType<Record<string, unknown>>
 
 function iconFor(icons: Record<string, string>, pathway: unknown) {
   return typeof pathway === 'string' ? icons[pathway] : undefined
@@ -77,5 +79,6 @@ export function CardMarkup({ state, icons }: { state: RenderState; icons: Record
   if (kind === 'Breakdown') return <StaticBreakdownCard {...props} />
   if (kind === 'Map') return <StaticMapCard {...props} />
   if (kind === 'Tarot Member') return <StaticTarotMemberCard {...props} />
+  if (kind === 'Ritual Logic') return <StaticRitualLogicCard {...props} />
   return <StaticCard {...props} />
 }

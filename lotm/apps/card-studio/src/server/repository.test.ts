@@ -86,7 +86,7 @@ test('crea cards.db v10 y guarda las familias de producción', async (t) => {
   const saved = repository.saveBatch({
     universe: { name: 'LOTM' }, part: { name: 'Rituals', number: 1 }, cards: [
       { type: 'Corruption File', variant: 'Warning', incident: 'Monocle', caseLabel: 'Normal explanation', explanation: 'Context.', reactionLabel: 'Fandom reaction', reaction: 'Panic.', corruptionLevel: 'Severe', showIncidentNumber: false },
-      { type: 'Ritual Logic', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
+      { type: 'Ritual Logic', variant: 'Chain', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
     ],
   })
   assert.deepEqual(saved.map((card) => card.type), ['Corruption File', 'Ritual Logic'])

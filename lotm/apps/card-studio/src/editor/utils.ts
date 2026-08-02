@@ -52,5 +52,8 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'Tarot Member') {
     return `tarot_member_${state.tarotMemberTitle || 'arcana'}_${state.tarotMemberName || 'member'}`.replace(/\s+/g, '_')
   }
+  if (state.type === 'Ritual Logic') {
+    return `ritual_logic_${state.ritualPathway || 'pathway'}_seq${state.ritualSequence}_${state.ritualVariant || 'Chain'}`.replace(/\s+/g, '_')
+  }
   return `${state.name || 'card'}_seq${state.seq}`
 }

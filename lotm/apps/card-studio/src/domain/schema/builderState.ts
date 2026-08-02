@@ -76,6 +76,7 @@ export type BuilderCardState = {
   corruptionImage: string | null
   ritualPathway: string
   ritualSequence: number
+  ritualVariant: 'Chain' | 'Split' | 'Casefile'
   ritualSequenceName: string
   ritualText: string
   ritualSurvival: string
@@ -162,6 +163,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   corruptionImage: null,
   ritualPathway: 'Fool',
   ritualSequence: 5,
+  ritualVariant: 'Chain',
   ritualSequenceName: '',
   ritualText: '',
   ritualSurvival: '',
@@ -314,6 +316,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       ...state,
       ritualPathway: content.pathway,
       ritualSequence: content.sequence,
+      ritualVariant: content.variant,
       ritualSequenceName: content.sequenceName,
       ritualText: content.ritual,
       ritualSurvival: content.survival,
@@ -469,6 +472,7 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
   if (state.type === 'Ritual Logic') {
     return {
       type: 'Ritual Logic',
+      variant: state.ritualVariant,
       pathway: state.ritualPathway,
       sequence: state.ritualSequence,
       sequenceName: state.ritualSequenceName.trim(),

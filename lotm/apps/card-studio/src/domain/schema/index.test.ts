@@ -312,7 +312,7 @@ test('Corruption File y Ritual Logic conservan todos sus campos', () => {
     showIncidentNumber: true, accentColor: '#d84a4a', backgroundOpacity: 45,
   })
   const ritual = CardContentSchema.parse({
-    type: 'Ritual Logic', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist',
+    type: 'Ritual Logic', variant: 'Split', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist',
     ritual: 'Perform before an audience.', survival: 'Stabilizes identity under the potion.',
     preparation: 'Rehearses control, observation and role separation.', certainty: 'Mixed',
     uncertainty: 'The causal link is inferred.', backgroundOpacity: 65,
@@ -321,5 +321,5 @@ test('Corruption File y Ritual Logic conservan todos sus campos', () => {
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(tarotMember)), tarotMember)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(corruption)), corruption)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(ritual)), ritual)
-  assert.equal(filenameForCard(ritual), 'ritual-logic_fool_seq5')
+  assert.equal(filenameForCard(ritual), 'ritual-logic_fool_seq5_split')
 })

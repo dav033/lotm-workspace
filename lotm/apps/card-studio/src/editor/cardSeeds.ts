@@ -40,6 +40,7 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     corruptionReaction: 'What the fandom did with it.',
   },
   'Ritual Logic': {
+    ritualVariant: 'Chain',
     ritualSequenceName: 'New sequence',
     ritualText: 'What the ritual requires.',
     ritualSurvival: 'What the ritual helps the aspirant survive.',
@@ -122,6 +123,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   corruptionImage: null,
   ritualPathway: 'Fool',
   ritualSequence: 5,
+  ritualVariant: 'Chain',
   ritualSequenceName: '',
   ritualText: '',
   ritualSurvival: '',
