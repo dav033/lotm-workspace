@@ -43,6 +43,22 @@ All three Sequence maps are populated from 9 to 0. Each Sequence note separates 
 - Derivation registry: [[Symbolism to Authority Derivations#Lord of Mysteries]]
 - [[Lord of Mysteries Group Counters]]
 
+## Advancement Ritual Logic
+
+Working interpretive rule for this group's advancement research:
+
+- An advancement ritual has a survival function: it interrupts, redirects, or stabilizes the backlash produced when the new Beyonder Characteristic asserts itself.
+- It also has a preparatory function: it makes the aspirant enact, rehearse, or preconfigure the central power or concept of the Sequence they are about to enter.
+- The second function is an interpretation unless a source describes it directly. It must not be inferred from the Sequence name alone.
+
+Applied to the Lord of Mysteries group:
+
+- [[5 - Marionettist]] — the mermaid song stabilizes the aspirant while the potion attacks their own Spirit Body Threads. Interpretively, the aspirant rehearses the Marionettist's central boundary: controlling threads without becoming controlled by them.
+- [[5 - Dream Stealer]] — the aspirant must occupy important roles in at least thirty simultaneous unconscious dreams. Interpretively, this rehearses Dream Stealer's insertion and theft of mental roles across independent minds, rather than merely providing protection from backlash.
+- [[5 - Traveler]] — the four distant Spirit World coordinates provide return points and preserve self-awareness during the backlash. Interpretively, the aspirant preconfigures the navigation and self-positioning that Traveler will need to use the Spirit World safely.
+
+The direct ritual wording and reported backlash come from [[Lord of Mysteries Wiki - Fool Pathway Advancement]], [[Lord of Mysteries Wiki - Error Pathway Advancement]], and [[Lord of Mysteries Wiki - Door Pathway Advancement]]. The preparatory reading remains a group-level synthesis and must stay separate from explicit power inventories.
+
 ## Conditional Sefirah Access
 
 Cross-Pathway use through [[Sefirah Castle]] is conditional access, not automatic Pathway inheritance. A Fool, Door, or Error Pathway holder must not be assigned another member Pathway's native Authorities solely because the Sefirah can mediate broader group-level effects.

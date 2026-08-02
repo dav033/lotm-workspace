@@ -13,6 +13,8 @@ import TarotMemberFields from './Panel/TarotMemberFields'
 import CoverFields from './Panel/CoverFields'
 import FullImageCoverFields from './Panel/FullImageCoverFields'
 import StandardFields from './Panel/StandardFields'
+import CorruptionFileFields from './Panel/CorruptionFileFields'
+import RitualLogicFields from './Panel/RitualLogicFields'
 
 export default function Panel(props) {
   const { state, set } = props
@@ -40,6 +42,8 @@ export default function Panel(props) {
       {state.type === 'Breakdown' ? <BreakdownFields {...fieldProps} /> : null}
       {state.type === 'Map' ? <MapFields {...fieldProps} /> : null}
       {state.type === 'Tarot Member' ? <TarotMemberFields {...fieldProps} /> : null}
+      {state.type === 'Corruption File' ? <CorruptionFileFields {...fieldProps} /> : null}
+      {state.type === 'Ritual Logic' ? <RitualLogicFields {...fieldProps} /> : null}
       {state.type === 'Cover' ? <CoverFields {...fieldProps} /> : null}
       {state.type === 'Full Image Cover' ? <FullImageCoverFields {...fieldProps} /> : null}
       {state.type !== 'Tier Explanation' &&
@@ -50,6 +54,8 @@ export default function Panel(props) {
       state.type !== 'Breakdown' &&
       state.type !== 'Map' &&
       state.type !== 'Tarot Member' &&
+      state.type !== 'Corruption File' &&
+      state.type !== 'Ritual Logic' &&
       state.type !== 'Cover' &&
       state.type !== 'Full Image Cover' ? <StandardFields {...fieldProps} /> : null}
     </aside>

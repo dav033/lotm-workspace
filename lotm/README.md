@@ -68,9 +68,9 @@ npm run test -w @lotm/card-studio
 
 ## Production deployment
 
-`main` auto-deploys on the VPS through the systemd timer. The timer pulls
-fast-forward changes, validates the checkout, rebuilds the compose services,
-and restarts them. Never push a non-deployable state to `main`.
+`main` auto-deploys on the VPS through a signed GitHub webhook. Each push
+triggers a fast-forward pull, rebuilds the compose services, and restarts them.
+No polling timer is used. Never push a non-deployable state to `main`.
 
 Build from this directory:
 

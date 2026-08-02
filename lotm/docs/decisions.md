@@ -50,10 +50,10 @@
 - **What was kept:** `resolveFeatureState` still receives the gate rows and the current phase, so restoring the staged behaviour is a one-function edit. The `FeatureGate` table, the phase-map editor that writes it, and the export and import formats are all unchanged — the configuration survives, nothing reads it to decide.
 - **Tests:** `shared/featureGates.test.ts` pins every feature open even with an absurd threshold or missing configuration. Two tests that previously asserted a locked ritual (`rituales.test.ts`, `combinarRitual.test.ts`) now assert the opposite, so silently reintroducing the gate turns them red.
 
-## ADR-005 — CI verifies, it does not deploy
+## ADR-005 — CI verifies; signed webhook deploys
 
 - **Status:** Accepted
 - **Date:** 2026-08-02
-- **Decision:** GitHub Actions runs lint, typecheck, test and build per workspace on pushes and PRs to `main`. It does not build or publish images and does not touch the release path; the VPS systemd timer remains the only deployment mechanism.
+- **Decision:** GitHub Actions runs lint, typecheck, test and build per workspace on pushes and PRs to `main`. A signed GitHub push webhook independently triggers the VPS systemd deploy service. No polling timer remains active.
 - **Excluded from CI:** the PNG visual golden harness. Font rasterisation and antialiasing differ per machine, so the pixel comparison stays a local gate. Chromium is therefore not installed in CI, which no unit test needs.
 - **Consequence:** A green CI run does **not** prove the rendered cards are unchanged. Run `npm run visual:check -w @lotm/card-studio` locally after touching `cards-ui` or the renderer.

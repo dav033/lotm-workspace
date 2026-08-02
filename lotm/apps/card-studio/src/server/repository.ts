@@ -535,8 +535,46 @@ export class CardRepository {
 
   private migrate(): void {
     const version = this.db.pragma('user_version', { simple: true }) as number
-    if (version > 7) throw new Error(`La version ${version} de cards.db no es compatible.`)
-    if (version === 7) return
+    if (version > 10) throw new Error(`La version ${version} de cards.db no es compatible.`)
+    if (version === 10) return
+
+    if (version === 9) {
+      this.rebuildCardsTable(['Corruption File', 'Ritual Logic'], 10)
+      return
+    }
+
+    if (version === 8) {
+      this.rebuildCardsTable(['Corruption File'], 9)
+      return
+    }
+
+    if (version === 7) {
+      this.db.exec(`
+        DROP INDEX cards_part_id_idx;
+        ALTER TABLE cards RENAME TO cards_previous;
+        CREATE TABLE cards (
+          id TEXT PRIMARY KEY,
+          part_id TEXT NOT NULL REFERENCES parts(id) ON DELETE CASCADE,
+          position INTEGER NOT NULL CHECK (position > 0),
+          type TEXT NOT NULL CHECK (type IN (
+            'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Pathway',
+            'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member'
+          )),
+          title TEXT NOT NULL,
+          data_json TEXT NOT NULL,
+          created_at TEXT NOT NULL,
+          updated_at TEXT NOT NULL,
+          duration_seconds REAL CHECK (duration_seconds IS NULL OR (duration_seconds >= 0.5 AND duration_seconds <= 60))
+        );
+        INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds)
+          SELECT id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds FROM cards_previous;
+        DROP TABLE cards_previous;
+        CREATE INDEX cards_part_id_idx ON cards(part_id);
+        PRAGMA user_version = 8;
+      `)
+      this.migrate()
+      return
+    }
 
     if (version === 6) {
       this.db.exec(`
@@ -679,21 +717,49 @@ export class CardRepository {
         position INTEGER NOT NULL CHECK (position > 0),
         type TEXT NOT NULL CHECK (type IN (
           'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Pathway',
-          'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member'
+          'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
+          'Corruption File', 'Ritual Logic'
         )),
         title TEXT NOT NULL,
         data_json TEXT NOT NULL,
         created_at TEXT NOT NULL,
-        updated_at TEXT NOT NULL,
-        UNIQUE (part_id, position)
+        updated_at TEXT NOT NULL
       );
 
       CREATE INDEX cards_part_id_idx ON cards(part_id);
       CREATE INDEX parts_universe_id_idx ON parts(universe_id);
       ${IMPORTED_IMAGES_SCHEMA}
       ${DURATION_COLUMNS}
-      PRAGMA user_version = 7;
+      PRAGMA user_version = 10;
     `)
+  }
+
+  private rebuildCardsTable(extraTypes: string[], targetVersion: number): void {
+    const types = [
+      'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Pathway',
+      'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
+      ...extraTypes,
+    ].map((type) => `'${type}'`).join(', ')
+    this.db.exec(`
+      ALTER TABLE cards RENAME TO cards_previous;
+      CREATE TABLE cards (
+        id TEXT PRIMARY KEY,
+        part_id TEXT NOT NULL REFERENCES parts(id) ON DELETE CASCADE,
+        position INTEGER NOT NULL CHECK (position > 0),
+        type TEXT NOT NULL CHECK (type IN (${types})),
+        title TEXT NOT NULL,
+        data_json TEXT NOT NULL,
+        created_at TEXT NOT NULL,
+        updated_at TEXT NOT NULL,
+        duration_seconds REAL CHECK (duration_seconds IS NULL OR (duration_seconds >= 0.5 AND duration_seconds <= 60))
+      );
+      INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds)
+        SELECT id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds FROM cards_previous;
+      DROP TABLE cards_previous;
+      CREATE INDEX cards_part_id_idx ON cards(part_id);
+      PRAGMA user_version = ${targetVersion};
+    `)
+    this.migrate()
   }
 }
 

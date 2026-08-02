@@ -1,0 +1,33 @@
+import { z } from 'zod'
+import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
+
+export const CorruptionFileCardSchema = z.object({
+  type: z.literal('Corruption File'),
+  variant: z.enum(['Warning', 'Evidence', 'Quote']).default('Warning'),
+  incident: z.string().trim().min(1).max(90),
+  caseLabel: z.string().trim().min(1).max(40).default('Normal explanation'),
+  explanation: z.string().trim().min(1).max(320),
+  reactionLabel: z.string().trim().min(1).max(40).default('Fandom reaction'),
+  reaction: z.string().trim().min(1).max(280),
+  footerText: z.string().trim().max(180).optional(),
+  corruptionLevel: z.enum(['Low', 'Moderate', 'Severe', 'Catastrophic']).default('Severe'),
+  showIncidentNumber: z.boolean().default(false),
+  accentColor: z.string().regex(/^#[0-9a-f]{6}$/i).optional(),
+  imageUrl: ImageSourceSchema.optional(),
+  backgroundOpacity: BackgroundOpacitySchema,
+}).strict()
+
+export const RitualLogicCardSchema = z.object({
+  type: z.literal('Ritual Logic'),
+  pathway: PathwayNameSchema,
+  sequence: z.int().min(0).max(9).describe('Secuencia que se alcanza mediante el ritual.'),
+  sequenceName: z.string().trim().min(1).max(80),
+  ritual: z.string().trim().min(1).max(360),
+  survival: z.string().trim().min(1).max(360),
+  preparation: z.string().trim().min(1).max(420),
+  certainty: z.enum(['Canon', 'Mixed', 'Theory']).default('Mixed'),
+  uncertainty: z.string().trim().max(240).optional(),
+  footerText: z.string().trim().max(180).optional(),
+  backgroundImageUrl: ImageSourceSchema.optional(),
+  backgroundOpacity: BackgroundOpacitySchema,
+}).strict()

@@ -71,6 +71,16 @@ Supplementary Ingredients
 
 Consume potion amidst the singing of mermaids.
 
+## Notes
+
+### Ritual Logic
+
+The ritual has two linked functions. The source describes the mermaid song as a neutralizing and balancing influence: without it, the potion can corrode the aspirant's own Spirit Body Threads and cause loss of control. The advancement scene also depicts stiffness, slowed thought, and progressive loss of bodily control before the song helps the aspirant retain their remaining emotions and recover movement. See [[Lord of Mysteries Wiki - Fool Pathway Advancement]] and [[Fool Pathway - Ability Research]].
+
+The preparatory reading is that the ritual rehearses the central problem of the target Sequence. A Marionettist must control Spirit Body Threads without becoming a puppet controlled by those same threads. The song is therefore not merely passive protection. It forces the aspirant to experience deep Spirit Body influence while maintaining a coherent self, which is a practical introduction to the controller/controlled boundary of Marionettist.
+
+The exact idea of the song as an emotional anchor or counter-resonance is an interpretation, not a separately stated source claim. The source does state that an equivalent voice or Beyonder power can replace mermaid singing, so the function belongs to the effect rather than exclusively to the creature's species.
+
 ## Sources
 
 - [[Cuttlefish WeChat - Completed Fool Authority]]

@@ -20,8 +20,8 @@ The two apps **must not import from each other**. Their only link is a URL
 
 ## Deploy model — read before touching `main`
 
-**Pushing `main` auto-deploys to a live VPS.** A systemd timer runs
-`autodeploy.sh` every two minutes: `pull --ff-only`, rebuild, restart. Never
+**Pushing `main` auto-deploys to a live VPS.** A signed GitHub webhook triggers
+the systemd deploy service immediately: `pull --ff-only`, rebuild, restart. Never
 merge a non-deployable state. Merge only at the milestone gates defined in
 `REFACTOR_PLAN.md` §5.0, and coordinate the deployment split with the owner.
 

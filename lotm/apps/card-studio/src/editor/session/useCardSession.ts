@@ -47,6 +47,13 @@ const IMAGE_FIELDS = [
   'tierBackgroundImage',
   'pathwayCardBackgroundImage',
   'tierExplanationBackgroundImage',
+  'generalExplanationBackgroundImage',
+  'pathwayExplanationBackgroundImage',
+  'breakdownBackgroundImage',
+  'mapBackgroundImage',
+  'tarotMemberImage',
+  'corruptionImage',
+  'ritualBackgroundImage',
 ]
 
 const toSessionCard = (card: ServerCard): SessionCard => ({
@@ -502,6 +509,19 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('tarotMemberDescription', 'What the Club sees.')
     fill('tarotMemberDetailLabel', 'Club function')
     fill('tarotMemberDetailText', 'What is actually happening.')
+  }
+  if (state.type === 'Corruption File') {
+    fill('corruptionIncident', 'New incident')
+    fill('corruptionCaseLabel', 'Normal explanation')
+    fill('corruptionExplanation', 'What happened.')
+    fill('corruptionReactionLabel', 'Fandom reaction')
+    fill('corruptionReaction', 'What the fandom did with it.')
+  }
+  if (state.type === 'Ritual Logic') {
+    fill('ritualSequenceName', 'New sequence')
+    fill('ritualText', 'What the ritual requires.')
+    fill('ritualSurvival', 'What the ritual helps the aspirant survive.')
+    fill('ritualPreparation', 'What the ritual rehearses before the new powers arrive.')
   }
   return next
 }

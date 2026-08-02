@@ -349,3 +349,9 @@
 # 2026-07-29 - TikTok content framework
 
 - Added the TikTok production hub, MCP card guide, and a comedy-first Pathway framework using varied Reddit-native formats while preserving the vault's ontology, evidence, and spoiler gates; updated the content index.
+
+# 2026-08-02 - Lord of Mysteries advancement ritual framework
+
+- Added a working interpretive rule to the Lord of Mysteries Group hub: advancement rituals have both a survival function against potion backlash and a preparatory function for the target Sequence's central power or concept.
+- Added separated ritual-logic notes to Sequence 5 Marionettist, Dream Stealer, and Traveler. Each note distinguishes source-described effects from the preparatory interpretation.
+- Added the three new uncertainty items and the group-level framework to [[Pending Review]]. No epistemic status was promoted and no source body was changed.

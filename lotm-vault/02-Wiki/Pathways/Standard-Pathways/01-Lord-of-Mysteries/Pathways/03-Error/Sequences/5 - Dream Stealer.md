@@ -41,6 +41,18 @@ source-confidence: strong-inference
 - Supplementary ingredients: Dream-Eating Rat's Blood (30 ml), De-Spiritualized Depraved Breath (30 ml), Celestine (1), Lavender Hydrosol (10 drops), Another's Tears Shed Due to Shattered Ideals (50 ml).
 - Advancement ritual: become a key antagonist or supporting figure in the unconscious dreams of at least 30 people; dream duration does not matter as long as it is occurring at the moment the potion is consumed.
 
+## Notes
+
+### Ritual Logic
+
+The ritual's survival function is not directly explained in the available source material. Its wording does, however, require the aspirant to enact the target Sequence's central condition before consuming the potion: their presence must already count as an important role inside at least thirty other people's unconscious dreams, all at the same moment. See [[Lord of Mysteries Wiki - Error Pathway Advancement]] and [[Cuttlefish WeChat - Marauder Pathway Abilities]].
+
+The preparatory reading is that this is a practical rehearsal of Dream Stealer's insertion and theft of mental roles. The aspirant does not merely enter one dream or create a private dream. They make a false presence function as part of many independent mental realities. The allowance for either an antagonist or a supporting figure suggests that the requirement is recognition and narrative insertion, not total control of the dream.
+
+The simultaneity matters. A long sequence of dreams would demonstrate duration; thirty dreams active at the instant of consumption demonstrate distributed coordination and a single false identity being accepted in many places at once. This matches the Error Pathway's broader pattern of making an incorrect presence, relation, or claim operate as if it were valid. That connection is a strong thematic interpretation, not a sentence supplied by the source.
+
+The sources do not explain why the threshold is exactly thirty or what failure looks like. Those questions remain open in [[Pending Review]]. The ritual should not be conflated with the Visionary Pathway's Dreamwalker ritual: Dream Stealer's requirement is about insertion and theft inside other people's dreams, not simply immersion in a dream state.
+
 ## Sources
 
 - [[Cuttlefish WeChat - Marauder Pathway Abilities]]

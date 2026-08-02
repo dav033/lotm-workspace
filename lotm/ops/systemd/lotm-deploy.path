@@ -1,0 +1,9 @@
+[Unit]
+Description=Trigger LOTM deploy after a verified GitHub push
+
+[Path]
+PathModified=/tmp/lotm-deploy.trigger
+Unit=lotm-deploy.service
+
+[Install]
+WantedBy=multi-user.target

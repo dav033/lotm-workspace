@@ -34,6 +34,17 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     tarotMemberDescription: 'What the Club sees.',
     tarotMemberDetailText: 'What is actually happening.',
   },
+  'Corruption File': {
+    corruptionIncident: 'New incident',
+    corruptionExplanation: 'What happened.',
+    corruptionReaction: 'What the fandom did with it.',
+  },
+  'Ritual Logic': {
+    ritualSequenceName: 'New sequence',
+    ritualText: 'What the ritual requires.',
+    ritualSurvival: 'What the ritual helps the aspirant survive.',
+    ritualPreparation: 'What the ritual rehearses before the new powers arrive.',
+  },
 }
 
 export const DEFAULT_STATE: BuilderCardState = {
@@ -97,6 +108,27 @@ export const DEFAULT_STATE: BuilderCardState = {
   tarotMemberFooterText: '',
   tarotMemberPathway: null,
   tarotMemberImage: null,
+  corruptionVariant: 'Warning',
+  corruptionIncident: '',
+  corruptionCaseLabel: 'Normal explanation',
+  corruptionExplanation: '',
+  corruptionReactionLabel: 'Fandom reaction',
+  corruptionReaction: '',
+  corruptionFooterText: '',
+  corruptionLevel: 'Severe',
+  corruptionShowIncidentNumber: false,
+  corruptionAccentColor: '#d84a4a',
+  corruptionImage: null,
+  ritualPathway: 'Fool',
+  ritualSequence: 5,
+  ritualSequenceName: '',
+  ritualText: '',
+  ritualSurvival: '',
+  ritualPreparation: '',
+  ritualCertainty: 'Mixed',
+  ritualUncertainty: '',
+  ritualFooterText: '',
+  ritualBackgroundImage: null,
   backgroundOpacity: 65,
 }
 

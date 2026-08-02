@@ -79,6 +79,10 @@ export async function resolveStateImages(
     ?? (state.type === 'Pathway'
       ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.pathwayCardPath] ?? null
       : null)
+  const ritualBackgroundSource = state.type === 'Ritual Logic'
+    ? state.ritualBackgroundImage
+      ?? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.ritualPathway] ?? null
+    : null
 
   return {
     ...state,
@@ -113,6 +117,12 @@ export async function resolveStateImages(
           publicDir,
         )
         : null,
+    corruptionImage: state.corruptionImage
+      ? await resolveImageSource(state.corruptionImage, publicDir)
+      : null,
+    ritualBackgroundImage: ritualBackgroundSource
+      ? await resolveImageSource(ritualBackgroundSource, publicDir)
+      : null,
     pathwayExplanationBackgroundImage: pathwayExplanationSource
       ? await resolveImageSource(pathwayExplanationSource, publicDir)
       : null,

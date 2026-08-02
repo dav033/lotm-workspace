@@ -2,7 +2,7 @@ import { parseMapEntries } from '../mapEntries'
 import type { CardContent } from './content'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic'
   name: string
   path: string
   seq: number
@@ -62,6 +62,27 @@ export type BuilderCardState = {
   tarotMemberFooterText: string
   tarotMemberPathway: string | null
   tarotMemberImage: string | null
+  corruptionVariant: 'Warning' | 'Evidence' | 'Quote'
+  corruptionIncident: string
+  corruptionCaseLabel: string
+  corruptionExplanation: string
+  corruptionReactionLabel: string
+  corruptionReaction: string
+  corruptionFooterText: string
+  corruptionLevel: 'Low' | 'Moderate' | 'Severe' | 'Catastrophic'
+  corruptionShowIncidentNumber: boolean
+  corruptionAccentColor: string | null
+  corruptionImage: string | null
+  ritualPathway: string
+  ritualSequence: number
+  ritualSequenceName: string
+  ritualText: string
+  ritualSurvival: string
+  ritualPreparation: string
+  ritualCertainty: 'Canon' | 'Mixed' | 'Theory'
+  ritualUncertainty: string
+  ritualFooterText: string
+  ritualBackgroundImage: string | null
   backgroundOpacity: number
 }
 
@@ -126,6 +147,27 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tarotMemberFooterText: '',
   tarotMemberPathway: null,
   tarotMemberImage: null,
+  corruptionVariant: 'Warning',
+  corruptionIncident: '',
+  corruptionCaseLabel: 'Normal explanation',
+  corruptionExplanation: '',
+  corruptionReactionLabel: 'Fandom reaction',
+  corruptionReaction: '',
+  corruptionFooterText: '',
+  corruptionLevel: 'Severe',
+  corruptionShowIncidentNumber: false,
+  corruptionAccentColor: null,
+  corruptionImage: null,
+  ritualPathway: 'Fool',
+  ritualSequence: 5,
+  ritualSequenceName: '',
+  ritualText: '',
+  ritualSurvival: '',
+  ritualPreparation: '',
+  ritualCertainty: 'Mixed',
+  ritualUncertainty: '',
+  ritualFooterText: '',
+  ritualBackgroundImage: null,
   backgroundOpacity: 65,
 }
 
@@ -244,6 +286,39 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       tarotMemberFooterText: content.footerText ?? '',
       tarotMemberPathway: content.pathway ?? null,
       tarotMemberImage: content.imageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Corruption File') {
+    return {
+      ...state,
+      corruptionVariant: content.variant,
+      corruptionIncident: content.incident,
+      corruptionCaseLabel: content.caseLabel,
+      corruptionExplanation: content.explanation,
+      corruptionReactionLabel: content.reactionLabel,
+      corruptionReaction: content.reaction,
+      corruptionFooterText: content.footerText ?? '',
+      corruptionLevel: content.corruptionLevel,
+      corruptionShowIncidentNumber: content.showIncidentNumber,
+      corruptionAccentColor: content.accentColor ?? null,
+      corruptionImage: content.imageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Ritual Logic') {
+    return {
+      ...state,
+      ritualPathway: content.pathway,
+      ritualSequence: content.sequence,
+      ritualSequenceName: content.sequenceName,
+      ritualText: content.ritual,
+      ritualSurvival: content.survival,
+      ritualPreparation: content.preparation,
+      ritualCertainty: content.certainty,
+      ritualUncertainty: content.uncertainty ?? '',
+      ritualFooterText: content.footerText ?? '',
+      ritualBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -367,6 +442,39 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
       ...(state.tarotMemberFooterText.trim() ? { footerText: state.tarotMemberFooterText.trim() } : {}),
       ...(state.tarotMemberPathway ? { pathway: state.tarotMemberPathway } : {}),
       ...(state.tarotMemberImage ? { imageUrl: state.tarotMemberImage } : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Corruption File') {
+    return {
+      type: 'Corruption File',
+      variant: state.corruptionVariant,
+      incident: state.corruptionIncident.trim(),
+      caseLabel: state.corruptionCaseLabel.trim() || 'Normal explanation',
+      explanation: state.corruptionExplanation.trim(),
+      reactionLabel: state.corruptionReactionLabel.trim() || 'Fandom reaction',
+      reaction: state.corruptionReaction.trim(),
+      ...(state.corruptionFooterText.trim() ? { footerText: state.corruptionFooterText.trim() } : {}),
+      corruptionLevel: state.corruptionLevel,
+      showIncidentNumber: state.corruptionShowIncidentNumber,
+      ...(state.corruptionAccentColor ? { accentColor: state.corruptionAccentColor } : {}),
+      ...(state.corruptionImage ? { imageUrl: state.corruptionImage } : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Ritual Logic') {
+    return {
+      type: 'Ritual Logic',
+      pathway: state.ritualPathway,
+      sequence: state.ritualSequence,
+      sequenceName: state.ritualSequenceName.trim(),
+      ritual: state.ritualText.trim(),
+      survival: state.ritualSurvival.trim(),
+      preparation: state.ritualPreparation.trim(),
+      certainty: state.ritualCertainty,
+      ...(state.ritualUncertainty.trim() ? { uncertainty: state.ritualUncertainty.trim() } : {}),
+      ...(state.ritualFooterText.trim() ? { footerText: state.ritualFooterText.trim() } : {}),
+      ...(state.ritualBackgroundImage ? { backgroundImageUrl: state.ritualBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }

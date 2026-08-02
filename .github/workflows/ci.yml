@@ -1,8 +1,8 @@
 name: CI
 
 # The npm workspace root is `lotm/`, not the repository root, so every job
-# runs from there. Deployment is untouched: the VPS timer still pulls `main`
-# and rebuilds; this workflow only reports.
+# runs from there. Deployment is triggered separately by the signed push
+# webhook; this workflow only reports.
 on:
   push:
     branches: [main]

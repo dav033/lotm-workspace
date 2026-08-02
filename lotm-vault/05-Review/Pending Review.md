@@ -43,6 +43,10 @@ path:"02-Wiki/Pathways/Standard-Pathways" [type:sequence] [status:interpretation
 ## Tracked Remaining Uncertainty
 
 - [[Lord of Mysteries Group Counters]]: counter-relations from a Fandom source remain secondary and situation-dependent pending official/high verification.
+- [[Lord of Mysteries Group]]: the working rule that an advancement ritual both protects against backlash and prepares the aspirant for the target Sequence's central power or concept is a group-level interpretation; test it against other Pathway groups before treating it as a general framework.
+- [[5 - Marionettist]]: the survival role of mermaid singing is sourced, but the emotional-anchor/counter-resonance reading and its interpretation as Marionettist preparation remain inferential.
+- [[5 - Dream Stealer]]: the ritual wording is preserved, but the reason for the threshold of thirty dreams, the exact failure backlash, and the preparation reading remain unresolved. The available advancement source is unofficial/medium.
+- [[5 - Traveler]]: the return and self-awareness functions of the four coordinates are sourced, but the reason for exactly four coordinates and any geometric or deeper cosmological meaning remain unresolved.
 - [[God Almighty Group Counters]]: counter-relations from a Fandom source remain secondary and situation-dependent pending official/high verification.
 - [[Calamity of Destruction Group Counters]]: counter-relations from a Fandom source remain secondary and situation-dependent pending official/high verification.
 - [[Eternal Darkness Group Counters]]: counter-relations from a Fandom source remain secondary and conditional on scale, contact, state, clues, occasion, or circumstances pending official/high verification.

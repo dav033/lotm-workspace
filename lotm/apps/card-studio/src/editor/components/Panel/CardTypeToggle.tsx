@@ -14,6 +14,8 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
   'Breakdown',
   'Map',
   'Tarot Member',
+  'Corruption File',
+  'Ritual Logic',
 ]
 
 type Props = {

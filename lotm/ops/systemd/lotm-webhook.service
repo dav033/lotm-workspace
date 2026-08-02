@@ -1,0 +1,20 @@
+[Unit]
+Description=Verified GitHub webhook receiver for LOTM
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=ec2-user
+ExecStart=/usr/bin/python3 /home/ec2-user/lotm/lotm/ops/github-webhook.py
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=false
+ProtectSystem=strict
+ProtectHome=read-only
+ReadOnlyPaths=/home/ec2-user/lotm
+ReadWritePaths=/tmp
+
+[Install]
+WantedBy=multi-user.target

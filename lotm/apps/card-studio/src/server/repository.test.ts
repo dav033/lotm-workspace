@@ -74,6 +74,27 @@ test('guarda y consulta cartas agrupadas en un SQLite separado', async (t) => {
   assert.equal(repository.listCards().length, 5)
 })
 
+test('crea cards.db v10 y guarda las familias de producción', async (t) => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v10-'))
+  const dbPath = path.join(directory, 'cards.db')
+  const repository = new CardRepository(dbPath)
+  t.after(async () => {
+    repository.close()
+    await fs.rm(directory, { recursive: true, force: true })
+  })
+
+  const saved = repository.saveBatch({
+    universe: { name: 'LOTM' }, part: { name: 'Rituals', number: 1 }, cards: [
+      { type: 'Corruption File', variant: 'Warning', incident: 'Monocle', caseLabel: 'Normal explanation', explanation: 'Context.', reactionLabel: 'Fandom reaction', reaction: 'Panic.', corruptionLevel: 'Severe', showIncidentNumber: false },
+      { type: 'Ritual Logic', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
+    ],
+  })
+  assert.deepEqual(saved.map((card) => card.type), ['Corruption File', 'Ritual Logic'])
+  const inspection = new Database(dbPath, { readonly: true })
+  assert.equal(inspection.pragma('user_version', { simple: true }), 10)
+  inspection.close()
+})
+
 test('migra cards.db v1 a v3 sin perder cartas', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v1-'))
   const dbPath = path.join(directory, 'cards.db')

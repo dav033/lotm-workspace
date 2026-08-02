@@ -26,6 +26,8 @@ export type CardKind =
   | 'Breakdown'
   | 'Map'
   | 'Tarot Member'
+  | 'Corruption File'
+  | 'Ritual Logic'
 
 export type CardViewHandlers = {
   onUploadImage?: (file: File | undefined, field?: string) => void
@@ -233,6 +235,30 @@ export function cardPropsFromBuilderState(
     }
   }
 
+  if (state.type === 'Corruption File') {
+    return { kind: 'Corruption File', props: {
+      variant: state.corruptionVariant, incident: state.corruptionIncident,
+      caseLabel: state.corruptionCaseLabel, explanation: state.corruptionExplanation,
+      reactionLabel: state.corruptionReactionLabel, reaction: state.corruptionReaction,
+      footerText: state.corruptionFooterText, corruptionLevel: state.corruptionLevel,
+      showIncidentNumber: state.corruptionShowIncidentNumber,
+      accentColor: state.corruptionAccentColor || '#d84a4a', image: state.corruptionImage,
+      backgroundOpacity: state.backgroundOpacity, onDropBackground: handlers.onDropBackground,
+    } }
+  }
+
+  if (state.type === 'Ritual Logic') {
+    const pathway = asPathway(state.ritualPathway) ?? 'Fool'
+    return { kind: 'Ritual Logic', props: {
+      pathway, sequence: state.ritualSequence, sequenceName: state.ritualSequenceName,
+      ritual: state.ritualText, survival: state.ritualSurvival, preparation: state.ritualPreparation,
+      certainty: state.ritualCertainty, uncertainty: state.ritualUncertainty,
+      footerText: state.ritualFooterText, tier: PATHWAY_COLORS[pathway],
+      backgroundImage: background(state.ritualBackgroundImage, PATHWAY_BACKGROUNDS[pathway]),
+      backgroundOpacity: state.backgroundOpacity, onDropBackground: handlers.onDropBackground,
+    } }
+  }
+
   const sequences = [
     { path: asPathway(state.path), seq: state.seq },
     ...(state.hasSecond ? [{ path: asPathway(state.path2), seq: state.seq2 }] : []),
@@ -295,6 +321,16 @@ export function accentForState(state: BuilderCardState): CardAccent {
   if (type === 'Pathway') {
     const path = state.pathwayCardPath in PATHWAYS ? (state.pathwayCardPath as Pathway) : 'Fool'
     return { ...PATHWAY_COLORS[path], pct: 100 }
+  }
+
+  if (type === 'Ritual Logic') {
+    const path = state.ritualPathway in PATHWAYS ? state.ritualPathway as Pathway : 'Fool'
+    return { ...PATHWAY_COLORS[path], pct: 100 }
+  }
+
+  if (type === 'Corruption File') {
+    const color = state.corruptionAccentColor || '#d84a4a'
+    return { c: color, d: '#351317', pct: 100 }
   }
 
   if (type === 'Map') {

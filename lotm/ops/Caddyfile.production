@@ -1,0 +1,24 @@
+api.marosconstruction.com {
+  reverse_proxy api:3000
+}
+
+lotm.marosconstruction.com {
+  @deploy path /deploy/github
+  reverse_proxy @deploy 172.18.0.1:9010
+
+  @cards_web path /cartas /cartas/* /api/cards /api/cards/*
+  reverse_proxy @cards_web card-studio:3000
+
+  @cards_mcp path /mcp /mcp/* /downloads/*
+  reverse_proxy @cards_mcp cards-mcp:3101
+
+  reverse_proxy lotm:3000
+}
+
+obsidian.marosconstruction.com {
+  log {
+    output stdout
+    format json
+  }
+  reverse_proxy 172.18.0.1:27123
+}

@@ -30,7 +30,7 @@ The game uses PostgreSQL through Prisma. Card Studio uses a separate SQLite data
 
 ## Deployment
 
-Production is live and auto-deploys from `main`: a systemd timer pulls fast-forward changes, builds, and restarts the services. Do not merge a non-deployable milestone into `main`. The refactor later splits game and Card Studio images and requires reverse-proxy routing for `/cartas*` and `/api/cards*`; see the plan before deploying that milestone.
+Production is live and auto-deploys from `main`: a signed GitHub webhook triggers a fast-forward pull, build, and service restart. The canonical repository is `dav033/lotm-workspace`; the former `lotm-game` repository is retained only as historical backup. Do not merge a non-deployable state into `main`.
 
 Back up game data through Supabase/PostgreSQL tooling. Back up Card Studio state by copying the `data/` volume.
 

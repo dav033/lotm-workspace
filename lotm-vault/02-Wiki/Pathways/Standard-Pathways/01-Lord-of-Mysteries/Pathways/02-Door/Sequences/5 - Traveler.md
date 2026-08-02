@@ -39,6 +39,16 @@ source-confidence: strong-inference
 - Advancement ritual: set up four special coordinates deep in the Spirit World, each placed extremely far apart, which both provide a way back and help maintain self-awareness during the ritual.
 - Consumption backlash/ritual effect: illusory doors blast open around the body and consciousness is drawn transparent into one of them; the drinker nearly loses self-awareness but is anchored by sensing the four coordinates, eventually "traversing" back through saturated colors and thin fog to a familiar spot.
 
+## Notes
+
+### Ritual Logic
+
+The source directly explains the survival function: after consuming the potion, the aspirant wanders chaotically through the Spirit World, loses their way, and risks danger, assimilation, and loss of mind. The four coordinates provide a route back and help maintain self-awareness. See [[Lord of Mysteries Wiki - Door Pathway Advancement]].
+
+The preparatory reading is that the ritual preconfigures the core operating condition of Traveler. Before the potion grants reliable Positioning and Traveler's Door, the aspirant must establish a navigational network that can still be sensed while ordinary orientation collapses. The ritual therefore rehearses the target Sequence's relationship with the Spirit World: leave the physical world, retain a connection to it, and return without losing the self.
+
+The source does not explain why the number is four, nor does it establish a geometric or cosmological meaning for that number. Any claim that the four points form a particular metaphysical shape remains theory. What is supported is their role as distant reference points for navigation and self-awareness.
+
 ## Sources
 
 - [[Cuttlefish WeChat - Apprentice Pathway Abilities]]
