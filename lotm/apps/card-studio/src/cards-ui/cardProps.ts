@@ -268,3 +268,49 @@ export function cardPropsFromBuilderState(
 export function cardPropsFromContent(content: CardContent, handlers: CardViewHandlers = {}): CardPropsResult {
   return cardPropsFromBuilderState(toBuilderCardState(content), handlers)
 }
+
+/** Acento dorado de portadas y de las familias sin rango del que derivarlo. */
+const COVER_ACCENT = { c: '#d9b869', d: '#4a3a17', pct: 100 } as const
+
+export type CardAccent = { c: string; d: string; pct: number }
+
+/**
+ * Color de acento de una carta, para cualquier familia.
+ *
+ * Las props que consume cada componente solo llevan `accent` en la familia
+ * estandar, porque el resto lo deriva de su propio rango. El editor, en cambio,
+ * tiñe su cromo (botones de descarga, ZIP y MP4) con el acento de la carta
+ * abierta sea del tipo que sea, asi que necesita esta cadena completa.
+ */
+export function accentForState(state: BuilderCardState): CardAccent {
+  const type = state.type
+
+  if (type === 'Cover' || type === 'Full Image Cover') return { ...COVER_ACCENT }
+
+  if (type === 'Tier' || type === 'Tier Explanation') {
+    const rank = state.tierRank in TIER_RANKS ? (state.tierRank as keyof typeof TIER_RANKS) : 'S'
+    return { ...TIER_RANKS[rank], pct: 100 }
+  }
+
+  if (type === 'Pathway') {
+    const path = state.pathwayCardPath in PATHWAYS ? (state.pathwayCardPath as Pathway) : 'Fool'
+    return { ...PATHWAY_COLORS[path], pct: 100 }
+  }
+
+  if (type === 'Map') {
+    const pathway =
+      state.mapPathway && state.mapPathway in PATHWAYS ? (state.mapPathway as Pathway) : null
+    return pathway ? { ...PATHWAY_COLORS[pathway], pct: 100 } : { ...COVER_ACCENT }
+  }
+
+  if (
+    type === 'General Explanation' ||
+    type === 'Pathway Explanation' ||
+    type === 'Breakdown' ||
+    type === 'Tarot Member'
+  ) {
+    return { ...COVER_ACCENT }
+  }
+
+  return powerTier(state.type, state.power, state.grade)
+}

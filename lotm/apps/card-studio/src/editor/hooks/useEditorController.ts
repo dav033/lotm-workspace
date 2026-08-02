@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { flushSync } from 'react-dom'
-import { cardPropsFromBuilderState } from '../../cards-ui/cardProps'
+import { accentForState } from '../../cards-ui/cardProps'
 import { PATH_NAMES } from '../../domain/pathways'
 import { fromBuilderCardState, slugify } from '../../domain/schema'
 import { DEFAULT_STATE, NEW_CARD_SEEDS, VIDEO_FORMATS } from '../cardSeeds'
@@ -271,7 +271,7 @@ export function useEditorController() {
 
   return {
     session, ready, sessionError, saving, projects, sections, cards, images,
-    openProjectIds, activeProjectId, editingId, editingIndex, state, accent: cardPropsFromBuilderState(state).props.accent,
+    openProjectIds, activeProjectId, editingId, editingIndex, state, accent: accentForState(state),
     filmstrip, sectionCount: new Set(cards.map((card) => card.part.id)).size,
     busy, videoError, seconds, setSeconds, set, setActiveProjectId: projectTabs.setActiveId,
     onOpenProject, onCloseProject, onCreateProject, onStep, onNewCard, onLoadCard,
