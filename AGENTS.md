@@ -1,5 +1,10 @@
 # AGENTS.md — convenciones del proyecto LOTM
 
+Código vive en `lotm/`: `lotm/apps/game`, `lotm/apps/card-studio` y
+`lotm/tools/obsidian-bridge`. Ejecuta scripts desde `lotm/`, salvo que una
+instrucción indique otra ruta. Producción usa `lotm/Dockerfile.game`,
+`lotm/Dockerfile.card-studio` y `lotm/docker-compose.production.yml`.
+
 ## Modo caveman (activo siempre)
 
 Usa el skill `caveman` en intensidad **full** para TODA respuesta en este

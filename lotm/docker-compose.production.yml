@@ -2,24 +2,40 @@ services:
   lotm:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.game
       args:
-        DATABASE_URL: ${DATABASE_URL}
+        DATABASE_URL: ${DATABASE_URL:-postgresql://ci:ci@localhost:5432/ci}
     image: lotm:latest
     restart: unless-stopped
     env_file: .env
+    expose:
+      - "3000"
+    networks:
+      - web
+
+  card-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile.card-studio
+    image: lotm-card-studio:latest
+    restart: unless-stopped
+    env_file: .env
+    expose:
+      - "3000"
     volumes:
       - lotm_data:/app/data
     networks:
       - web
 
   cards-mcp:
-    image: lotm:latest
+    image: lotm-card-studio:latest
     restart: unless-stopped
     env_file: .env
     environment:
       CARDS_MCP_HOST: 0.0.0.0
-    command: npm run cards:mcp:http
+    command: npm run mcp:http -w @lotm/card-studio
+    expose:
+      - "3101"
     volumes:
       - lotm_data:/app/data
     networks:
