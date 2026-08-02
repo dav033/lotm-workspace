@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "build": "tsc --noEmit",
+    "test": "node --test",
+    "typecheck": "tsc --noEmit",
     "obsidian:bridge": "node --import tsx obsidian-bridge.ts"
   },
   "dependencies": {
