@@ -527,10 +527,10 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 - [x] P1.1–P1.5 junk removed · [x] P1.6 root README · [x] P1.7 README lies fixed · [x] P1.8 decisions.md · [ ] **M1 merged**
 - [x] P2.1–P2.6 workspaces scaffolded, lockfile regenerated
 - [x] P3.1 moves · [x] P3.2 studio layout+fonts · [x] P3.3 render root fix · [x] P3.4 data-dir anchoring · [x] P3.5 MCP configs · [x] P3.6 env split · [x] P3.7 tests moved · [x] studio gate green
-- [ ] P4.1–P4.8 game slimmed · [ ] game gate green
-- [ ] P7.1–P7.6 Docker/compose/README/AGENTS updated · [ ] **M2 merged (coordinated deploy)**
-- [ ] P5.1 domain · [ ] P5.2 cards-ui + styles manifest + single mapper · [ ] P5.3 server/render/mcp · [ ] P5.4 editor TS rewrite · [ ] P5.5-E export unification · [ ] P5.6 asset typos · [ ] P5.7 allowJs off, builder/cards dirs gone · [ ] P5.8 studio agent docs · [ ] **M3 merged**
-- [ ] P6.1 shared/ moves · [ ] P6.2 server-only enforced · [ ] P6.3 i18n removed · [ ] P6.4 store slices · [ ] P6.5 admin tree split + manual checklist · [ ] P6.6 datos split + round-trip test · [ ] P6.7 diagnostico split · [ ] P6.8 dead code sweep · [ ] **M4 merged**
+- [x] P4.1–P4.8 game slimmed · [ ] game gate green *(build/test/typecheck verified green; manual `dev:game` run against a reachable DATABASE_URL still pending)*
+- [x] P7.1–P7.6 Docker/compose/README/AGENTS updated · [ ] **M2 merged (coordinated deploy)**
+- [x] P5.1 domain · [x] P5.2 cards-ui + styles manifest + single mapper · [x] P5.3 server/render/mcp · [x] P5.4 editor TS rewrite · [x] P5.5-E export unification · [x] P5.6 asset typos · [x] P5.7 allowJs off, builder/cards dirs gone · [x] P5.8 studio agent docs · [ ] **M3 merged**
+- [x] P6.1 shared/ moves · [x] P6.2 server-only enforced · [x] P6.3 i18n removed · [ ] P6.4 store slices *(helpers extracted; `store.ts` still 964 ln)* · [ ] P6.5 admin tree split + manual checklist *(`MapaFases.tsx` still 2 659 ln)* · [ ] P6.6 datos split + round-trip test · [ ] P6.7 diagnostico split · [ ] P6.8 dead code sweep · [ ] **M4 merged**
 - [ ] P8.1–P8.3 CI green · [ ] P9.1–P9.6 agent docs complete · [ ] **M5 merged**
 
 ## 11. Deviations log
@@ -539,3 +539,19 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 
 - **2026-08-01 — P1.1:** Used `git rm --cached` for `lotm/graphify-out/` so tracked artifacts leave Git while the local directory remains available, matching the step's “keep the local folder” requirement.
 - **2026-08-01 — P1 gate:** Repaired pre-existing bilingual admin editor type mappings, stale English UI test assertions, and a Prisma transaction-client type mismatch exposed by the gate. This keeps Phase 1 deploy-safe without changing its sanitation scope.
+
+- **2026-08-01 — P5.5-E:** El flujo cliente de exportación quedó unificado en /api/cards/export y se retiró html2canvas. jszip se conserva únicamente en el exportador servidor/MCP porque forma parte de la generación del ZIP y del contrato existente; no se considera dependencia cliente.
+
+- **2026-08-01 — file integrity:** A prior session accidentally saved this file with its middle section (§4.1 tail through Phase 4/7 details, ~207 lines) replaced by a context-truncation marker. Restored the full content from the last commit and re-applied the two legitimate working-tree updates (P5 checklist ticks, P5.5-E deviation entry).
+
+- **2026-08-01 — audit, commit hygiene:** Phases 4 through 7 plus Phase 6 waves 1–3 had accumulated entirely in the working tree (≈240 changed files) with only the studio renames staged. Split into four commits that preserve the plan's move-versus-edit rule: pure renames, Phase 5 studio modernization, Phase 6 game boundary work, Phase 7 deployment split. Nothing was discarded.
+
+- **2026-08-01 — audit, P5.2 partial:** `cards-ui/styleFiles.ts` is consumed only by `server/render/assets.ts`. The Next pages import `cards-ui/styles/index.css`, which repeats the same thirteen files as a hand-written `@import` list. Both orders currently agree, but the single-source-of-truth requirement is not met and nothing prevents drift.
+
+- **2026-08-01 — audit, unlogged additions:** Phase 5 also added `POST /api/cards/render` (the plan only approved `GET /api/cards/export`) and put `react-dom` into the studio's `serverExternalPackages`. Both are recorded here after the fact.
+
+- **2026-08-01 — audit, P7 gate:** Docker is not installed on the development machine, so neither image build nor `compose config` could be validated locally. Per §3.1 the M2 merge must be coordinated with the owner and verified on a machine with Docker. Two items to check during that run: `Dockerfile.game` sets `WORKDIR /app/apps/game` but its CMD calls `npm run start -w @lotm/game`, and npm resolves `-w` from the workspace root, so the command may need to run from `/app`; and the game service no longer mounts `lotm_data`, which is intended since `data/` is now studio-only.
+
+- **2026-08-01 — audit, environment:** The developer `.env` still lives at `lotm/.env`, but Next reads `.env` from each app directory, so `apps/game` and `apps/card-studio` no longer see it. `npm run build -w @lotm/game` fails with "Falta DATABASE_URL" until `apps/game/.env` exists; with a dummy value the build is green. P3.6 solved this for the MCP entrypoints only (they walk up to the workspace root).
+
+- **2026-08-01 — P7 gate:** P7.1–P7.6 are implemented and local app/build/config checks pass. Docker CLI is unavailable in the execution environment, so image builds and `docker compose config` could not be run here; YAML was validated with PyYAML instead.
