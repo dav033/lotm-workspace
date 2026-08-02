@@ -3,26 +3,29 @@ api.marosconstruction.com {
 }
 
 lotm.marosconstruction.com {
-  @deploy path /deploy/github
-  handle @deploy {
-    reverse_proxy 172.18.0.1:9010
-  }
+  route {
+    @deploy path /deploy/github
+    handle @deploy {
+      reverse_proxy 172.18.0.1:9010
+    }
 
-  @cards_web path /cartas /cartas/* /api/cards /api/cards/*
-  handle_path /cartas/_next/* {
-    reverse_proxy card-studio:3000
-  }
-  handle @cards_web {
-    reverse_proxy card-studio:3000
-  }
+    handle_path /cartas/_next/* {
+      reverse_proxy card-studio:3000
+    }
 
-  @cards_mcp path /mcp /mcp/* /downloads/*
-  handle @cards_mcp {
-    reverse_proxy cards-mcp:3101
-  }
+    @cards_web path /cartas /cartas/* /api/cards /api/cards/*
+    handle @cards_web {
+      reverse_proxy card-studio:3000
+    }
 
-  handle {
-    reverse_proxy lotm:3000
+    @cards_mcp path /mcp /mcp/* /downloads/*
+    handle @cards_mcp {
+      reverse_proxy cards-mcp:3101
+    }
+
+    handle {
+      reverse_proxy lotm:3000
+    }
   }
 }
 
