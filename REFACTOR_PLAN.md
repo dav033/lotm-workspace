@@ -530,7 +530,7 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 - [x] P4.1–P4.8 game slimmed · [ ] game gate green *(build/test/typecheck verified green; manual `dev:game` run against a reachable DATABASE_URL still pending)*
 - [x] P7.1–P7.6 Docker/compose/README/AGENTS updated · [ ] **M2 merged (coordinated deploy)**
 - [x] P5.1 domain · [x] P5.2 cards-ui + styles manifest + single mapper · [x] P5.3 server/render/mcp · [x] P5.4 editor TS rewrite · [x] P5.5-E export unification · [x] P5.6 asset typos · [x] P5.7 allowJs off, builder/cards dirs gone · [x] P5.8 studio agent docs · [ ] **M3 merged**
-- [x] P6.1 shared/ moves · [x] P6.2 server-only enforced · [x] P6.3 i18n removed · [ ] P6.4 store slices *(helpers extracted; `store.ts` still 964 ln)* · [ ] P6.5 admin tree split + manual checklist *(`MapaFases.tsx` still 2 659 ln)* · [x] P6.6 datos split *(round-trip test still pending: needs `TEST_DATABASE_URL`)* · [x] P6.7 diagnostico split · [ ] P6.8 dead code sweep · [ ] **M4 merged**
+- [x] P6.1 shared/ moves · [x] P6.2 server-only enforced · [x] P6.3 i18n removed · [x] P6.4 store slices *(`store.ts` 964 → 61 ln)* · [ ] P6.5 admin tree split + manual checklist *(views extracted, `MapaFases.tsx` 2 659 → 2 090 ln; container split and checklist still open)* · [x] P6.6 datos split *(round-trip test still pending: needs `TEST_DATABASE_URL`)* · [x] P6.7 diagnostico split · [x] P6.8 dead code sweep · [ ] **M4 merged**
 - [x] P8.1–P8.3 CI added *(first GitHub Actions run still to be observed)* · [x] P9.1–P9.6 agent docs complete · [ ] **M5 merged**
 
 ## 11. Deviations log
@@ -561,5 +561,11 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 - **2026-08-02 — Phase 8 before the rest of Phase 6:** CI was added while P6.4, P6.5 and P6.8 are still open, out of the plan's milestone order. Phases 8 and 9 touch no application code and depend on nothing in M4, and having automated gates makes the remaining decomposition safer to attempt.
 
 - **2026-08-02 — Phase 9 root docs:** P9.4 prescribes mirroring each `CLAUDE.md` as an `AGENTS.md`. At the repository root that would have destroyed the existing `AGENTS.md`, which carries content and editorial conventions rather than an engineering map. The two files are complementary there and cross-reference each other; the per-app pairs are mirrored as prescribed.
+
+- **2026-08-02 — P6.4 shared runtime:** The store kept six mutable module-level variables outside the zustand closure. Those several slices touch (`esAdminActual`, `refrescoPotencialPendiente`, `pendientesTimer`) moved into a single exported `runtime` object in `store/runtime.ts`, because an imported binding cannot be reassigned. State only one slice touches (`avisoId`/`avisoTimers`, `combinandoEnCurso`) moved into that slice's factory closure, which the store instantiates once — same lifetime as before.
+
+- **2026-08-02 — P6.5 partial:** Only the seven presentational components in the tail of `MapaFases.tsx` were extracted, plus the shared `EstadoElemento`/`ESTADO_META` pair. The 2 000-line container was left intact on purpose: its split is gated on the manual browser checklist this step defines, and there are no automated UI tests, so a restructure that cannot be exercised would be an unverifiable change to live admin tooling. `ArbolConexiones.tsx` and `ExploradorArbol.tsx` are untouched for the same reason.
+
+- **2026-08-02 — P6.8 scope:** `npx knip` was run against `apps/game` and every hit verified by hand. Three files were genuinely dead and removed. The rest were rejected: `pg`/`@prisma/client`/`@types/pg`/`eslint-config-next` are used through paths knip cannot resolve, the `adminAuth` token helpers are the intentionally bypassed mechanism ADR-001 preserves, and the flagged `index.ts` re-exports exist precisely to keep the public API stable after P6.6 and P6.7.
 
 - **2026-08-01 — P7 gate:** P7.1–P7.6 are implemented and local app/build/config checks pass. Docker CLI is unavailable in the execution environment, so image builds and `docker compose config` could not be run here; YAML was validated with PyYAML instead.
