@@ -1,5 +1,9 @@
 # AGENTS.md — convenciones del proyecto LOTM
 
+Este archivo cubre las convenciones de contenido y de trabajo. Para el mapa de
+ingeniería — estructura, invariantes congelados, comandos y modelo de despliegue
+— lee [`CLAUDE.md`](./CLAUDE.md), que es su complemento y no una copia.
+
 Código vive en `lotm/`: `lotm/apps/game`, `lotm/apps/card-studio` y
 `lotm/tools/obsidian-bridge`. Ejecuta scripts desde `lotm/`, salvo que una
 instrucción indique otra ruta. Producción usa `lotm/Dockerfile.game`,

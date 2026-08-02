@@ -30,3 +30,20 @@
 - **Date:** 2026-08-01
 - **Decision:** New code, symbols, comments, commit messages, and engineering docs use English. Existing Spanish game identifiers remain unless a scheduled rewrite substantially changes that module. Card Studio is fully migrated to English during its planned modernization.
 - **Constraint:** Never rename public routes, database columns, environment variables, MCP tool names, or export-format fields.
+
+## ADR-004 — Split oversized modules behind an unchanged public API
+
+- **Status:** Accepted
+- **Date:** 2026-08-02
+- **Decision:** When a module grows past comfortable reading size, split it into a directory of focused files plus an `index.ts` that re-exports the **exact** previous public surface. Consumers keep their import paths, so the split stays a pure structural change and the existing tests remain the proof.
+- **Applied to:** `server/domain/diagnostico` (types, pure calculators, orchestration, derived inspections) and `server/services/datos` (nominal export, backup export, import validation, import execution, shared error).
+- **Rationale:** The alternative — updating every importer — turns a mechanical refactor into a wide diff and makes regressions hard to attribute.
+- **Note:** The plan prescribed a shared `mappers.ts` for `datos`. Only the nominal export path uses those two helpers, so they stayed with it rather than creating a module with a single consumer.
+
+## ADR-005 — CI verifies, it does not deploy
+
+- **Status:** Accepted
+- **Date:** 2026-08-02
+- **Decision:** GitHub Actions runs lint, typecheck, test and build per workspace on pushes and PRs to `main`. It does not build or publish images and does not touch the release path; the VPS systemd timer remains the only deployment mechanism.
+- **Excluded from CI:** the PNG visual golden harness. Font rasterisation and antialiasing differ per machine, so the pixel comparison stays a local gate. Chromium is therefore not installed in CI, which no unit test needs.
+- **Consequence:** A green CI run does **not** prove the rendered cards are unchanged. Run `npm run visual:check -w @lotm/card-studio` locally after touching `cards-ui` or the renderer.

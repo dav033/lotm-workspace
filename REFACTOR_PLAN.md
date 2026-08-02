@@ -530,8 +530,8 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 - [x] P4.1–P4.8 game slimmed · [ ] game gate green *(build/test/typecheck verified green; manual `dev:game` run against a reachable DATABASE_URL still pending)*
 - [x] P7.1–P7.6 Docker/compose/README/AGENTS updated · [ ] **M2 merged (coordinated deploy)**
 - [x] P5.1 domain · [x] P5.2 cards-ui + styles manifest + single mapper · [x] P5.3 server/render/mcp · [x] P5.4 editor TS rewrite · [x] P5.5-E export unification · [x] P5.6 asset typos · [x] P5.7 allowJs off, builder/cards dirs gone · [x] P5.8 studio agent docs · [ ] **M3 merged**
-- [x] P6.1 shared/ moves · [x] P6.2 server-only enforced · [x] P6.3 i18n removed · [ ] P6.4 store slices *(helpers extracted; `store.ts` still 964 ln)* · [ ] P6.5 admin tree split + manual checklist *(`MapaFases.tsx` still 2 659 ln)* · [ ] P6.6 datos split + round-trip test · [ ] P6.7 diagnostico split · [ ] P6.8 dead code sweep · [ ] **M4 merged**
-- [ ] P8.1–P8.3 CI green · [ ] P9.1–P9.6 agent docs complete · [ ] **M5 merged**
+- [x] P6.1 shared/ moves · [x] P6.2 server-only enforced · [x] P6.3 i18n removed · [ ] P6.4 store slices *(helpers extracted; `store.ts` still 964 ln)* · [ ] P6.5 admin tree split + manual checklist *(`MapaFases.tsx` still 2 659 ln)* · [x] P6.6 datos split *(round-trip test still pending: needs `TEST_DATABASE_URL`)* · [x] P6.7 diagnostico split · [ ] P6.8 dead code sweep · [ ] **M4 merged**
+- [x] P8.1–P8.3 CI added *(first GitHub Actions run still to be observed)* · [x] P9.1–P9.6 agent docs complete · [ ] **M5 merged**
 
 ## 11. Deviations log
 
@@ -553,5 +553,13 @@ Everything under `lotm/` moves to exactly one of these destinations. `[P#]` = ph
 - **2026-08-01 — audit, P7 gate:** Docker is not installed on the development machine, so neither image build nor `compose config` could be validated locally. Per §3.1 the M2 merge must be coordinated with the owner and verified on a machine with Docker. Two items to check during that run: `Dockerfile.game` sets `WORKDIR /app/apps/game` but its CMD calls `npm run start -w @lotm/game`, and npm resolves `-w` from the workspace root, so the command may need to run from `/app`; and the game service no longer mounts `lotm_data`, which is intended since `data/` is now studio-only.
 
 - **2026-08-01 — audit, environment:** The developer `.env` still lives at `lotm/.env`, but Next reads `.env` from each app directory, so `apps/game` and `apps/card-studio` no longer see it. `npm run build -w @lotm/game` fails with "Falta DATABASE_URL" until `apps/game/.env` exists; with a dummy value the build is green. P3.6 solved this for the MCP entrypoints only (they walk up to the workspace root).
+
+- **2026-08-02 — P6.6 partial:** The split shipped, but the prescribed round-trip test (export v3 → import in merge and replace modes on a scratch schema) did not. `TEST_DATABASE_URL` is unset and the existing `datos` tests drive a hand-written Prisma stub rather than a real database, so a round-trip test written here could not be executed or trusted. It stays open for an environment that has the database.
+
+- **2026-08-02 — P6.6 mappers:** `nombresPorUnidad` and `nombresElementos` are used only by the nominal export, so they live in `exportNominal.ts` instead of the shared `mappers.ts` the step prescribed. A shared module with one consumer would be indirection for its own sake.
+
+- **2026-08-02 — Phase 8 before the rest of Phase 6:** CI was added while P6.4, P6.5 and P6.8 are still open, out of the plan's milestone order. Phases 8 and 9 touch no application code and depend on nothing in M4, and having automated gates makes the remaining decomposition safer to attempt.
+
+- **2026-08-02 — Phase 9 root docs:** P9.4 prescribes mirroring each `CLAUDE.md` as an `AGENTS.md`. At the repository root that would have destroyed the existing `AGENTS.md`, which carries content and editorial conventions rather than an engineering map. The two files are complementary there and cross-reference each other; the per-app pairs are mirrored as prescribed.
 
 - **2026-08-01 — P7 gate:** P7.1–P7.6 are implemented and local app/build/config checks pass. Docker CLI is unavailable in the execution environment, so image builds and `docker compose config` could not be run here; YAML was validated with PyYAML instead.
