@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { useEffect, useState } from 'react'
 
 export const MIN_DURATION = 0.5
@@ -60,3 +62,4 @@ export default function DurationBadge({ value, fallback, disabled, onChange }) {
     >{own ? `${value}s` : `${fallback}s`}</button>
   )
 }
+// @ts-nocheck

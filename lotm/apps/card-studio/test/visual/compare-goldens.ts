@@ -3,8 +3,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import pixelmatch from 'pixelmatch'
 import { PNG } from 'pngjs'
-import { CardPngRenderer } from '../../src/cards/render'
-import { CardContentSchema, filenameForCard, type CardContent } from '../../src/cards/schema'
+import { CardPngRenderer } from '../../src/server/render/renderer'
+import { CardContentSchema, filenameForCard, type CardContent } from '../../src/domain/schema'
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const workspaceRoot = path.resolve(appRoot, '../..')

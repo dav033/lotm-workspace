@@ -1,0 +1,30 @@
+/* ================= BREAKDOWN CARD (ficha: DOES / DOESN'T / edge) ================= */
+.breakdown-card{padding:32px 30px 40px;display:flex;flex-direction:column}
+/* La cifra de la secuencia, enorme y casi invisible, sangrada por la derecha. */
+.breakdown-ghost{position:absolute;right:-30px;bottom:40px;z-index:0;
+  font-family:'Playfair Display',serif;font-weight:900;font-size:320px;line-height:.7;
+  color:var(--tier);opacity:.05}
+.breakdown-content{position:relative;z-index:3;display:flex;flex-direction:column;
+  height:100%;min-height:0;text-align:left}
+.breakdown-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.breakdown-chip{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#0a0a0b;background:var(--tier);
+  padding:6px 10px;border-radius:4px;white-space:nowrap}
+.breakdown-aside{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#8a8579;text-align:right}
+.breakdown-title{flex:0 0 auto;margin-top:32px}
+/* Los tres campos quedan centrados entre el nombre y los pips, como en el diseño. */
+.breakdown-sections{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
+  justify-content:center;gap:20px;overflow:hidden}
+.breakdown-section{flex:0 0 auto}
+.breakdown-label{display:block;margin-bottom:6px;font-family:'JetBrains Mono',monospace;
+  font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#8a8579}
+.breakdown-text{font-size:21px;font-weight:600;line-height:1.35;color:#eeeae0;
+  white-space:pre-line;overflow-wrap:anywhere;text-wrap:pretty}
+.breakdown-edge .breakdown-text{color:var(--tier)}
+.breakdown-pips{flex:0 0 auto;display:flex;align-items:center;gap:8px}
+.breakdown-pip{width:22px;height:7px;border-radius:4px;background:rgba(255,255,255,.1)}
+.breakdown-pip.full{background:var(--tier)}
+.breakdown-pip.partial{background:rgba(227,189,119,.6)}
+.breakdown-card.dense .breakdown-sections{gap:15px}
+.breakdown-card.dense .breakdown-text{font-size:18px;line-height:1.3}

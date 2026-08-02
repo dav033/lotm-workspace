@@ -5,8 +5,8 @@ import path from 'node:path'
 import test from 'node:test'
 import { Client } from '@modelcontextprotocol/sdk/client/index.js'
 import { InMemoryTransport } from '@modelcontextprotocol/sdk/inMemory.js'
-import { createCardsMcpServer } from './mcp'
-import { CardRepository } from './repository'
+import { createCardsMcpServer } from './createServer'
+import { CardRepository } from '../server/repository'
 
 test('expone herramientas MCP para guardar y consultar cartas', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-mcp-'))

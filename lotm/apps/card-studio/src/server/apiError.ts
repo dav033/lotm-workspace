@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 
 // Un error de validacion acaba mostrandose en el editor, asi que se traduce a
 // texto legible en vez del volcado JSON de issues que trae ZodError.message.

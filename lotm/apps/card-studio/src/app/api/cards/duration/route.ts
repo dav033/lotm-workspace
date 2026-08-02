@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { cardsRepository } from '@/server/cardsDb'
 import { badRequest } from '@/server/apiError'
-import { MAX_CARD_DURATION, MIN_CARD_DURATION } from '@/cards/repository'
+import { MAX_CARD_DURATION, MIN_CARD_DURATION } from '@/server/repository'
 
 export const runtime = 'nodejs'
 

@@ -2,7 +2,7 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   // El estudio conserva sus módulos nativos fuera del bundle de Next.
-  serverExternalPackages: ['better-sqlite3', 'ffmpeg-static'],
+  serverExternalPackages: ['better-sqlite3', 'ffmpeg-static', 'react-dom'],
 }
 
 export default nextConfig

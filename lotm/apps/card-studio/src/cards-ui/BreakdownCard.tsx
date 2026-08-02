@@ -1,19 +1,20 @@
 import React, { forwardRef } from 'react'
-import { parseSequenceReach } from '../sequencePips'
-import { titleSizeClass } from '../titleFit'
-import { useBackgroundDrop } from '../useBackgroundDrop'
+import { parseSequenceReach } from '../domain/sequencePips'
+import { titleSizeClass } from '../domain/titleFit'
+import { useBackgroundDrop } from './useBackgroundDrop'
+import type { CardUiProps } from './types'
 
 const SEQUENCES = 10
 
 // El kicker suele venir como "Authority · Seq 1→0": la parte previa al primer
 // separador es la etiqueta del chip y el resto queda a la derecha, como en la
 // ficha del diseño.
-function splitKicker(kicker) {
+function splitKicker(kicker: string) {
   const [head, ...rest] = (kicker || '').split('·')
   return { chip: head.trim(), aside: rest.join('·').trim() }
 }
 
-function Section({ label, text, highlight }) {
+function Section({ label, text, highlight }: CardUiProps) {
   return (
     <div className={'breakdown-section' + (highlight ? ' breakdown-edge' : '')}>
       <span className="breakdown-label">{label}</span>
@@ -22,8 +23,8 @@ function Section({ label, text, highlight }) {
   )
 }
 
-const BreakdownCard = forwardRef(function BreakdownCard(
-  { kicker, title, does, doesNot, edgeLabel, edgeText, backgroundImage = null, backgroundOpacity = 65, onDropBackground },
+const BreakdownCard = forwardRef<HTMLElement, CardUiProps>(function BreakdownCard(
+  { kicker, title, does, doesNot, edgeLabel, edgeText, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -37,7 +38,7 @@ const BreakdownCard = forwardRef(function BreakdownCard(
       className={'ficha breakdown-card' + (dense ? ' dense' : '') + (dragging ? ' dragover' : '')}
       id="card"
       ref={ref}
-      style={{ '--background-opacity': backgroundOpacity / 100 }}
+      style={{ '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
       aria-label={`${title || 'Breakdown'} concept card`}
       {...dropProps}
     >

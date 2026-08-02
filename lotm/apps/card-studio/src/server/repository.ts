@@ -1,7 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
-import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import {
   CardContentSchema,
@@ -11,7 +10,8 @@ import {
   type SaveCardBatchInput,
   slugify,
   titleForCard,
-} from './schema'
+} from '../domain/schema'
+import { resolveWorkspacePath } from './paths'
 
 type UniverseRow = {
   id: string
@@ -128,8 +128,7 @@ export type CardLibrary = Array<{
 }>
 
 export function resolveCardsDbPath(): string {
-  const workspaceDataDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../data')
-  return path.resolve(process.env.CARDS_DB_PATH || path.join(workspaceDataDir, 'cards.db'))
+  return resolveWorkspacePath(process.env.CARDS_DB_PATH, 'data/cards.db')
 }
 
 export class CardRepository {
@@ -709,7 +708,7 @@ const DURATION_COLUMNS = `
 // Imagenes que se importan tal cual, sin convertirse en carta: no se editan,
 // solo se ordenan y se exportan. Cuelgan del universo (el "proyecto") y no de
 // una parte, porque no participan en la numeracion de las cartas.
-// Mismos limites que src/cards/video.ts. Se repiten aqui en vez de importarlos
+// Mismos limites que src/server/video.ts. Se repiten aqui en vez de importarlos
 // porque ese modulo arrastra ffmpeg-static, y el repositorio lo usan el MCP y
 // los scripts, que no tienen por que cargar un binario de 50 MB.
 export const MIN_CARD_DURATION = 0.5

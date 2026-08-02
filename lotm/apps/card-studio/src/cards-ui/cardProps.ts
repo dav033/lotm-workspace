@@ -1,0 +1,270 @@
+import {
+  PATH_NAMES,
+  PATHWAY_COLORS,
+  PATHWAYS,
+  TIER_RANKS,
+  powerTier,
+  tierColor,
+  type Pathway,
+} from '../domain/pathways'
+import { PATHWAY_BACKGROUNDS } from '../domain/pathwayBackgrounds'
+import { PATHWAY_ICONS } from '../domain/pathwayIcons'
+import type { BuilderCardState, CardContent } from '../domain/schema'
+import { toBuilderCardState } from '../domain/schema'
+import type { CardUiProps } from './types'
+
+export type CardKind =
+  | 'Character'
+  | 'Artifact'
+  | 'Cover'
+  | 'Full Image Cover'
+  | 'Tier'
+  | 'Pathway'
+  | 'Tier Explanation'
+  | 'General Explanation'
+  | 'Pathway Explanation'
+  | 'Breakdown'
+  | 'Map'
+  | 'Tarot Member'
+
+export type CardViewHandlers = {
+  onUploadImage?: (file: File | undefined, field?: string) => void
+  onDropImages?: (files: File[]) => void
+  onDropBackground?: (file: File) => void
+}
+
+export type CardPropsResult = {
+  kind: CardKind
+  props: CardUiProps
+}
+
+function asPathway(value: string | null | undefined): Pathway | null {
+  return value && value in PATHWAYS ? value as Pathway : null
+}
+
+function background(value: string | null | undefined, fallback: string | null): string | null {
+  return value || fallback
+}
+
+export function cardPropsFromBuilderState(
+  state: BuilderCardState,
+  handlers: CardViewHandlers = {},
+): CardPropsResult {
+  if (state.type === 'Cover') {
+    return {
+      kind: 'Cover',
+      props: {
+        image1: state.coverImage1,
+        image2: state.coverImage2,
+        title: state.coverTitle,
+        part: state.coverPartNum,
+        onUploadImage: handlers.onUploadImage,
+      },
+    }
+  }
+
+  if (state.type === 'Full Image Cover') {
+    return {
+      kind: 'Full Image Cover',
+      props: {
+        image: state.fullCoverImage,
+        title: state.fullCoverTitle,
+        onUploadImage: handlers.onUploadImage,
+      },
+    }
+  }
+
+  if (state.type === 'Tier') {
+    const path = asPathway(state.tierPath) ?? 'Fool'
+    const rank = state.tierRank in TIER_RANKS ? state.tierRank : 'S'
+    const tierSequence = state.tierSeq
+    const sequence = typeof tierSequence === 'number' && Number.isInteger(tierSequence) && tierSequence >= 0 && tierSequence <= 9
+      ? tierSequence
+      : null
+    return {
+      kind: 'Tier',
+      props: {
+        path,
+        icon: PATHWAY_ICONS[path],
+        sequence,
+        sequenceName: sequence === null ? null : PATHWAYS[path][9 - sequence],
+        rank,
+        tier: TIER_RANKS[rank as keyof typeof TIER_RANKS],
+        text: state.tierText || '',
+        footerText: state.tierFooterText || '',
+        backgroundImage: background(state.tierBackgroundImage, PATHWAY_BACKGROUNDS[path]),
+        backgroundOpacity: state.backgroundOpacity,
+      },
+    }
+  }
+
+  if (state.type === 'Pathway') {
+    const path = asPathway(state.pathwayCardPath) ?? 'Fool'
+    const pathwaySequence = state.pathwayCardSeq
+    const sequence = typeof pathwaySequence === 'number' && Number.isInteger(pathwaySequence) && pathwaySequence >= 0 && pathwaySequence <= 9
+      ? pathwaySequence
+      : null
+    return {
+      kind: 'Pathway',
+      props: {
+        path,
+        icon: PATHWAY_ICONS[path],
+        sequence,
+        sequenceName: sequence === null ? null : PATHWAYS[path][9 - sequence],
+        tier: PATHWAY_COLORS[path],
+        text: state.pathwayCardText || '',
+        footerText: state.pathwayCardFooterText || '',
+        backgroundImage: background(state.pathwayCardBackgroundImage, PATHWAY_BACKGROUNDS[path]),
+        backgroundOpacity: state.backgroundOpacity,
+      },
+    }
+  }
+
+  if (state.type === 'Tier Explanation') {
+    const rank = state.tierRank in TIER_RANKS ? state.tierRank : 'S'
+    return {
+      kind: 'Tier Explanation',
+      props: {
+        rank,
+        tier: TIER_RANKS[rank as keyof typeof TIER_RANKS],
+        description: state.tierExplanationText || '',
+        backgroundImage: state.tierExplanationBackgroundImage,
+        backgroundOpacity: state.backgroundOpacity,
+        scope: 'All pathways',
+      },
+    }
+  }
+
+  if (state.type === 'General Explanation') {
+    const pathway = asPathway(state.explanationPath)
+    return {
+      kind: 'General Explanation',
+      props: {
+        title: state.generalExplanationTitle || '',
+        description: state.generalExplanationText || '',
+        scope: pathway ?? 'All pathways',
+        pathway,
+        icon: pathway ? PATHWAY_ICONS[pathway] : null,
+        backgroundImage: background(
+          state.generalExplanationBackgroundImage,
+          pathway ? PATHWAY_BACKGROUNDS[pathway] : null,
+        ),
+        backgroundOpacity: state.backgroundOpacity,
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  if (state.type === 'Pathway Explanation') {
+    const pathway = asPathway(state.pathwayExplanationPath) ?? 'Fool'
+    return {
+      kind: 'Pathway Explanation',
+      props: {
+        pathway,
+        index: PATH_NAMES.indexOf(pathway) + 1,
+        total: PATH_NAMES.length,
+        title: state.pathwayExplanationTitle || '',
+        description: state.pathwayExplanationText || '',
+        backgroundImage: background(
+          state.pathwayExplanationBackgroundImage,
+          PATHWAY_BACKGROUNDS[pathway],
+        ),
+        backgroundOpacity: state.backgroundOpacity,
+        tier: PATHWAY_COLORS[pathway],
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  if (state.type === 'Breakdown') {
+    return {
+      kind: 'Breakdown',
+      props: {
+        kicker: state.breakdownKicker || '',
+        title: state.breakdownTitle || '',
+        does: state.breakdownDoes || '',
+        doesNot: state.breakdownDoesNot || '',
+        edgeLabel: state.breakdownEdgeLabel || 'Edge',
+        edgeText: state.breakdownEdgeText || '',
+        backgroundImage: state.breakdownBackgroundImage,
+        backgroundOpacity: state.backgroundOpacity,
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  if (state.type === 'Map') {
+    const pathway = asPathway(state.mapPathway)
+    return {
+      kind: 'Map',
+      props: {
+        title: state.mapTitle || '',
+        entriesText: state.mapEntriesText || '',
+        footerText: state.mapFooterText || '',
+        pathway,
+        tier: pathway ? PATHWAY_COLORS[pathway] : null,
+        backgroundImage: background(
+          state.mapBackgroundImage,
+          pathway ? PATHWAY_BACKGROUNDS[pathway] : null,
+        ),
+        backgroundOpacity: state.backgroundOpacity,
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  if (state.type === 'Tarot Member') {
+    const pathway = asPathway(state.tarotMemberPathway)
+    return {
+      kind: 'Tarot Member',
+      props: {
+        variant: state.tarotMemberVariant,
+        name: state.tarotMemberName,
+        tarotTitle: state.tarotMemberTitle,
+        description: state.tarotMemberDescription,
+        detailLabel: state.tarotMemberDetailLabel,
+        detailText: state.tarotMemberDetailText,
+        footerText: state.tarotMemberFooterText,
+        image: background(state.tarotMemberImage, pathway ? PATHWAY_BACKGROUNDS[pathway] : null),
+        backgroundOpacity: state.backgroundOpacity,
+        tier: pathway ? PATHWAY_COLORS[pathway] : null,
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  const sequences = [
+    { path: asPathway(state.path), seq: state.seq },
+    ...(state.hasSecond ? [{ path: asPathway(state.path2), seq: state.seq2 }] : []),
+  ]
+    .filter((item): item is { path: Pathway; seq: number } => Boolean(item.path))
+    .map(({ path, seq }) => ({
+      path,
+      seq,
+      rank: PATHWAYS[path][9 - seq],
+      icon: PATHWAY_ICONS[path],
+      tier: tierColor(seq),
+    }))
+  const isCharacter = state.type === 'Character'
+  const baseValue = isCharacter ? state.power : state.grade
+  const powerValue = baseValue + (state.mod.trim() ? ' (' + state.mod.trim() + ')' : '')
+  return {
+    kind: state.type,
+    props: {
+      name: state.name,
+      image: state.image,
+      accent: powerTier(state.type, state.power, state.grade),
+      sequences,
+      pathLabel: [...new Set(sequences.map((item) => item.path))].join(' · '),
+      dom: state.dom,
+      powerLabel: isCharacter ? 'Power' : 'Grade',
+      powerValue,
+      onUploadImage: handlers.onUploadImage,
+      onDropImages: handlers.onDropImages,
+    },
+  }
+}
+
+export function cardPropsFromContent(content: CardContent, handlers: CardViewHandlers = {}): CardPropsResult {
+  return cardPropsFromBuilderState(toBuilderCardState(content), handlers)
+}

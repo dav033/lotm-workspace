@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server'
 import { badRequest } from '@/server/apiError'
-import { slugify } from '@/cards/schema'
+import { slugify } from '@/domain/schema'
 import {
   clampSeconds,
   createVideoFromFrames,
   DEFAULT_SECONDS_PER_CARD,
   VIDEO_FORMATS,
   type VideoFormat,
-} from '@/cards/video'
+} from '@/server/video'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -18,7 +18,7 @@ const MAX_FRAMES = 200
 const MAX_TOTAL_BYTES = 256 * 1024 * 1024
 
 // Recibe los fotogramas ya capturados por el editor y devuelve el MP4. El
-// render no ocurre aqui: ver el comentario de src/cards/video.ts.
+// render no ocurre aqui: ver el comentario de src/server/video.ts.
 export async function POST(request: Request) {
   let frames: Uint8Array[]
   let seconds: number

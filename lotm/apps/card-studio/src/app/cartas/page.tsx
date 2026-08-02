@@ -1,11 +1,10 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import '@/builder/styles.css'
+import '@/cards-ui/styles/index.css'
 
-// El generador usa IndexedDB, html2canvas y drag & drop: solo tiene sentido en
-// el navegador, así que se desactiva el prerender del árbol completo.
-const BuilderApp = dynamic(() => import('@/builder/App.jsx'), {
+// El editor usa APIs del navegador y solo tiene sentido en el cliente.
+const BuilderApp = dynamic(() => import('@/editor/EditorApp'), {
   ssr: false,
   loading: () => <div className="app-loading">Loading your cards…</div>,
 })

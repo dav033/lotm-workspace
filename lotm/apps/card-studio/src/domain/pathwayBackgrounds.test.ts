@@ -2,8 +2,8 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs'
 import path from 'node:path'
 import test from 'node:test'
-import { PATH_NAMES } from './pathways.js'
-import { PATHWAY_BACKGROUNDS } from './pathwayBackgrounds.js'
+import { PATH_NAMES } from './pathways'
+import { PATHWAY_BACKGROUNDS } from './pathwayBackgrounds'
 
 test('asocia fondos existentes para los 22 pathways', () => {
   const backgrounds = PATHWAY_BACKGROUNDS as Record<string, string>

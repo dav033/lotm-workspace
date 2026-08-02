@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
-import { parseTierText } from '../tierText'
+import { parseTierText } from '../domain/tierText'
+import type { CardUiProps } from './types'
 
 // Tierlist slide: one pathway per slide, with a compact identity summary and
 // the remaining space reserved for explanation points.
-const TierCard = forwardRef(function TierCard(
-  { path, icon, sequence, sequenceName, rank, tier, text, footerText = '', backgroundImage = null, backgroundOpacity = 65 },
+const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
+  { path, icon, sequence, sequenceName, rank, tier, text, footerText = '', backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
@@ -22,7 +23,7 @@ const TierCard = forwardRef(function TierCard(
       className="tier-card"
       id="card"
       ref={ref}
-      style={cardStyle}
+      style={cardStyle as React.CSSProperties}
       aria-label={`${path}${sequence === null ? ' pathway' : ` sequence ${sequence} ${sequenceName}`}, tier ${rank}`}
     >
       {backgroundImage && (

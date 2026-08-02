@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { useState } from 'react'
-import LiveCardPreview from '../LiveCardPreview.jsx'
-import DurationBadge from './DurationBadge.jsx'
+import CardView from '../../cards-ui/CardView'
+import DurationBadge from './DurationBadge'
 
 // Horizontal strip of saved cards (Canva-style "pages"). Click to edit, drag a
 // thumbnail onto another to reorder, "+" to add a new card.
@@ -136,7 +138,7 @@ export default function Filmstrip({
                 >
                   <span className="film-no">{i + 1}</span>
                   <div className="film-preview">
-                    <LiveCardPreview state={item.state} />
+                    <CardView state={item.state} />
                   </div>
                   {/* Mismo camino que el arrastre, pero de a un paso: cambiar el
                       orden no deberia obligar a acertarle a un blanco de 78px. */}
@@ -209,7 +211,7 @@ export default function Filmstrip({
   )
 }
 
-// Tiene que coincidir con los limites de src/cards/video.ts; el servidor los
+// Tiene que coincidir con los limites de src/server/video.ts; el servidor los
 // valida igual, esto solo evita mandar un valor que va a rebotar.
 const DEFAULT_SECONDS = 4
 const MIN_SECONDS = 0.5
@@ -232,3 +234,4 @@ function formatDuration(total) {
   const seconds = rounded % 60
   return minutes ? `${minutes}m ${seconds}s` : `${seconds}s`
 }
+// @ts-nocheck

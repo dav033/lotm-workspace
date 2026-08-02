@@ -1,0 +1,15 @@
+export const STYLE_FILES = [
+  'base.css',
+  'standard.css',
+  'cover.css',
+  'full-image-cover.css',
+  'tier.css',
+  'pathway.css',
+  'explanation.css',
+  'ficha.css',
+  'breakdown.css',
+  'map.css',
+  'tarot-member.css',
+  'editor.css',
+  'live.css',
+] as const

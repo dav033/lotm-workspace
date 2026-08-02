@@ -1,16 +1,16 @@
-import React, { forwardRef, useState } from 'react'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { forwardRef } from 'react'
+import type { CardUiProps } from './types'
 
-const Card = forwardRef(function Card(
-  { name, image, accent, sequences, pathLabel, dom, powerLabel, powerValue, onUploadImage, onDropImages },
+const Card = forwardRef<HTMLDivElement, CardUiProps>(function Card(
+  { name, image, accent, sequences, pathLabel, dom, powerLabel, powerValue, onUploadImage, onDropImages }: CardUiProps,
   ref
 ) {
   const cardStyle = { '--tier': accent.c, '--tier-deep': accent.d }
-  const [dragging, setDragging] = useState(false)
   const dual = sequences.length > 1
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault()
-    setDragging(false)
     const files = [...e.dataTransfer.files].filter((f) => f.type.startsWith('image/'))
     if (!files.length) return
     // Multiple images -> one card per image; a single image fills this card.
@@ -19,29 +19,29 @@ const Card = forwardRef(function Card(
   }
 
   return (
-    <div className="card" id="card" ref={ref} style={cardStyle}>
+    <div className="card" id="card" ref={ref} style={cardStyle as React.CSSProperties}>
       <div className="frame" />
       <div className="scanlines" />
       <div className="content">
         <div className="name">{(name || ' ').toUpperCase()}</div>
 
         <div
-          className={'imgwrap' + (image ? '' : ' empty') + (dragging ? ' dragover' : '')}
+          className={'imgwrap' + (image ? '' : ' empty')}
           style={image ? { backgroundImage: `url("${image}")` } : undefined}
-          onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-          onDragLeave={(e) => { e.preventDefault(); setDragging(false) }}
+          onDragOver={(e) => { e.preventDefault() }}
+          onDragLeave={(e) => { e.preventDefault() }}
           onDrop={handleDrop}
         >
           {!image && (
             <span className="ph">
-              {dragging ? 'Drop image(s) here' : 'Drop or upload image — drop several to batch-create cards'}
+              Drop or upload image — drop several to batch-create cards
             </span>
           )}
           <span className="scan" />
         </div>
 
         <div className={'seqhero' + (dual ? ' dual' : '')}>
-          {sequences.map((s, i) => (
+          {sequences.map((s: any, i: number) => (
             <div className="seqitem" key={i}>
               <div className="num" style={{ color: s.tier.c, textShadow: `0 0 26px ${s.tier.d}` }}>
                 {s.seq}

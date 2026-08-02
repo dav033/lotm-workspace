@@ -1,0 +1,74 @@
+/* ================= EXPLANATION CARDS ================= */
+.explanation-card{
+  position:relative;width:480px;height:640px;flex:0 0 auto;overflow:hidden;
+  border:1px solid var(--line2);padding:28px;
+  background:
+    radial-gradient(110% 70% at 50% -5%,rgba(255,255,255,.055),transparent 62%),
+    radial-gradient(130% 85% at 50% 112%,var(--tier-deep,#3f351d),transparent 58%),
+    #0a0a11;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 70px -30px rgba(0,0,0,.9)
+}
+.explanation-content{position:relative;z-index:3;width:100%;height:100%;display:flex;
+  flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:0}
+.explanation-tier{font-family:'Cinzel',serif;font-size:268px;font-weight:900;line-height:1.2;
+  color:var(--tier);letter-spacing:-.06em;text-shadow:0 0 64px var(--tier-deep);
+  margin-top:-45px}
+.tier-explanation-rule{width:42px;height:2px;margin:80px auto 22px;
+  background:var(--tier);box-shadow:0 0 12px var(--tier-deep)}
+.tier-explanation-description{max-width:29ch;font-size:18px;line-height:1.55;
+  color:var(--text);white-space:pre-line;overflow-wrap:anywhere}
+
+.general-explanation-card{--tier:#d9b869;--tier-deep:#4a3a17}
+/* Esta carta se alinea a la izquierda; .explanation-content centra porque lo
+   comparte con la carta de Tier Explanation. */
+.general-explanation-content{padding:54px 34px 30px;align-items:flex-start;
+  justify-content:flex-start;text-align:left}
+/* Cabecera con el simbolo del pathway, solo en explicaciones de uno concreto. */
+.general-explanation-pathway{flex:0 0 auto;display:flex;align-items:center;gap:12px;
+  margin-bottom:18px}
+.general-explanation-icon{width:44px;height:44px;object-fit:contain;
+  filter:drop-shadow(0 0 12px var(--tier-deep))}
+.general-explanation-pathname{font-family:'Cinzel',serif;font-size:15px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--tier)}
+
+/* El titulo ocupa el ancho de la carta: antes un max-width de 10ch lo partia en
+   varias lineas aunque cupiera de sobra. */
+.general-explanation-title{font-family:'Cinzel',serif;font-size:34px;font-weight:900;
+  line-height:1.14;color:#fff;overflow-wrap:anywhere;
+  text-shadow:-1px 0 rgba(255,40,90,.28),1px 0 rgba(40,170,255,.28)}
+/* flex:0 0 auto o el flex-shrink del contenedor en columna la aplasta a 0. */
+.general-explanation-rule{flex:0 0 auto;width:96px;height:3px;margin:14px 0 26px;
+  background:var(--tier);box-shadow:0 0 14px var(--tier-deep)}
+.general-explanation-body{display:flex;flex-direction:column;gap:18px}
+.general-explanation-description{font-size:17px;line-height:1.62;color:var(--text);
+  white-space:pre-line;overflow-wrap:anywhere}
+/* ponytail: dos tamanos fijos, no ajuste automatico. Cubre el rango util; con
+   mucho mas texto del que cabe, la carta recorta (overflow:hidden). */
+.general-explanation-card.dense .general-explanation-content{padding:38px 34px 26px}
+.general-explanation-card.dense .general-explanation-pathway{gap:10px;margin-bottom:12px}
+.general-explanation-card.dense .general-explanation-icon{width:34px;height:34px}
+.general-explanation-card.dense .general-explanation-pathname{font-size:13px}
+.general-explanation-card.dense .general-explanation-title{font-size:26px;line-height:1.16}
+.general-explanation-card.dense .general-explanation-rule{margin:12px 0 20px;width:80px;height:2px}
+.general-explanation-card.dense .general-explanation-body{gap:13px}
+.general-explanation-card.dense .general-explanation-description{font-size:14px;line-height:1.5}
+
+/* ================= PATHWAY EXPLANATION (ficha: el gancho del carrusel) ================= */
+.pathway-explanation-card{padding:32px 30px 40px;display:flex;flex-direction:column}
+.pathway-explanation-content{position:relative;z-index:3;display:flex;flex-direction:column;
+  height:100%;min-height:0;text-align:left}
+.pathway-explanation-head{flex:0 0 auto;display:flex;align-items:center;
+  justify-content:space-between;gap:12px}
+.pathway-explanation-chip{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#0a0a0b;background:var(--tier);
+  padding:6px 10px;border-radius:4px;white-space:nowrap}
+.pathway-explanation-counter{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#8a8579;font-variant-numeric:tabular-nums}
+/* El gancho manda: el titulo se centra en el hueco libre. margin auto y no flex,
+   porque un h2 flex convierte cada trozo de texto y el <span> dorado en items
+   en fila y descuartiza la frase en columnas. */
+.pathway-explanation-title{flex:0 0 auto;margin:auto 0}
+.pathway-explanation-highlight{color:var(--tier)}
+.pathway-explanation-description{flex:0 0 auto;font-size:21px;font-weight:600;line-height:1.35;
+  color:#eeeae0;white-space:pre-line;overflow-wrap:anywhere;text-wrap:pretty}
+.pathway-explanation-rule{flex:0 0 auto;width:106px;height:4px;margin-top:22px;background:var(--tier)}

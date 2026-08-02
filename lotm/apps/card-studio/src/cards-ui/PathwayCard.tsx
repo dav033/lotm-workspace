@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
-import { parseTierText } from '../tierText'
+import { parseTierText } from '../domain/tierText'
+import type { CardUiProps } from './types'
 
 // Same layout as TierCard, minus the tier-rank signaling: no "Tier" label, no
 // rank letter. Accent color comes from PATHWAY_COLORS instead of TIER_RANKS.
-const PathwayCard = forwardRef(function PathwayCard(
-  { path, icon, sequence, sequenceName, text, footerText = '', backgroundImage = null, backgroundOpacity = 65, tier },
+const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
+  { path, icon, sequence, sequenceName, text, footerText = '', backgroundImage = null, backgroundOpacity = 65, tier }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
@@ -22,7 +23,7 @@ const PathwayCard = forwardRef(function PathwayCard(
       className="pathway-card"
       id="card"
       ref={ref}
-      style={cardStyle}
+      style={cardStyle as React.CSSProperties}
       aria-label={`${path}${sequence === null ? ' pathway' : ` sequence ${sequence} ${sequenceName}`}`}
     >
       {backgroundImage && (

@@ -8,11 +8,11 @@ import {
   SaveCardBatchSchema,
   SaveCardImageSchema,
   UpdateCardSchema,
-} from './schema'
-import { storeCardImage } from './images'
-import { exportCardsToZip } from './export'
-import { openBrowserOnce } from './openBrowser'
-import type { CardRepository, StoredCard } from './repository'
+} from '../domain/schema'
+import { storeCardImage } from '../server/images'
+import { exportCardsToZip } from '../server/export'
+import { openBrowserOnce } from '../server/openBrowser'
+import type { CardRepository, StoredCard } from '../server/repository'
 
 type McpOptions = {
   repository: CardRepository

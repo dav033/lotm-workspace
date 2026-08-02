@@ -1,36 +1,32 @@
-import React, { forwardRef, useRef, useState } from 'react'
+import React, { forwardRef } from 'react'
+import type { CardUiProps } from './types'
 
 const coverDefaultImage = '/cover-default.jpg'
 
 // A dropzone that fills with an uploaded image; drag & drop or click to upload.
-function CoverSlot({ image, field, onUploadImage, placeholder, className = '', children }) {
-  const [dragging, setDragging] = useState(false)
-  const fileRef = useRef(null)
-
-  const handleDrop = (e) => {
+function CoverSlot({ image, field, onUploadImage, placeholder, className = '', children }: CardUiProps) {
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault()
-    setDragging(false)
     const file = [...e.dataTransfer.files].find((f) => f.type.startsWith('image/'))
     if (file) onUploadImage(file, field)
   }
 
   return (
     <div
-      className={'cover-slot' + (image ? '' : ' empty') + (dragging ? ' dragover' : '') + ' ' + className}
+      className={'cover-slot' + (image ? '' : ' empty') + ' ' + className}
       style={image ? { backgroundImage: `url("${image}")` } : undefined}
-      onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
-      onDragLeave={(e) => { e.preventDefault(); setDragging(false) }}
+      onDragOver={(e) => { e.preventDefault() }}
+      onDragLeave={(e) => { e.preventDefault() }}
       onDrop={handleDrop}
-      onClick={() => fileRef.current?.click()}
+      onClick={(e) => e.currentTarget.querySelector<HTMLInputElement>('input')?.click()}
     >
-      {!image && <span className="cover-ph">{dragging ? 'Drop image here' : placeholder}</span>}
+      {!image && <span className="cover-ph">{placeholder}</span>}
       <input
-        ref={fileRef}
         type="file"
         accept="image/*"
         style={{ display: 'none' }}
         onClick={(e) => e.stopPropagation()}
-        onChange={(e) => onUploadImage(e.target.files[0], field)}
+        onChange={(e) => onUploadImage(e.target.files?.[0], field)}
       />
       {children}
     </div>
@@ -40,7 +36,7 @@ function CoverSlot({ image, field, onUploadImage, placeholder, className = '', c
 // "Lord of Mysteries" is this app's one constant crossover partner, so only
 // the other series' title and the part number are ever user input — every
 // other word in the text block is fixed.
-const CoverCard = forwardRef(function CoverCard({ image1, image2, title, part, onUploadImage }, ref) {
+const CoverCard = forwardRef<HTMLDivElement, CardUiProps>(function CoverCard({ image1, image2, title, part, onUploadImage }: CardUiProps, ref) {
   return (
     <div className="cover-card" id="card" ref={ref}>
       <CoverSlot

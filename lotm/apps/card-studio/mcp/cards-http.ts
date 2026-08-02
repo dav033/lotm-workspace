@@ -3,9 +3,9 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createMcpExpressApp } from '@modelcontextprotocol/sdk/server/express.js'
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js'
-import { CardRepository } from '../src/cards/repository'
-import { resolveCardExportDir } from '../src/cards/export'
-import { createCardsMcpServer } from '../src/cards/mcp'
+import { CardRepository } from '../src/server/repository'
+import { resolveCardExportDir } from '../src/server/export'
+import { createCardsMcpServer } from '../src/mcp/createServer'
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const workspaceRoot = path.resolve(appRoot, '../..')

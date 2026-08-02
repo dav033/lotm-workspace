@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
-import { z } from 'zod/v4'
+import { z } from 'zod'
 import { cardsRepository } from '@/server/cardsDb'
 import { badRequest } from '@/server/apiError'
-import { storeCardImage } from '@/cards/images'
+import { storeCardImage } from '@/server/images'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'

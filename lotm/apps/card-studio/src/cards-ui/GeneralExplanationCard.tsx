@@ -1,11 +1,12 @@
 import React, { forwardRef } from 'react'
-import { useBackgroundDrop } from '../useBackgroundDrop'
+import { useBackgroundDrop } from './useBackgroundDrop'
+import type { CardUiProps } from './types'
 
-const GeneralExplanationCard = forwardRef(function GeneralExplanationCard(
+const GeneralExplanationCard = forwardRef<HTMLElement, CardUiProps>(function GeneralExplanationCard(
   {
     title, description, scope, pathway = null, icon = null,
     backgroundImage = null, backgroundOpacity = 65, onDropBackground,
-  },
+  }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -14,7 +15,7 @@ const GeneralExplanationCard = forwardRef(function GeneralExplanationCard(
   // conservan (white-space:pre-line), asi que una lista sigue viendose como tal.
   const paragraphs = (description || 'Add the explanation in the editor panel.')
     .split(/\n\s*\n/)
-    .map((block) => block.trim())
+    .map((block: string) => block.trim())
     .filter(Boolean)
 
   return (
@@ -22,7 +23,7 @@ const GeneralExplanationCard = forwardRef(function GeneralExplanationCard(
       className={'explanation-card general-explanation-card' + (dense ? ' dense' : '') + (dragging ? ' dragover' : '')}
       id="card"
       ref={ref}
-      style={{ '--background-opacity': backgroundOpacity / 100 }}
+      style={{ '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
       aria-label={`${title || 'General explanation'} for ${scope}`}
       {...dropProps}
     >
@@ -58,7 +59,7 @@ const GeneralExplanationCard = forwardRef(function GeneralExplanationCard(
         <h2 className="general-explanation-title">{title || 'Explanation title'}</h2>
         <div className="general-explanation-rule" aria-hidden="true" />
         <div className="general-explanation-body">
-          {paragraphs.map((block, index) => (
+          {paragraphs.map((block: string, index: number) => (
             <p className="general-explanation-description" key={index}>{block}</p>
           ))}
         </div>

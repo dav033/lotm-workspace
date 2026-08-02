@@ -1,0 +1,43 @@
+import React, { forwardRef } from 'react'
+import Card from './Card'
+import CoverCard from './CoverCard'
+import FullImageCoverCard from './FullImageCoverCard'
+import TierCard from './TierCard'
+import PathwayCard from './PathwayCard'
+import TierExplanationCard from './TierExplanationCard'
+import GeneralExplanationCard from './GeneralExplanationCard'
+import PathwayExplanationCard from './PathwayExplanationCard'
+import BreakdownCard from './BreakdownCard'
+import MapCard from './MapCard'
+import TarotMemberCard from './TarotMemberCard'
+import { cardPropsFromBuilderState, type CardViewHandlers } from './cardProps'
+import type { BuilderCardState } from '../domain/schema'
+
+export type CardViewProps = CardViewHandlers & {
+  state: BuilderCardState
+}
+
+const CardView = forwardRef<HTMLElement, CardViewProps>(function CardView(
+  { state, onUploadImage, onDropImages, onDropBackground },
+  ref,
+) {
+  const { kind, props } = cardPropsFromBuilderState(state, {
+    onUploadImage,
+    onDropImages,
+    onDropBackground,
+  })
+
+  if (kind === 'Cover') return <CoverCard {...props} ref={ref as React.Ref<HTMLDivElement>} />
+  if (kind === 'Full Image Cover') return <FullImageCoverCard {...props} ref={ref} />
+  if (kind === 'Tier') return <TierCard {...props} ref={ref} />
+  if (kind === 'Pathway') return <PathwayCard {...props} ref={ref} />
+  if (kind === 'Tier Explanation') return <TierExplanationCard {...props} ref={ref} />
+  if (kind === 'General Explanation') return <GeneralExplanationCard {...props} ref={ref} />
+  if (kind === 'Pathway Explanation') return <PathwayExplanationCard {...props} ref={ref} />
+  if (kind === 'Breakdown') return <BreakdownCard {...props} ref={ref} />
+  if (kind === 'Map') return <MapCard {...props} ref={ref} />
+  if (kind === 'Tarot Member') return <TarotMemberCard {...props} ref={ref} />
+  return <Card {...props} ref={ref as React.Ref<HTMLDivElement>} />
+})
+
+export default CardView

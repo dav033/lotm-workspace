@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react'
+import type { CardUiProps } from './types'
 
-const TierExplanationCard = forwardRef(function TierExplanationCard(
-  { rank, tier, description, scope, backgroundImage = null, backgroundOpacity = 65 },
+const TierExplanationCard = forwardRef<HTMLElement, CardUiProps>(function TierExplanationCard(
+  { rank, tier, description, scope, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
   ref,
 ) {
   const cardStyle = {
@@ -14,7 +15,7 @@ const TierExplanationCard = forwardRef(function TierExplanationCard(
       className="explanation-card tier-explanation-card"
       id="card"
       ref={ref}
-      style={cardStyle}
+      style={cardStyle as React.CSSProperties}
       aria-label={`Tier ${rank} explanation for ${scope}`}
     >
       {backgroundImage && (

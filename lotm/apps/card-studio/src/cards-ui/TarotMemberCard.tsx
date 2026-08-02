@@ -1,12 +1,13 @@
 import React, { forwardRef } from 'react'
-import { titleSizeClass } from '../titleFit'
-import { useBackgroundDrop } from '../useBackgroundDrop'
+import { titleSizeClass } from '../domain/titleFit'
+import { useBackgroundDrop } from './useBackgroundDrop'
+import type { CardUiProps } from './types'
 
-const TarotMemberCard = forwardRef(function TarotMemberCard(
+const TarotMemberCard = forwardRef<HTMLElement, CardUiProps>(function TarotMemberCard(
   {
     variant = 'Portrait', name, tarotTitle, description, detailLabel, detailText,
     footerText, image = null, backgroundOpacity = 65, tier = null, onDropBackground,
-  },
+  }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -21,7 +22,7 @@ const TarotMemberCard = forwardRef(function TarotMemberCard(
       className={`ficha tarot-member-card tarot-member-${mode.toLowerCase()}${dragging ? ' dragover' : ''}`}
       id="card"
       ref={ref}
-      style={style}
+      style={style as React.CSSProperties}
       aria-label={`${name || 'Tarot member'} profile`}
       {...dropProps}
     >

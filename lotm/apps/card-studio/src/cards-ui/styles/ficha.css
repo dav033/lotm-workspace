@@ -1,0 +1,27 @@
+/* ================= FICHA LANGUAGE (design 1B) =================
+   Carta coleccionable: fondo casi negro, filo dorado, Playfair para el nombre,
+   JetBrains Mono para los rotulos y Archivo para el cuerpo. Medidas tomadas del
+   documento de diseño (405x720) escaladas x4/3 a este lienzo de 540x960. */
+.ficha{
+  /* El dorado del diseño es solo el valor por defecto: una carta con pathway
+     sobreescribe --tier en linea y toda la ficha se tiñe con su color. */
+  --tier:#e3bd77; --tier-deep:#4a3a17;
+  position:relative;width:480px;height:640px;flex:0 0 auto;overflow:hidden;
+  background:#0a0a0b;border:1px solid rgba(227,189,119,.16);
+  font-family:Archivo,'Space Grotesk',system-ui,sans-serif;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 70px -30px rgba(0,0,0,.9);
+}
+.ficha-label{display:block;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:#8a8579}
+/* La talla la fija titleFit.ts segun la palabra mas larga: en Playfair 900 una
+   palabra de 11 letras no entra a 96px y el navegador la partiria por la mitad.
+   overflow-wrap queda solo de red de seguridad para un caso patologico. */
+.ficha-name{font-family:'Playfair Display',serif;font-weight:900;color:#faf7f0;
+  line-height:.9;overflow-wrap:anywhere}
+.ficha-name.xl{font-size:76px}
+.ficha-name.lg{font-size:62px}
+.ficha-name.md{font-size:52px}
+.ficha-name.sm{font-size:42px}
+/* Al arrastrar una imagen encima, la carta entera se marca como zona de suelta. */
+.ficha.dragover::after{content:'';position:absolute;inset:10px;z-index:6;pointer-events:none;
+  border:3px dashed var(--tier);border-radius:10px;background:rgba(227,189,119,.08)}

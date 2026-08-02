@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import '@/builder/styles.css'
-import LiveCardPreview from '@/builder/LiveCardPreview.jsx'
-import { toBuilderCardState, type CardContent } from '@/cards/schema'
+import '@/cards-ui/styles/index.css'
+import CardView from '@/cards-ui/CardView'
+import { toBuilderCardState, type CardContent } from '@/domain/schema'
 
 const POLL_MS = 1_000
 const FLASH_MS = 4_000
@@ -132,7 +132,7 @@ export default function CartasVivoPage() {
                       return (
                         <div key={card.id} className={'live-tile' + (isRecent ? ' flash' : '')}>
                           <div className="live-tile-inner">
-                            <LiveCardPreview state={toBuilderCardState(card.content)} />
+                            <CardView state={toBuilderCardState(card.content)} />
                           </div>
                           <span className="live-tile-title">{card.title}</span>
                         </div>

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CardContentSchema, filenameForCard, fromBuilderCardState, toBuilderCardState } from './schema'
+import { CardContentSchema, filenameForCard, fromBuilderCardState, toBuilderCardState } from './index'
 
 test('Tarot Member conserva sus tres composiciones y campos al ida y vuelta', () => {
   for (const variant of ['Portrait', 'Dossier', 'Contrast'] as const) {

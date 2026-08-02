@@ -1,8 +1,10 @@
+import type { Pathway } from './pathways'
+
 // Each of the 22 pathways mapped to its icon (filenames don't always match the
 // name). Served from /public so the paths work the same in dev and production.
-const icon = (file) => `/pathway-icons/${file}.webp`
+const icon = (file: string) => `/pathway-icons/${file}.webp`
 
-export const PATHWAY_ICONS = {
+export const PATHWAY_ICONS: Record<Pathway, string> = {
   "Fool": icon('fool'),
   "Door": icon('door'),
   "Error": icon('error'),

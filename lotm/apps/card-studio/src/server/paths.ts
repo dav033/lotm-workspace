@@ -1,0 +1,9 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const moduleDirectory = path.dirname(fileURLToPath(import.meta.url))
+export const workspaceRoot = path.resolve(moduleDirectory, '../../../..')
+
+export function resolveWorkspacePath(configuredPath: string | undefined, fallbackPath: string): string {
+  return path.resolve(workspaceRoot, configuredPath || fallbackPath)
+}

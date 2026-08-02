@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { useRef, useState } from 'react'
-import DurationBadge from './DurationBadge.jsx'
+import DurationBadge from './DurationBadge'
 
 // Bandeja de imagenes importadas. A diferencia del filmstrip de cartas, aqui
 // no se edita nada: solo se importa, se ordena, se borra y se exporta a MP4.
@@ -102,3 +104,4 @@ export default function ImageTray({
     </div>
   )
 }
+// @ts-nocheck

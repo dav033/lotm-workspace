@@ -1,0 +1,56 @@
+/* ================= CARD (exports at 960x1280) ================= */
+.card{
+  position:relative;width:480px;height:640px;flex:0 0 auto;
+  background:
+    radial-gradient(120% 75% at 50% -8%, rgba(255,255,255,.045), transparent 60%),
+    radial-gradient(135% 95% at 50% 118%, var(--tier-deep), transparent 55%),
+    #0a0a11;
+  border:1px solid var(--line2);border-radius:0;
+  padding:22px 24px 18px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 70px -30px rgba(0,0,0,.9);
+}
+.frame{position:absolute;inset:9px;border:1px solid var(--line);border-radius:12px;pointer-events:none;z-index:2}
+.scanlines{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.45;
+  background:repeating-linear-gradient(0deg,transparent 0 2px,rgba(0,0,0,.10) 2px 3px)}
+.card > .content{position:relative;z-index:3;display:flex;flex-direction:column;height:100%}
+
+.name{font-family:'Cinzel',serif;font-weight:900;line-height:.96;font-size:38px;
+  letter-spacing:.01em;color:#fff;word-break:break-word;
+  text-shadow:-1.1px 0 rgba(255,40,90,.32),1.1px 0 rgba(40,170,255,.32)}
+
+.imgwrap{flex:1 1 auto;min-height:280px;margin:12px 0;border-radius:8px;
+  border:1.5px solid var(--tier);position:relative;overflow:hidden;
+  background:#0d0d15 center/cover no-repeat}
+.imgwrap.empty{display:flex;align-items:center;justify-content:center;text-align:center;
+  border-style:dashed;border-color:var(--line2)}
+.imgwrap{transition:border-color .15s,box-shadow .15s}
+.imgwrap.dragover{border-style:dashed;border-color:var(--tier);
+  box-shadow:inset 0 0 0 9999px rgba(232,195,107,.10),0 0 0 3px rgba(232,195,107,.18)}
+.imgwrap .ph{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:0 18px}
+.imgwrap .scan{position:absolute;inset:0;pointer-events:none;opacity:.32;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.22) 3px 4px)}
+
+.seqhero{display:flex;flex-direction:column;gap:6px;margin:2px 0 12px}
+.seqhero .seqitem{display:flex;align-items:center;gap:12px}
+.seqhero .num{font-family:'Cinzel',serif;font-weight:900;font-size:74px;line-height:.78;
+  color:var(--tier);text-shadow:0 0 26px var(--tier-deep);flex:0 0 auto;min-width:54px;text-align:center}
+.seqhero .seqicon{width:40px;height:40px;flex:0 0 auto;object-fit:contain;opacity:.95}
+.seqhero.dual .seqicon{width:30px;height:30px}
+.seqhero .seqname{font-family:'Cinzel',serif;font-weight:700;font-size:22px;line-height:1.05;
+  color:#fff;word-break:break-word}
+.seqhero.dual .num{font-size:50px;min-width:42px}
+.seqhero.dual .seqname{font-size:17px}
+
+.stats{display:flex;flex-direction:column;margin-bottom:12px;
+  padding:4px 6px;border-radius:8px;background:rgba(255,255,255,.06)}
+.row{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+  padding:8px 0;border-bottom:1px solid var(--line)}
+.row:first-child{border-top:1px solid var(--line)}
+.row .k{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.row .v{font-size:14px;font-weight:500;color:var(--text);text-align:right}
+
+.progress{display:flex;flex-direction:column;gap:7px}
+.progress .ptrack{position:relative;height:3px;border-radius:3px;
+  background:rgba(255,255,255,.08);overflow:hidden}
+.progress .pfill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;
+  background:var(--tier);box-shadow:0 0 8px var(--tier-deep);transition:width .25s ease}

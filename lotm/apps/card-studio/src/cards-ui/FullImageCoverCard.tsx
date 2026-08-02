@@ -1,13 +1,11 @@
-import React, { forwardRef, useRef, useState } from 'react'
+import React, { forwardRef } from 'react'
+import type { CardUiProps } from './types'
 
-const FullImageCoverCard = forwardRef(function FullImageCoverCard(
-  { image, title, onUploadImage },
+const FullImageCoverCard = forwardRef<HTMLElement, CardUiProps>(function FullImageCoverCard(
+  { image, title, onUploadImage }: CardUiProps,
   ref,
 ) {
-  const [dragging, setDragging] = useState(false)
-  const fileRef = useRef(null)
-
-  const upload = (file) => {
+  const upload = (file: File | undefined) => {
     if (file?.type.startsWith('image/')) onUploadImage(file, 'fullCoverImage')
   }
 
@@ -15,27 +13,25 @@ const FullImageCoverCard = forwardRef(function FullImageCoverCard(
     <article className="full-image-cover" id="card" ref={ref} aria-label={title || 'Full image cover'}>
       <button
         type="button"
-        className={'full-cover-image' + (image ? '' : ' empty') + (dragging ? ' dragover' : '')}
+        className={'full-cover-image' + (image ? '' : ' empty')}
         style={image ? { backgroundImage: `url("${image}")` } : undefined}
         aria-label="Upload full cover image"
-        onClick={() => fileRef.current?.click()}
-        onDragOver={(event) => { event.preventDefault(); setDragging(true) }}
-        onDragLeave={() => setDragging(false)}
+        onClick={(event) => (event.currentTarget.nextElementSibling as HTMLInputElement | null)?.click()}
+        onDragOver={(event) => { event.preventDefault() }}
+        onDragLeave={() => undefined}
         onDrop={(event) => {
           event.preventDefault()
-          setDragging(false)
           upload([...event.dataTransfer.files].find((file) => file.type.startsWith('image/')))
         }}
       >
-        {!image && <span>{dragging ? 'Drop image here' : 'Drop or click to upload image'}</span>}
+        {!image && <span>Drop or click to upload image</span>}
       </button>
       <input
-        ref={fileRef}
         type="file"
         accept="image/*"
         aria-label="Choose full cover image"
         hidden
-        onChange={(event) => upload(event.target.files[0])}
+        onChange={(event) => upload(event.target.files?.[0])}
       />
       <footer className="full-cover-title">{title || 'Cover title'}</footer>
     </article>

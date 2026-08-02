@@ -3,7 +3,7 @@ import test from 'node:test'
 import JSZip from 'jszip'
 import { createCardsZip } from './export'
 import type { StoredCard } from './repository'
-import { titleForCard } from './schema'
+import { titleForCard } from '../domain/schema'
 
 test('el ZIP contiene todas las cartas organizadas y un manifiesto textual', async () => {
   const cards: StoredCard[] = [

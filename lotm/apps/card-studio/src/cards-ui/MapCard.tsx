@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
-import { parseMapEntries } from '../mapEntries'
-import { titleSizeClass } from '../titleFit'
-import { useBackgroundDrop } from '../useBackgroundDrop'
+import { parseMapEntries } from '../domain/mapEntries'
+import { titleSizeClass } from '../domain/titleFit'
+import { useBackgroundDrop } from './useBackgroundDrop'
+import type { CardUiProps } from './types'
 
-const MapCard = forwardRef(function MapCard(
-  { title, entriesText, footerText, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground },
+const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
+  { title, entriesText, footerText, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -21,7 +22,7 @@ const MapCard = forwardRef(function MapCard(
       className={'ficha map-card' + (dense ? ' dense' : '') + (dragging ? ' dragover' : '')}
       id="card"
       ref={ref}
-      style={cardStyle}
+      style={cardStyle as React.CSSProperties}
       aria-label={`${title || 'Map'} card`}
       {...dropProps}
     >
@@ -50,7 +51,7 @@ const MapCard = forwardRef(function MapCard(
             ))}
           </div>
         ) : (
-          <p className="map-empty">Add one row per line as "tags -&gt; value" in the editor panel.</p>
+          <p className="map-empty">Add one row per line as &quot;tags -&gt; value&quot; in the editor panel.</p>
         )}
         {footerText && <p className="map-footer-text">{footerText}</p>}
       </div>

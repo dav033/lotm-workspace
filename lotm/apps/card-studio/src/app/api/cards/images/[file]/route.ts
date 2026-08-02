@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import { NextResponse } from 'next/server'
-import { cardImageMime, resolveCardImageFile } from '@/cards/images'
+import { cardImageMime, resolveCardImageFile } from '@/server/images'
 
 export const runtime = 'nodejs'
 

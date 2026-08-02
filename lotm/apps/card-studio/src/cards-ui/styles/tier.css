@@ -1,0 +1,72 @@
+/* ================= TIER CARD (exports at 960x1280) ================= */
+.tier-card{
+  position:relative;width:480px;height:640px;flex:0 0 auto;
+  background:
+    radial-gradient(120% 75% at 50% -8%, rgba(255,255,255,.045), transparent 60%),
+    radial-gradient(135% 95% at 50% 118%, var(--tier-deep), transparent 55%),
+    #0a0a11;
+  border:1px solid var(--line2);
+  padding:24px 26px 20px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 70px -30px rgba(0,0,0,.9);
+}
+.tier-background{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;
+  opacity:var(--background-opacity,.65);filter:saturate(.95) contrast(1.04)}
+/* El velo cede cuando sube la visibilidad: con opacidad fija la imagen nunca
+   pasaba del 18% real por mas que el slider dijera 100%. */
+.tier-background-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:calc(1.15 - var(--background-opacity,.65));
+  background:linear-gradient(180deg,rgba(10,10,11,.62),rgba(10,10,11,.82))}
+/* Con el velo mas fino el texto se apoya en su propia sombra, no en el velo. */
+:has(>.tier-background){text-shadow:0 2px 14px rgba(0,0,0,.72)}
+.tier-content{position:relative;z-index:3;display:flex;flex-direction:column;
+  align-items:center;width:100%;height:100%;min-height:0;text-align:center}
+
+.tier-summary{flex:0 0 auto;width:100%;display:grid;
+  grid-template-columns:84px minmax(0,1fr) 60px;align-items:center;gap:13px;margin:14px 0 12px}
+.tier-iconwrap{width:84px;height:84px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;border:1.5px solid var(--tier);
+  background:radial-gradient(60% 60% at 50% 50%, var(--tier-deep), transparent 75%);
+  box-shadow:0 0 28px -9px var(--tier-deep),inset 0 0 22px rgba(0,0,0,.5)}
+.tier-icon{width:58px;height:58px;object-fit:contain;
+  filter:drop-shadow(0 0 10px var(--tier-deep))}
+.tier-identity{min-width:0;text-align:left}
+.tier-pathlabel{display:block;margin-bottom:5px;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted)}
+.tier-path{font-family:'Cinzel',serif;font-weight:900;font-size:28px;line-height:1.05;
+  color:#fff;overflow-wrap:anywhere;
+  text-shadow:-1.1px 0 rgba(255,40,90,.32),1.1px 0 rgba(40,170,255,.32)}
+.tier-sequence{margin-top:7px;font-size:10px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tier);overflow-wrap:anywhere}
+
+.tier-rankwrap{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0}
+.tier-ranklabel{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
+.tier-rank{display:block;font-family:'Cinzel',serif;font-weight:900;font-size:76px;line-height:.88;
+  color:var(--tier);text-shadow:0 0 40px var(--tier-deep)}
+
+.tier-body{flex:1 1 0;min-height:0;width:100%;display:flex;flex-direction:column;
+  justify-content:center;gap:14px;overflow:hidden}
+.tier-text{flex:0 1 auto;min-height:0;width:100%;padding:12px 15px 11px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid var(--line);
+  color:var(--text);text-align:left;display:flex;flex-direction:column;overflow:hidden}
+.tier-text-label{flex:0 0 auto;margin-bottom:9px;font-size:9px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--tier)}
+.tier-points{display:flex;flex-direction:column;gap:8px;list-style:none;min-height:0}
+.tier-points li{position:relative;padding-left:16px;font-size:16px;line-height:1.42;
+  overflow-wrap:anywhere}
+.tier-points li::before{content:'';position:absolute;left:0;top:.58em;width:5px;height:5px;
+  border-radius:50%;background:var(--tier);box-shadow:0 0 7px var(--tier-deep)}
+.tier-text.sparse .tier-points li{font-size:18px}
+.tier-text.dense .tier-points{gap:6px}
+.tier-text.dense .tier-points li{font-size:14px;line-height:1.36}
+.tier-empty{flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+  max-width:30ch;margin:0 auto;color:var(--muted2);font-size:12px;line-height:1.5;text-align:center}
+.tier-footer-text{flex:0 0 auto;margin:0 14px;color:#fff;text-align:center;
+  font-size:20px;font-weight:700;line-height:1.28;
+  white-space:pre-line;overflow-wrap:anywhere;
+  text-shadow:0 2px 12px #000}
+.tier-footer-text.sparse{font-size:22px}
+.tier-footer-text.dense{font-size:18px}
+.tier-progress{flex:0 0 auto;width:100%;margin-top:11px}
+
+.tier-toggle .seg{font-weight:700}
+.tier-background-actions{margin-bottom:7px}

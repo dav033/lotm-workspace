@@ -1,0 +1,63 @@
+import type { CardContent } from './schema/content'
+import { slugify } from './slug'
+
+export function titleForCard(content: CardContent): string {
+  if (content.type === 'Cover') return 'Pathways in ' + content.title + ' - Part ' + content.partNumber
+  if (content.type === 'Full Image Cover') return content.title
+  if (content.type === 'Tier') {
+    return content.pathway + (content.sequence === undefined ? '' : ' Sequence ' + content.sequence) + ' - Tier ' + content.rank
+  }
+  if (content.type === 'Pathway') {
+    return content.pathway + (content.sequence === undefined ? '' : ' Sequence ' + content.sequence) + ' - Pathway'
+  }
+  if (content.type === 'Tier Explanation') {
+    return 'Tier ' + content.rank + ' Explanation'
+  }
+  if (content.type === 'General Explanation') {
+    return content.pathway ? content.title + ' - ' + content.pathway : content.title
+  }
+  if (content.type === 'Pathway Explanation') {
+    return content.pathway + ' - ' + content.title.replace(/\*/g, '')
+  }
+  if (content.type === 'Breakdown') {
+    return content.kicker ? content.kicker + ': ' + content.title : content.title
+  }
+  if (content.type === 'Map') {
+    return content.title
+  }
+  if (content.type === 'Tarot Member') return content.tarotTitle + ': ' + content.name
+  return content.name
+}
+
+export function filenameForCard(content: CardContent): string {
+  if (content.type === 'Cover') return slugify(content.title) + '_part-' + slugify(content.partNumber)
+  if (content.type === 'Full Image Cover') return 'full-cover_' + slugify(content.title)
+  if (content.type === 'Tier') {
+    const base = 'tier-' + content.rank.toLowerCase() + '_' + slugify(content.pathway)
+    return content.sequence === undefined ? base : base + '_seq-' + content.sequence
+  }
+  if (content.type === 'Pathway') {
+    const base = 'pathway_' + slugify(content.pathway)
+    return content.sequence === undefined ? base : base + '_seq-' + content.sequence
+  }
+  if (content.type === 'Tier Explanation') {
+    return 'tier-explanation-' + content.rank.toLowerCase()
+  }
+  if (content.type === 'General Explanation') {
+    const base = 'general-explanation_' + slugify(content.title)
+    return content.pathway ? base + '_' + slugify(content.pathway) : base
+  }
+  if (content.type === 'Pathway Explanation') {
+    return 'pathway-explanation_' + slugify(content.pathway)
+  }
+  if (content.type === 'Breakdown') {
+    return 'breakdown_' + slugify(content.title)
+  }
+  if (content.type === 'Map') {
+    return 'map_' + slugify(content.title)
+  }
+  if (content.type === 'Tarot Member') {
+    return 'tarot-member_' + slugify(content.tarotTitle) + '_' + slugify(content.name)
+  }
+  return slugify(content.name) + '_seq-' + content.sequence
+}

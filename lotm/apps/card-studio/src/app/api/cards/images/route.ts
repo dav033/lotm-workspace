@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { storeCardImage } from '@/cards/images'
+import { storeCardImage } from '@/server/images'
 import { badRequest } from '@/server/apiError'
 
 export const runtime = 'nodejs'

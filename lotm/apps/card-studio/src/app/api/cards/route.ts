@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { z } from 'zod/v4'
-import { CardContentSchema, PartInputSchema, UniverseInputSchema } from '@/cards/schema'
+import { z } from 'zod'
+import { CardContentSchema, PartInputSchema, UniverseInputSchema } from '@/domain/schema'
 import { cardsRepository } from '@/server/cardsDb'
 import { badRequest } from '@/server/apiError'
 

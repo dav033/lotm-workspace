@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { CardContentSchema } from '@/cards/schema'
+import { CardContentSchema } from '@/domain/schema'
 import { cardsRepository } from '@/server/cardsDb'
 import { badRequest } from '@/server/apiError'
 

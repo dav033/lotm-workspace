@@ -21,12 +21,13 @@ export const PATHWAYS = {
   "Chained": ["Prisoner", "Lunatic", "Werewolf", "Zombie", "Wraith", "Puppet", "Disciple of Silence", "Ancient Bane", "Abomination", "Chained"],
   "Black Emperor": ["Lawyer", "Barbarian", "Briber", "Baron of Corruption", "Mentor of Disorder", "Earl of the Fallen", "Frenzied Mage", "Duke of Entropy", "Prince of Abolition", "Black Emperor"],
   "Justiciar": ["Arbiter", "Sheriff", "Interrogator", "Judge", "Disciplinary Paladin", "Imperative Mage", "Chaos Hunter", "Balancer", "Hand of Order", "Justiciar"],
-};
+  } as const;
 
-export const PATH_NAMES = Object.keys(PATHWAYS);
+export type Pathway = keyof typeof PATHWAYS
+export const PATH_NAMES = Object.keys(PATHWAYS) as Pathway[]
 
 // Per-sequence color (used only for the big sequence number).
-export function tierColor(seq) {
+export function tierColor(seq: number | string): { c: string; d: string } {
   seq = Number(seq);
   if (seq === 0) return { c: "#e8c36b", d: "#5a4416" };
   if (seq <= 3) return { c: "#b07ce0", d: "#3d2557" };
@@ -44,17 +45,18 @@ export const POWER_LEVELS = [
   { key: "Angel", c: "#b07ce0", d: "#3d2557" },        // purple
   { key: "King of Angels", c: "#e8a23c", d: "#5a3c12" }, // gold
   { key: "True God", c: "#f25f6b", d: "#5a1c24" },     // crimson/radiant
-];
+] as const
+export type PowerLevel = (typeof POWER_LEVELS)[number]['key']
 
 // Artifact grades, 5 (weakest) -> 0 (apex), aligned to the same color ramp.
-const GRADE_LEVELS = {
+const GRADE_LEVELS: Record<number, { c: string; d: string }> = {
   5: { c: "#6b6b80", d: "#2a2a36" },
   4: { c: "#5b8def", d: "#1f3358" },
   3: { c: "#2bc4b0", d: "#114740" },
   2: { c: "#6fcf5f", d: "#214a1c" },
   1: { c: "#b07ce0", d: "#3d2557" },
   0: { c: "#f25f6b", d: "#5a1c24" },
-};
+  };
 
 // Tierlist ranks (best -> worst), aligned to the app's existing color ramp.
 export const TIER_RANKS = {
@@ -64,8 +66,9 @@ export const TIER_RANKS = {
   C: { c: "#46c2a0", d: "#15473a" },  // teal
   D: { c: "#6e8bc0", d: "#22324f" },  // blue
   F: { c: "#6b6b80", d: "#2a2a36" },  // gray
-};
-export const TIER_RANK_NAMES = Object.keys(TIER_RANKS);
+  } as const;
+export type TierRank = keyof typeof TIER_RANKS
+export const TIER_RANK_NAMES = Object.keys(TIER_RANKS) as TierRank[]
 
 // Per-pathway thematic color (curated, not lore-canonical — no official source
 // exists). Used only by the Pathway card, which has no tier rank to derive an
@@ -95,8 +98,7 @@ export const PATHWAY_COLORS = {
   "Justiciar": { c: "#4d7ea8", d: "#1a2c3d" },
 };
 
-// Resolve the active power level into a color + progress percentage.
-export function powerTier(type, power, grade) {
+export function powerTier(type: string, power: string, grade: string | number): { c: string; d: string; pct: number } {
   if (type === "Artifact") {
     const g = Number(grade);
     const t = GRADE_LEVELS[g] || GRADE_LEVELS[5];

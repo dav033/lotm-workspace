@@ -37,7 +37,7 @@ export type CardVideoOptions = {
 // indicados.
 //
 // Los PNG llegan ya renderizados desde el editor en vez de generarse aqui:
-// src/cards/render.tsx importa componentes de cliente y react-dom/server, asi
+// src/server/render/renderer.ts importa componentes de cliente y react-dom/server, asi
 // que una ruta de Next no puede cargarlo (solo lo usan los procesos del MCP,
 // que corren fuera del bundler). Capturarlos en el navegador ademas garantiza
 // que el video muestre exactamente lo mismo que el export ZIP.

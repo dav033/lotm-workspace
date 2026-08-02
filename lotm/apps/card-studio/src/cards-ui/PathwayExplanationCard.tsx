@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
-import { titleSizeClass } from '../titleFit'
-import { useBackgroundDrop } from '../useBackgroundDrop'
+import { titleSizeClass } from '../domain/titleFit'
+import { useBackgroundDrop } from './useBackgroundDrop'
+import type { CardUiProps } from './types'
 
 // El texto entre *asteriscos* se resalta en el color del tier; el resto queda
 // en blanco. Solo una palabra o frase clave lleva color.
-function renderHighlightedTitle(title) {
+function renderHighlightedTitle(title: string) {
   return title.split(/\*(.+?)\*/g).map((part, index) => (
     index % 2 === 1
       ? <span className="pathway-explanation-highlight" key={index}>{part}</span>
@@ -12,8 +13,8 @@ function renderHighlightedTitle(title) {
   ))
 }
 
-const PathwayExplanationCard = forwardRef(function PathwayExplanationCard(
-  { pathway, index, total, title, description, backgroundImage = null, backgroundOpacity = 65, tier = null, onDropBackground },
+const PathwayExplanationCard = forwardRef<HTMLElement, CardUiProps>(function PathwayExplanationCard(
+  { pathway, index, total, title, description, backgroundImage = null, backgroundOpacity = 65, tier = null, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -29,7 +30,7 @@ const PathwayExplanationCard = forwardRef(function PathwayExplanationCard(
       style={{
         ...(tier ? { '--tier': tier.c, '--tier-deep': tier.d } : {}),
         '--background-opacity': backgroundOpacity / 100,
-      }}
+      } as React.CSSProperties}
       aria-label={`${pathway} pathway explanation`}
       {...dropProps}
     >

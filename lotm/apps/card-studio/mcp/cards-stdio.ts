@@ -1,8 +1,8 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
-import { CardRepository } from '../src/cards/repository'
-import { createCardsMcpServer } from '../src/cards/mcp'
+import { CardRepository } from '../src/server/repository'
+import { createCardsMcpServer } from '../src/mcp/createServer'
 
 const appRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const workspaceRoot = path.resolve(appRoot, '../..')

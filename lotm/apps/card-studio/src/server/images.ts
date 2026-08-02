@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { randomUUID } from 'node:crypto'
-import { fileURLToPath } from 'node:url'
+import { resolveWorkspacePath } from './paths'
 
 // Las imagenes que sube el editor se guardan como archivos junto a la base y
 // solo su ruta viaja al SQLite, igual que las que referencia el MCP. Asi el
@@ -28,8 +28,7 @@ const MIME_BY_EXTENSION: Record<string, string> = {
 export const CARD_IMAGE_URL_PREFIX = '/api/cards/images/'
 
 export function resolveCardImageDir(): string {
-  const workspaceDataDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../../data')
-  return path.resolve(process.env.CARDS_IMAGE_DIR || path.join(workspaceDataDir, 'card-images'))
+  return resolveWorkspacePath(process.env.CARDS_IMAGE_DIR, 'data/card-images')
 }
 
 export function isStoredCardImage(source: string): boolean {
