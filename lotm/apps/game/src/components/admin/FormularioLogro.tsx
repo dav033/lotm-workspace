@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from 'react'
 import { guardarLogro } from '@/server/actions/logros'
-import { ESTADO_INICIAL } from '@/server/actions/tipos'
+import { ESTADO_INICIAL } from '@/shared/actionState'
 import { ICON_KEYS, IconoElemento } from '@/components/game/IconoElemento'
 import { BotonGuardar, MensajeEstado } from './ui'
 

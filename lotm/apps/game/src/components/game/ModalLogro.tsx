@@ -1,6 +1,6 @@
 'use client'
 
-import type { AchievementPublicData } from '@/server/domain/tipos'
+import type { AchievementPublicData } from '@/shared/tipos'
 import { IconoElemento } from './IconoElemento'
 import { ModalOculto } from './ModalOculto'
 

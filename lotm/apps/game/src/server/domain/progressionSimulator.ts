@@ -1,3 +1,4 @@
+import 'server-only'
 // Simulador puro y determinista del grafo de progresión. No accede a Prisma:
 // recibe catálogos normalizados cargados desde PostgreSQL y calcula el cierre
 // alcanzable por punto fijo para el runtime y sus diagnósticos.

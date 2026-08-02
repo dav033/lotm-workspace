@@ -19,7 +19,6 @@ import {
   ESTILO_ARISTA,
   ETIQUETA_FAMILIA,
   ETIQUETA_ARISTA,
-  FAMILIA_ARISTA,
   MARGEN,
   NODO_H,
   NODO_W,
@@ -42,6 +41,7 @@ import {
   type NodoArbol,
 } from './arbol/tipos'
 import { calcularDisposicion, calcularDisposicionCamino } from './arbol/disposicion'
+import { filtrarAristasVisibles } from './arbol/layoutConexiones'
 import {
   ComboLinea,
   DefsArbol,
@@ -111,7 +111,7 @@ export function ArbolConexiones({
   const porId = useMemo(() => new Map(nodos.map((n) => [n.id, n])), [nodos])
 
   const aristasVisibles = useMemo(
-    () => aristas.filter((arista) => filtros[FAMILIA_ARISTA[arista.tipo]]),
+    () => filtrarAristasVisibles(aristas, filtros),
     [aristas, filtros],
   )
   const combinaciones = useMemo(() => agruparCombinaciones(aristasVisibles), [aristasVisibles])

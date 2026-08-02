@@ -1,3 +1,4 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import { faseActualParaPerfil, filtroElementoDisponiblePorPhaseIds } from '../domain/fases'
 import { calcularRevisionMemoria, filtrarClavesValidas } from '../domain/memoriaAprendiz'

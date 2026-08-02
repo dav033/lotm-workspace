@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
-import { facultadesDesdeSlugs } from '@/server/domain/habilidades'
+import { facultadesDesdeSlugs } from '@/shared/habilidades'
 import {
   aplicarDeltaAMemoria,
   crearEstadoInteraccionHabilidades,

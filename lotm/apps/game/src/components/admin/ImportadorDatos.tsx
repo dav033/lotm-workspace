@@ -3,7 +3,7 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { ejecutarImportacion, validarImportacion } from '@/server/actions/datos'
-import type { ResumenImportacion } from '@/server/services/datos'
+import type { ResumenImportacion } from '@/shared/adminTree'
 
 export default function ImportadorDatos() {
   const router = useRouter()

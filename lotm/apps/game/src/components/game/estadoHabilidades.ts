@@ -1,6 +1,6 @@
-import { facultadesBloqueadas, type PlayerAbilities, type PotentialTier } from '@/server/domain/habilidades'
-import { advanceIdFromToken } from '@/server/domain/publicos'
-import type { ApprenticeMemoryDelta } from '@/server/domain/tipos'
+import { facultadesBloqueadas, type PlayerAbilities, type PotentialTier } from '@/shared/habilidades'
+import { advanceIdFromToken } from '@/shared/advances'
+import type { ApprenticeMemoryDelta } from '@/shared/tipos'
 import { buildPairInputKey } from '@/shared/inputKey'
 
 export type ModoInteraccion = 'normal' | 'vidente-objetivo'

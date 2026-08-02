@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/server/db'
 import { asegurarPerfil } from '@/server/perfil'
-import { calcularPotencialPorElemento, entradaPotencialPublica } from '@/server/domain/habilidades'
+import { calcularPotencialPorElemento, entradaPotencialPublica } from '@/shared/habilidades'
 import { cargarSnapshotPotencial, resolverFacultades } from '@/server/services/habilidades'
 
 export const runtime = 'nodejs'

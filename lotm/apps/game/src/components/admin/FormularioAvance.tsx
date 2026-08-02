@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { guardarAvance } from '@/server/actions/avances'
-import { ESTADO_INICIAL } from '@/server/actions/tipos'
+import { ESTADO_INICIAL } from '@/shared/actionState'
 import { BotonGuardar, MensajeEstado } from './ui'
 
 type OpcionElemento = { id: string; name: string; type: string }

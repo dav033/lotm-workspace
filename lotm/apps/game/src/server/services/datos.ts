@@ -1,3 +1,4 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import { isIntentionalRecipeAdvanceDualOutcome } from '@/shared/formulaOverlapPolicy'
 import {
@@ -8,11 +9,13 @@ import {
   type PhaseRule,
 } from '@/shared/phaseRules'
 import { descubrirIniciales } from '../domain/descubrimientos'
-import { buildRecipeInputKey } from '../domain/inputKey'
-import { DIFICULTAD_LABELS, etiquetaRuta } from '../domain/diagnostico'
+import { buildRecipeInputKey } from '@/shared/inputKey'
+import { DIFICULTAD_LABELS } from '@/shared/dificultad'
+import { etiquetaRuta } from '../domain/diagnostico'
 import { importDocumentoSchema, type ImportDocumento } from '../schemas'
 import { sincronizarStartersConPrimeraFase } from './fasesProgresion'
 import { cargarAnalisisProgresion } from './progresion'
+import type { ResumenImportacion } from '@/shared/adminTree'
 
 export class ImportError extends Error {}
 
@@ -846,20 +849,6 @@ export async function exportarContenido(db: PrismaClient) {
 }
 
 // ---------- Validación previa a la importación ----------
-
-export type ResumenImportacion = {
-  fases: number
-  featureGates: number
-  categorias: number
-  elementos: number
-  caminos: number
-  secuencias: number
-  recetas: number
-  avances: number
-  rituales: number
-  logros: number
-  problemas: string[]
-}
 
 export function validarDocumento(raw: unknown): { doc: ImportDocumento; resumen: ResumenImportacion } {
   const parsed = importDocumentoSchema.safeParse(raw)

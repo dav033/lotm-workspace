@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormStatus } from 'react-dom'
-import type { EstadoAccion } from '@/server/actions/tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 // Botón de envío que se desactiva mientras la acción está en curso
 // (evita envíos duplicados).

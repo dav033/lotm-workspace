@@ -4,11 +4,10 @@ import { useDeferredValue, useEffect, useMemo } from 'react'
 import Link from 'next/link'
 import { Search, X } from 'lucide-react'
 import { alternarElementoActivo, eliminarElemento } from '@/server/actions/elementos'
-import { ELEMENT_TYPES, etiquetaTipo } from '@/server/domain/tipos'
-import { DIFICULTAD_LABELS, type DiagDifficulty } from '@/server/domain/diagnostico'
+import { ELEMENT_TYPES, etiquetaTipo } from '@/shared/tipos'
+import { colorDificultad, DIFICULTAD_LABELS, type DiagDifficulty } from '@/shared/dificultad'
 import { IconoElemento } from '@/components/game/IconoElemento'
 import { BotonEliminar } from './BotonEliminar'
-import { colorDificultad } from './dificultad'
 import { crearStoreFiltros } from './storeFiltros'
 
 // Vista plana y serializable de un elemento para la tabla (la construye el

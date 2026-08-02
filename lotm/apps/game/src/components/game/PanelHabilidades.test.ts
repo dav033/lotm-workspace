@@ -2,7 +2,7 @@ import { describe, it } from 'node:test'
 import assert from 'node:assert/strict'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { facultadesDesdeSlugs } from '@/server/domain/habilidades'
+import { facultadesDesdeSlugs } from '@/shared/habilidades'
 import { PanelHabilidades } from './PanelHabilidades'
 
 describe('PanelHabilidades — marcador Savant', () => {

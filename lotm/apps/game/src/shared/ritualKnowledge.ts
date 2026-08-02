@@ -4,7 +4,6 @@ export type RitualKnowledgeStatus = 'HIDDEN' | 'SEALED' | 'UNLOCKED'
 
 export type PublicRitualIngredient = {
   name: string
-  nameEn?: string | null
   iconKey: string
   quantity: number
   discovered: boolean
@@ -13,7 +12,6 @@ export type PublicRitualIngredient = {
 export type PublicRitualOption = {
   ritualId: string
   optionLabel: string
-  optionLabelEn?: string | null
   completed: boolean
   canPerform: boolean
   ingredients: PublicRitualIngredient[]
@@ -129,8 +127,7 @@ export function calcularEstadoRitual(snapshot: RitualKnowledgeSnapshot): PublicR
     const options = rituals.map((ritual, optionIndex): PublicRitualOption => {
       const completed = ritual.players.length > 0
       const ingredients = ritual.ingredients.map((ingredient) => ({
-        name: ingredient.element.name,
-        nameEn: ingredient.element.nameEn,
+        name: ingredient.element.nameEn?.trim() || ingredient.element.name,
         iconKey: ingredient.element.iconKey,
         quantity: ingredient.quantity,
         discovered:
@@ -140,9 +137,8 @@ export function calcularEstadoRitual(snapshot: RitualKnowledgeSnapshot): PublicR
       return {
         ritualId: ritual.id,
         optionLabel:
-          ritual.name ??
+          ritual.nameEn?.trim() || ritual.name ||
           (rituals.length === 1 ? 'Preparación ritual' : `Método ${romanOption(optionIndex + 1)}`),
-        optionLabelEn: ritual.nameEn,
         completed,
         canPerform:
           !protectedGroup &&

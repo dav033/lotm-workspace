@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { Check, LockKeyhole, ShieldCheck } from 'lucide-react'
-import type { PublicRitualState } from '@/server/domain/ritualKnowledge'
+import type { PublicRitualState } from '@/shared/ritualKnowledge'
 import { IconoElemento } from './IconoElemento'
 
 export function PanelRituales({

@@ -11,7 +11,7 @@ import {
   sincronizarUmbralesFases,
 } from '../services/fasesProgresion'
 import { eliminarRecetasCompletamente } from '../services/recetas'
-import type { EstadoAccion } from './tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 function leerFormulario(formData: FormData) {
   return {

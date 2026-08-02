@@ -1,4 +1,4 @@
-// Estado devuelto por las Server Actions de formularios del panel.
+// Estado devuelto por Server Actions de formularios del panel.
 export type EstadoAccion = {
   ok: boolean
   error: string | null

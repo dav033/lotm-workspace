@@ -4,7 +4,7 @@ import { obtenerPerfilActual } from '@/server/perfil'
 import { IconoElemento } from '@/components/game/IconoElemento'
 import { descubrirIniciales } from '@/server/domain/descubrimientos'
 import { faseActualParaPerfil, filtroElementoDisponiblePorPhaseIds } from '@/server/domain/fases'
-import { ELEMENT_TYPE_LABELS, etiquetaTipo } from '@/server/domain/tipos'
+import { ELEMENT_TYPE_LABELS, etiquetaTipo } from '@/shared/tipos'
 
 export const runtime = 'nodejs'
 

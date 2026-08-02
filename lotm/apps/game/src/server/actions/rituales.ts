@@ -6,7 +6,7 @@ import { exigirAdminAccion, NoAutorizadoError } from '../adminAuth'
 import { ritualSchema } from '../schemas'
 import { derivarInputKey, RecetaError } from '../services/recetas'
 import { sincronizarUmbralesFases } from '../services/fasesProgresion'
-import type { EstadoAccion } from './tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 function ingredientesDe(a: string, b: string) {
   return a === b

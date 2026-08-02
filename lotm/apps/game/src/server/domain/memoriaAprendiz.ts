@@ -1,10 +1,11 @@
+import 'server-only'
 // Memoria del Aprendiz: filtra el historial persistente de intentos sin
 // resultado (PlayerCombinationStat) hasta quedarse solo con pares de
 // exactamente dos Elementos normales, activos y actualmente descubiertos por
 // el perfil. Módulo puro: la consulta Prisma vive en
 // server/services/memoriaAprendiz.ts.
 
-import { parseInputKey, totalUnits } from './inputKey'
+import { parseInputKey, totalUnits } from '@/shared/inputKey'
 
 export type CombinationStatRow = {
   inputKey: string

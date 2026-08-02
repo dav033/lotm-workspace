@@ -40,9 +40,7 @@ export type ElementPublicData = {
   id: string
   slug: string
   name: string
-  nameEn?: string | null
   description: string
-  descriptionEn?: string | null
   iconKey: string
   imageUrl: string | null
   type: string

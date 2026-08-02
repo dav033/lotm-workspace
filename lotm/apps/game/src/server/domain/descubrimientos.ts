@@ -1,3 +1,4 @@
+import 'server-only'
 import type { Db } from '../db'
 import { desbloqueoEspontaneoSatisfecho } from './desbloqueoEspontaneo'
 import {
@@ -7,7 +8,7 @@ import {
   resolverFasePorDescubrimientos,
 } from './fases'
 import { toPublicElement } from './publicos'
-import type { RecetaPendiente } from './tipos'
+import type { RecetaPendiente } from '@/shared/tipos'
 
 // Descubrimientos espontáneos: elementos que ninguna receta fabrica y que se
 // desbloquean solos. La regla exacta vive en `desbloqueoEspontaneo.ts`: una

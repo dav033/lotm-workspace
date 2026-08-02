@@ -4,7 +4,7 @@ import { asegurarPerfil } from '@/server/perfil'
 import { sequenceLabelOf, toPublicAdvance, toPublicElement } from '@/server/domain/publicos'
 import { obtenerLogrosPendientes, reconciliarLogros } from '@/server/domain/logros'
 import { obtenerEstadoRitual } from '@/server/domain/rituales'
-import { facultadesDesdeSlugs } from '@/server/domain/habilidades'
+import { facultadesDesdeSlugs } from '@/shared/habilidades'
 import { faseActualParaPerfil, filtroElementoDisponiblePorPhaseIds } from '@/server/domain/fases'
 import { featuresParaFase } from '@/server/domain/featureGates'
 

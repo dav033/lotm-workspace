@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import NavPrincipal from '@/components/NavPrincipal'
-import { LanguageProvider, type AppLanguage } from '@/i18n/LanguageProvider'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,10 +13,8 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const savedLanguage = (await cookies()).get('am-language')?.value
-  const language: AppLanguage = savedLanguage === 'en' ? 'en' : 'es'
   return (
-    <html lang={language}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -29,10 +25,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         />
       </head>
       <body>
-        <LanguageProvider initialLanguage={language}>
-          <NavPrincipal />
-          {children}
-        </LanguageProvider>
+        <NavPrincipal />
+        {children}
       </body>
     </html>
   )

@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import { calcularRevisionMemoria, filtrarClavesValidas, type CombinationStatRow } from './memoriaAprendiz'
-import { buildPairInputKey } from './inputKey'
+import { buildPairInputKey } from '@/shared/inputKey'
 
 function fila(inputKey: string, lastAttemptAt = new Date('2026-01-01')): CombinationStatRow {
   return { inputKey, lastAttemptAt }

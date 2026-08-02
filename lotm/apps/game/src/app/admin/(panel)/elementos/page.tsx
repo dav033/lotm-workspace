@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { prisma } from '@/server/db'
 import { exigirAdminPagina } from '@/server/adminAuth'
 import { cargarAnalisisProgresion } from '@/server/services/progresion'
-import { etiquetaTipo } from '@/server/domain/tipos'
+import { etiquetaTipo } from '@/shared/tipos'
 import { ExploradorElementos, type ElementoVista } from '@/components/admin/ExploradorElementos'
 
 export const runtime = 'nodejs'

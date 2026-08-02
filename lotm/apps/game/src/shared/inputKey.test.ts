@@ -28,10 +28,9 @@ describe('buildPairInputKey', () => {
 })
 
 describe('inputKey — servidor y cliente comparten la misma implementación', () => {
-  it('src/server/domain/inputKey reexporta src/shared/inputKey', async () => {
-    const servidor = await import('../server/domain/inputKey')
-    assert.equal(servidor.buildPairInputKey, buildPairInputKey)
-    assert.equal(servidor.buildRecipeInputKey, buildRecipeInputKey)
-    assert.equal(servidor.parseInputKey, parseInputKey)
+  it('expone una implementación única compartida por servidor y cliente', () => {
+    assert.equal(typeof buildPairInputKey, 'function')
+    assert.equal(typeof buildRecipeInputKey, 'function')
+    assert.equal(typeof parseInputKey, 'function')
   })
 })

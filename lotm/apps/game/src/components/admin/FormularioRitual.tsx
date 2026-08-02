@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { guardarRitual } from '@/server/actions/rituales'
-import { ESTADO_INICIAL } from '@/server/actions/tipos'
+import { ESTADO_INICIAL } from '@/shared/actionState'
 import { BotonGuardar, MensajeEstado } from './ui'
 
 export type RitualEditable = {

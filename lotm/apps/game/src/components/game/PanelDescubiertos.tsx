@@ -4,11 +4,11 @@ import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { SPRING_UI } from './motion'
 import { Search, X } from 'lucide-react'
-import { ELEMENT_TYPES, etiquetaTipo } from '@/server/domain/tipos'
+import { ELEMENT_TYPES, etiquetaTipo } from '@/shared/tipos'
 import {
   NUMERAL_TIER,
   POTENTIAL_TIER_LABELS,
-} from '@/server/domain/habilidades'
+} from '@/shared/habilidades'
 import { parPreviamenteFallido } from './estadoHabilidades'
 import { IconoElemento } from './IconoElemento'
 import { useJuegoStore } from './store'

@@ -1,3 +1,4 @@
+import 'server-only'
 // Convierte un nombre visible («Adivinación Mayor») en un slug estable y sin
 // acentos («adivinacion-mayor»), el formato que exige buildRecipeInputKey.
 export function generarSlug(nombre: string): string {

@@ -1,5 +1,6 @@
+import 'server-only'
 import type { Db } from '../db'
-import type { AchievementPublicData } from './tipos'
+import type { AchievementPublicData } from '@/shared/tipos'
 
 function toPublicAchievement(
   achievement: {

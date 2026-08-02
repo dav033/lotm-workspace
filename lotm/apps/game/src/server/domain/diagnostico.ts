@@ -1,7 +1,9 @@
+import 'server-only'
 // Herramientas de diagnóstico del árbol de combinaciones. Funciones puras
 // sobre datos ya cargados: fáciles de probar y sin atadura a la base de datos.
 
-import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from './ritualKnowledge'
+import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from '@/shared/ritualKnowledge'
+import type { DiagDifficulty } from '@/shared/dificultad'
 
 // ---------------------------------------------------------------------------
 // Tipos de entrada
@@ -79,32 +81,6 @@ export type DiagBestRoute = {
   label: string
   detail: string
   id?: string
-}
-
-export type DiagDifficulty =
-  | 'trivial'
-  | 'easy'
-  | 'moderate'
-  | 'hard'
-  | 'extreme'
-  | 'impossible'
-
-export const DIFICULTAD_LABELS: Record<DiagDifficulty, string> = {
-  trivial: 'Trivial',
-  easy: 'Fácil',
-  moderate: 'Moderada',
-  hard: 'Difícil',
-  extreme: 'Extrema',
-  impossible: 'Inalcanzable',
-}
-
-export const DIFICULTAD_ORDEN: Record<DiagDifficulty, number> = {
-  impossible: 100,
-  extreme: 5,
-  hard: 4,
-  moderate: 3,
-  easy: 2,
-  trivial: 1,
 }
 
 export type DiagParticipation = {

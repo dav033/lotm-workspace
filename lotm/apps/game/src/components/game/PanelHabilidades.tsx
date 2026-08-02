@@ -8,7 +8,7 @@ import {
   rangoDeTier,
   type PlayerAbilities,
   type PotentialTier,
-} from '@/server/domain/habilidades'
+} from '@/shared/habilidades'
 import { useJuegoStore } from './store'
 import { hayFacultadesDesbloqueadas } from './estadoHabilidades'
 

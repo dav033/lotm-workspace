@@ -1,3 +1,4 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import {
   ABILITY_KEYS,
@@ -7,7 +8,7 @@ import {
   type FormulaPotencial,
   type PlayerAbilities,
   type SnapshotPotencial,
-} from '../domain/habilidades'
+} from '@/shared/habilidades'
 import {
   aplicacionAvanceTieneContenidoActivo,
   avanceCreableAhora,

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 import type { PrismaClient } from '@/generated/prisma/client'
 import { combinarParaPerfil } from './combinar'
-import { buildPairInputKey } from './inputKey'
+import { buildPairInputKey } from '@/shared/inputKey'
 
 const profileId = 'profile'
 const phase1 = {

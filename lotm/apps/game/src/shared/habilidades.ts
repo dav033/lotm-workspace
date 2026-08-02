@@ -270,3 +270,4 @@ export function entradaPotencialPublica(elementId: string, count: number) {
  * No deducir "bloqueada" de una combinación fallida genérica hasta que las
  * reglas del conocimiento prohibido estén formalmente modeladas.
  */
+

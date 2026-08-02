@@ -1,3 +1,4 @@
+import 'server-only'
 // Predicado puro y compartido para el desbloqueo espontáneo de elementos.
 //
 // Un elemento se desbloquea cuando SE CUMPLE cualquiera de estas dos rutas:

@@ -1,14 +1,16 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import type { Db } from '../db'
 import { desbloquearEspontaneos } from './descubrimientos'
-import { buildRecipeInputKey } from './inputKey'
+import { buildRecipeInputKey } from '@/shared/inputKey'
 import { concederLogrosPorElementos } from './logros'
 import {
   elementoDisponiblePorPhaseId,
   faseActualParaPerfil,
   filtroElementoDisponiblePorPhaseIds,
 } from './fases'
-import { advanceIdFromToken, sequenceLabelOf, toPublicAdvance, toPublicElement } from './publicos'
+import { advanceIdFromToken } from '@/shared/advances'
+import { sequenceLabelOf, toPublicAdvance, toPublicElement } from './publicos'
 import {
   aplicacionAvanceTieneContenidoActivo,
   avanceCreableAhora,
@@ -20,8 +22,8 @@ import {
   type CombineResult,
   type PathwayReveal,
   type RecipeOutputData,
-} from './tipos'
-import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from './ritualKnowledge'
+} from '@/shared/tipos'
+import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from '@/shared/ritualKnowledge'
 import { featuresParaFase } from './featureGates'
 
 async function autoUnlockNextSequenceIngredients(

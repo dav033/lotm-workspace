@@ -1,10 +1,11 @@
+import 'server-only'
 import type { Db } from '../db'
 import {
   calcularEstadoRitual,
   RITUAL_KNOWLEDGE_ELEMENT_SLUG,
   type PublicRitualState,
   type RitualKnowledgeCandidate,
-} from './ritualKnowledge'
+} from '@/shared/ritualKnowledge'
 import {
   elementoDisponiblePorPhaseId,
   faseActualParaPerfil,

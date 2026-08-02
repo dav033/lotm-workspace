@@ -1,6 +1,6 @@
 import { prisma } from '@/server/db'
 import { exigirAdminPagina } from '@/server/adminAuth'
-import { parseInputKey } from '@/server/domain/inputKey'
+import { parseInputKey } from '@/shared/inputKey'
 import ConstructorReceta from '@/components/admin/ConstructorReceta'
 
 export const runtime = 'nodejs'

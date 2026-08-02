@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { guardarCamino, guardarSecuencia } from '@/server/actions/caminos'
-import { ESTADO_INICIAL } from '@/server/actions/tipos'
+import { ESTADO_INICIAL } from '@/shared/actionState'
 import { CampoElemento } from './CampoElemento'
 import type { ElementoOpcion } from './tiposReceta'
 import { BotonGuardar, MensajeEstado } from './ui'

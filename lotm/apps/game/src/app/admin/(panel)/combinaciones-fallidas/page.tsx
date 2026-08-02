@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { prisma } from '@/server/db'
 import { exigirAdminPagina } from '@/server/adminAuth'
-import { parseInputKey } from '@/server/domain/inputKey'
+import { parseInputKey } from '@/shared/inputKey'
 
 export const runtime = 'nodejs'
 

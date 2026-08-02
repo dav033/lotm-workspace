@@ -2,11 +2,8 @@ import Link from 'next/link'
 import { prisma } from '@/server/db'
 import { exigirAdminPagina } from '@/server/adminAuth'
 import { cargarAnalisisProgresion } from '@/server/services/progresion'
-import { colorDificultad } from '@/components/admin/dificultad'
 import {
   detectarCiclos,
-  DIFICULTAD_LABELS,
-  DIFICULTAD_ORDEN,
   elementosInalcanzables,
   elementosSinUso,
   etiquetaRuta,
@@ -15,6 +12,7 @@ import {
   resumenParticipacion,
   type DiagElementResult,
 } from '@/server/domain/diagnostico'
+import { DIFICULTAD_LABELS, DIFICULTAD_ORDEN, colorDificultad } from '@/shared/dificultad'
 
 export const runtime = 'nodejs'
 

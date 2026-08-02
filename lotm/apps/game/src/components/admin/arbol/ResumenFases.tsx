@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { ArrowRight, Milestone } from 'lucide-react'
-import type { VistaFases } from '@/server/services/fasesProgresion'
+import type { VistaFases } from '@/shared/adminTree'
 import type { AristaArbol, NodoArbol } from './tipos'
 import { construirResumenFases } from './modeloResumenFases'
 

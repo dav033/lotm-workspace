@@ -8,15 +8,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { GitBranch, ListTree, Map as MapIcon, Maximize2, Milestone, Minimize2, Network } from 'lucide-react'
 import { ArbolConexiones } from '@/components/admin/ArbolConexiones'
-import type { VistaFases } from '@/server/services/fasesProgresion'
+import type { VistaFases } from '@/shared/adminTree'
 import type { CaminoLeyenda, NodoArbol } from './tipos'
 import { ExploradorArbol } from './ExploradorArbol'
 import { CaminoEspina } from './CaminoEspina'
-import {
-  MapaFases,
-  type GrafoFases,
-  type RespuestaArbolFases,
-} from './MapaFases'
+import { MapaFases } from './MapaFases'
+import type { GrafoFases, RespuestaArbolFases } from './mapa/types'
 import type { PestanaArbol } from './pestanasArbol'
 import { ResumenFases } from './ResumenFases'
 

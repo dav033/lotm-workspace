@@ -13,7 +13,7 @@ import {
   type AplicacionAvancePotencial,
   type FormulaPotencial,
   type SnapshotPotencial,
-} from './habilidades'
+} from '@/shared/habilidades'
 
 // ---------------------------------------------------------------------------
 // Helpers de construcción de snapshots

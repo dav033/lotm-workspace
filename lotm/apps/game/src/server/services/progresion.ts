@@ -1,3 +1,4 @@
+import 'server-only'
 import type { SimInput } from '../domain/progressionSimulator'
 import type { Db } from '../db'
 import {

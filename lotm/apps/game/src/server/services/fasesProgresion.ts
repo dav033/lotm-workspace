@@ -1,3 +1,4 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import { simulateProgression, type SimInput } from '../domain/progressionSimulator'
 import type { Db } from '../db'
@@ -242,8 +243,6 @@ export async function sincronizarUmbralesFases(db: Db): Promise<void> {
     }
   }
 }
-
-export type VistaFases = Awaited<ReturnType<typeof cargarVistaFases>>
 
 export async function cargarVistaFases(db: PrismaClient) {
   const [

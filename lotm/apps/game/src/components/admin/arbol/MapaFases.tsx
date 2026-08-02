@@ -5,7 +5,6 @@ import {
   startTransition,
   useDeferredValue,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from 'react'
@@ -26,8 +25,7 @@ import {
 import { alternarElementoActivo } from '@/server/actions/elementos'
 import { alternarRecetaActiva, eliminarReceta } from '@/server/actions/recetas'
 import { alternarRitualActivo } from '@/server/actions/rituales'
-import type { VistaFases } from '@/server/services/fasesProgresion'
-import { ArbolConexiones } from '../ArbolConexiones'
+import type { VistaFases } from '@/shared/adminTree'
 import {
   agruparContenidoPorBloqueadores,
   agruparElementosDeFase,
@@ -35,14 +33,10 @@ import {
   filtrarCandidatosIniciales,
   type OrdenBloqueos,
 } from './agrupacionFases'
-import { construirSubgrafoFase } from './subgrafoFase'
 import { EditorReglaFase } from './EditorReglaFase'
-import {
-  normalizarTexto,
-  type AristaArbol,
-  type CaminoLeyenda,
-  type NodoArbol,
-} from './tipos'
+import { normalizarTexto } from './tipos'
+import type { GrafoFases, RespuestaArbolFases } from './mapa/types'
+import { GrafoDeFase as GrafoDeFasePanel } from './mapa/GrafoDeFase'
 
 type EstadoElemento = 'disponible' | 'sin-ruta' | 'frontera' | 'bloqueado' | 'inactivo'
 type Filtro = 'todos' | EstadoElemento
@@ -51,16 +45,7 @@ type EditorReceta =
   | { kind: 'nueva-como-resultado'; elementId: string }
   | { kind: 'nueva-como-ingrediente'; elementId: string }
 
-export type GrafoFases = {
-  nodos: NodoArbol[]
-  aristas: AristaArbol[]
-  caminos: CaminoLeyenda[]
-}
-
-export type RespuestaArbolFases = {
-  fases: VistaFases
-  grafo: GrafoFases
-}
+export type { GrafoFases, RespuestaArbolFases } from './mapa/types'
 
 const ESTADO_META: Record<EstadoElemento, { label: string; className: string }> = {
   disponible: {
@@ -83,82 +68,6 @@ const ESTADO_META: Record<EstadoElemento, { label: string; className: string }> 
     label: 'Inactivo',
     className: 'border-wine/40 bg-wine/10 text-fog',
   },
-}
-
-function GrafoDeFase({
-  grafo,
-  phase,
-  previousPhase,
-  inactiveRecipeIds,
-  selectedElementId,
-  onSelectElement,
-}: {
-  grafo: GrafoFases
-  phase: VistaFases['phases'][number]
-  previousPhase: VistaFases['phases'][number] | undefined
-  inactiveRecipeIds: readonly string[]
-  selectedElementId: string | null
-  onSelectElement: (id: string | null) => void
-}) {
-  const subgrafo = useMemo(() => {
-    return construirSubgrafoFase({
-      nodos: grafo.nodos,
-      aristas: grafo.aristas,
-      phaseElementIds: phase.ownElementIds,
-      initialElementIds: phase.initialElementIds,
-      reachableElementIds: phase.reachableElementIds,
-      previousReachableElementIds: previousPhase?.reachableElementIds ?? [],
-      inactiveRecipeIds,
-    })
-  }, [grafo, phase, previousPhase, inactiveRecipeIds])
-
-  const selectedNodeId = selectedElementId && subgrafo.nodos.some(
-    (nodo) => nodo.id === `el:${selectedElementId}`,
-  )
-    ? `el:${selectedElementId}`
-    : null
-
-  return (
-    <section
-      aria-labelledby={`mapa-fase-${phase.id}`}
-      className="mist-card rounded-xl border border-brass/25 p-4"
-    >
-      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2
-            id={`mapa-fase-${phase.id}`}
-            className="font-[family-name:var(--font-display)] text-xl text-parchment"
-          >
-            Mapa de conexiones de {phase.name}
-          </h2>
-          <p className="mt-1 text-xs text-fog">
-            Rutas que vuelven alcanzables los nuevos elementos de la etapa.
-          </p>
-        </div>
-        <span className="rounded-full border border-line px-2.5 py-1 text-xs tabular-nums text-fog">
-          {subgrafo.nodos.length} nodos · {subgrafo.aristas.length} conexiones
-        </span>
-      </div>
-      {subgrafo.nodos.length === 0 ? (
-        <p className="rounded-lg border border-line bg-black/15 p-4 text-sm text-fog">
-          Esta fase todavía no tiene elementos ni conexiones.
-        </p>
-      ) : (
-        <ArbolConexiones
-          nodos={subgrafo.nodos}
-          aristas={subgrafo.aristas}
-          caminos={grafo.caminos}
-          seleccionId={selectedNodeId}
-          onSeleccionChange={(id) => {
-            onSelectElement(id?.startsWith('el:') ? id.slice(3) : null)
-          }}
-          mostrarDetalle={false}
-          titulo={`Dependencias de ${phase.name}`}
-          subtitulo="Selecciona un elemento para abrir su expediente y editarlo."
-        />
-      )}
-    </section>
-  )
 }
 
 export function MapaFases({
@@ -1053,7 +962,7 @@ export function MapaFases({
       )}
 
       {mode === 'mapa' && (
-        <GrafoDeFase
+        <GrafoDeFasePanel
           grafo={grafo}
           phase={selectedPhase}
           previousPhase={previousActivePhase}

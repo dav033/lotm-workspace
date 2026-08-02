@@ -6,7 +6,7 @@ import { prisma } from '../db'
 import { caminoSchema, secuenciaSchema } from '../schemas'
 import { buscarRecetaEquivalente, crearReceta, RecetaError } from '../services/recetas'
 import { sincronizarUmbralesFases } from '../services/fasesProgresion'
-import type { EstadoAccion } from './tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 export async function guardarCamino(
   id: string | null,

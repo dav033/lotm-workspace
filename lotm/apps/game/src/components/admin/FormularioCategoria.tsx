@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { guardarCategoria } from '@/server/actions/categorias'
-import { ESTADO_INICIAL } from '@/server/actions/tipos'
+import { ESTADO_INICIAL } from '@/shared/actionState'
 import { BotonGuardar, MensajeEstado } from './ui'
 
 export type CategoriaEditable = {

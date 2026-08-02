@@ -1,5 +1,6 @@
+import 'server-only'
 import type { SimInput, SimResult } from './progressionSimulator'
-import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from './ritualKnowledge'
+import { RITUAL_KNOWLEDGE_ELEMENT_SLUG } from '@/shared/ritualKnowledge'
 
 export type BloqueadoresElemento = {
   elementSlugs: string[]

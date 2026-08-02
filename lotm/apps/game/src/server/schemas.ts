@@ -1,8 +1,9 @@
+import 'server-only'
 import { z } from 'zod'
 import { FEATURE_KEYS } from '@/shared/featureGates'
 import { defaultPhaseCelebrationMessage } from '@/shared/phaseCelebrations'
 import { legacyPhaseRule, phaseRuleSchema } from '@/shared/phaseRules'
-import { elementTypeSchema } from './domain/tipos'
+import { elementTypeSchema } from '@/shared/tipos'
 
 // Texto visible: longitud acotada y sin HTML arbitrario.
 const texto = (max: number) =>

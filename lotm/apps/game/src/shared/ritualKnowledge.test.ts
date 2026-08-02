@@ -4,7 +4,7 @@ import {
   calcularEstadoRitual,
   type RitualKnowledgeCandidate,
   type RitualKnowledgeSnapshot,
-} from './ritualKnowledge'
+} from '@/shared/ritualKnowledge'
 
 function candidate({
   id = 'ritual-escriba',
@@ -181,3 +181,4 @@ describe('calcularEstadoRitual', () => {
   })
 
 })
+

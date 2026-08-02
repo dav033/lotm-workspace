@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { exigirAdminAccion, NoAutorizadoError } from '../adminAuth'
 import { prisma } from '../db'
 import { categoriaSchema } from '../schemas'
-import type { EstadoAccion } from './tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 // ¿candidatoId es descendiente de (o igual a) categoriaId?
 async function esDescendiente(categoriaId: string, candidatoId: string): Promise<boolean> {

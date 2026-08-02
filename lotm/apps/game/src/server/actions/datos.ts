@@ -7,8 +7,8 @@ import {
   importarContenido,
   ImportError,
   validarDocumento,
-  type ResumenImportacion,
 } from '../services/datos'
+import type { ResumenImportacion } from '@/shared/adminTree'
 import { sincronizarUmbralesFases } from '../services/fasesProgresion'
 
 const MAX_JSON = 5 * 1024 * 1024 // 5 MB

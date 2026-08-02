@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { crearElementoRapido } from '@/server/actions/elementos'
-import { ELEMENT_TYPES, etiquetaTipo } from '@/server/domain/tipos'
+import { ELEMENT_TYPES, etiquetaTipo } from '@/shared/tipos'
 import type { ElementoOpcion } from './tiposReceta'
 
 // Alta exprés de elementos: permite armar una combinación desde cero (nuevos

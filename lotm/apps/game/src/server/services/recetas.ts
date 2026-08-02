@@ -1,6 +1,7 @@
+import 'server-only'
 import type { PrismaClient } from '@/generated/prisma/client'
 import { isIntentionalRecipeAdvanceDualOutcome } from '@/shared/formulaOverlapPolicy'
-import { buildRecipeInputKey } from '../domain/inputKey'
+import { buildRecipeInputKey } from '@/shared/inputKey'
 
 // Error de negocio: su mensaje puede mostrarse al administrador tal cual.
 export class RecetaError extends Error {}

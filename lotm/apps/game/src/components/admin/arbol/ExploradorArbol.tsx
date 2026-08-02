@@ -18,7 +18,6 @@ import {
   ESTILO_ARISTA,
   ETIQUETA_FAMILIA,
   ETIQUETA_ARISTA,
-  FAMILIA_ARISTA,
   MARGEN,
   ORDEN_PANEL,
   RADIO,
@@ -32,6 +31,7 @@ import {
   type NodoArbol,
 } from './tipos'
 import { calcularDisposicion } from './disposicion'
+import { filtrarAristasVisibles } from './layoutConexiones'
 import {
   ComboLinea,
   DefsArbol,
@@ -123,7 +123,7 @@ export function ExploradorArbol({
 
   // Combinaciones tras aplicar los filtros por familia de relación.
   const combos = useMemo(() => {
-    const visibles = [...aristasMapa.values()].filter((a) => filtros[FAMILIA_ARISTA[a.tipo]])
+    const visibles = filtrarAristasVisibles([...aristasMapa.values()], filtros)
     return agruparCombinaciones(visibles)
   }, [aristasMapa, filtros])
 

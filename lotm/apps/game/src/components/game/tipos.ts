@@ -2,13 +2,13 @@ import type {
   AchievementPublicData,
   ElementPublicData,
   ProgressionPhasePublicData,
-} from '@/server/domain/tipos'
-import type { PlayerAbilities } from '@/server/domain/habilidades'
-import type { PublicRitualState } from '@/server/domain/ritualKnowledge'
+} from '@/shared/tipos'
+import type { PlayerAbilities } from '@/shared/habilidades'
+import type { PublicRitualState } from '@/shared/ritualKnowledge'
 import type { FeatureState } from '@/shared/featureGates'
 
-export type { RecetaPendiente, RecetaPendienteElemento } from '@/server/domain/tipos'
-export type { PlayerAbilities } from '@/server/domain/habilidades'
+export type { RecetaPendiente, RecetaPendienteElemento } from '@/shared/tipos'
+export type { PlayerAbilities } from '@/shared/habilidades'
 
 export type ElementoDescubierto = ElementPublicData & {
   firstDiscoveredAt: string

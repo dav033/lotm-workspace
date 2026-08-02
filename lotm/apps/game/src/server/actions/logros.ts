@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { prisma } from '../db'
 import { exigirAdminAccion, NoAutorizadoError } from '../adminAuth'
 import { logroSchema } from '../schemas'
-import type { EstadoAccion } from './tipos'
+import type { EstadoAccion } from '@/shared/actionState'
 
 export async function guardarLogro(
   id: string | null,

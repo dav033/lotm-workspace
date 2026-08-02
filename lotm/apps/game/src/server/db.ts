@@ -1,3 +1,4 @@
+import 'server-only'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { PrismaClient } from '@/generated/prisma/client'
 
@@ -32,3 +33,4 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prismaGame = prisma
 // poder ejecutarse dentro o fuera de una transacción (y contra otra BD en tests).
 export type DbClient = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0]
 export type Db = PrismaClient | DbClient
+import 'server-only'

@@ -1,22 +1,31 @@
 'use client'
 
 import { create } from 'zustand'
+import { appendAviso, removeAviso } from './store/notices'
+import { nuevosDesbloqueos } from './store/abilities'
+import {
+  mismoDestino,
+  sincronizarBandeja,
+  agregarAperturasBandeja,
+  crearInstanciaBandeja,
+  limitarPosicion,
+} from './store/tray'
+import { unidadesDePendiente } from './store/recipes'
+import { parseCombineResult } from './store/combine'
+import { openingSlugsFromResponse } from './store/phases'
 import type {
   AchievementPublicData,
   ApprenticeMemoryDelta,
-  CombineResult,
   ResolvedCombineResult,
-} from '@/server/domain/tipos'
-import type { PublicRitualState } from '@/server/domain/ritualKnowledge'
-import { browserLanguage, localizedElement, localizedRitualState } from '@/i18n/content'
+} from '@/shared/tipos'
+import type { PublicRitualState } from '@/shared/ritualKnowledge'
 import {
   ABILITY_DEFINITIONS,
-  desbloqueosNuevos,
   facultadesDesdeSlugs,
   type AbilityKey,
   type PlayerAbilities,
   type PotentialTier,
-} from '@/server/domain/habilidades'
+} from '@/shared/habilidades'
 import {
   aplicarDeltaAMemoria,
   crearEstadoInteraccionHabilidades,
@@ -157,75 +166,13 @@ const avisoTimers = new Map<number, ReturnType<typeof setTimeout>>()
 let combinandoEnCurso = false
 let refrescoPotencialPendiente = false
 let pendientesTimer: ReturnType<typeof setTimeout> | null = null
-let instanciaBandejaId = 0
-
 function feedbackTactil(pattern: number | number[]) {
   if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
     navigator.vibrate(pattern)
   }
 }
 
-// Evita re-renderizados en cadena cuando el puntero pasa sobre muchos
-// objetivos iguales seguidos: solo se publica un destino realmente distinto.
-const mismoDestino = (a: DestinoArrastre, b: DestinoArrastre): boolean => {
-  if (a === b) return true
-  if (!a || !b || a.tipo !== b.tipo) return false
-  if (a.tipo === 'slot' && b.tipo === 'slot') return a.index === b.index
-  if (a.tipo === 'elemento' && b.tipo === 'elemento') {
-    return a.slug === b.slug && a.bandejaInstanceId === b.bandejaInstanceId
-  }
-  if (a.tipo === 'bandeja' && b.tipo === 'bandeja') return true
-  return false
-}
-
-function sincronizarBandeja(
-  bandeja: InstanciaBandeja[],
-  elementos: ElementoDescubierto[],
-): InstanciaBandeja[] {
-  const porId = new Map(elementos.map((elemento) => [elemento.id, elemento]))
-  return bandeja.flatMap((instancia) => {
-    const actualizado = porId.get(instancia.elemento.id)
-    return actualizado ? [{ ...instancia, elemento: actualizado }] : []
-  })
-}
-
-function limitarPosicion(value: number, min: number, max: number) {
-  return Math.min(max, Math.max(min, Number.isFinite(value) ? value : 0.5))
-}
-
-function crearInstanciaBandeja(
-  elemento: ElementoDescubierto,
-  x: number,
-  y: number,
-): InstanciaBandeja {
-  return {
-    instanceId: `bandeja-${++instanciaBandejaId}`,
-    elemento,
-    x: limitarPosicion(x, 0.02, 0.98),
-    y: limitarPosicion(y, 0.02, 0.98),
-  }
-}
-
-export function agregarAperturasBandeja(
-  bandeja: InstanciaBandeja[],
-  aperturas: ElementoDescubierto[],
-): InstanciaBandeja[] {
-  const presentes = new Set(bandeja.map((instancia) => instancia.elemento.slug))
-  const nuevas = aperturas.filter((elemento) => !presentes.has(elemento.slug))
-  return [
-    ...bandeja,
-    ...nuevas.map((elemento, index) => {
-      const columns = Math.min(4, Math.max(1, nuevas.length))
-      const column = index % columns
-      const row = Math.floor(index / columns)
-      return crearInstanciaBandeja(
-        elemento,
-        (column + 1) / (columns + 1),
-        0.18 + row * 0.2,
-      )
-    }),
-  ]
-}
+export { agregarAperturasBandeja } from './store/tray'
 
 export const useJuegoStore = create<JuegoState>()((set, get) => {
   // Registra el resultado en el estado local sin recargar todo el progreso.
@@ -279,7 +226,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
               .map((elemento) => elemento.slug),
           ),
         )
-        for (const key of desbloqueosNuevos(prev.abilities, abilities)) {
+        for (const key of nuevosDesbloqueos(prev.abilities, abilities)) {
           nuevasFacultades.add(key)
         }
         return {
@@ -366,12 +313,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         const res = await fetch('/api/estado')
         if (!res.ok) throw new Error()
         const rawData = (await res.json()) as EstadoJuego
-        const language = browserLanguage()
-        const data: EstadoJuego = {
-          ...rawData,
-          elementos: rawData.elementos.map((element) => localizedElement(element, language)),
-          ritualState: localizedRitualState(rawData.ritualState, language),
-        }
+        const data = rawData
         const estadoAnterior = get().estado
         const abilitiesAnteriores = get().abilities
         set((prev) => ({
@@ -388,7 +330,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
           bandeja: sincronizarBandeja(prev.bandeja, data.elementos),
         }))
         if (estadoAnterior) {
-          for (const key of desbloqueosNuevos(abilitiesAnteriores, data.abilities)) {
+          for (const key of nuevosDesbloqueos(abilitiesAnteriores, data.abilities)) {
             get().mostrarAviso(`New ability: ${ABILITY_DEFINITIONS[key].nombre}.`)
           }
         }
@@ -405,7 +347,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
 
     mostrarAviso: (texto, tono = 'bruma') => {
       const id = ++avisoId
-      set((prev) => ({ avisos: [...prev.avisos.slice(-2), { id, texto, tono }] }))
+      set((prev) => ({ avisos: appendAviso(prev.avisos, { id, texto, tono }) }))
       avisoTimers.set(
         id,
         setTimeout(() => get().cerrarAviso(id), 4200),
@@ -416,7 +358,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
       const timer = avisoTimers.get(id)
       if (timer) clearTimeout(timer)
       avisoTimers.delete(id)
-      set((prev) => ({ avisos: prev.avisos.filter((a) => a.id !== id) }))
+      set((prev) => ({ avisos: removeAviso(prev.avisos, id) }))
     },
 
     colocar: (el) => {
@@ -531,13 +473,13 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
           get().mostrarAviso(data?.error ?? 'The archive remains silent.', 'peligro')
           return
         }
-        const rawResult = data as CombineResult
+        const rawResult = parseCombineResult(data)
         const r = rawResult.kind === 'RESOLVED'
           ? {
               ...rawResult,
               results: rawResult.results.map((output) => ({
                 ...output,
-                element: localizedElement(output.element, browserLanguage()),
+                element: output.element,
               })),
             }
           : rawResult
@@ -708,9 +650,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
         }
 
         await get().cargarEstado()
-        const openingElementSlugs = Array.isArray(data.openingElementSlugs)
-          ? data.openingElementSlugs.filter((slug: unknown): slug is string => typeof slug === 'string')
-          : []
+        const openingElementSlugs = openingSlugsFromResponse(data)
         const openingSet = new Set(openingElementSlugs)
         const openings = get().estado?.elementos.filter(
           (elemento) => elemento.kind === 'ELEMENT' && openingSet.has(elemento.slug),
@@ -754,12 +694,7 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
           await get().cargarEstado()
           return
         }
-        set({
-          ritualState: localizedRitualState(
-            data.ritualState as PublicRitualState,
-            browserLanguage(),
-          ),
-        })
+        set({ ritualState: data.ritualState as PublicRitualState })
         get().mostrarAviso('The ritual preparation has been completed.')
         void get().refrescarPotencial()
       } catch {
@@ -1027,16 +962,3 @@ export const useJuegoStore = create<JuegoState>()((set, get) => {
     },
   }
 })
-
-// Unidades sueltas de una receta pendiente (ojo ×2 → ojo, ojo).
-function unidadesDePendiente(pendientes: RecetaPendiente[], recipeId: string) {
-  const receta = pendientes.find((r) => r.recipeId === recipeId)
-  if (!receta) return []
-  return receta.ingredientes.flatMap((i) =>
-    Array.from({ length: i.quantity }, () => ({
-      ...i,
-      firstDiscoveredAt: '',
-      timesCreated: 0,
-    })),
-  )
-}

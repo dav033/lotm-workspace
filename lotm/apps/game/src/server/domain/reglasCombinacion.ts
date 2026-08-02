@@ -1,3 +1,4 @@
+import 'server-only'
 // Predicados puros compartidos por el resolvedor real y el analizador de
 // potencial. Mantener estas reglas aquí evita que el Vidente anuncie una
 // acción que combinar.ts rechazaría después.

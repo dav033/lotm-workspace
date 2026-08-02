@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronsUp, ExternalLink, Sparkle } from 'lucide-react'
 import { IconoElemento } from '@/components/game/IconoElemento'
 import { COLOR_NEUTRO, colorDeCamino, type CaminoLeyenda } from './tipos'
-import type { EspinaCamino } from '@/server/services/arbolGrafo'
+import type { EspinaCamino } from '@/shared/adminTree'
 
 export function CaminoEspina({
   caminos,

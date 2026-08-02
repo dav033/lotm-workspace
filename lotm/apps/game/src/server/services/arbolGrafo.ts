@@ -1,9 +1,11 @@
+import 'server-only'
 // Construcción del grafo del árbol de habilidades y sus rebanadas bajo
 // demanda: el explorador pide vecindarios y espinas en lugar de recibir el
 // contenido completo, así la página no crece con el volumen del juego.
 
 import { prisma } from '@/server/db'
-import { etiquetaTipo } from '@/server/domain/tipos'
+import { etiquetaTipo } from '@/shared/tipos'
+import type { EspinaCamino } from '@/shared/adminTree'
 import {
   agruparCombinaciones,
   normalizarTexto,
@@ -434,44 +436,6 @@ export async function buscarNodos(consulta: string) {
 }
 
 // ---------- Espina de camino (vista estructurada en HTML) ----------
-
-export type EspinaSecuencia = {
-  numero: number
-  nombre: string
-  descripcion: string | null
-  elementoId: string
-  elementoNombre: string
-  elementoDescripcion: string
-  iconKey: string
-  tipo: string
-  activo: boolean
-  recetas: string[]
-  desbloqueos: string[]
-  usadoEnRecetas: number
-}
-
-export type EspinaRitual = {
-  nombre: string
-  exigeSecuencia: number
-  ingredientes: string
-  fallos: string[]
-  activo: boolean
-}
-
-export type EspinaAvance = {
-  nombre: string
-  deNumero: number
-  aNumero: number
-  ingredientes: string
-  activo: boolean
-  rituales: EspinaRitual[]
-}
-
-export type EspinaCamino = {
-  camino: { id: string; nombre: string; descripcion: string; index: number }
-  secuencias: EspinaSecuencia[]
-  avances: EspinaAvance[]
-}
 
 function nombresIngredientes(
   ingredientes: { quantity: number; element: { name: string } }[],

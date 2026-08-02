@@ -1,6 +1,6 @@
 'use client'
 
-import type { PathwayReveal } from '@/server/domain/tipos'
+import type { PathwayReveal } from '@/shared/tipos'
 import { ModalOculto } from './ModalOculto'
 
 // Revelación de descubrimiento mayor (desbloqueo de un camino).

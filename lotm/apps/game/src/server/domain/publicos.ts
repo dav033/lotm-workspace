@@ -1,16 +1,6 @@
-import type { ElementPublicData } from './tipos'
-
-export const ADVANCE_TOKEN_PREFIX = 'advance-'
-
-export function advanceToken(id: string): string {
-  return `${ADVANCE_TOKEN_PREFIX}${id}`
-}
-
-export function advanceIdFromToken(token: string): string | null {
-  if (!token.startsWith(ADVANCE_TOKEN_PREFIX)) return null
-  const id = token.slice(ADVANCE_TOKEN_PREFIX.length)
-  return id || null
-}
+import 'server-only'
+import type { ElementPublicData } from '@/shared/tipos'
+import { advanceToken } from '@/shared/advances'
 
 export function toPublicElement(e: {
   id: string
@@ -29,10 +19,8 @@ export function toPublicElement(e: {
     kind: 'ELEMENT',
     id: e.id,
     slug: e.slug,
-    name: e.name,
-    nameEn: e.nameEn,
-    description: e.description,
-    descriptionEn: e.descriptionEn,
+    name: e.nameEn?.trim() || e.name,
+    description: e.descriptionEn?.trim() || e.description,
     iconKey: e.iconKey,
     imageUrl: e.imageUrl,
     type: e.type,
@@ -64,12 +52,8 @@ export function toPublicAdvance(advance: {
     kind: 'ADVANCE',
     id: token,
     slug: token,
-    name: 'Avance desconocido',
-    nameEn: 'Unknown advancement',
-    description:
-      'Se consume al usarlo: combínalo con la secuencia correcta para ascender.',
-    descriptionEn:
-      'It is consumed when used: combine it with the correct Sequence to advance.',
+    name: 'Unknown advancement',
+    description: 'It is consumed when used: combine it with the correct Sequence to advance.',
     // El icono del camino de origen distingue avances entre sí y da una pista
     // de dónde encaja sin revelar la secuencia exacta.
     iconKey: advance.sourceSequence?.pathway.iconKey ?? 'wand-sparkles',

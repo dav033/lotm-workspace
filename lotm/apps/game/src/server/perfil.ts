@@ -1,3 +1,4 @@
+import 'server-only'
 import { cookies } from 'next/headers'
 import { prisma } from './db'
 import { descubrirIniciales } from './domain/descubrimientos'

@@ -1,7 +1,7 @@
 // Normalización determinista de combinaciones. Módulo puro (sin Prisma, sin
 // Node): puede importarse tanto desde el servidor como desde componentes de
 // cliente. El servidor lo reexporta desde su ubicación histórica
-// (`@/server/domain/inputKey`) para no romper imports existentes.
+// Todos los llamadores importan este módulo desde `@/shared/inputKey`.
 //
 // Una receta se identifica por su inputKey: los slugs de sus ingredientes
 // agrupados, ordenados alfabéticamente y unidos con "|":
