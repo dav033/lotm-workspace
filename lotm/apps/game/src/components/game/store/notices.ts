@@ -1,4 +1,4 @@
-import type { Aviso } from '../store'
+import type { Aviso } from './tipos'
 
 export function appendAviso(avisos: Aviso[], aviso: Aviso): Aviso[] {
   return [...avisos.slice(-2), aviso]
