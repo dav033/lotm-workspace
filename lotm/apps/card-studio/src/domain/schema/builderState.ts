@@ -61,6 +61,7 @@ export type BuilderCardState = {
   tarotMemberDetailText: string
   tarotMemberFooterText: string
   tarotMemberPathway: string | null
+  tarotMemberAccentColor: string | null
   tarotMemberImage: string | null
   corruptionVariant: 'Warning' | 'Evidence' | 'Quote'
   corruptionIncident: string
@@ -146,6 +147,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tarotMemberDetailText: '',
   tarotMemberFooterText: '',
   tarotMemberPathway: null,
+  tarotMemberAccentColor: null,
   tarotMemberImage: null,
   corruptionVariant: 'Warning',
   corruptionIncident: '',
@@ -285,6 +287,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       tarotMemberDetailText: content.detailText,
       tarotMemberFooterText: content.footerText ?? '',
       tarotMemberPathway: content.pathway ?? null,
+      tarotMemberAccentColor: content.accentColor ?? null,
       tarotMemberImage: content.imageUrl ?? null,
     }
   }
@@ -441,6 +444,7 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
       detailText: state.tarotMemberDetailText.trim(),
       ...(state.tarotMemberFooterText.trim() ? { footerText: state.tarotMemberFooterText.trim() } : {}),
       ...(state.tarotMemberPathway ? { pathway: state.tarotMemberPathway } : {}),
+      ...(state.tarotMemberAccentColor ? { accentColor: state.tarotMemberAccentColor } : {}),
       ...(state.tarotMemberImage ? { imageUrl: state.tarotMemberImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }

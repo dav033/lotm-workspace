@@ -107,6 +107,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   tarotMemberDetailText: '',
   tarotMemberFooterText: '',
   tarotMemberPathway: null,
+  tarotMemberAccentColor: null,
   tarotMemberImage: null,
   corruptionVariant: 'Warning',
   corruptionIncident: '',

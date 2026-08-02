@@ -48,6 +48,13 @@ function background(value: string | null | undefined, fallback: string | null): 
   return value || fallback
 }
 
+function darkenHex(color: string, factor = 0.34): string {
+  const value = color.replace('#', '')
+  const channel = (offset: number) => Math.round(Number.parseInt(value.slice(offset, offset + 2), 16) * factor)
+    .toString(16).padStart(2, '0')
+  return `#${channel(0)}${channel(2)}${channel(4)}`
+}
+
 export function cardPropsFromBuilderState(
   state: BuilderCardState,
   handlers: CardViewHandlers = {},
@@ -217,6 +224,7 @@ export function cardPropsFromBuilderState(
 
   if (state.type === 'Tarot Member') {
     const pathway = asPathway(state.tarotMemberPathway)
+    const customAccent = state.tarotMemberAccentColor
     return {
       kind: 'Tarot Member',
       props: {
@@ -229,7 +237,9 @@ export function cardPropsFromBuilderState(
         footerText: state.tarotMemberFooterText,
         image: background(state.tarotMemberImage, pathway ? PATHWAY_BACKGROUNDS[pathway] : null),
         backgroundOpacity: state.backgroundOpacity,
-        tier: pathway ? PATHWAY_COLORS[pathway] : null,
+        tier: customAccent
+          ? { c: customAccent, d: darkenHex(customAccent) }
+          : pathway ? PATHWAY_COLORS[pathway] : null,
         onDropBackground: handlers.onDropBackground,
       },
     }

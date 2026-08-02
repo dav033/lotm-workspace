@@ -301,6 +301,11 @@ test('rechaza pathways no canónicos y explicaciones fuera de límite', () => {
 })
 
 test('Corruption File y Ritual Logic conservan todos sus campos', () => {
+  const tarotMember = CardContentSchema.parse({
+    type: 'Tarot Member', variant: 'Portrait', name: 'Alger Wilson', tarotTitle: 'The Hanged Man',
+    description: 'A veteran sailor.', detailText: 'Acts as the Club naval specialist.',
+    pathway: 'Tyrant', accentColor: '#2f8fc4', backgroundOpacity: 42,
+  })
   const corruption = CardContentSchema.parse({
     type: 'Corruption File', variant: 'Evidence', incident: 'Monocle panic',
     explanation: 'Amon uses monocles as a visual signature.', reaction: 'Every monocle became suspicious.',
@@ -313,6 +318,7 @@ test('Corruption File y Ritual Logic conservan todos sus campos', () => {
     uncertainty: 'The causal link is inferred.', backgroundOpacity: 65,
   })
 
+  assert.deepEqual(fromBuilderCardState(toBuilderCardState(tarotMember)), tarotMember)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(corruption)), corruption)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(ritual)), ritual)
   assert.equal(filenameForCard(ritual), 'ritual-logic_fool_seq5')

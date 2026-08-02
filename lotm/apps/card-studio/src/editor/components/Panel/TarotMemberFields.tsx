@@ -35,6 +35,19 @@ export default function TarotMemberFields({ state, set, accent, onUploadImage, o
                 <PathwayCombo value={state.tarotMemberPathway} onPick={(pathway) => set({ tarotMemberPathway: pathway })} />
               </div>
             )}
+            <div className="field">
+              <label>Custom accent (optional)</label>
+              <div className="toggle">
+                <input
+                  type="color"
+                  value={state.tarotMemberAccentColor || '#d8b76b'}
+                  onChange={(e) => set({ tarotMemberAccentColor: e.target.value })}
+                />
+                {state.tarotMemberAccentColor && (
+                  <button className="seg" onClick={() => set({ tarotMemberAccentColor: null })}>Use pathway color</button>
+                )}
+              </div>
+            </div>
   
             <div className="field"><label>Name or identity</label><input maxLength={80} value={state.tarotMemberName ?? ''} onChange={(e) => set({ tarotMemberName: e.target.value })} /></div>
             <div className="field"><label>Tarot title</label><input maxLength={40} value={state.tarotMemberTitle ?? ''} placeholder="The Hanged Man" onChange={(e) => set({ tarotMemberTitle: e.target.value })} /></div>

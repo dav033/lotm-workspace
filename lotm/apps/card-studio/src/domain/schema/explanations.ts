@@ -95,6 +95,9 @@ export const TarotMemberCardSchema = z
     detailText: z.string().trim().min(1).max(280).describe('Segunda idea, funcion o contraste del personaje.'),
     footerText: z.string().trim().max(180).optional().describe('Remate final breve, divertido pero veraz.'),
     pathway: PathwayNameSchema.optional().describe('Pathway opcional que aporta el color de acento.'),
+    accentColor: z.string().regex(/^#[0-9a-f]{6}$/i).optional().describe(
+      'Color visual opcional en hexadecimal. Reemplaza el acento del pathway sin presentarse como canon.',
+    ),
     imageUrl: ImageSourceSchema.optional().describe('Retrato o arte de fondo opcional.'),
     backgroundOpacity: BackgroundOpacitySchema,
   })
