@@ -1,0 +1,54 @@
+name: CI
+
+# The npm workspace root is `lotm/`, not the repository root, so every job
+# runs from there. Deployment is untouched: the VPS timer still pulls `main`
+# and rebuilds; this workflow only reports.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+defaults:
+  run:
+    working-directory: lotm
+
+jobs:
+  check:
+    name: ${{ matrix.workspace }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        workspace: ['@lotm/game', '@lotm/card-studio']
+    env:
+      # The game build is force-dynamic and never opens a connection, but
+      # `src/server/db.ts` throws when DATABASE_URL is missing at build time.
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
+      DIRECT_URL: postgresql://ci:ci@localhost:5432/ci
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: lotm/package-lock.json
+
+      - run: npm ci
+
+      # Only the game needs a generated Prisma client to typecheck and build.
+      - name: Generate Prisma client
+        if: matrix.workspace == '@lotm/game'
+        run: npx prisma generate --schema apps/game/prisma/schema.prisma
+
+      # Chromium is deliberately not installed. No unit test drives Playwright:
+      # the repository, schema, video and MCP suites are all pure. The visual
+      # golden harness (`visual:check`) is a local-only gate, because font
+      # rasterisation and antialiasing differ per machine and would make the
+      # pixel comparison flap in CI.
+      - run: npm run lint -w ${{ matrix.workspace }}
+      - run: npm run typecheck -w ${{ matrix.workspace }}
+      - run: npm run test -w ${{ matrix.workspace }}
+      - run: npm run build -w ${{ matrix.workspace }}

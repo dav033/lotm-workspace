@@ -1,5 +1,7 @@
 # LOTM Workspace
 
+[![CI](https://github.com/dav033/lotm-workspace/actions/workflows/ci.yml/badge.svg)](https://github.com/dav033/lotm-workspace/actions/workflows/ci.yml)
+
 This directory is the npm-workspaces monorepo for Archivo de Misterios and
 Card Studio. The two apps deploy separately and keep their data stores
 separate: the game uses PostgreSQL; Card Studio uses SQLite under `data/`.
