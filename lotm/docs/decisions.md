@@ -40,6 +40,16 @@
 - **Rationale:** The alternative — updating every importer — turns a mechanical refactor into a wide diff and makes regressions hard to attribute.
 - **Note:** The plan prescribed a shared `mappers.ts` for `datos`. Only the nominal export path uses those two helpers, so they stayed with it rather than creating a module with a single consumer.
 
+## ADR-006 — The game runs with every feature open
+
+- **Status:** Accepted by owner
+- **Date:** 2026-08-02
+- **Decision:** `resolveFeatureState()` returns `true` for every key in `FEATURE_DEFINITIONS`. No feature is hidden behind a progression phase, an unlock threshold or a role, and the admin panel is never feature-restricted. New features are added open; they do not get a flag or a phase.
+- **Rationale:** The owner is the only operator and uses the archive as an authoring and review tool. Being throttled by the same progression curve the players see gets in the way, and the gating existed for players, not for them.
+- **Accepted consequence:** Authentication is disabled (ADR-001), so nothing can distinguish the owner from a visitor. Opening the features therefore opens them for **everyone** who reaches the public site, not just the admin panel. The owner was shown this and chose it.
+- **What was kept:** `resolveFeatureState` still receives the gate rows and the current phase, so restoring the staged behaviour is a one-function edit. The `FeatureGate` table, the phase-map editor that writes it, and the export and import formats are all unchanged — the configuration survives, nothing reads it to decide.
+- **Tests:** `shared/featureGates.test.ts` pins every feature open even with an absurd threshold or missing configuration. Two tests that previously asserted a locked ritual (`rituales.test.ts`, `combinarRitual.test.ts`) now assert the opposite, so silently reintroducing the gate turns them red.
+
 ## ADR-005 — CI verifies, it does not deploy
 
 - **Status:** Accepted

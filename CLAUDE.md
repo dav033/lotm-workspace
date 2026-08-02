@@ -38,6 +38,12 @@ These are not negotiable without asking the owner first.
   so `/admin/**`, every mutating Server Action and `/api/cards/**` are open. The
   deployment is considered trusted. Do not enable it, do not add auth, do not
   "helpfully" harden it. See `lotm/docs/decisions.md` ADR-001.
+- **The game runs with every feature open, and the owner's admin is never
+  limited.** `resolveFeatureState()` returns `true` for every key: no
+  progression phase, unlock threshold or role hides anything. Do not reintroduce
+  gating, and do not add a new capability behind a flag or a phase. The
+  `FeatureGate` rows and their editor stay as configuration that nothing reads
+  today. See ADR-006.
 - **The MCP contract is frozen**: server name `lotm-card-studio`, the seven tool
   names and their schemas, the `/mcp` endpoint and its Bearer behaviour,
   `/downloads/:filename`, and the ZIP layout `universo/NN-seccion/` with

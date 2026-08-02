@@ -169,19 +169,17 @@ async function apply(fixture: ReturnType<typeof createFixture>, confirmRitualRis
 }
 
 describe('aplicación de avances con ritual', () => {
-  it('bloquea un avance ritualizado antes de la fase configurada sin mutar progreso', async () => {
+  // Las features están abiertas por decisión del propietario (ADR-006): el
+  // umbral de `FeatureGate` ya no bloquea. Antes esto esperaba un rechazo con
+  // "not yet available"; ahora fija lo contrario, para que reponer el
+  // escalonado sin querer salte en rojo.
+  it('aplica un avance ritualizado aunque el umbral configurado quede por encima', async () => {
     const fixture = createFixture({ featureEnabled: false, prepared: true })
-    await assert.rejects(
-      () => apply(fixture, true),
-      (error: unknown) =>
-        error instanceof CombinationError && /not yet available/.test(error.message),
-    )
-    assert.deepEqual(fixture.writes, {
-      profile: 0,
-      stats: 0,
-      advanceConsumed: 0,
-      discovered: [],
-    })
+    const result = await apply(fixture, true)
+
+    assert.equal(result.kind, 'RESOLVED')
+    assert.equal(result.kind === 'RESOLVED' && result.success, true)
+    assert.equal(fixture.writes.advanceConsumed, 1)
   })
 
   it('permite avances sin ritual antes de la fase configurada', async () => {

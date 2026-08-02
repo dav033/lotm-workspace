@@ -145,13 +145,17 @@ async function expectCode(config: Config, code: RitualError['code']) {
 }
 
 describe('realizarRitual', () => {
-  it('rechaza antes de la fase configurada sin crear una preparación', async () => {
+  // Las features están abiertas por decisión del propietario (ADR-006): la fase
+  // configurada en `FeatureGate` ya no bloquea nada. Antes esto esperaba un
+  // FEATURE_LOCKED; ahora fija lo contrario, para que reponer el escalonado sin
+  // querer salte en rojo.
+  it('no bloquea aunque el umbral configurado quede por encima de la fase', async () => {
     const fixture = createDb({ featureEnabled: false })
-    await assert.rejects(
-      () => realizarRitual(fixture.db, 'profile', 'ritual-1'),
-      (error: unknown) => error instanceof RitualError && error.code === 'FEATURE_LOCKED',
-    )
-    assert.equal(fixture.upsertCalls(), 0)
+    const result = await realizarRitual(fixture.db, 'profile', 'ritual-1')
+
+    assert.equal(result.ok, true)
+    assert.equal(result.ritualState.status, 'UNLOCKED')
+    assert.equal(fixture.upsertCalls(), 1)
   })
 
   it('rechaza sin conocimiento ritual', async () => {

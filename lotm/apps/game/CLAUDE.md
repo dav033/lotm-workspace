@@ -49,6 +49,22 @@ New code is English. Existing Spanish modules get renamed only when they are
 being substantially rewritten anyway — never in a rename-only commit, and never
 for routes, DB columns, env vars or export-format fields.
 
+## Feature gates: open, and staying open
+
+`shared/featureGates.ts` returns `true` for every feature key regardless of the
+player's phase. That is deliberate (ADR-006): the owner runs the archive with no
+limits and the admin panel is never feature-restricted.
+
+Because authentication is disabled there is no way to tell the owner apart from
+a visitor, so this opens the features for everyone — that trade was accepted
+knowingly. `resolveFeatureState` still takes the gate rows and the phase so the
+old behaviour is one edit away, and `FeatureGate` rows, the phase-map editor
+that writes them, and the export/import formats all stay intact. Nothing reads
+them to make a decision.
+
+When you add a feature, add it to `FEATURE_DEFINITIONS` and let it resolve open.
+Do not put new capabilities behind a phase, a flag or a role.
+
 ## Database
 
 PostgreSQL (Supabase) through `@prisma/adapter-pg`. `src/server/db.ts` requires
