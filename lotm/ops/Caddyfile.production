@@ -9,7 +9,9 @@ lotm.marosconstruction.com {
       reverse_proxy 172.18.0.1:9010
     }
 
-    handle_path /cartas/_next/* {
+    @cards_assets path /cartas/_next/*
+    handle @cards_assets {
+      uri strip_prefix /cartas
       reverse_proxy card-studio:3000
     }
 
