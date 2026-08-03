@@ -174,3 +174,9 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Las frases de `Concept rehearsal` no deben sonar a etiquetas o apuntes telegráficos.
 - Mantenerlas breves, pero escribir una idea completa y natural: sujeto, tensión y vínculo con el poder de la Secuencia.
 - Se reescribió el bloque conceptual de las ocho cartas live con ese criterio y se regeneró el export.
+
+## 2026-08-02 — Espaciado adaptativo para cartas de ritual
+
+- La composición debe medir la carga total del contenido visible y no reservar siempre la misma altura para bloques cortos.
+- Cuando una variante no-`Pressure` tiene poco texto, usa el espacio vertical libre para repartir mejor sus pasos y paneles; el contenido denso conserva su compactación.
+- `Pressure` mantiene su baseline visual congelado para no alterar composiciones ya aprobadas; no se deben regenerar goldens para ocultar una regresión.

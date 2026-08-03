@@ -79,6 +79,15 @@ test('Ritual Logic marks short content as sparse so the layout can use the card 
     certainty: 'Mixed', uncertainty: 'The four-point logic is inferred.', footerText: 'Every journey needs a way back.',
   }))
   assert.match(html, /ritual-logic-card[^>]*sparse/)
+
+  const pressureHtml = renderToStaticMarkup(React.createElement(RitualLogic, {
+    pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', variant: 'Pressure',
+    ritual: 'Build a small theater and set the stage before the ritual.',
+    survival: 'The threads answer to the performer.',
+    preparation: 'Keep each motion deliberate.',
+    certainty: 'Mixed', uncertainty: 'The exact pressure is inferred.', footerText: 'Control begins with attention.',
+  }))
+  assert.doesNotMatch(pressureHtml, /ritual-logic-card[^>]*sparse/)
 })
 
 test('Tier Explanation muestra solo tier y descripción general', () => {

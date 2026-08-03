@@ -20,7 +20,8 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
   const steps = [ritual, survival, preparation]
   const contentLength = steps.join('').length + (uncertainty || '').length + (footerText || '').length
   const dense = contentLength > 620
-  const sparse = contentLength < 360
+  // Pressure keeps its frozen visual baseline; other short layouts can redistribute the spare height.
+  const sparse = mode !== 'Pressure' && contentLength < 360
   return (
     <article className={`ficha ritual-logic-card certainty-${certainty.toLowerCase()}${dense ? ' dense' : ''}${sparse ? ' sparse' : ''}${dragging ? ' dragover' : ''}`} id="card" ref={ref}
       style={{ '--tier': tier?.c || '#d9b869', '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
