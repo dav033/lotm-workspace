@@ -147,3 +147,30 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - **Regla nueva para la metodología:** si una combinación se siente floja, sospechar primero de que la fuente (nota corta de Secuencia 9) esté incompleta, y revisar si hay un dossier de investigación más rico en `01-Sources` antes de seguir forzando palabras sobre poco material.
 - Sembrado en producción: 1 categoría, 2 caminos, 4 elementos concepto, 2 beyonders, 2 secuencias, 2 recetas. Documentado en [[Combinaciones del Juego]].
 - Siguiente grupo: Demon of Knowledge.
+
+## 2026-08-02 — Regla de composición para cartas de ritual
+
+- Cada `Ritual Logic` conserva una sola carta por ritual. La variante cambia la representación visual de la misma información; nunca crea cartas duplicadas ni divide el contenido en varias cartas.
+- Si el backlash del ritual está descrito de forma explícita en el canon, la carta usa `Pressure`.
+- Si el backlash no está descrito de forma explícita, la carta recibe al azar una variante entre `Chain`, `Split`, `Casefile` y `Timeline`; `Pressure` queda reservado para backlash canónico.
+- Esta asignación es una regla editorial/visual del proyecto, no terminología canónica de LOTM.
+- Aplicación inicial: God Almighty Group, con el contenido pendiente de aprobación antes de crear o actualizar cartas live.
+
+## 2026-08-02 — Criterio operativo de backlash para `Ritual Logic`
+
+- `Backlash` significa la reacción adversa de la poción/característica durante la asimilación: daño, deformación, pérdida de conciencia, fragmentación del alma o riesgo de perder el control.
+- No se debe llamar backlash a una manifestación visual del avance, a una transformación exitosa ni al efecto estabilizador del ritual. Esos datos van separados dentro de la explicación de la carta.
+- Aplicación en God Almighty, Secuencia 5: `Pressure` para Dreamwalker y Ocean Songster; `Pressure` para Shepherd con confianza media por la propiedad canónica de desgarro del alma; `Timeline` aleatoria para Priest of Light y `Chain` aleatoria para Mysticism Magister al no haber backlash adverso explícito localizado.
+- Se añadieron las cinco cartas a `LOTM — Why Sequence 5 Rituals Work`, una parte por camino. El orden global de las ocho partes existentes se aleatorizó sin duplicar ni dividir cartas.
+
+## 2026-08-02 — Compresión editorial de cartas de ritual
+
+- El texto visible de `Ritual Logic` debe ser breve: una frase para la condición, una para la presión/supervivencia y una para la preparación conceptual.
+- No escribir `Backlash:` dentro del cuerpo de la carta. La composición visual ya comunica la presión; el texto debe describir directamente el peligro o indicar que no hay backlash explícito.
+- Se aplicó la compresión a las ocho cartas live de `LOTM — Why Sequence 5 Rituals Work` y se regeneró el export.
+
+## 2026-08-02 — Tono del bloque conceptual en cartas de ritual
+
+- Las frases de `Concept rehearsal` no deben sonar a etiquetas o apuntes telegráficos.
+- Mantenerlas breves, pero escribir una idea completa y natural: sujeto, tensión y vínculo con el poder de la Secuencia.
+- Se reescribió el bloque conceptual de las ocho cartas live con ese criterio y se regeneró el export.

@@ -70,6 +70,17 @@ test('Ritual Logic produce cinco composiciones distintas', () => {
   assert.notEqual(pressure, timeline)
 })
 
+test('Ritual Logic marks short content as sparse so the layout can use the card height', () => {
+  const html = renderToStaticMarkup(React.createElement(RitualLogic, {
+    pathway: 'Door', sequence: 5, sequenceName: 'Traveler', variant: 'Chain',
+    ritual: 'Set four distant coordinates in the Spirit World.',
+    survival: 'The coordinates point home.',
+    preparation: 'Mark a position and return without losing yourself.',
+    certainty: 'Mixed', uncertainty: 'The four-point logic is inferred.', footerText: 'Every journey needs a way back.',
+  }))
+  assert.match(html, /ritual-logic-card[^>]*sparse/)
+})
+
 test('Tier Explanation muestra solo tier y descripción general', () => {
   const html = renderToStaticMarkup(React.createElement(TierExplanation, {
     rank: 'S',

@@ -18,9 +18,11 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const mode = ['Chain', 'Split', 'Casefile', 'Pressure', 'Timeline'].includes(variant) ? variant : 'Chain'
   const steps = [ritual, survival, preparation]
-  const dense = steps.join('').length > 620
+  const contentLength = steps.join('').length + (uncertainty || '').length + (footerText || '').length
+  const dense = contentLength > 620
+  const sparse = contentLength < 360
   return (
-    <article className={`ficha ritual-logic-card certainty-${certainty.toLowerCase()}${dense ? ' dense' : ''}${dragging ? ' dragover' : ''}`} id="card" ref={ref}
+    <article className={`ficha ritual-logic-card certainty-${certainty.toLowerCase()}${dense ? ' dense' : ''}${sparse ? ' sparse' : ''}${dragging ? ' dragover' : ''}`} id="card" ref={ref}
       style={{ '--tier': tier?.c || '#d9b869', '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
       aria-label={`${pathway} Sequence ${sequence} ${sequenceName} advancement ritual`} {...dropProps}>
       {backgroundImage && <><div className="tier-background" style={{ backgroundImage: `url("${backgroundImage}")` }} aria-hidden="true" /><div className="tier-background-overlay" aria-hidden="true" /></>}

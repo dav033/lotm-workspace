@@ -51,4 +51,14 @@
 .ritual-logic-card.dense .ritual-logic-chain{gap:9px}.ritual-logic-card.dense .ritual-logic-step p{font-size:12px;line-height:1.25}.ritual-logic-card.dense .ritual-logic-title{font-size:38px}.ritual-logic-card.dense .ritual-logic-verdict{margin-top:11px}.ritual-logic-card.dense .ritual-logic-footer{margin-top:9px}
 .ritual-logic-card.dense .ritual-logic-pane{min-height:165px;padding:13px}.ritual-logic-card.dense .ritual-logic-pane-number{margin-bottom:12px}.ritual-logic-card.dense .ritual-logic-pane h3{font-size:20px}.ritual-logic-card.dense .ritual-logic-pane p,.ritual-logic-card.dense .ritual-logic-pressure p,.ritual-logic-card.dense .ritual-logic-casefile p{font-size:12px;line-height:1.25}
 .ritual-logic-card.dense .ritual-logic-threat{padding:17px 16px 19px}.ritual-logic-card.dense .ritual-logic-threat p{font-size:21px}.ritual-logic-card.dense .ritual-logic-pressure-notes section{min-height:112px;padding:12px}.ritual-logic-card.dense .ritual-logic-pressure-notes p,.ritual-logic-card.dense .ritual-logic-timeline p{font-size:11px;line-height:1.25}.ritual-logic-card.dense .ritual-logic-timeline h3{font-size:18px}
+.ritual-logic-card.sparse .ritual-logic-chain{flex:1 1 auto;justify-content:space-around;gap:18px;padding-bottom:18px}
+.ritual-logic-card.sparse .ritual-logic-chain::before{top:42px;bottom:42px}
+.ritual-logic-card.sparse .ritual-logic-step p{font-size:15px;line-height:1.35}
+.ritual-logic-card.sparse .ritual-logic-split,.ritual-logic-card.sparse .ritual-logic-casefile,.ritual-logic-card.sparse .ritual-logic-pressure-layout,.ritual-logic-card.sparse .ritual-logic-timeline{flex:1 1 auto;min-height:0}
+.ritual-logic-card.sparse .ritual-logic-split{grid-auto-rows:1fr}
+.ritual-logic-card.sparse .ritual-logic-pane{min-height:0}
+.ritual-logic-card.sparse .ritual-logic-pressure-layout{justify-content:space-between;gap:20px}
+.ritual-logic-card.sparse .ritual-logic-pressure-notes section{min-height:0}
+.ritual-logic-card.sparse .ritual-logic-timeline{align-items:stretch}
+.ritual-logic-card.sparse .ritual-logic-verdict{margin-top:10px}
 @media (max-width:700px){.ritual-logic-pressure-notes,.ritual-logic-timeline{grid-template-columns:1fr}.ritual-logic-timeline{gap:12px;padding-top:0}.ritual-logic-timeline::before{left:5px;right:auto;top:8px;bottom:8px;width:1px;height:auto}.ritual-logic-timeline section{padding-left:18px}.ritual-logic-timeline section::before{top:8px;left:0;transform:translateX(-50%)}}
