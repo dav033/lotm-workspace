@@ -26,6 +26,7 @@ Nada de lo que vive en `10-Project/` es lore de la novela. Es el registro de un 
 - [[IP y Riesgo Legal|IP y Riesgo Legal]] — investigación de derechos, fecha ancla, plan de contingencia.
 - [[Arquitectura del Juego|Arquitectura del Juego]] — stack técnico, decisiones de diseño de datos, estado actual del código, **y la regla de diseño del sistema de combinación/Beyonders** (Secuencia 9, Avances, Rituales de avance, Avances ocultos).
 - [[Guía de cartas de ritual|Guía de cartas de ritual]] — contrato de contenido, evidencia, variantes, portada y estilo visual para las cartas de ritual de avance.
+- [[Sesión 2026-08-02 - Fondos automáticos y cartas de ritual|Sesión 2026-08-02 — Fondos automáticos y cartas de ritual]] — decisiones de esta sesión sobre fallback por pathway, fondos de Secuencia, rutas públicas y estado del deploy.
 - [[Combinaciones del Juego|Combinaciones del Juego]] — registro de trabajo de las combinaciones Concepto+Concepto → Beyonder de Secuencia 9, grupo por grupo: tabla maestra de estado, conceptos ya usados, detalle y "por qué" de cada camino confirmado.
 - [[Estrategia de TikTok y Validación|Estrategia de TikTok y Validación]] — tracción del canal, plan de prueba de valor del juego.
 - [[Deliberacion del Consejo - Ronda 9|Deliberación del Consejo — Ronda 9]] — transcripción completa de la sesión donde se replanteó (y revirtió) la decisión de genericar nombres canónicos.

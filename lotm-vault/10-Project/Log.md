@@ -225,3 +225,7 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - Las cartas `Ritual Logic` conservan la misma regla que las cartas de Tier: el fondo por defecto viene del pathway declarado. `Mysticism Magister` usa por tanto `White Tower` sin guardar una URL en la carta.
 - Se corrigieron las rutas públicas de fondos e iconos del pathway bajo `/cartas` para que esa herencia también funcione en la vista viva de producción.
+
+## 2026-08-02 — Nota de cierre de la sesión
+
+- Se creó [[Sesión 2026-08-02 - Fondos automáticos y cartas de ritual]] con el resumen de decisiones editoriales, visuales, técnicas y de despliegue tomadas en esta sesión.
