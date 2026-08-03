@@ -15,6 +15,7 @@ Una carta explica por qué un ritual puede preparar al aspirante para la
 Secuencia siguiente. No es una receta aislada ni una descripción de poderes:
 conecta el acto, la presión de la poción y el principio que el nuevo poder
 requiere.
+La colección también abre con una slide metodológica que explica el marco y separa canon de interpretación.
 
 ## Contrato de contenido
 
@@ -77,9 +78,9 @@ La primera carta es una `Full Image Cover` dentro de `Main`:
 - Tono: una tesis clara, misterio contenido y espacio visual suficiente para
   que el título respire.
 
-La portada introduce el análisis; no repite ninguna carta de pathway ni añade
-una novena explicación de ritual. La colección completa son nueve cartas dentro
-de `Main`: una portada y ocho rituales.
+La portada introduce el análisis; no repite ninguna carta de pathway. La segunda carta es una `General Explanation` titulada **Why Rituals Matter**: debe
+resumir la necesidad del ritual, sus utilidades prácticas y el grado de certeza. La colección completa son diez cartas dentro de `Main`: una portada,
+una explicación metodológica y ocho rituales.
 
 ## Flujo de actualización
 
@@ -88,5 +89,5 @@ de `Main`: una portada y ocho rituales.
 3. Elegir la variante según evidencia, no según qué composición parezca más
    dramática.
 4. Guardar o actualizar la carta live.
-5. Exportar la colección completa y revisar que siga teniendo una sola sección
-   `Main`, una portada y una carta por ritual.
+5. Exportar la colección completa y revisar que siga teniendo una sola sección `Main`, una portada,
+   una explicación metodológica y una carta por ritual.

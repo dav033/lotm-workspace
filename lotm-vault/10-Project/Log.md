@@ -201,3 +201,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - Se eliminaron las divisiones visibles por pathway: las nueve cartas de la colección live ahora viven juntas en `Main`.
 - `Main` abre con la portada y continúa con los ocho rituales de Secuencia 5. La guía queda actualizada para impedir nuevas partes separadas.
+
+## 2026-08-02 — Slide metodológica de la colección
+
+- Se añadió **Why Rituals Matter** como `General Explanation` en `Main`, justo después de la portada.
+- La slide explica la función del ritual, sus utilidades durante la asimilación y la diferencia entre hechos canónicos, interpretaciones y teorías. La colección pasa a tener diez cartas: portada, método y ocho rituales.
