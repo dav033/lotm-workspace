@@ -186,3 +186,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Toda carta de ritual debe separar tres ideas sin ambigüedad: `Ritual function` explica qué consigue el acto y cómo orienta la asimilación; `Potion pressure` explica el peligro o la presión de la poción; `Sequence rehearsal` explica qué poder o principio de la nueva Secuencia se ensaya.
 - Las variantes pueden cambiar la composición, pero deben conservar esa misma lectura: no volver a etiquetas vagas como `Setup`, `Condition` o `Concept rehearsal` cuando ocultan la función.
 - El contenido live de las ocho cartas de Secuencia 5 se reescribió con esa separación. Se evita la palabra `backlash` en el texto visible; se habla de reacción adversa, presión o peligro según corresponda.
+
+## 2026-08-02 — Chain usa el alto libre cuando el contenido no es denso
+
+- El modo `Chain` no debe depender de que el texto sea extremadamente corto para crecer: mientras no esté en modo `dense`, reparte sus pasos por el alto disponible y deja el veredicto/footer debajo.
+- El modo `dense` conserva su compactación; `sparse` sigue afinando el espaciado para cartas especialmente breves.
