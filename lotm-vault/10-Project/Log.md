@@ -191,3 +191,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - El modo `Chain` no debe depender de que el texto sea extremadamente corto para crecer: mientras no esté en modo `dense`, reparte sus pasos por el alto disponible y deja el veredicto/footer debajo.
 - El modo `dense` conserva su compactación; `sparse` sigue afinando el espaciado para cartas especialmente breves.
+
+## 2026-08-02 — Portada y guía de la colección de rituales
+
+- Se creó la portada `Full Image Cover` **Why Sequence 5 Rituals Work** en la parte `Cover` de la colección live, usando `/covers/sequence-2-c-b.png`, un fondo místico azul ya existente en Card Studio.
+- Se creó [[Guía de cartas de ritual]] y se añadió al índice del proyecto. La guía fija el contrato `Ritual function` / `Potion pressure` / `Sequence rehearsal`, la regla de evidencia, las cinco variantes y el estilo de portada.
