@@ -70,6 +70,12 @@ La colección usa una sola sección principal llamada `Main`. No crear una parte
 por pathway ni una parte separada para la portada. La portada ocupa la primera
 posición y las cartas de ritual siguen en el orden editorial elegido.
 
+El fondo temático se resuelve por metadata de Secuencia: si una carta declara
+una Secuencia, Card Studio elige automáticamente su imagen pública. La carta no
+debe guardar la URL a mano; `backgroundImageUrl` queda reservado para un
+override excepcional. Para esta colección, Secuencia 5 usa
+`/sequence-back/sequence-5.png`.
+
 La primera carta es una `Full Image Cover` dentro de `Main`:
 
 - Título: **Why Sequence 5 Rituals Work**.

@@ -241,6 +241,7 @@ test('una General Explanation acepta imagen de fondo propia, con o sin pathway',
     type: 'General Explanation',
     title: 'Door y la replicacion',
     description: 'Texto.',
+    sequence: 5,
     pathway: 'Door',
     backgroundImageUrl: '/covers/door-propia.jpg',
   })
@@ -255,10 +256,12 @@ test('una General Explanation acepta imagen de fondo propia, con o sin pathway',
   assert.equal(toBuilderCardState(sinPathway).generalExplanationBackgroundImage, '/covers/generica.jpg')
   // El pathway sigue siendo cosa aparte de la imagen: uno no arrastra al otro.
   assert.equal(toBuilderCardState(sinPathway).explanationPath, null)
+  assert.equal(toBuilderCardState(conPathway).generalExplanationSequence, 5)
 
   const ida = fromBuilderCardState(toBuilderCardState(conPathway))
   assert.equal(ida.type === 'General Explanation' && ida.backgroundImageUrl, '/covers/door-propia.jpg')
   assert.equal(ida.type === 'General Explanation' && ida.pathway, 'Door')
+  assert.equal(ida.type === 'General Explanation' && ida.sequence, 5)
 
   // Sin imagen el campo no se inventa, que si no toda carta vieja saldria con
   // un backgroundImageUrl vacio al reguardarse.

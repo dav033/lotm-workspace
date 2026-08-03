@@ -39,18 +39,35 @@ export default function ExplanationFields({ state, set, accent, onUploadImage, o
                     />
                   </div>
                 )}
+
+                <div className="field">
+                  <label htmlFor="general-explanation-sequence">Sequence theme</label>
+                  <select
+                    id="general-explanation-sequence"
+                    value={state.generalExplanationSequence ?? ''}
+                    onChange={(e) => set({
+                      generalExplanationSequence: e.target.value === '' ? null : Number(e.target.value),
+                    })}
+                  >
+                    <option value="">No sequence background</option>
+                    {Array.from({ length: 10 }, (_, i) => 9 - i).map((n) => (
+                      <option key={n} value={n}>Sequence {n}</option>
+                    ))}
+                  </select>
+                  <p className="field-help">The background is selected automatically. Upload only to override it.</p>
+                </div>
   
-                {/* Siempre, no solo con pathway: sin pathway no hay fondo por
-                    defecto, pero una imagen propia se puede poner igual. */}
                 <BackgroundField
                   value={state.generalExplanationBackgroundImage}
                   field="generalExplanationBackgroundImage"
                   opacity={state.backgroundOpacity}
                   set={set}
                   onUploadImage={onUploadImage}
-                  help={state.explanationPath
-                    ? `Using the default ${state.explanationPath} background. Upload one to override it.`
-                    : 'No background image selected.'}
+                  help={state.generalExplanationSequence !== null
+                    ? `Using the default Sequence ${state.generalExplanationSequence} background. Upload one to override it.`
+                    : state.explanationPath
+                      ? `Using the default ${state.explanationPath} background. Upload one to override it.`
+                      : 'No background image selected.'}
                 />
               </>
             )}

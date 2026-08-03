@@ -11,6 +11,9 @@ export const GeneralExplanationCardSchema = z
     type: z.literal('General Explanation'),
     title: z.string().trim().min(1).max(100).describe('Titulo principal de la explicacion.'),
     description: z.string().trim().min(1).max(800).describe('Texto explicativo general.'),
+    sequence: z.int().min(0).max(9).optional().describe(
+      'Secuencia tematica opcional. Selecciona el fondo por defecto de esa Secuencia.',
+    ),
     pathway: PathwayNameSchema.optional().describe(
       'Pathway concreto opcional. Si se omite, la explicacion es general.',
     ),

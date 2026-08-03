@@ -36,6 +36,7 @@ export type BuilderCardState = {
   tierExplanationBackgroundImage: string | null
   generalExplanationTitle: string
   generalExplanationText: string
+  generalExplanationSequence: number | null
   generalExplanationBackgroundImage: string | null
   pathwayExplanationPath: string
   pathwayExplanationTitle: string
@@ -123,6 +124,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tierExplanationBackgroundImage: null,
   generalExplanationTitle: '',
   generalExplanationText: '',
+  generalExplanationSequence: null,
   generalExplanationBackgroundImage: null,
   pathwayExplanationPath: 'Fool',
   pathwayExplanationTitle: '',
@@ -238,6 +240,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       explanationPath: content.pathway ?? null,
       generalExplanationTitle: content.title,
       generalExplanationText: content.description,
+      generalExplanationSequence: content.sequence ?? null,
       generalExplanationBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
@@ -393,6 +396,9 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
     return {
       type: 'General Explanation', title: state.generalExplanationTitle.trim(),
       description: state.generalExplanationText.trim(),
+      ...(state.generalExplanationSequence !== null
+        ? { sequence: state.generalExplanationSequence }
+        : {}),
       ...(state.explanationPath ? { pathway: state.explanationPath } : {}),
       ...(state.generalExplanationBackgroundImage
         ? { backgroundImageUrl: state.generalExplanationBackgroundImage }

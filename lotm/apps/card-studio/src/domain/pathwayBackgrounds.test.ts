@@ -4,6 +4,7 @@ import path from 'node:path'
 import test from 'node:test'
 import { PATH_NAMES } from './pathways'
 import { PATHWAY_BACKGROUNDS } from './pathwayBackgrounds'
+import { SEQUENCE_BACKGROUNDS } from './sequenceBackgrounds'
 
 test('asocia fondos existentes para los 22 pathways', () => {
   const backgrounds = PATHWAY_BACKGROUNDS as Record<string, string>
@@ -14,4 +15,9 @@ test('asocia fondos existentes para los 22 pathways', () => {
   for (const source of Object.values(backgrounds)) {
     assert.equal(fs.existsSync(path.join(process.cwd(), 'public', source)), true, source)
   }
+})
+
+test('resuelve el fondo temático de la Secuencia 5 desde un asset público', () => {
+  assert.equal(SEQUENCE_BACKGROUNDS[5], '/sequence-back/sequence-5.png')
+  assert.equal(fs.existsSync(path.join(process.cwd(), 'public', SEQUENCE_BACKGROUNDS[5]!)), true)
 })

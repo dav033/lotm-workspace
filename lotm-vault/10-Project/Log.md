@@ -211,3 +211,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - Se reescribió **Why Rituals Matter** para abrir con una pregunta, explicar la utilidad del ritual en bloques cortos y dejar clara la frontera entre canon, interpretación y teoría.
 - La slide puede tener más desarrollo que una carta de ritual, pero mantiene párrafos breves para no funcionar como un muro de texto al inicio.
+
+## 2026-08-02 — Fondo automático por Secuencia
+
+- El fondo de la slide metodológica ya no se guarda manualmente en la carta: `General Explanation` declara la Secuencia y Card Studio resuelve su imagen por defecto.
+- Se añadió el asset público `/sequence-back/sequence-5.png` y la URL manual queda documentada solo como override excepcional.

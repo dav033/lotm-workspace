@@ -9,6 +9,7 @@ import {
 } from '../domain/pathways'
 import { PATHWAY_BACKGROUNDS } from '../domain/pathwayBackgrounds'
 import { PATHWAY_ICONS } from '../domain/pathwayIcons'
+import { SEQUENCE_BACKGROUNDS } from '../domain/sequenceBackgrounds'
 import type { BuilderCardState, CardContent } from '../domain/schema'
 import { toBuilderCardState } from '../domain/schema'
 import type { CardUiProps } from './types'
@@ -146,6 +147,9 @@ export function cardPropsFromBuilderState(
 
   if (state.type === 'General Explanation') {
     const pathway = asPathway(state.explanationPath)
+    const sequenceBackground = state.generalExplanationSequence === null
+      ? null
+      : SEQUENCE_BACKGROUNDS[state.generalExplanationSequence] ?? null
     return {
       kind: 'General Explanation',
       props: {
@@ -156,7 +160,7 @@ export function cardPropsFromBuilderState(
         icon: pathway ? PATHWAY_ICONS[pathway] : null,
         backgroundImage: background(
           state.generalExplanationBackgroundImage,
-          pathway ? PATHWAY_BACKGROUNDS[pathway] : null,
+          sequenceBackground ?? (pathway ? PATHWAY_BACKGROUNDS[pathway] : null),
         ),
         backgroundOpacity: state.backgroundOpacity,
         onDropBackground: handlers.onDropBackground,

@@ -83,6 +83,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   tierExplanationBackgroundImage: null,
   generalExplanationTitle: '',
   generalExplanationText: '',
+  generalExplanationSequence: null,
   generalExplanationBackgroundImage: null,
   pathwayExplanationPath: 'Fool',
   pathwayExplanationTitle: '',
