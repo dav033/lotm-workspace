@@ -78,9 +78,7 @@ La primera carta es una `Full Image Cover` dentro de `Main`:
 - Tono: una tesis clara, misterio contenido y espacio visual suficiente para
   que el título respire.
 
-La portada introduce el análisis; no repite ninguna carta de pathway. La segunda carta es una `General Explanation` titulada **Why Rituals Matter**: debe
-resumir la necesidad del ritual, sus utilidades prácticas y el grado de certeza. La colección completa son diez cartas dentro de `Main`: una portada,
-una explicación metodológica y ocho rituales.
+La portada introduce el análisis; no repite ninguna carta de pathway. La segunda carta es una `General Explanation` titulada **Why Rituals Matter** y funciona como el gancho de entrada: debe abrir con una pregunta o tensión, explicar por qué importa el ritual y cerrar separando canon de interpretación. Puede tener más desarrollo que una carta de ritual, pero debe dividirse en bloques cortos y no convertirse en un muro de texto. La colección completa son diez cartas dentro de `Main`: una portada, una explicación metodológica y ocho rituales.
 
 ## Flujo de actualización
 

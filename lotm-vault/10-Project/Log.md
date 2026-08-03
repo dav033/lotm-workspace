@@ -206,3 +206,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - Se añadió **Why Rituals Matter** como `General Explanation` en `Main`, justo después de la portada.
 - La slide explica la función del ritual, sus utilidades durante la asimilación y la diferencia entre hechos canónicos, interpretaciones y teorías. La colección pasa a tener diez cartas: portada, método y ocho rituales.
+
+## 2026-08-02 — Hook de entrada para la explicación
+
+- Se reescribió **Why Rituals Matter** para abrir con una pregunta, explicar la utilidad del ritual en bloques cortos y dejar clara la frontera entre canon, interpretación y teoría.
+- La slide puede tener más desarrollo que una carta de ritual, pero mantiene párrafos breves para no funcionar como un muro de texto al inicio.
