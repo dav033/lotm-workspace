@@ -196,3 +196,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 
 - Se creó la portada `Full Image Cover` **Why Sequence 5 Rituals Work** en la parte `Cover` de la colección live, usando `/covers/sequence-2-c-b.png`, un fondo místico azul ya existente en Card Studio.
 - Se creó [[Guía de cartas de ritual]] y se añadió al índice del proyecto. La guía fija el contrato `Ritual function` / `Potion pressure` / `Sequence rehearsal`, la regla de evidencia, las cinco variantes y el estilo de portada.
+
+## 2026-08-02 — Una sola sección principal para los rituales
+
+- Se eliminaron las divisiones visibles por pathway: las nueve cartas de la colección live ahora viven juntas en `Main`.
+- `Main` abre con la portada y continúa con los ocho rituales de Secuencia 5. La guía queda actualizada para impedir nuevas partes separadas.

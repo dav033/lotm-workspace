@@ -63,9 +63,13 @@ la variante visual es `Pressure`. Si no está descrito, elegir entre `Chain`,
   breves. No fijar alturas por carta ni dejar un bloque corto pegado arriba con
   un vacío accidental abajo.
 
-## Portada de la colección
+## Organización de la colección
 
-La colección abre con una carta `Full Image Cover` en la parte `Cover`:
+La colección usa una sola sección principal llamada `Main`. No crear una parte
+por pathway ni una parte separada para la portada. La portada ocupa la primera
+posición y las cartas de ritual siguen en el orden editorial elegido.
+
+La primera carta es una `Full Image Cover` dentro de `Main`:
 
 - Título: **Why Sequence 5 Rituals Work**.
 - Imagen: `/covers/sequence-2-c-b.png`, fondo místico azul ya existente en el
@@ -74,7 +78,8 @@ La colección abre con una carta `Full Image Cover` en la parte `Cover`:
   que el título respire.
 
 La portada introduce el análisis; no repite ninguna carta de pathway ni añade
-una novena explicación de ritual.
+una novena explicación de ritual. La colección completa son nueve cartas dentro
+de `Main`: una portada y ocho rituales.
 
 ## Flujo de actualización
 
@@ -83,5 +88,5 @@ una novena explicación de ritual.
 3. Elegir la variante según evidencia, no según qué composición parezca más
    dramática.
 4. Guardar o actualizar la carta live.
-5. Exportar la colección completa y revisar que siga teniendo una portada y
-   una sola carta por ritual.
+5. Exportar la colección completa y revisar que siga teniendo una sola sección
+   `Main`, una portada y una carta por ritual.
