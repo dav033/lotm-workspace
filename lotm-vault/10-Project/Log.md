@@ -229,3 +229,10 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 ## 2026-08-02 — Nota de cierre de la sesión
 
 - Se creó [[Sesión 2026-08-02 - Fondos automáticos y cartas de ritual]] con el resumen de decisiones editoriales, visuales, técnicas y de despliegue tomadas en esta sesión.
+
+## 2026-08-03 — Investigación de contenido: efecto mariposa
+
+- Se creó [[Efecto mariposa]] para conservar el criterio editorial y las cadenas causales investigadas para futuros videos.
+- Quedaron aprobados como líneas fuertes: el olvido de los trenes nocturnos que permite la fuga de Trissy en el volumen 1, y la daga maldita/Kalvetua que termina creando la Iglesia del Dios del Mar en el volumen 3.
+- Se descartaron Cattleya, Frank Lee, Leonard, las acciones de Coim Company y otras propuestas por no producir un cambio de tablero suficientemente claro o por depender de una decisión demasiado dirigida.
+- La búsqueda queda abierta en el volumen 4; la liberación accidental de Zaratul está en revisión, no aprobada.
