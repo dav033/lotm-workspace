@@ -28,6 +28,14 @@
 .background-opacity-control input.background-opacity-range:focus-visible{outline:2px solid var(--tier);outline-offset:4px}
 .background-opacity-presets{flex-wrap:nowrap}
 .background-opacity-presets .seg{min-width:0;padding:7px 4px;font-size:11px}
+.range-control{padding:9px 11px;background:var(--panel2);border:1px solid var(--line);border-radius:8px}
+.range-control-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  color:var(--muted2);font-size:12px}
+.range-control-head output{color:var(--text);font-variant-numeric:tabular-nums}
+.range-control input[type=range]{display:block;width:100%;margin:6px 0 12px;padding:0;border:0;
+  background:transparent;box-shadow:none;appearance:auto;accent-color:var(--tier);cursor:pointer}
+.range-control input[type=range]:focus-visible{outline:2px solid var(--tier);outline-offset:4px}
+.range-control .field-help{margin:0}
 
 .toggle{display:flex;flex-wrap:wrap;gap:6px}
 .seg{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:8px;color:var(--muted2);

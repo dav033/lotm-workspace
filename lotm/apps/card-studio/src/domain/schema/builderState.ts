@@ -39,6 +39,9 @@ export type BuilderCardState = {
   generalExplanationSequence: number | null
   generalExplanationBackgroundImage: string | null
   simpleExplanationText: string
+  simpleExplanationMinFontSize: number
+  simpleExplanationMaxFontSize: number
+  simpleExplanationPosition: 'top' | 'center' | 'bottom'
   pathwayExplanationPath: string
   pathwayExplanationTitle: string
   pathwayExplanationText: string
@@ -128,6 +131,9 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   generalExplanationSequence: null,
   generalExplanationBackgroundImage: null,
   simpleExplanationText: '',
+  simpleExplanationMinFontSize: 14,
+  simpleExplanationMaxFontSize: 28,
+  simpleExplanationPosition: 'center',
   pathwayExplanationPath: 'Fool',
   pathwayExplanationTitle: '',
   pathwayExplanationText: '',
@@ -251,6 +257,9 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
     return {
       ...state,
       simpleExplanationText: content.text,
+      simpleExplanationMinFontSize: content.fontSizeMin,
+      simpleExplanationMaxFontSize: content.fontSizeMax,
+      simpleExplanationPosition: content.position,
     }
   }
 
@@ -419,6 +428,9 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
     return {
       type: 'Simple Explanation',
       text: state.simpleExplanationText.trim(),
+      fontSizeMin: state.simpleExplanationMinFontSize,
+      fontSizeMax: state.simpleExplanationMaxFontSize,
+      position: state.simpleExplanationPosition,
     }
   }
   if (state.type === 'Pathway Explanation') {

@@ -30,6 +30,19 @@ export const SimpleExplanationCardSchema = z
     text: z.string().trim().min(1).max(1000).describe(
       'Texto unico, centrado y autoajustable. La letra se reduce a medida que crece el contenido.',
     ),
+    fontSizeMin: z.number().int().min(12).max(36).default(14).describe(
+      'Tamano minimo de fuente en pixeles para textos largos.',
+    ),
+    fontSizeMax: z.number().int().min(16).max(48).default(28).describe(
+      'Tamano maximo de fuente en pixeles para textos cortos.',
+    ),
+    position: z.enum(['top', 'center', 'bottom']).default('center').describe(
+      'Distribucion vertical del texto dentro de la carta.',
+    ),
+  })
+  .refine((card) => card.fontSizeMin <= card.fontSizeMax, {
+    path: ['fontSizeMin'],
+    message: 'fontSizeMin debe ser menor o igual que fontSizeMax.',
   })
   .strict()
 

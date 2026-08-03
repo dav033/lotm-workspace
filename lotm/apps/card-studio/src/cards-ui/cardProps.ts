@@ -172,7 +172,12 @@ export function cardPropsFromBuilderState(
   if (state.type === 'Simple Explanation') {
     return {
       kind: 'Simple Explanation',
-      props: { text: state.simpleExplanationText || '' },
+      props: {
+        text: state.simpleExplanationText || '',
+        fontSizeMin: state.simpleExplanationMinFontSize,
+        fontSizeMax: state.simpleExplanationMaxFontSize,
+        position: state.simpleExplanationPosition,
+      },
     }
   }
 

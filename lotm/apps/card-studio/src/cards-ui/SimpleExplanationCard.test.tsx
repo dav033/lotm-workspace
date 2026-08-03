@@ -12,7 +12,19 @@ test('Simple Explanation centra texto y reduce letra al crecer contenido', () =>
 
   assert.match(html, /simple-explanation-card/)
   assert.match(html, /simple-explanation-text[^>]*>A short explanation\./)
-  assert.match(html, /--simple-explanation-size:42px/)
+  assert.match(html, /--simple-explanation-size:28px/)
   assert.ok(simpleExplanationFontSize(long) < simpleExplanationFontSize(short))
   assert.match(denseHtml, new RegExp(`--simple-explanation-size:${simpleExplanationFontSize(long)}px`))
+})
+
+test('Simple Explanation acepta rango de fuente y posicion vertical', () => {
+  const html = renderToStaticMarkup(React.createElement(SimpleExplanationCard, {
+    text: 'A short explanation.',
+    fontSizeMin: 18,
+    fontSizeMax: 24,
+    position: 'bottom',
+  }))
+
+  assert.match(html, /simple-explanation-bottom/)
+  assert.match(html, /--simple-explanation-size:24px/)
 })
