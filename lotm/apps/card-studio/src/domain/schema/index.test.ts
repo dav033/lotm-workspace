@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { CardContentSchema, filenameForCard, fromBuilderCardState, toBuilderCardState } from './index'
+import { CardContentSchema, filenameForCard, fromBuilderCardState, titleForCard, toBuilderCardState } from './index'
 
 test('Tarot Member conserva sus tres composiciones y campos al ida y vuelta', () => {
   for (const variant of ['Portrait', 'Dossier', 'Contrast'] as const) {
@@ -321,5 +321,6 @@ test('Corruption File y Ritual Logic conservan todos sus campos', () => {
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(tarotMember)), tarotMember)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(corruption)), corruption)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(ritual)), ritual)
+  assert.equal(titleForCard(ritual), 'Fool Sequence 5 — Marionettist')
   assert.equal(filenameForCard(ritual), 'ritual-logic_fool_seq5_split')
 })

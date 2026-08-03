@@ -4,7 +4,7 @@ import { slugify } from './slug'
 export function titleForCard(content: CardContent): string {
   if (content.type === 'Ritual Logic') {
     const base = `${content.pathway} Sequence ${content.sequence} — ${content.sequenceName}`
-    return content.variant === 'Chain' ? base : `${base} · ${content.variant}`
+    return base
   }
   if (content.type === 'Corruption File') return `Corruption File: ${content.incident}`
   if (content.type === 'Cover') return 'Pathways in ' + content.title + ' - Part ' + content.partNumber
