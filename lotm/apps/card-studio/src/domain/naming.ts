@@ -21,6 +21,9 @@ export function titleForCard(content: CardContent): string {
   if (content.type === 'General Explanation') {
     return content.pathway ? content.title + ' - ' + content.pathway : content.title
   }
+  if (content.type === 'Simple Explanation') {
+    return content.text.replace(/\s+/g, ' ').trim().slice(0, 80) || 'Simple Explanation'
+  }
   if (content.type === 'Pathway Explanation') {
     return content.pathway + ' - ' + content.title.replace(/\*/g, '')
   }
@@ -56,6 +59,9 @@ export function filenameForCard(content: CardContent): string {
   if (content.type === 'General Explanation') {
     const base = 'general-explanation_' + slugify(content.title)
     return content.pathway ? base + '_' + slugify(content.pathway) : base
+  }
+  if (content.type === 'Simple Explanation') {
+    return 'simple-explanation_' + (slugify(content.text).slice(0, 80) || 'untitled')
   }
   if (content.type === 'Pathway Explanation') {
     return 'pathway-explanation_' + slugify(content.pathway)

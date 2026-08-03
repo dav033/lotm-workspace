@@ -4,6 +4,7 @@ import React from 'react'
 import { PATHWAY_BACKGROUNDS } from '../../domain/pathwayBackgrounds'
 import CardTypeToggle from './Panel/CardTypeToggle'
 import ExplanationFields from './Panel/ExplanationFields'
+import SimpleExplanationFields from './Panel/SimpleExplanationFields'
 import TierFields from './Panel/TierFields'
 import PathwayFields from './Panel/PathwayFields'
 import PathwayExplanationFields from './Panel/PathwayExplanationFields'
@@ -36,6 +37,7 @@ export default function Panel(props) {
       </div>
 
       {state.type === 'Tier Explanation' || state.type === 'General Explanation' ? <ExplanationFields {...fieldProps} /> : null}
+      {state.type === 'Simple Explanation' ? <SimpleExplanationFields {...fieldProps} /> : null}
       {state.type === 'Tier' ? <TierFields {...fieldProps} /> : null}
       {state.type === 'Pathway' ? <PathwayFields {...fieldProps} /> : null}
       {state.type === 'Pathway Explanation' ? <PathwayExplanationFields {...fieldProps} /> : null}
@@ -48,6 +50,7 @@ export default function Panel(props) {
       {state.type === 'Full Image Cover' ? <FullImageCoverFields {...fieldProps} /> : null}
       {state.type !== 'Tier Explanation' &&
       state.type !== 'General Explanation' &&
+      state.type !== 'Simple Explanation' &&
       state.type !== 'Tier' &&
       state.type !== 'Pathway' &&
       state.type !== 'Pathway Explanation' &&

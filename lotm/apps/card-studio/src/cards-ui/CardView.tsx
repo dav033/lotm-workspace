@@ -6,6 +6,7 @@ import TierCard from './TierCard'
 import PathwayCard from './PathwayCard'
 import TierExplanationCard from './TierExplanationCard'
 import GeneralExplanationCard from './GeneralExplanationCard'
+import SimpleExplanationCard from './SimpleExplanationCard'
 import PathwayExplanationCard from './PathwayExplanationCard'
 import BreakdownCard from './BreakdownCard'
 import MapCard from './MapCard'
@@ -35,6 +36,7 @@ const CardView = forwardRef<HTMLElement, CardViewProps>(function CardView(
   if (kind === 'Pathway') return <PathwayCard {...props} ref={ref} />
   if (kind === 'Tier Explanation') return <TierExplanationCard {...props} ref={ref} />
   if (kind === 'General Explanation') return <GeneralExplanationCard {...props} ref={ref} />
+  if (kind === 'Simple Explanation') return <SimpleExplanationCard {...props} ref={ref} />
   if (kind === 'Pathway Explanation') return <PathwayExplanationCard {...props} ref={ref} />
   if (kind === 'Breakdown') return <BreakdownCard {...props} ref={ref} />
   if (kind === 'Map') return <MapCard {...props} ref={ref} />

@@ -18,6 +18,7 @@ const FAMILIES: CardKind[] = [
   'Pathway',
   'Tier Explanation',
   'General Explanation',
+  'Simple Explanation',
   'Pathway Explanation',
   'Breakdown',
   'Map',

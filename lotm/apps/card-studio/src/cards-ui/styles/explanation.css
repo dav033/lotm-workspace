@@ -53,6 +53,18 @@
 .general-explanation-card.dense .general-explanation-body{gap:13px}
 .general-explanation-card.dense .general-explanation-description{font-size:14px;line-height:1.5}
 
+/* ================= SIMPLE EXPLANATION ================= */
+.simple-explanation-card{--tier:#d9b869;--tier-deep:#4a3a17;
+  padding:32px 42px;background:
+    radial-gradient(75% 48% at 50% 50%,rgba(217,184,105,.12),transparent 68%),
+    radial-gradient(130% 85% at 50% 112%,rgba(74,58,23,.72),transparent 58%),
+    #0a0a11}
+.simple-explanation-content{position:relative;z-index:3;width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;text-align:center;min-height:0}
+.simple-explanation-text{width:min(100%,18em);color:#f3efe3;font-size:var(--simple-explanation-size,42px);
+  font-weight:600;line-height:1.2;letter-spacing:-.035em;white-space:pre-wrap;
+  overflow-wrap:anywhere;text-wrap:balance;text-shadow:0 0 28px rgba(217,184,105,.18)}
+
 /* ================= PATHWAY EXPLANATION (ficha: el gancho del carrusel) ================= */
 .pathway-explanation-card{padding:32px 30px 40px;display:flex;flex-direction:column}
 .pathway-explanation-content{position:relative;z-index:3;display:flex;flex-direction:column;

@@ -21,6 +21,10 @@ type ServerCard = {
 type SessionCard = Omit<ServerCard, 'content'> & { state: BuilderCardState }
 type SessionProject = SessionUniverse
 type SessionImage = { id: string; universeId: string; url: string; durationSeconds: number | null }
+type CreateCardTarget = {
+  universe: Pick<SessionUniverse, 'name'>
+  part: Pick<SessionPart, 'name' | 'number'>
+}
 type SessionPayload = {
   revision: string
   projects?: SessionProject[]
@@ -156,12 +160,18 @@ export function useCardSession() {
     timers.current.set(id, setTimeout(() => void flush(id, state, seq), SAVE_DEBOUNCE_MS))
   }, [flush, markPending])
 
-  const createCard = useCallback(async (state: BuilderCardState): Promise<string | null> => {
+  const createCard = useCallback(async (
+    state: BuilderCardState,
+    target?: CreateCardTarget,
+  ): Promise<string | null> => {
     try {
       const response = await fetch('/api/cards', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ card: fromBuilderCardState(state) }),
+        body: JSON.stringify({
+          card: fromBuilderCardState(state),
+          ...(target ? { universe: target.universe, part: target.part } : {}),
+        }),
       })
       if (!response.ok) {
         setError(await readError(response, 'No se pudo crear la carta'))
@@ -503,6 +513,7 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('generalExplanationTitle')
     fill('generalExplanationText')
   }
+  if (state.type === 'Simple Explanation') fill('simpleExplanationText')
   if (state.type === 'Tarot Member') {
     fill('tarotMemberName', 'New member')
     fill('tarotMemberTitle', 'The Unknown')

@@ -14,6 +14,7 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     generalExplanationTitle: 'Nueva explicacion',
     generalExplanationText: 'Nueva explicacion',
   },
+  'Simple Explanation': { simpleExplanationText: 'Write the explanation here.' },
   'Pathway Explanation': {
     pathwayExplanationTitle: 'Nueva explicacion',
     pathwayExplanationText: 'Nueva explicacion',
@@ -85,6 +86,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   generalExplanationText: '',
   generalExplanationSequence: null,
   generalExplanationBackgroundImage: null,
+  simpleExplanationText: '',
   pathwayExplanationPath: 'Fool',
   pathwayExplanationTitle: '',
   pathwayExplanationText: '',

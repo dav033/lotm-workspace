@@ -38,6 +38,22 @@ export function useEditorController() {
   const cards = allCards.filter((card) => card.universe.id === activeProjectId)
   const images = useImages(allImages, activeProjectId)
 
+  // New cards must target active project/section. Without this, API fallback
+  // sends them to Editor/Borradores, then active-project filter hides them.
+  const targetForNewCard = () => {
+    const anchor = cards.find((card) => card.id === editingIdRef.current) ?? cards[cards.length - 1]
+    if (anchor) {
+      return {
+        universe: { name: anchor.universe.name },
+        part: { name: anchor.part.name, number: anchor.part.number },
+      }
+    }
+    const project = projects.find((item) => item.id === activeProjectId)
+    return project
+      ? { universe: { name: project.name }, part: { name: 'Borradores', number: 1 } }
+      : undefined
+  }
+
   const onOpenProject = (id) => {
     projectTabs.open(id)
     setEditingId(null)
@@ -106,13 +122,14 @@ export function useEditorController() {
       pathwayCardText: '', pathwayCardFooterText: '', pathwayCardBackgroundImage: null,
       tierExplanationText: '', tierExplanationBackgroundImage: null,
       generalExplanationTitle: '', generalExplanationText: '', generalExplanationBackgroundImage: null,
+      simpleExplanationText: '',
       pathwayExplanationTitle: '', pathwayExplanationText: '', pathwayExplanationBackgroundImage: null,
       breakdownKicker: '', breakdownTitle: '', breakdownDoes: '', breakdownDoesNot: '',
       breakdownEdgeText: '', breakdownBackgroundImage: null,
       mapTitle: '', mapEntriesText: '', mapFooterText: '', mapBackgroundImage: null,
       ...(NEW_CARD_SEEDS[stateRef.current.type] ?? {}),
     }
-    const id = await session.createCard(fresh)
+    const id = await session.createCard(fresh, targetForNewCard())
     if (!id) return
     setEditingId(id)
     stateRef.current = fresh
@@ -147,10 +164,11 @@ export function useEditorController() {
     if (busy) return
     setBusy(true)
     try {
+      const target = targetForNewCard()
       const urls = (await Promise.all(dropped.map((file) => session.uploadImage(file)))).filter(Boolean)
       if (!urls.length) return
       set({ image: urls[0] })
-      for (const image of urls.slice(1)) await session.createCard({ ...stateRef.current, image })
+      for (const image of urls.slice(1)) await session.createCard({ ...stateRef.current, image }, target)
     } finally {
       setBusy(false)
     }
@@ -232,10 +250,11 @@ export function useEditorController() {
     if (busy) return
     setBusy(true)
     try {
+      const target = targetForNewCard()
       let first = null
       for (const path of PATH_NAMES) {
         const cardState = { ...stateRef.current, type: 'Tier', tierPath: path, tierText: '' }
-        const id = await session.createCard(cardState)
+        const id = await session.createCard(cardState, target)
         if (id && !first) first = { id, state: cardState }
       }
       if (first) {

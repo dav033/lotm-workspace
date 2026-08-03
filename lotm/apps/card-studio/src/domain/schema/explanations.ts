@@ -24,6 +24,15 @@ export const GeneralExplanationCardSchema = z
   })
   .strict()
 
+export const SimpleExplanationCardSchema = z
+  .object({
+    type: z.literal('Simple Explanation'),
+    text: z.string().trim().min(1).max(1000).describe(
+      'Texto unico, centrado y autoajustable. La letra se reduce a medida que crece el contenido.',
+    ),
+  })
+  .strict()
+
 export const PathwayExplanationCardSchema = z
   .object({
     type: z.literal('Pathway Explanation'),

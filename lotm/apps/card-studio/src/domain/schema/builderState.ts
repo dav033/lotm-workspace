@@ -2,7 +2,7 @@ import { parseMapEntries } from '../mapEntries'
 import type { CardContent } from './content'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic'
   name: string
   path: string
   seq: number
@@ -38,6 +38,7 @@ export type BuilderCardState = {
   generalExplanationText: string
   generalExplanationSequence: number | null
   generalExplanationBackgroundImage: string | null
+  simpleExplanationText: string
   pathwayExplanationPath: string
   pathwayExplanationTitle: string
   pathwayExplanationText: string
@@ -126,6 +127,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   generalExplanationText: '',
   generalExplanationSequence: null,
   generalExplanationBackgroundImage: null,
+  simpleExplanationText: '',
   pathwayExplanationPath: 'Fool',
   pathwayExplanationTitle: '',
   pathwayExplanationText: '',
@@ -242,6 +244,13 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       generalExplanationText: content.description,
       generalExplanationSequence: content.sequence ?? null,
       generalExplanationBackgroundImage: content.backgroundImageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Simple Explanation') {
+    return {
+      ...state,
+      simpleExplanationText: content.text,
     }
   }
 
@@ -404,6 +413,12 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
         ? { backgroundImageUrl: state.generalExplanationBackgroundImage }
         : {}),
       backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Simple Explanation') {
+    return {
+      type: 'Simple Explanation',
+      text: state.simpleExplanationText.trim(),
     }
   }
   if (state.type === 'Pathway Explanation') {

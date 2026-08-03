@@ -535,16 +535,24 @@ export class CardRepository {
 
   private migrate(): void {
     const version = this.db.pragma('user_version', { simple: true }) as number
-    if (version > 10) throw new Error(`La version ${version} de cards.db no es compatible.`)
-    if (version === 10) return
+    if (version > 11) throw new Error(`La version ${version} de cards.db no es compatible.`)
+
+    if (version === 10) {
+      this.rebuildCardsTable(['Corruption File', 'Ritual Logic', 'Simple Explanation'], 11)
+      return
+    }
+
+    if (version === 11) return
 
     if (version === 9) {
       this.rebuildCardsTable(['Corruption File', 'Ritual Logic'], 10)
+      this.migrate()
       return
     }
 
     if (version === 8) {
       this.rebuildCardsTable(['Corruption File'], 9)
+      this.migrate()
       return
     }
 
@@ -718,7 +726,7 @@ export class CardRepository {
         type TEXT NOT NULL CHECK (type IN (
           'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Pathway',
           'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
-          'Corruption File', 'Ritual Logic'
+          'Corruption File', 'Ritual Logic', 'Simple Explanation'
         )),
         title TEXT NOT NULL,
         data_json TEXT NOT NULL,
@@ -730,7 +738,7 @@ export class CardRepository {
       CREATE INDEX parts_universe_id_idx ON parts(universe_id);
       ${IMPORTED_IMAGES_SCHEMA}
       ${DURATION_COLUMNS}
-      PRAGMA user_version = 10;
+      PRAGMA user_version = 11;
     `)
   }
 

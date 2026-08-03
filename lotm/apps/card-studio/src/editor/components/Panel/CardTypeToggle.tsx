@@ -10,6 +10,7 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
   'Pathway',
   'Tier Explanation',
   'General Explanation',
+  'Simple Explanation',
   'Pathway Explanation',
   'Breakdown',
   'Map',

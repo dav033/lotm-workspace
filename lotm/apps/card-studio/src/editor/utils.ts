@@ -44,6 +44,9 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'General Explanation') {
     return `general_explanation_${state.generalExplanationTitle || 'untitled'}${state.explanationPath ? `_${state.explanationPath}` : ''}`.replace(/\s+/g, '_')
   }
+  if (state.type === 'Simple Explanation') {
+    return `simple_explanation_${String(state.simpleExplanationText || 'untitled').slice(0, 60)}`.replace(/\s+/g, '_')
+  }
   if (state.type === 'Pathway Explanation') {
     return `pathway_explanation_${state.pathwayExplanationPath || 'pathway'}`.replace(/\s+/g, '_')
   }

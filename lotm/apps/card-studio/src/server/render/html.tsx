@@ -6,6 +6,7 @@ import TierCard from '../../cards-ui/TierCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TierExplanationCard from '../../cards-ui/TierExplanationCard'
 import GeneralExplanationCard from '../../cards-ui/GeneralExplanationCard'
+import SimpleExplanationCard from '../../cards-ui/SimpleExplanationCard'
 import PathwayExplanationCard from '../../cards-ui/PathwayExplanationCard'
 import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
@@ -22,6 +23,7 @@ const StaticTierCard = TierCard as unknown as ComponentType<Record<string, unkno
 const StaticPathwayCard = PathwayCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTierExplanationCard = TierExplanationCard as unknown as ComponentType<Record<string, unknown>>
 const StaticGeneralExplanationCard = GeneralExplanationCard as unknown as ComponentType<Record<string, unknown>>
+const StaticSimpleExplanationCard = SimpleExplanationCard as unknown as ComponentType<Record<string, unknown>>
 const StaticPathwayExplanationCard = PathwayExplanationCard as unknown as ComponentType<Record<string, unknown>>
 const StaticBreakdownCard = BreakdownCard as unknown as ComponentType<Record<string, unknown>>
 const StaticMapCard = MapCard as unknown as ComponentType<Record<string, unknown>>
@@ -75,6 +77,7 @@ export function CardMarkup({ state, icons }: { state: RenderState; icons: Record
   if (kind === 'Pathway') return <StaticPathwayCard {...props} />
   if (kind === 'Tier Explanation') return <StaticTierExplanationCard {...props} />
   if (kind === 'General Explanation') return <StaticGeneralExplanationCard {...props} />
+  if (kind === 'Simple Explanation') return <StaticSimpleExplanationCard {...props} />
   if (kind === 'Pathway Explanation') return <StaticPathwayExplanationCard {...props} />
   if (kind === 'Breakdown') return <StaticBreakdownCard {...props} />
   if (kind === 'Map') return <StaticMapCard {...props} />

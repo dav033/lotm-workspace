@@ -23,6 +23,7 @@ export type CardKind =
   | 'Pathway'
   | 'Tier Explanation'
   | 'General Explanation'
+  | 'Simple Explanation'
   | 'Pathway Explanation'
   | 'Breakdown'
   | 'Map'
@@ -165,6 +166,13 @@ export function cardPropsFromBuilderState(
         backgroundOpacity: state.backgroundOpacity,
         onDropBackground: handlers.onDropBackground,
       },
+    }
+  }
+
+  if (state.type === 'Simple Explanation') {
+    return {
+      kind: 'Simple Explanation',
+      props: { text: state.simpleExplanationText || '' },
     }
   }
 
@@ -355,6 +363,7 @@ export function accentForState(state: BuilderCardState): CardAccent {
 
   if (
     type === 'General Explanation' ||
+    type === 'Simple Explanation' ||
     type === 'Pathway Explanation' ||
     type === 'Breakdown' ||
     type === 'Tarot Member'
