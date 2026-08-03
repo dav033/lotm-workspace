@@ -215,4 +215,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 ## 2026-08-02 — Fondo automático por Secuencia
 
 - El fondo de la slide metodológica ya no se guarda manualmente en la carta: `General Explanation` declara la Secuencia y Card Studio resuelve su imagen por defecto.
-- Se añadió el asset público `/sequence-back/sequence-5.png` y la URL manual queda documentada solo como override excepcional.
+- Se añadió el asset público `/cartas/sequence-back/sequence-5.png` y la URL manual queda documentada solo como override excepcional.
+
+## 2026-08-02 — Ruta pública del fondo de Secuencia 5
+
+- La imagen automática se sirve bajo `/cartas/sequence-back/sequence-5.png`, que funciona igual en la vista viva y en producción; el renderizador de PNG la resuelve desde `public/`.

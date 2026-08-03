@@ -18,6 +18,7 @@ test('asocia fondos existentes para los 22 pathways', () => {
 })
 
 test('resuelve el fondo temático de la Secuencia 5 desde un asset público', () => {
-  assert.equal(SEQUENCE_BACKGROUNDS[5], '/sequence-back/sequence-5.png')
-  assert.equal(fs.existsSync(path.join(process.cwd(), 'public', SEQUENCE_BACKGROUNDS[5]!)), true)
+  assert.equal(SEQUENCE_BACKGROUNDS[5], '/cartas/sequence-back/sequence-5.png')
+  const publicPath = SEQUENCE_BACKGROUNDS[5]!.replace(/^\/cartas/, '')
+  assert.equal(fs.existsSync(path.join(process.cwd(), 'public', publicPath)), true)
 })

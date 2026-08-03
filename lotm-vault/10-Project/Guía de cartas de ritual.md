@@ -74,7 +74,8 @@ El fondo temático se resuelve por metadata de Secuencia: si una carta declara
 una Secuencia, Card Studio elige automáticamente su imagen pública. La carta no
 debe guardar la URL a mano; `backgroundImageUrl` queda reservado para un
 override excepcional. Para esta colección, Secuencia 5 usa
-`/sequence-back/sequence-5.png`.
+  `/cartas/sequence-back/sequence-5.png` (la ruta interna del renderizador
+  elimina el prefijo `/cartas` al leer el asset local).
 
 La primera carta es una `Full Image Cover` dentro de `Main`:
 

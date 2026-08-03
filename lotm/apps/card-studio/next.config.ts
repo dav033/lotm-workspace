@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   assetPrefix: '/cartas',
   // El estudio conserva sus módulos nativos fuera del bundle de Next.
   serverExternalPackages: ['better-sqlite3', 'ffmpeg-static', 'react-dom'],
+  async rewrites() {
+    return [
+      {
+        source: '/cartas/sequence-back/:path*',
+        destination: '/sequence-back/:path*',
+      },
+    ]
+  },
 }
 
 export default nextConfig

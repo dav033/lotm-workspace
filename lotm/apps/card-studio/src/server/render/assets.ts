@@ -2,6 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { PATHWAY_BACKGROUNDS } from '../../domain/pathwayBackgrounds'
+import { SEQUENCE_BACKGROUNDS } from '../../domain/sequenceBackgrounds'
 import { type BuilderCardState } from '../../domain/schema'
 import { PATHWAY_ICONS } from '../../domain/pathwayIcons'
 import { STYLE_FILES } from '../../cards-ui/styleFiles'
@@ -58,6 +59,9 @@ export async function resolveStateImages(
   // hay respaldo pero la propia se pinta igual.
   const generalExplanationSource = state.type === 'General Explanation'
     ? state.generalExplanationBackgroundImage
+      ?? (state.generalExplanationSequence === null
+        ? null
+        : SEQUENCE_BACKGROUNDS[state.generalExplanationSequence] ?? null)
       ?? (state.explanationPath
         ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.explanationPath] ?? null
         : null)
@@ -154,7 +158,8 @@ async function resolveImageSource(source: string, publicDir: string): Promise<st
   }
 
   const pathname = decodeURIComponent(new URL(source, 'http://cards.local').pathname)
-  const file = path.resolve(publicDir, `.${pathname}`)
+  const publicPath = pathname.startsWith('/cartas/') ? pathname.slice('/cartas'.length) : pathname
+  const file = path.resolve(publicDir, `.${publicPath}`)
   const root = `${path.resolve(publicDir)}${path.sep}`
   if (!file.startsWith(root)) throw new Error(`Ruta de imagen no permitida: ${source}`)
   const buffer = await fs.readFile(file)
