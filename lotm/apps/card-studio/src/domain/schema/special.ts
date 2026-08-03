@@ -19,8 +19,8 @@ export const CorruptionFileCardSchema = z.object({
 
 export const RitualLogicCardSchema = z.object({
   type: z.literal('Ritual Logic'),
-  variant: z.enum(['Chain', 'Split', 'Casefile']).default('Chain').describe(
-    'Composicion visual: Chain muestra el proceso completo; Split separa requisito y preparacion; Casefile separa observacion, presion e interpretacion.',
+  variant: z.enum(['Chain', 'Split', 'Casefile', 'Pressure', 'Timeline']).default('Chain').describe(
+    'Composicion visual: Chain muestra el proceso completo; Split separa requisito y preparacion; Casefile usa una nota de campo; Pressure pone el peligro al frente; Timeline ordena la experiencia antes, durante y despues del trago.',
   ),
   pathway: PathwayNameSchema,
   sequence: z.int().min(0).max(9).describe('Secuencia que se alcanza mediante el ritual.'),

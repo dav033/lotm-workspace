@@ -27,6 +27,22 @@
 .ritual-logic-casefile section:last-child{border-bottom:0}
 .ritual-logic-casefile p{margin:4px 0 0;font-size:13px;font-weight:600;line-height:1.3;color:#f0ede5;text-wrap:pretty;overflow-wrap:anywhere}
 .ritual-logic-casefile section:last-child p{color:var(--tier)}
+.ritual-logic-pressure-layout{display:flex;flex-direction:column;gap:12px}
+.ritual-logic-threat{position:relative;padding:22px 20px 24px;border:1px solid var(--tier);background:linear-gradient(135deg,rgba(7,8,10,.92),rgba(80,57,23,.34));overflow:hidden}
+.ritual-logic-threat::after{content:'!';position:absolute;right:14px;top:-22px;font-family:'Playfair Display',serif;font-size:170px;font-weight:900;line-height:1;color:var(--tier);opacity:.1}
+.ritual-logic-threat .ritual-logic-label{color:var(--tier)}
+.ritual-logic-threat p{position:relative;z-index:1;margin:10px 35px 0 0;font-family:'Playfair Display',serif;font-size:25px;line-height:1.08;color:#f5eee0;text-wrap:pretty;overflow-wrap:anywhere}
+.ritual-logic-pressure-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ritual-logic-pressure-notes section{min-height:126px;padding:14px;border-top:2px solid rgba(255,255,255,.22);background:rgba(7,8,10,.72)}
+.ritual-logic-pressure-notes p{margin:7px 0 0;font-size:13px;font-weight:600;line-height:1.3;color:#f0ede5;text-wrap:pretty;overflow-wrap:anywhere}
+.ritual-logic-pressure-notes section:last-child{border-top-color:var(--tier)}
+.ritual-logic-timeline{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding-top:23px}
+.ritual-logic-timeline::before{content:'';position:absolute;left:8%;right:8%;top:8px;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.16),var(--tier),rgba(255,255,255,.16))}
+.ritual-logic-timeline section{position:relative;padding:17px 13px 14px;border:1px solid rgba(255,255,255,.16);background:rgba(7,8,10,.72)}
+.ritual-logic-timeline section::before{content:'';position:absolute;top:-20px;left:50%;width:9px;height:9px;border:1px solid var(--tier);border-radius:50%;background:#090a0d;transform:translateX(-50%)}
+.ritual-logic-time{display:block;margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:900;letter-spacing:.18em;color:var(--tier)}
+.ritual-logic-timeline h3{margin:0 0 8px;font-family:'Playfair Display',serif;font-size:20px;line-height:1;color:#f0ede5}
+.ritual-logic-timeline p{margin:0;font-size:12px;font-weight:600;line-height:1.3;color:#ddd8cd;text-wrap:pretty;overflow-wrap:anywhere}
 .ritual-logic-verdict{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;margin-top:16px;padding:10px 12px;border:1px dashed rgba(255,255,255,.19);background:rgba(7,8,10,.68)}
 .ritual-logic-certainty{padding:4px 7px;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#090a0c;background:var(--tier)}
 .ritual-logic-card.certainty-theory .ritual-logic-certainty{color:#eee;background:#705878}
@@ -34,3 +50,5 @@
 .ritual-logic-footer{margin:13px 0 0;padding-top:10px;border-top:1px solid rgba(227,189,119,.45);font-family:'Playfair Display',serif;font-size:14px;font-style:italic;color:#d8d2c4}
 .ritual-logic-card.dense .ritual-logic-chain{gap:9px}.ritual-logic-card.dense .ritual-logic-step p{font-size:12px;line-height:1.25}.ritual-logic-card.dense .ritual-logic-title{font-size:38px}.ritual-logic-card.dense .ritual-logic-verdict{margin-top:11px}.ritual-logic-card.dense .ritual-logic-footer{margin-top:9px}
 .ritual-logic-card.dense .ritual-logic-pane{min-height:165px;padding:13px}.ritual-logic-card.dense .ritual-logic-pane-number{margin-bottom:12px}.ritual-logic-card.dense .ritual-logic-pane h3{font-size:20px}.ritual-logic-card.dense .ritual-logic-pane p,.ritual-logic-card.dense .ritual-logic-pressure p,.ritual-logic-card.dense .ritual-logic-casefile p{font-size:12px;line-height:1.25}
+.ritual-logic-card.dense .ritual-logic-threat{padding:17px 16px 19px}.ritual-logic-card.dense .ritual-logic-threat p{font-size:21px}.ritual-logic-card.dense .ritual-logic-pressure-notes section{min-height:112px;padding:12px}.ritual-logic-card.dense .ritual-logic-pressure-notes p,.ritual-logic-card.dense .ritual-logic-timeline p{font-size:11px;line-height:1.25}.ritual-logic-card.dense .ritual-logic-timeline h3{font-size:18px}
+@media (max-width:700px){.ritual-logic-pressure-notes,.ritual-logic-timeline{grid-template-columns:1fr}.ritual-logic-timeline{gap:12px;padding-top:0}.ritual-logic-timeline::before{left:5px;right:auto;top:8px;bottom:8px;width:1px;height:auto}.ritual-logic-timeline section{padding-left:18px}.ritual-logic-timeline section::before{top:8px;left:0;transform:translateX(-50%)}}

@@ -4,7 +4,7 @@ import { useBackgroundDrop } from './useBackgroundDrop'
 const STEP_META = [['01', 'Ritual'], ['02', 'Potion hazard'], ['03', 'Concept rehearsal']] as const
 
 type RitualLogicCardProps = {
-  variant?: 'Chain' | 'Split' | 'Casefile'
+  variant?: 'Chain' | 'Split' | 'Casefile' | 'Pressure' | 'Timeline'
   pathway?: string; sequence?: number; sequenceName?: string; ritual?: string; survival?: string
   preparation?: string; certainty?: 'Canon' | 'Mixed' | 'Theory'; uncertainty?: string
   footerText?: string; tier?: { c: string }; backgroundImage?: string | null
@@ -16,7 +16,7 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
   uncertainty, footerText, tier, backgroundImage, backgroundOpacity = 65, onDropBackground,
 }, ref) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
-  const mode = ['Chain', 'Split', 'Casefile'].includes(variant) ? variant : 'Chain'
+  const mode = ['Chain', 'Split', 'Casefile', 'Pressure', 'Timeline'].includes(variant) ? variant : 'Chain'
   const steps = [ritual, survival, preparation]
   const dense = steps.join('').length > 620
   return (
@@ -41,6 +41,21 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
           <section><span className="ritual-logic-label">Observed requirement</span><p>{ritual}</p></section>
           <section><span className="ritual-logic-label">Advancement pressure</span><p>{survival}</p></section>
           <section><span className="ritual-logic-label">Conceptual reading</span><p>{preparation}</p></section>
+        </div>}
+        {mode === 'Pressure' && <div className="ritual-logic-pressure-layout">
+          <section className="ritual-logic-threat">
+            <span className="ritual-logic-label">The part that can kill you</span>
+            <p>{survival}</p>
+          </section>
+          <div className="ritual-logic-pressure-notes">
+            <section><span className="ritual-logic-label">Condition</span><p>{ritual}</p></section>
+            <section><span className="ritual-logic-label">What it teaches</span><p>{preparation}</p></section>
+          </div>
+        </div>}
+        {mode === 'Timeline' && <div className="ritual-logic-timeline">
+          <section><span className="ritual-logic-time">BEFORE</span><h3>Set the scene</h3><p>{ritual}</p></section>
+          <section><span className="ritual-logic-time">DURING</span><h3>Take the strain</h3><p>{survival}</p></section>
+          <section><span className="ritual-logic-time">AFTER</span><h3>Carry the idea</h3><p>{preparation}</p></section>
         </div>}
         <div className="ritual-logic-verdict"><span className="ritual-logic-certainty">{certainty}</span><p>{uncertainty || 'The causal reading is supported by the ritual and the resulting powers, but is not stated outright.'}</p></div>
         {footerText && <p className="ritual-logic-footer">{footerText}</p>}

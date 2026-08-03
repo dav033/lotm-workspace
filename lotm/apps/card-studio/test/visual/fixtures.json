@@ -125,5 +125,33 @@
     "pathway": "Hanged Man",
     "imageUrl": "/pathway-back/hangedman.jpg",
     "backgroundOpacity": 65
+  },
+  {
+    "type": "Ritual Logic",
+    "variant": "Pressure",
+    "pathway": "Fool",
+    "sequence": 5,
+    "sequenceName": "Marionettist",
+    "ritual": "Drink the potion while a mermaid sings.",
+    "survival": "The potion tightens the aspirant’s Spirit Body Threads. The song keeps emotion and selfhood from going rigid.",
+    "preparation": "Marionettist means taking hold of another person’s threads without confusing their body with your own.",
+    "certainty": "Mixed",
+    "uncertainty": "The emotional counter-resonance is an interpretation, not a named rule.",
+    "footerText": "Learn the strings. Keep your name.",
+    "backgroundOpacity": 45
+  },
+  {
+    "type": "Ritual Logic",
+    "variant": "Timeline",
+    "pathway": "Door",
+    "sequence": 5,
+    "sequenceName": "Traveler",
+    "ritual": "Prepare four special coordinates deep in the Spirit World, far apart.",
+    "survival": "The potion throws the aspirant through the Spirit World. The coordinates give direction, memory, and a route home.",
+    "preparation": "Traveler is Position under pressure: mark places, keep a link to them, and return before distance becomes disorientation.",
+    "certainty": "Mixed",
+    "uncertainty": "Canon shows the coordinates helping navigation, but does not explain their deeper geometry.",
+    "footerText": "Every journey needs a way back.",
+    "backgroundOpacity": 45
   }
 ]

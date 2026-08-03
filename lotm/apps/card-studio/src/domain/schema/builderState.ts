@@ -76,7 +76,7 @@ export type BuilderCardState = {
   corruptionImage: string | null
   ritualPathway: string
   ritualSequence: number
-  ritualVariant: 'Chain' | 'Split' | 'Casefile'
+  ritualVariant: 'Chain' | 'Split' | 'Casefile' | 'Pressure' | 'Timeline'
   ritualSequenceName: string
   ritualText: string
   ritualSurvival: string

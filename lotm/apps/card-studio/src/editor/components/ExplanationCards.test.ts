@@ -42,7 +42,7 @@ test('Tarot Member produce composiciones distintas para retrato, expediente y co
   assert.match(contrast, /What the Club sees/)
 })
 
-test('Ritual Logic produce composiciones distintas para cadena, division y expediente', () => {
+test('Ritual Logic produce cinco composiciones distintas', () => {
   const common = {
     pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist',
     ritual: 'A mermaid sings while the potion is consumed.',
@@ -53,13 +53,21 @@ test('Ritual Logic produce composiciones distintas para cadena, division y exped
   const chain = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Chain' }))
   const split = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Split' }))
   const casefile = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Casefile' }))
+  const pressure = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Pressure' }))
+  const timeline = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Timeline' }))
   assert.match(chain, /ritual-logic-chain/)
   assert.match(split, /ritual-logic-split/)
   assert.match(split, /What it trains/)
   assert.match(casefile, /ritual-logic-casefile/)
   assert.match(casefile, /Observed requirement/)
+  assert.match(pressure, /ritual-logic-pressure-layout/)
+  assert.match(pressure, /The part that can kill you/)
+  assert.match(timeline, /ritual-logic-timeline/)
+  assert.match(timeline, /BEFORE/)
   assert.notEqual(chain, split)
   assert.notEqual(split, casefile)
+  assert.notEqual(casefile, pressure)
+  assert.notEqual(pressure, timeline)
 })
 
 test('Tier Explanation muestra solo tier y descripción general', () => {
