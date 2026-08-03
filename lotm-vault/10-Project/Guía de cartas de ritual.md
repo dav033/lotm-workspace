@@ -70,12 +70,14 @@ La colección usa una sola sección principal llamada `Main`. No crear una parte
 por pathway ni una parte separada para la portada. La portada ocupa la primera
 posición y las cartas de ritual siguen en el orden editorial elegido.
 
-El fondo temático se resuelve por metadata de Secuencia: si una carta declara
-una Secuencia, Card Studio elige automáticamente su imagen pública. La carta no
-debe guardar la URL a mano; `backgroundImageUrl` queda reservado para un
-override excepcional. Para esta colección, Secuencia 5 usa
-  `/cartas/sequence-back/sequence-5.png` (la ruta interna del renderizador
-  elimina el prefijo `/cartas` al leer el asset local).
+El fondo temático se resuelve por metadata, igual que en las cartas de Tier.
+`Ritual Logic`, `Tier` y `Pathway` toman por defecto el fondo público de su
+pathway; por ejemplo, **Mysticism Magister** usa el fondo de **White Tower**.
+La `General Explanation` de esta colección declara además la Secuencia 5 y
+usa `/cartas/sequence-back/sequence-5.png`. La carta no debe guardar la URL a
+mano; `backgroundImageUrl` queda reservado para un override excepcional. La
+ruta interna del renderizador elimina el prefijo `/cartas` al leer los assets
+locales.
 
 La primera carta es una `Full Image Cover` dentro de `Main`:
 

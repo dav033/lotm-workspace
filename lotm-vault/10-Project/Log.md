@@ -220,3 +220,8 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 ## 2026-08-02 — Ruta pública del fondo de Secuencia 5
 
 - La imagen automática se sirve bajo `/cartas/sequence-back/sequence-5.png`, que funciona igual en la vista viva y en producción; el renderizador de PNG la resuelve desde `public/`.
+
+## 2026-08-02 — Ritual Logic hereda el fondo del pathway
+
+- Las cartas `Ritual Logic` conservan la misma regla que las cartas de Tier: el fondo por defecto viene del pathway declarado. `Mysticism Magister` usa por tanto `White Tower` sin guardar una URL en la carta.
+- Se corrigieron las rutas públicas de fondos e iconos del pathway bajo `/cartas` para que esa herencia también funcione en la vista viva de producción.

@@ -13,7 +13,8 @@ test('asocia fondos existentes para los 22 pathways', () => {
   assert.deepEqual(missing, [])
   assert.equal(Object.keys(backgrounds).length, 22)
   for (const source of Object.values(backgrounds)) {
-    assert.equal(fs.existsSync(path.join(process.cwd(), 'public', source)), true, source)
+    const publicPath = source.replace(/^\/cartas/, '')
+    assert.equal(fs.existsSync(path.join(process.cwd(), 'public', publicPath)), true, source)
   }
 })
 

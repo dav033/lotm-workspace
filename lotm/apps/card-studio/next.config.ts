@@ -12,6 +12,14 @@ const nextConfig: NextConfig = {
         source: '/cartas/sequence-back/:path*',
         destination: '/sequence-back/:path*',
       },
+      {
+        source: '/cartas/pathway-back/:path*',
+        destination: '/pathway-back/:path*',
+      },
+      {
+        source: '/cartas/pathway-icons/:path*',
+        destination: '/pathway-icons/:path*',
+      },
     ]
   },
 }

@@ -1,6 +1,8 @@
 import type { Pathway } from './pathways'
 
-const background = (file: string) => `/pathway-back/${file}.jpg`
+// The card studio lives under /cartas in production. Keep the same fallback
+// used by Tier cards, but route the public asset through the studio namespace.
+const background = (file: string) => `/cartas/pathway-back/${file}.jpg`
 
 export const PATHWAY_BACKGROUNDS: Record<Pathway, string> = {
   Fool: background('fool'),
