@@ -1,7 +1,7 @@
 ---
 tags: [project, log]
 scope: out-of-ontology
-updated: 2026-07-31
+updated: 2026-08-03
 ---
 
 # Log de decisiones — Archivo de Misterios
@@ -236,3 +236,19 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Quedaron aprobados como líneas fuertes: el olvido de los trenes nocturnos que permite la fuga de Trissy en el volumen 1, y la daga maldita/Kalvetua que termina creando la Iglesia del Dios del Mar en el volumen 3.
 - Se descartaron Cattleya, Frank Lee, Leonard, las acciones de Coim Company y otras propuestas por no producir un cambio de tablero suficientemente claro o por depender de una decisión demasiado dirigida.
 - La búsqueda queda abierta en el volumen 4; la liberación accidental de Zaratul está en revisión, no aprobada.
+
+## 2026-08-03 — Primera colección de cartas: Efectos mariposa
+
+- Decisión editorial final: usar tres cadenas, no solo decisiones de Klein: los trenes nocturnos y Trissy; la ayuda a Utravsky y la llave que permite frustrar el descenso del Verdadero Creador; Derrick asignado al grupo de Lovia, parasitado por Amon y convertido en vía hacia el conflicto que lleva a Klein a la Tierra Abandonada de los Dioses.
+- Creadas siete cartas live en el proyecto `LOTM — Butterfly Effects`: portada y dos cartas para Trissy; dos para Utravsky; dos para Derrick. Exportadas en PNG 960×1280 dentro de un ZIP.
+
+## 2026-08-03 — Cuarta cadena: bendición de la Noche Eterna
+
+- El usuario aprobó añadir la bendición de Amanises del dominio de los sueños. Permite a Klein conservar consciencia en sueños y resistir la voluntad remanente del Lord of Mysteries al final del libro 1.
+- Añadidas dos cartas live en `Part 4 — Evernight's Blessing` de `LOTM — Butterfly Effects`.
+- Corrección canónica final: estas cartas tratan la bendición inicial al transmigrador, no la ayuda posterior tras *The Fool's Gambit*. Punto crítico elegido: Madam Sharon atrapa a Klein en sueño durante la pelea de volumen 1; su lucidez le permite salir, romper los hilos que lo inmovilizan y sobrevivir.
+- Corrección canónica adicional: Utravsky no entrega la Master Key para entrar a ningún ritual. Klein la obtiene como recompensa por vencer al otro yo de Utravsky; más tarde la usa al escapar de la Mother Tree of Desire, alerta al Verdadero Creador y la llave termina destruida, frustrando el descenso.
+
+## 2026-08-03 — Próxima iteración: espada de hueso
+
+- El usuario pidió reservar la cadena de la espada de hueso/Kalvetua para una siguiente iteración. Anotada en [[Efecto mariposa]]: toque del arma maldita, exposición y caída de Kalvetua, Cetro del Dios del Mar, creyentes que después aportan anclas a la Iglesia del Loco. No se crean cartas todavía.
