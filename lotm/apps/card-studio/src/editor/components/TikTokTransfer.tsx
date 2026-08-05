@@ -74,6 +74,25 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
     if (params.get('tiktok_error')) setError(params.get('tiktok_error') ?? 'TikTok connection failed.')
   }, [])
 
+  async function pngToJpeg(png: Blob): Promise<Blob> {
+    const bitmap = await createImageBitmap(png)
+    const canvas = document.createElement('canvas')
+    canvas.width = bitmap.width
+    canvas.height = bitmap.height
+    const context = canvas.getContext('2d')
+    if (!context) throw new Error('Could not prepare the carousel image.')
+    context.fillStyle = '#0a0a11'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+    context.drawImage(bitmap, 0, 0)
+    bitmap.close()
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((jpeg) => {
+        if (jpeg) resolve(jpeg)
+        else reject(new Error('Could not encode the carousel image.'))
+      }, 'image/jpeg', 0.92)
+    })
+  }
+
   async function renderCurrentCarousel() {
     if (!selectedCards.length) return setError('Create at least one card in the current section first.')
     if (selectedCards.length > 35) return setError('TikTok accepts up to 35 images per carousel.')
@@ -92,7 +111,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
         if (!rendered.ok) throw new Error(`Could not render card ${card.id}.`)
 
         const form = new FormData()
-        form.append('file', await rendered.blob(), `${card.id}.png`)
+        form.append('file', await pngToJpeg(await rendered.blob()), `${card.id}.jpg`)
         const stored = await fetch('/api/cards/images', { method: 'POST', body: form })
         const data = await stored.json()
         if (!stored.ok || typeof data.url !== 'string') throw new Error(data.error ?? 'Could not store a rendered card.')
