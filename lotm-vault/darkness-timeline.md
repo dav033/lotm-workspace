@@ -8,6 +8,7 @@ sources:
   - "[[Lord of Mysteries Wiki - Darkness Pathway List of Beyonders]]"
   - "[[Lord of Mysteries Wiki - Flegrea]]"
   - "[[Lord of Mysteries Wiki - River of Eternal Darkness]]"
+  - "[[Lord of Mysteries Wiki - Darkness Pathway Advancement]]"
   - "[[Lord of Mysteries Wiki - Darkness Pathway Abilities]]"
 ---
 
@@ -78,9 +79,9 @@ Dos descendientes de Flegrea, Antigonus y Mother of the Sky, sobreviven y fundan
 
 Fuente: [[Lord of Mysteries Wiki - Flegrea]] · [[Flegrea]].
 
-### Final de la Segunda y Tercera Epoch — expansión del grupo
+### Síntesis funcional — expansión del grupo (sin fecha precisa)
 
-**Hito:** Death y Twilight Giant empiezan a separarse funcionalmente de Darkness, aunque siguen compartiendo grupo y fuente superior.
+**Síntesis:** Death y Twilight Giant se diferencian funcionalmente de Darkness, aunque siguen compartiendo grupo y fuente superior.
 
 **Importancia:**
 
@@ -110,11 +111,11 @@ Salinger aparece más tarde directamente ligado a un tributario del River en Cal
 
 Fuente de cronología: [[Lord of Mysteries Wiki - River of Eternal Darkness]].
 
-### Quinta Epoch — institucionalización de Darkness
+### Tercera–Quinta Epoch — institucionalización progresiva de Darkness
 
-**Hito:** la Church of the Evernight Goddess y los Nighthawks convierten el camino en una estructura religiosa y operativa estable.
+**Hito:** la Church of the Evernight Goddess existe primero como estructura secreta y se consolida públicamente junto con los Nighthawks durante la Quinta Epoch.
 
-**Importancia:** Darkness deja de ser principalmente un poder de criaturas antiguas y se vuelve una infraestructura social:
+**Importancia:** la consolidación pública convierte Darkness en una infraestructura social:
 
 - protección nocturna;
 - investigación espiritual;
@@ -143,6 +144,8 @@ Fuente: [[Lord of Mysteries Wiki - Evernight Goddess]].
 
 Fuente: [[Lord of Mysteries Wiki - River of Eternal Darkness]].
 
+La conexión y la muerte del Eternal Blazing Sun se conservan aquí como captura secundaria. La atribución al capítulo 1115 no queda verificada en la página oficial, así que no se fija un número de capítulo.
+
 ### Circle of Inevitability — tributarios accesibles
 
 **Hito:** la Samaritan Women's Spring y otros tributarios se convierten en recursos utilizables para rituales y avances.
@@ -151,13 +154,13 @@ El capítulo 358 explica que el agua tiene usos distintos para Sleepless, Corpse
 
 **Importancia:** el River deja de ser solo una amenaza de fondo y se convierte en un recurso práctico, aunque peligroso y condicionado por compatibilidad.
 
-### Apocalypse — Evernight se convierte en Eternal Darkness
+### Apocalypse — acomodación de Evernight al River
 
-**Hito:** se debilita el sello occidental; Evernight hace el Oath of the River Styx, recibe la posición de Haoli Sect Master y acomoda completamente el River.
+**Hito:** se debilita el sello occidental; Evernight hace el Oath of the River Styx, recibe la posición de Haoli Sect Master y empieza a acomodar el River.
 
-**Resultado:** Amanises se convierte en [[Eternal Darkness]].
+**Resultado posterior:** tras completar la acomodación durante el Apocalypse, Amanises se convierte en [[Eternal Darkness]].
 
-El capítulo 1159 muestra el River entrando en Evernight; el capítulo 1165 todavía describe la acomodación como incompleta, por lo que el proceso se extiende durante ese tramo de la historia.[Oath of the River Styx](https://dynamic.webnovel.com/story/25759730405792805/84758380744339781) · [Two Star Dominions](https://www.webnovel.com/book/lord-of-mysteries-2-circle-of-inevitability_25759730405792805/two-star-dominions_84827821909786921)
+El capítulo 1159 muestra el River entrando en Evernight y el traspaso de la posición de Haoli Sect Master; el capítulo 1165 confirma que la acomodación todavía está incompleta. Por eso, 1159 marca el inicio o transición del proceso y no su final. La terminación exacta queda sin fijar aquí.[Oath of the River Styx](https://dynamic.webnovel.com/story/25759730405792805/84758380744339781) · [Two Star Dominions](https://www.webnovel.com/book/lord-of-mysteries-2-circle-of-inevitability_25759730405792805/two-star-dominions_84827821909786921)
 
 ## Puntos de inflexión internos del camino
 
