@@ -1,8 +1,13 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import { fromBuilderCardState, type BuilderCardState } from '../../domain/schema'
 
-type ImportedImage = { id: string; name: string; url: string }
+type CarouselCard = {
+  id: string
+  state: BuilderCardState
+  part: { id: string; name: string; number: number | null }
+}
 type Connection = {
   configured: boolean
   connected: boolean
@@ -21,7 +26,7 @@ const EMPTY_CONNECTION: Connection = {
   accessTokenExpiresAt: null,
 }
 
-export default function TikTokTransfer({ images }: { images: ImportedImage[] }) {
+export default function TikTokTransfer({ cards, currentCardId }: { cards: CarouselCard[]; currentCardId: string | null }) {
   const [connection, setConnection] = useState<Connection | null>(null)
   const [mode, setMode] = useState<'video' | 'carousel'>('video')
   const [video, setVideo] = useState<File | null>(null)
@@ -29,16 +34,32 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
   const [description, setDescription] = useState('')
   const [photoUrls, setPhotoUrls] = useState('')
   const [carouselSelected, setCarouselSelected] = useState(false)
+  const [selectedPartId, setSelectedPartId] = useState('')
   const [coverIndex, setCoverIndex] = useState('0')
   const [publishId, setPublishId] = useState<string | null>(null)
   const [status, setStatus] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
 
-  const importedUrls = useMemo(
-    () => images.map((image) => new URL(image.url, window.location.origin).toString()),
-    [images],
+  const sections = useMemo(() => {
+    const grouped = new Map<string, { id: string; name: string; number: number | null; count: number }>()
+    for (const card of cards) {
+      const current = grouped.get(card.part.id)
+      if (current) current.count += 1
+      else grouped.set(card.part.id, { ...card.part, count: 1 })
+    }
+    return [...grouped.values()]
+  }, [cards])
+
+  const currentPartId = cards.find((card) => card.id === currentCardId)?.part.id ?? sections[0]?.id ?? ''
+  const selectedCards = useMemo(
+    () => cards.filter((card) => card.part.id === selectedPartId),
+    [cards, selectedPartId],
   )
+
+  useEffect(() => {
+    if (!selectedPartId && currentPartId) setSelectedPartId(currentPartId)
+  }, [currentPartId, selectedPartId])
 
   async function refreshConnection() {
     const response = await fetch('/api/tiktok/connection', { cache: 'no-store' })
@@ -53,9 +74,46 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
     if (params.get('tiktok_error')) setError(params.get('tiktok_error') ?? 'TikTok connection failed.')
   }, [])
 
-  function useImportedImages() {
-    setPhotoUrls(importedUrls.join('\n'))
-    setCarouselSelected(importedUrls.length > 0)
+  async function renderCurrentCarousel() {
+    if (!selectedCards.length) return setError('Create at least one card in the current section first.')
+    if (selectedCards.length > 35) return setError('TikTok accepts up to 35 images per carousel.')
+
+    setBusy(true)
+    setError('')
+    setStatus('Rendering the current carousel…')
+    try {
+      const urls: string[] = []
+      for (const card of selectedCards) {
+        const rendered = await fetch('/api/cards/render', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ card: fromBuilderCardState(card.state) }),
+        })
+        if (!rendered.ok) throw new Error(`Could not render card ${card.id}.`)
+
+        const form = new FormData()
+        form.append('file', await rendered.blob(), `${card.id}.png`)
+        const stored = await fetch('/api/cards/images', { method: 'POST', body: form })
+        const data = await stored.json()
+        if (!stored.ok || typeof data.url !== 'string') throw new Error(data.error ?? 'Could not store a rendered card.')
+        urls.push(new URL(data.url, window.location.origin).toString())
+      }
+
+      setPhotoUrls(urls.join('\n'))
+      setCarouselSelected(true)
+      setStatus(`Carousel ready: ${urls.length} app-generated image${urls.length === 1 ? '' : 's'}.`)
+    } catch (caught) {
+      setStatus('')
+      setError(caught instanceof Error ? caught.message : 'Could not prepare the carousel.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
+  function changeSection(partId: string) {
+    setSelectedPartId(partId)
+    setPhotoUrls('')
+    setCarouselSelected(false)
     setCoverIndex('0')
     setError('')
   }
@@ -190,31 +248,40 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
               <label><span>Description</span><textarea value={description} maxLength={4000} onChange={(event) => setDescription(event.target.value)} /></label>
               <div className="tiktok-carousel-picker">
                 <div className="tiktok-carousel-picker-head">
-                  <span>Current carousel</span>
-                  <strong>{images.length} image{images.length === 1 ? '' : 's'}</strong>
+                  <span>Card Studio carousel</span>
+                  <strong>{selectedCards.length} card{selectedCards.length === 1 ? '' : 's'}</strong>
                 </div>
-                {images.length ? (
+                <label>
+                  <span>Section</span>
+                  <select value={selectedPartId} disabled={busy || !sections.length} onChange={(event) => changeSection(event.target.value)}>
+                    {!sections.length ? <option value="">No cards available</option> : null}
+                    {sections.map((section) => (
+                      <option key={section.id} value={section.id}>{section.name} · {section.count} cards</option>
+                    ))}
+                  </select>
+                </label>
+                {photoUrls.trim() ? (
                   <div className="tiktok-carousel-preview" aria-label="Current carousel preview">
-                    {images.map((image, index) => (
-                      <div className="tiktok-carousel-thumb" key={image.id} title={image.name}>
-                        <img src={image.url} alt={image.name} />
+                    {photoUrls.split(/\r?\n/).filter(Boolean).map((url, index) => (
+                      <div className="tiktok-carousel-thumb" key={url} title={`Generated card ${index + 1}`}>
+                        <img src={url} alt={`Generated card ${index + 1}`} />
                         <span>{index + 1}</span>
                       </div>
                     ))}
                   </div>
-                ) : <p className="tiktok-muted">Import images into the current project first.</p>}
+                ) : <p className="tiktok-muted">The selected cards will be rendered by Card Studio.</p>}
                 <button
                   type="button"
                   className="tiktok-secondary"
-                  disabled={busy || !images.length || images.length > 35}
-                  onClick={useImportedImages}
+                  disabled={busy || !selectedCards.length || selectedCards.length > 35}
+                  onClick={() => void renderCurrentCarousel()}
                 >
-                  {carouselSelected ? 'Current carousel selected' : 'Select current carousel'}
+                  {carouselSelected ? 'Re-render current carousel' : 'Use current carousel'}
                 </button>
-                {carouselSelected ? <button type="button" className="tiktok-link" onClick={clearCarouselSelection}>Clear selection</button> : null}
+                {carouselSelected ? <button type="button" className="tiktok-link" onClick={clearCarouselSelection}>Clear rendered carousel</button> : null}
               </div>
-              <label><span>Cover image number</span><input type="number" min="0" max="34" value={coverIndex} onChange={(event) => setCoverIndex(event.target.value)} /></label>
-              <p className="tiktok-muted">TikTok fetches the selected images from this app over public HTTPS. They arrive as a draft for final editing and publishing.</p>
+              <label><span>Cover image number (0 = first)</span><input type="number" min="0" max={Math.max(0, selectedCards.length - 1)} value={coverIndex} onChange={(event) => setCoverIndex(event.target.value)} /></label>
+              <p className="tiktok-muted">Card Studio renders the selected cards and sends those generated images. TikTok receives them as a draft for final editing and publishing.</p>
               <button type="button" className="tiktok-primary" disabled={busy || !carouselSelected || !photoUrls.trim()} onClick={() => void sendCarousel()}>
                 {busy ? 'Sending…' : 'Send carousel'}
               </button>

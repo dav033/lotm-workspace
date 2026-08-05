@@ -7,12 +7,11 @@ import styles from './TikTokTransfer.module.css'
 
 export default function EditorApp() {
   const controller = useEditorController()
-  const images = controller.images.map((image) => ({ ...image, name: image.id }))
   return (
     <>
       <EditorWorkspace controller={controller} />
       <div className={`${styles.floating} tiktok-floating`}>
-        <TikTokTransfer images={images} />
+        <TikTokTransfer cards={controller.filmstrip} currentCardId={controller.editingId} />
       </div>
     </>
   )

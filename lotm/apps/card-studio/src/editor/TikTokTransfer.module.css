@@ -20,9 +20,9 @@
 .floating :global(.tiktok-mode button.active){border-color:#e8c36b;background:rgba(232,195,107,.11);color:#e8c36b}
 .floating :global(.tiktok-fields){display:grid;gap:11px}
 .floating :global(.tiktok-fields label){display:grid;gap:5px}
-.floating :global(.tiktok-fields input),.floating :global(.tiktok-fields textarea){width:100%;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#16161f;color:#ecebf4;font:13px/1.4 'Space Grotesk',sans-serif;padding:8px 9px}
+.floating :global(.tiktok-fields input),.floating :global(.tiktok-fields textarea),.floating :global(.tiktok-fields select){width:100%;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#16161f;color:#ecebf4;font:13px/1.4 'Space Grotesk',sans-serif;padding:8px 9px}
 .floating :global(.tiktok-fields textarea){min-height:76px;resize:vertical}
-.floating :global(.tiktok-fields input:focus),.floating :global(.tiktok-fields textarea:focus){outline:none;border-color:#e8c36b;box-shadow:0 0 0 3px rgba(232,195,107,.1)}
+.floating :global(.tiktok-fields input:focus),.floating :global(.tiktok-fields textarea:focus),.floating :global(.tiktok-fields select:focus){outline:none;border-color:#e8c36b;box-shadow:0 0 0 3px rgba(232,195,107,.1)}
 .floating :global(.tiktok-carousel-picker){display:grid;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
 .floating :global(.tiktok-carousel-picker-head){display:flex;align-items:center;justify-content:space-between;gap:8px;color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
 .floating :global(.tiktok-carousel-picker-head strong){color:#ecebf4;font-size:11px;letter-spacing:0;text-transform:none}
