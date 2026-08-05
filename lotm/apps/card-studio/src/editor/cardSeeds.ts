@@ -104,6 +104,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   mapTitle: '',
   mapEntriesText: '',
   mapFooterText: '',
+  mapTextStyles: { title: {}, label: {}, value: {}, footer: {} },
   mapBackgroundImage: null,
   mapPathway: null,
   tarotMemberVariant: 'Portrait',

@@ -67,6 +67,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         'Las cartas con arte de fondo aceptan backgroundOpacity de 0 a 100 para controlar su visibilidad. ' +
         'Pathway Explanation, Breakdown y Map aceptan ademas backgroundImageUrl propio; ' +
         'en Map tiene prioridad sobre el fondo del pathway. ' +
+         'Map acepta textStyles opcionales por rol (title, label, value y footer) para ajustar fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, color y textTransform. ' +
         'Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: ' +
         'Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. ' +
         'Corruption File explica chistes internos en formatos Warning, Evidence y Quote. ' +
@@ -125,7 +126,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
     'update_card',
     {
       title: 'Actualizar una carta',
-      description: 'Reemplaza el contenido de una carta existente sin cambiar su universo, parte ni posicion.',
+      description: 'Reemplaza el contenido de una carta existente sin cambiar su universo, parte ni posicion. Para Map tambien puede reemplazar textStyles por rol (title, label, value y footer).',
       inputSchema: UpdateCardSchema,
       annotations: {
         readOnlyHint: false,

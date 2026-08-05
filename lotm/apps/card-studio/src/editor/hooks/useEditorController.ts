@@ -14,6 +14,7 @@ import { downloadVideo } from './useVideoExport'
 import { useZipExport } from './useZipExport'
 import { useEditorState } from '../state/editorState'
 import { sameCardState, useCardSession } from '../session/useCardSession'
+import { readEditingCardId, saveEditingCardId } from '../session/viewStorage'
 import { imageToPng, fileSafe, labelFor } from '../utils'
 
 export function useEditorController() {
@@ -25,6 +26,7 @@ export function useEditorController() {
   const projectTabs = useProjects(projects)
   const { openIds: openProjectIds, activeId: activeProjectId } = projectTabs
   const [editingId, setEditingId] = useState(null)
+  const [editingSelectionRestored, setEditingSelectionRestored] = useState(false)
   const { state, setState } = useEditorState(DEFAULT_STATE)
   const exportZip = useZipExport()
   const [busy, setBusy] = useState(false)
@@ -34,6 +36,16 @@ export function useEditorController() {
   const editingIdRef = useRef(editingId)
   stateRef.current = state
   editingIdRef.current = editingId
+
+  useEffect(() => {
+    setEditingId(readEditingCardId())
+    setEditingSelectionRestored(true)
+  }, [])
+
+  useEffect(() => {
+    if (!editingSelectionRestored) return
+    saveEditingCardId(editingId)
+  }, [editingId, editingSelectionRestored])
 
   const cards = allCards.filter((card) => card.universe.id === activeProjectId)
   const images = useImages(allImages, activeProjectId)
@@ -126,7 +138,9 @@ export function useEditorController() {
       pathwayExplanationTitle: '', pathwayExplanationText: '', pathwayExplanationBackgroundImage: null,
       breakdownKicker: '', breakdownTitle: '', breakdownDoes: '', breakdownDoesNot: '',
       breakdownEdgeText: '', breakdownBackgroundImage: null,
-      mapTitle: '', mapEntriesText: '', mapFooterText: '', mapBackgroundImage: null,
+      mapTitle: '', mapEntriesText: '', mapFooterText: '',
+      mapTextStyles: { title: {}, label: {}, value: {}, footer: {} },
+      mapBackgroundImage: null,
       ...(NEW_CARD_SEEDS[stateRef.current.type] ?? {}),
     }
     const id = await session.createCard(fresh, targetForNewCard())

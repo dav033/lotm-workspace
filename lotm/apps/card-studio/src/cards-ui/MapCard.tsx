@@ -2,15 +2,21 @@ import React, { forwardRef } from 'react'
 import { parseMapEntries } from '../domain/mapEntries'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
+import { textStyleCss } from './textStyle'
 import type { CardUiProps } from './types'
 
 const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
-  { title, entriesText, footerText, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
+  { title, entriesText, footerText, textStyles, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const entries = parseMapEntries(entriesText || '')
   const dense = entries.length > 3 || entries.some((entry) => entry.value.length > 44)
+  const extraDense = entries.length > 5
+  const normalizedFooter = footerText?.trim() || ''
+  const visibleFooter = normalizedFooter && normalizedFooter.toLocaleLowerCase() !== pathway?.toLocaleLowerCase()
+    ? normalizedFooter
+    : ''
   // Sin pathway la ficha se queda con el dorado que trae .ficha por defecto.
   const cardStyle = {
     ...(tier ? { '--tier': tier.c, '--tier-deep': tier.d } : {}),
@@ -19,7 +25,12 @@ const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
 
   return (
     <article
-      className={'ficha map-card' + (dense ? ' dense' : '') + (dragging ? ' dragover' : '')}
+      className={
+        'ficha map-card'
+        + (dense ? ' dense' : '')
+        + (extraDense ? ' extra-dense' : '')
+        + (dragging ? ' dragover' : '')
+      }
       id="card"
       ref={ref}
       style={cardStyle as React.CSSProperties}
@@ -37,23 +48,26 @@ const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
         </>
       )}
       <div className="map-content">
-        {pathway && <span className="map-chip">{pathway}</span>}
-        <h2 className={`ficha-name map-title ${titleSizeClass(title || 'Map title')}`}>
+        {pathway && <span className="map-chip" style={textStyleCss(textStyles?.label)}>{pathway}</span>}
+        <h2
+          className={`ficha-name map-title ${titleSizeClass(title || 'Map title')}`}
+          style={textStyleCss(textStyles?.title)}
+        >
           {title || 'Map title'}
         </h2>
         {entries.length ? (
           <div className="map-entries">
             {entries.map((entry, index) => (
               <div className="map-entry" key={index}>
-                {entry.tags && <span className="map-entry-tags">{entry.tags}</span>}
-                <p className="map-entry-value">{entry.value}</p>
+                {entry.tags && <span className="map-entry-tags" style={textStyleCss(textStyles?.label)}>{entry.tags}</span>}
+                <p className="map-entry-value" style={textStyleCss(textStyles?.value)}>{entry.value}</p>
               </div>
             ))}
           </div>
         ) : (
           <p className="map-empty">Add one row per line as &quot;tags -&gt; value&quot; in the editor panel.</p>
         )}
-        {footerText && <p className="map-footer-text">{footerText}</p>}
+        {visibleFooter && <p className="map-footer-text" style={textStyleCss(textStyles?.footer)}>{visibleFooter}</p>}
       </div>
     </article>
   )

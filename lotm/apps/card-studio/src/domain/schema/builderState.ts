@@ -1,5 +1,6 @@
 import { parseMapEntries } from '../mapEntries'
 import type { CardContent } from './content'
+import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 
 export type BuilderCardState = {
   type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic'
@@ -56,6 +57,7 @@ export type BuilderCardState = {
   mapTitle: string
   mapEntriesText: string
   mapFooterText: string
+  mapTextStyles: MapTextStyles
   mapPathway: string | null
   mapBackgroundImage: string | null
   tarotMemberVariant: 'Portrait' | 'Dossier' | 'Contrast'
@@ -148,6 +150,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   mapTitle: '',
   mapEntriesText: '',
   mapFooterText: '',
+  mapTextStyles: DEFAULT_MAP_TEXT_STYLES,
   mapPathway: null,
   mapBackgroundImage: null,
   tarotMemberVariant: 'Portrait',
@@ -294,6 +297,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
         .map(({ tags, value }) => (tags ? tags + ' -> ' + value : value))
         .join('\n'),
       mapFooterText: content.footerText ?? '',
+      mapTextStyles: content.textStyles ?? DEFAULT_MAP_TEXT_STYLES,
       mapPathway: content.pathway ?? null,
       mapBackgroundImage: content.backgroundImageUrl ?? null,
     }
@@ -464,6 +468,9 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
       title: state.mapTitle.trim(),
       entries: parseMapEntries(state.mapEntriesText),
       ...(state.mapFooterText.trim() ? { footerText: state.mapFooterText.trim() } : {}),
+      ...(Object.values(state.mapTextStyles).some((style) => style && Object.keys(style).length)
+        ? { textStyles: state.mapTextStyles }
+        : {}),
       ...(state.mapPathway ? { pathway: state.mapPathway } : {}),
       ...(state.mapBackgroundImage ? { backgroundImageUrl: state.mapBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,

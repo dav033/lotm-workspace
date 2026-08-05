@@ -217,6 +217,16 @@ test('Map muestra el título, las filas con y sin etiquetas, y el footer opciona
   assert.match(html, /map-footer-text">Three roots\. Seven powers\./)
 })
 
+test('Map oculta footer que repite el pathway', () => {
+  const html = renderToStaticMarkup(React.createElement(Map_, {
+    title: 'The path of the scholar',
+    entriesText: 'Reader -> Acquires the object of study',
+    pathway: 'White Tower',
+    footerText: 'White Tower',
+  }))
+  assert.doesNotMatch(html, /map-footer-text/)
+})
+
 test('Map sin footer no muestra la regla final ni fondo de pathway', () => {
   const html = renderToStaticMarkup(React.createElement(Map_, {
     title: 'Sin footer',

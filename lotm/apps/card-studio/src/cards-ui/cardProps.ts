@@ -227,6 +227,7 @@ export function cardPropsFromBuilderState(
         title: state.mapTitle || '',
         entriesText: state.mapEntriesText || '',
         footerText: state.mapFooterText || '',
+        textStyles: state.mapTextStyles,
         pathway,
         tier: pathway ? PATHWAY_COLORS[pathway] : null,
         backgroundImage: background(

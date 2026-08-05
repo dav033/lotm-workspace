@@ -3,7 +3,7 @@
     {
       "name": "save_card_batch",
       "title": "Guardar lote de cartas",
-      "description": "Crea o reutiliza un anime/universo y una parte, y agrega hasta 100 cartas. Acepta Character, Artifact, Cover, Full Image Cover, Tier, Pathway, Tier Explanation, General Explanation, Pathway Explanation, Breakdown, Map y Tarot Member. Las explicaciones pueden ser generales o asociarse a uno de los 22 pathways. Pathway Explanation es una carta corta por pathway: titulo con una palabra resaltada entre *asteriscos*, regla y descripcion breve; el contador \"N / 22 PATHWAYS\" se calcula solo a partir del pathway, no se guarda. Breakdown es una carta de concepto o autoridad con kicker opcional (p. ej. \"Authority\", o compuesto como \"Authority · From Bizarreness\" ya que es texto libre), titulo y tres secciones: does, doesNot y una tercera con etiqueta libre (edgeLabel, p. ej. \"Edge\" o \"Caps at\") resaltada en color tier. Map es una carta resumen: titulo, hasta 8 filas (entries) con etiquetas opcionales (tags, unidas por \" · \") y un valor en negrita, mas un footerText opcional bajo una regla; con un pathway opcional toma el color y el fondo de ese camino. Las cartas con arte de fondo aceptan backgroundOpacity de 0 a 100 para controlar su visibilidad. Pathway Explanation, Breakdown y Map aceptan ademas backgroundImageUrl propio; en Map tiene prioridad sobre el fondo del pathway. Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. Las imagenes son solo URLs o rutas de /public.",
+      "description": "Crea o reutiliza un anime/universo y una parte, y agrega hasta 100 cartas. Acepta Character, Artifact, Cover, Full Image Cover, Tier, Pathway, Tier Explanation, General Explanation, Pathway Explanation, Breakdown, Map, Tarot Member, Corruption File y Ritual Logic. Las explicaciones pueden ser generales o asociarse a uno de los 22 pathways. Pathway Explanation es una carta corta por pathway: titulo con una palabra resaltada entre *asteriscos*, regla y descripcion breve; el contador \"N / 22 PATHWAYS\" se calcula solo a partir del pathway, no se guarda. Breakdown es una carta de concepto o autoridad con kicker opcional (p. ej. \"Authority\", o compuesto como \"Authority · From Bizarreness\" ya que es texto libre), titulo y tres secciones: does, doesNot y una tercera con etiqueta libre (edgeLabel, p. ej. \"Edge\" o \"Caps at\") resaltada en color tier. Map es una carta resumen: titulo, hasta 8 filas (entries) con etiquetas opcionales (tags, unidas por \" · \") y un valor en negrita, mas un footerText opcional bajo una regla; con un pathway opcional toma el color y el fondo de ese camino. Las cartas con arte de fondo aceptan backgroundOpacity de 0 a 100 para controlar su visibilidad. Pathway Explanation, Breakdown y Map aceptan ademas backgroundImageUrl propio; en Map tiene prioridad sobre el fondo del pathway. Map acepta textStyles opcionales por rol (title, label, value y footer) para ajustar fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, color y textTransform. Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. Corruption File explica chistes internos en formatos Warning, Evidence y Quote. Ritual Logic explica la funcion del ritual, la presion de la pocion y el poder de la nueva Secuencia que ensaya; puede representar la misma explicacion en cinco composiciones realmente distintas: Chain, Split, Casefile, Pressure y Timeline; el selector cambia jerarquia, ritmo y orden de lectura sin crear otra carta; certainty distingue canon, evidencia mixta y teoria, y uncertainty expone el limite de la evidencia. Las imagenes son solo URLs o rutas de /public.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -604,6 +604,12 @@
                       "maxLength": 800,
                       "description": "Texto explicativo general."
                     },
+                    "sequence": {
+                      "description": "Secuencia tematica opcional. Selecciona el fondo por defecto de esa Secuencia.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9
+                    },
                     "pathway": {
                       "description": "Pathway concreto opcional. Si se omite, la explicacion es general.",
                       "type": "string",
@@ -648,6 +654,50 @@
                     "type",
                     "title",
                     "description"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Simple Explanation"
+                    },
+                    "text": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 1000,
+                      "description": "Texto unico, centrado y autoajustable. La letra se reduce a medida que crece el contenido."
+                    },
+                    "fontSizeMin": {
+                      "default": 14,
+                      "description": "Tamano minimo de fuente en pixeles para textos largos.",
+                      "type": "integer",
+                      "minimum": 12,
+                      "maximum": 36
+                    },
+                    "fontSizeMax": {
+                      "default": 28,
+                      "description": "Tamano maximo de fuente en pixeles para textos cortos.",
+                      "type": "integer",
+                      "minimum": 16,
+                      "maximum": 48
+                    },
+                    "position": {
+                      "default": "center",
+                      "description": "Distribucion vertical del texto dentro de la carta.",
+                      "type": "string",
+                      "enum": [
+                        "top",
+                        "center",
+                        "bottom"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text"
                   ],
                   "additionalProperties": false
                 },
@@ -827,6 +877,293 @@
                       "type": "string",
                       "maxLength": 160
                     },
+                    "textStyles": {
+                      "description": "Ajustes tipograficos independientes para titulo, etiquetas, valores y footer.",
+                      "type": "object",
+                      "properties": {
+                        "title": {
+                          "type": "object",
+                          "properties": {
+                            "fontFamily": {
+                              "type": "string",
+                              "enum": [
+                                "Archivo",
+                                "Playfair Display",
+                                "JetBrains Mono",
+                                "Cinzel",
+                                "Space Grotesk"
+                              ]
+                            },
+                            "fontSize": {
+                              "type": "integer",
+                              "minimum": 8,
+                              "maximum": 96
+                            },
+                            "fontWeight": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "const": 400
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 500
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 600
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 700
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 800
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 900
+                                }
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "minimum": 0.75,
+                              "maximum": 2
+                            },
+                            "letterSpacing": {
+                              "type": "number",
+                              "minimum": -0.08,
+                              "maximum": 0.35
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "textTransform": {
+                              "type": "string",
+                              "enum": [
+                                "none",
+                                "uppercase"
+                              ]
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "label": {
+                          "type": "object",
+                          "properties": {
+                            "fontFamily": {
+                              "type": "string",
+                              "enum": [
+                                "Archivo",
+                                "Playfair Display",
+                                "JetBrains Mono",
+                                "Cinzel",
+                                "Space Grotesk"
+                              ]
+                            },
+                            "fontSize": {
+                              "type": "integer",
+                              "minimum": 8,
+                              "maximum": 96
+                            },
+                            "fontWeight": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "const": 400
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 500
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 600
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 700
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 800
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 900
+                                }
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "minimum": 0.75,
+                              "maximum": 2
+                            },
+                            "letterSpacing": {
+                              "type": "number",
+                              "minimum": -0.08,
+                              "maximum": 0.35
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "textTransform": {
+                              "type": "string",
+                              "enum": [
+                                "none",
+                                "uppercase"
+                              ]
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "value": {
+                          "type": "object",
+                          "properties": {
+                            "fontFamily": {
+                              "type": "string",
+                              "enum": [
+                                "Archivo",
+                                "Playfair Display",
+                                "JetBrains Mono",
+                                "Cinzel",
+                                "Space Grotesk"
+                              ]
+                            },
+                            "fontSize": {
+                              "type": "integer",
+                              "minimum": 8,
+                              "maximum": 96
+                            },
+                            "fontWeight": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "const": 400
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 500
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 600
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 700
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 800
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 900
+                                }
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "minimum": 0.75,
+                              "maximum": 2
+                            },
+                            "letterSpacing": {
+                              "type": "number",
+                              "minimum": -0.08,
+                              "maximum": 0.35
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "textTransform": {
+                              "type": "string",
+                              "enum": [
+                                "none",
+                                "uppercase"
+                              ]
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        "footer": {
+                          "type": "object",
+                          "properties": {
+                            "fontFamily": {
+                              "type": "string",
+                              "enum": [
+                                "Archivo",
+                                "Playfair Display",
+                                "JetBrains Mono",
+                                "Cinzel",
+                                "Space Grotesk"
+                              ]
+                            },
+                            "fontSize": {
+                              "type": "integer",
+                              "minimum": 8,
+                              "maximum": 96
+                            },
+                            "fontWeight": {
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "const": 400
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 500
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 600
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 700
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 800
+                                },
+                                {
+                                  "type": "number",
+                                  "const": 900
+                                }
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "minimum": 0.75,
+                              "maximum": 2
+                            },
+                            "letterSpacing": {
+                              "type": "number",
+                              "minimum": -0.08,
+                              "maximum": 0.35
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "textTransform": {
+                              "type": "string",
+                              "enum": [
+                                "none",
+                                "uppercase"
+                              ]
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      },
+                      "additionalProperties": false
+                    },
                     "pathway": {
                       "description": "Pathway opcional del que la carta toma su color y su imagen de fondo. Si se omite, usa el dorado neutro.",
                       "type": "string",
@@ -955,6 +1292,11 @@
                         "Justiciar"
                       ]
                     },
+                    "accentColor": {
+                      "description": "Color visual opcional en hexadecimal. Reemplaza el acento del pathway sin presentarse como canon.",
+                      "type": "string",
+                      "pattern": "^#[0-9a-f]{6}$"
+                    },
                     "imageUrl": {
                       "description": "Retrato o arte de fondo opcional.",
                       "type": "string",
@@ -973,6 +1315,207 @@
                     "tarotTitle",
                     "description",
                     "detailText"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Corruption File"
+                    },
+                    "variant": {
+                      "default": "Warning",
+                      "type": "string",
+                      "enum": [
+                        "Warning",
+                        "Evidence",
+                        "Quote"
+                      ]
+                    },
+                    "incident": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 90
+                    },
+                    "caseLabel": {
+                      "default": "Normal explanation",
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40
+                    },
+                    "explanation": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 320
+                    },
+                    "reactionLabel": {
+                      "default": "Fandom reaction",
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 40
+                    },
+                    "reaction": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 280
+                    },
+                    "footerText": {
+                      "type": "string",
+                      "maxLength": 180
+                    },
+                    "corruptionLevel": {
+                      "default": "Severe",
+                      "type": "string",
+                      "enum": [
+                        "Low",
+                        "Moderate",
+                        "Severe",
+                        "Catastrophic"
+                      ]
+                    },
+                    "showIncidentNumber": {
+                      "default": false,
+                      "type": "boolean"
+                    },
+                    "accentColor": {
+                      "type": "string",
+                      "pattern": "^#[0-9a-f]{6}$"
+                    },
+                    "imageUrl": {
+                      "type": "string",
+                      "maxLength": 2048,
+                      "description": "URL http(s) o ruta publica de la imagen. SQLite guarda solo esta referencia textual, nunca el binario."
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "incident",
+                    "explanation",
+                    "reaction"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "const": "Ritual Logic"
+                    },
+                    "variant": {
+                      "default": "Chain",
+                      "description": "Composicion visual: Chain muestra el proceso completo; Split separa requisito y preparacion; Casefile usa una nota de campo; Pressure pone el peligro al frente; Timeline ordena la experiencia antes, durante y despues del trago.",
+                      "type": "string",
+                      "enum": [
+                        "Chain",
+                        "Split",
+                        "Casefile",
+                        "Pressure",
+                        "Timeline"
+                      ]
+                    },
+                    "pathway": {
+                      "type": "string",
+                      "enum": [
+                        "Fool",
+                        "Door",
+                        "Error",
+                        "Visionary",
+                        "Sun",
+                        "Tyrant",
+                        "White Tower",
+                        "Hanged Man",
+                        "Darkness",
+                        "Death",
+                        "Twilight Giant",
+                        "Demoness",
+                        "Red Priest",
+                        "Hermit",
+                        "Paragon",
+                        "Wheel of Fortune",
+                        "Mother",
+                        "Moon",
+                        "Abyss",
+                        "Chained",
+                        "Black Emperor",
+                        "Justiciar"
+                      ],
+                      "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                    },
+                    "sequence": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9,
+                      "description": "Secuencia que se alcanza mediante el ritual."
+                    },
+                    "sequenceName": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 80
+                    },
+                    "ritual": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 360,
+                      "description": "What the ritual act accomplishes and how it guides assimilation."
+                    },
+                    "survival": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 360,
+                      "description": "What pressure or danger the potion creates during assimilation."
+                    },
+                    "preparation": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 420,
+                      "description": "What power or principle of the new Sequence the ritual rehearses."
+                    },
+                    "certainty": {
+                      "default": "Mixed",
+                      "type": "string",
+                      "enum": [
+                        "Canon",
+                        "Mixed",
+                        "Theory"
+                      ]
+                    },
+                    "uncertainty": {
+                      "type": "string",
+                      "maxLength": 240
+                    },
+                    "footerText": {
+                      "type": "string",
+                      "maxLength": 180
+                    },
+                    "backgroundImageUrl": {
+                      "type": "string",
+                      "maxLength": 2048,
+                      "description": "URL http(s) o ruta publica de la imagen. SQLite guarda solo esta referencia textual, nunca el binario."
+                    },
+                    "backgroundOpacity": {
+                      "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "pathway",
+                    "sequence",
+                    "sequenceName",
+                    "ritual",
+                    "survival",
+                    "preparation"
                   ],
                   "additionalProperties": false
                 }
@@ -1022,7 +1565,7 @@
     {
       "name": "update_card",
       "title": "Actualizar una carta",
-      "description": "Reemplaza el contenido de una carta existente sin cambiar su universo, parte ni posicion.",
+      "description": "Reemplaza el contenido de una carta existente sin cambiar su universo, parte ni posicion. Para Map tambien puede reemplazar textStyles por rol (title, label, value y footer).",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1579,6 +2122,12 @@
                     "maxLength": 800,
                     "description": "Texto explicativo general."
                   },
+                  "sequence": {
+                    "description": "Secuencia tematica opcional. Selecciona el fondo por defecto de esa Secuencia.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9
+                  },
                   "pathway": {
                     "description": "Pathway concreto opcional. Si se omite, la explicacion es general.",
                     "type": "string",
@@ -1623,6 +2172,50 @@
                   "type",
                   "title",
                   "description"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Simple Explanation"
+                  },
+                  "text": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 1000,
+                    "description": "Texto unico, centrado y autoajustable. La letra se reduce a medida que crece el contenido."
+                  },
+                  "fontSizeMin": {
+                    "default": 14,
+                    "description": "Tamano minimo de fuente en pixeles para textos largos.",
+                    "type": "integer",
+                    "minimum": 12,
+                    "maximum": 36
+                  },
+                  "fontSizeMax": {
+                    "default": 28,
+                    "description": "Tamano maximo de fuente en pixeles para textos cortos.",
+                    "type": "integer",
+                    "minimum": 16,
+                    "maximum": 48
+                  },
+                  "position": {
+                    "default": "center",
+                    "description": "Distribucion vertical del texto dentro de la carta.",
+                    "type": "string",
+                    "enum": [
+                      "top",
+                      "center",
+                      "bottom"
+                    ]
+                  }
+                },
+                "required": [
+                  "type",
+                  "text"
                 ],
                 "additionalProperties": false
               },
@@ -1802,6 +2395,293 @@
                     "type": "string",
                     "maxLength": 160
                   },
+                  "textStyles": {
+                    "description": "Ajustes tipograficos independientes para titulo, etiquetas, valores y footer.",
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "object",
+                        "properties": {
+                          "fontFamily": {
+                            "type": "string",
+                            "enum": [
+                              "Archivo",
+                              "Playfair Display",
+                              "JetBrains Mono",
+                              "Cinzel",
+                              "Space Grotesk"
+                            ]
+                          },
+                          "fontSize": {
+                            "type": "integer",
+                            "minimum": 8,
+                            "maximum": 96
+                          },
+                          "fontWeight": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "const": 400
+                              },
+                              {
+                                "type": "number",
+                                "const": 500
+                              },
+                              {
+                                "type": "number",
+                                "const": 600
+                              },
+                              {
+                                "type": "number",
+                                "const": 700
+                              },
+                              {
+                                "type": "number",
+                                "const": 800
+                              },
+                              {
+                                "type": "number",
+                                "const": 900
+                              }
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "number",
+                            "minimum": 0.75,
+                            "maximum": 2
+                          },
+                          "letterSpacing": {
+                            "type": "number",
+                            "minimum": -0.08,
+                            "maximum": 0.35
+                          },
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9a-f]{6}$"
+                          },
+                          "textTransform": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "uppercase"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "label": {
+                        "type": "object",
+                        "properties": {
+                          "fontFamily": {
+                            "type": "string",
+                            "enum": [
+                              "Archivo",
+                              "Playfair Display",
+                              "JetBrains Mono",
+                              "Cinzel",
+                              "Space Grotesk"
+                            ]
+                          },
+                          "fontSize": {
+                            "type": "integer",
+                            "minimum": 8,
+                            "maximum": 96
+                          },
+                          "fontWeight": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "const": 400
+                              },
+                              {
+                                "type": "number",
+                                "const": 500
+                              },
+                              {
+                                "type": "number",
+                                "const": 600
+                              },
+                              {
+                                "type": "number",
+                                "const": 700
+                              },
+                              {
+                                "type": "number",
+                                "const": 800
+                              },
+                              {
+                                "type": "number",
+                                "const": 900
+                              }
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "number",
+                            "minimum": 0.75,
+                            "maximum": 2
+                          },
+                          "letterSpacing": {
+                            "type": "number",
+                            "minimum": -0.08,
+                            "maximum": 0.35
+                          },
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9a-f]{6}$"
+                          },
+                          "textTransform": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "uppercase"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "value": {
+                        "type": "object",
+                        "properties": {
+                          "fontFamily": {
+                            "type": "string",
+                            "enum": [
+                              "Archivo",
+                              "Playfair Display",
+                              "JetBrains Mono",
+                              "Cinzel",
+                              "Space Grotesk"
+                            ]
+                          },
+                          "fontSize": {
+                            "type": "integer",
+                            "minimum": 8,
+                            "maximum": 96
+                          },
+                          "fontWeight": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "const": 400
+                              },
+                              {
+                                "type": "number",
+                                "const": 500
+                              },
+                              {
+                                "type": "number",
+                                "const": 600
+                              },
+                              {
+                                "type": "number",
+                                "const": 700
+                              },
+                              {
+                                "type": "number",
+                                "const": 800
+                              },
+                              {
+                                "type": "number",
+                                "const": 900
+                              }
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "number",
+                            "minimum": 0.75,
+                            "maximum": 2
+                          },
+                          "letterSpacing": {
+                            "type": "number",
+                            "minimum": -0.08,
+                            "maximum": 0.35
+                          },
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9a-f]{6}$"
+                          },
+                          "textTransform": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "uppercase"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "footer": {
+                        "type": "object",
+                        "properties": {
+                          "fontFamily": {
+                            "type": "string",
+                            "enum": [
+                              "Archivo",
+                              "Playfair Display",
+                              "JetBrains Mono",
+                              "Cinzel",
+                              "Space Grotesk"
+                            ]
+                          },
+                          "fontSize": {
+                            "type": "integer",
+                            "minimum": 8,
+                            "maximum": 96
+                          },
+                          "fontWeight": {
+                            "anyOf": [
+                              {
+                                "type": "number",
+                                "const": 400
+                              },
+                              {
+                                "type": "number",
+                                "const": 500
+                              },
+                              {
+                                "type": "number",
+                                "const": 600
+                              },
+                              {
+                                "type": "number",
+                                "const": 700
+                              },
+                              {
+                                "type": "number",
+                                "const": 800
+                              },
+                              {
+                                "type": "number",
+                                "const": 900
+                              }
+                            ]
+                          },
+                          "lineHeight": {
+                            "type": "number",
+                            "minimum": 0.75,
+                            "maximum": 2
+                          },
+                          "letterSpacing": {
+                            "type": "number",
+                            "minimum": -0.08,
+                            "maximum": 0.35
+                          },
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9a-f]{6}$"
+                          },
+                          "textTransform": {
+                            "type": "string",
+                            "enum": [
+                              "none",
+                              "uppercase"
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
                   "pathway": {
                     "description": "Pathway opcional del que la carta toma su color y su imagen de fondo. Si se omite, usa el dorado neutro.",
                     "type": "string",
@@ -1930,6 +2810,11 @@
                       "Justiciar"
                     ]
                   },
+                  "accentColor": {
+                    "description": "Color visual opcional en hexadecimal. Reemplaza el acento del pathway sin presentarse como canon.",
+                    "type": "string",
+                    "pattern": "^#[0-9a-f]{6}$"
+                  },
                   "imageUrl": {
                     "description": "Retrato o arte de fondo opcional.",
                     "type": "string",
@@ -1948,6 +2833,207 @@
                   "tarotTitle",
                   "description",
                   "detailText"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Corruption File"
+                  },
+                  "variant": {
+                    "default": "Warning",
+                    "type": "string",
+                    "enum": [
+                      "Warning",
+                      "Evidence",
+                      "Quote"
+                    ]
+                  },
+                  "incident": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 90
+                  },
+                  "caseLabel": {
+                    "default": "Normal explanation",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "explanation": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 320
+                  },
+                  "reactionLabel": {
+                    "default": "Fandom reaction",
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 40
+                  },
+                  "reaction": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 280
+                  },
+                  "footerText": {
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "corruptionLevel": {
+                    "default": "Severe",
+                    "type": "string",
+                    "enum": [
+                      "Low",
+                      "Moderate",
+                      "Severe",
+                      "Catastrophic"
+                    ]
+                  },
+                  "showIncidentNumber": {
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "accentColor": {
+                    "type": "string",
+                    "pattern": "^#[0-9a-f]{6}$"
+                  },
+                  "imageUrl": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "description": "URL http(s) o ruta publica de la imagen. SQLite guarda solo esta referencia textual, nunca el binario."
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "incident",
+                  "explanation",
+                  "reaction"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "const": "Ritual Logic"
+                  },
+                  "variant": {
+                    "default": "Chain",
+                    "description": "Composicion visual: Chain muestra el proceso completo; Split separa requisito y preparacion; Casefile usa una nota de campo; Pressure pone el peligro al frente; Timeline ordena la experiencia antes, durante y despues del trago.",
+                    "type": "string",
+                    "enum": [
+                      "Chain",
+                      "Split",
+                      "Casefile",
+                      "Pressure",
+                      "Timeline"
+                    ]
+                  },
+                  "pathway": {
+                    "type": "string",
+                    "enum": [
+                      "Fool",
+                      "Door",
+                      "Error",
+                      "Visionary",
+                      "Sun",
+                      "Tyrant",
+                      "White Tower",
+                      "Hanged Man",
+                      "Darkness",
+                      "Death",
+                      "Twilight Giant",
+                      "Demoness",
+                      "Red Priest",
+                      "Hermit",
+                      "Paragon",
+                      "Wheel of Fortune",
+                      "Mother",
+                      "Moon",
+                      "Abyss",
+                      "Chained",
+                      "Black Emperor",
+                      "Justiciar"
+                    ],
+                    "description": "Nombre canonico de uno de los 22 pathways de Lord of Mysteries."
+                  },
+                  "sequence": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9,
+                    "description": "Secuencia que se alcanza mediante el ritual."
+                  },
+                  "sequenceName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 80
+                  },
+                  "ritual": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 360,
+                    "description": "What the ritual act accomplishes and how it guides assimilation."
+                  },
+                  "survival": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 360,
+                    "description": "What pressure or danger the potion creates during assimilation."
+                  },
+                  "preparation": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 420,
+                    "description": "What power or principle of the new Sequence the ritual rehearses."
+                  },
+                  "certainty": {
+                    "default": "Mixed",
+                    "type": "string",
+                    "enum": [
+                      "Canon",
+                      "Mixed",
+                      "Theory"
+                    ]
+                  },
+                  "uncertainty": {
+                    "type": "string",
+                    "maxLength": 240
+                  },
+                  "footerText": {
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "backgroundImageUrl": {
+                    "type": "string",
+                    "maxLength": 2048,
+                    "description": "URL http(s) o ruta publica de la imagen. SQLite guarda solo esta referencia textual, nunca el binario."
+                  },
+                  "backgroundOpacity": {
+                    "description": "Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "type",
+                  "pathway",
+                  "sequence",
+                  "sequenceName",
+                  "ritual",
+                  "survival",
+                  "preparation"
                 ],
                 "additionalProperties": false
               }

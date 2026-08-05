@@ -1,4 +1,5 @@
 export * from './base'
+export * from './textStyles'
 export * from './standard'
 export * from './covers'
 export * from './tiers'

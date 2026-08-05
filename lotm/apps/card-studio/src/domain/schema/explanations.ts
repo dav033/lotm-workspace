@@ -5,6 +5,7 @@ import {
   MapEntrySchema,
   PathwayNameSchema,
 } from './base'
+import { MapTextStylesSchema } from './textStyles'
 
 export const GeneralExplanationCardSchema = z
   .object({
@@ -92,6 +93,9 @@ export const MapCardSchema = z
     ),
     footerText: z.string().trim().max(160).optional().describe(
       'Texto final opcional bajo una regla, p. ej. "Three roots. Seven powers."',
+    ),
+    textStyles: MapTextStylesSchema.optional().describe(
+      'Ajustes tipograficos independientes para titulo, etiquetas, valores y footer.',
     ),
     pathway: PathwayNameSchema.optional().describe(
       'Pathway opcional del que la carta toma su color y su imagen de fondo. Si se omite, usa el dorado neutro.',

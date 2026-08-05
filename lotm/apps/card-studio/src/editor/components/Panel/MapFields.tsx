@@ -4,6 +4,7 @@ import React, { useRef } from 'react'
 import { PATHWAYS, PATH_NAMES, TIER_RANKS, TIER_RANK_NAMES } from '../../../domain/pathways'
 import { PATHWAY_BACKGROUNDS } from '../../../domain/pathwayBackgrounds'
 import { BackgroundField, PathwayCombo, SeqSelect } from './primitives'
+import TextStyleField from './TextStyleField'
 
 export default function MapFields({ state, set, accent, onUploadImage, onDownload, onGenerateTierBatch, defaultTierBackground, defaultPathwayCardBackground }) {
   return (
@@ -89,6 +90,38 @@ export default function MapFields({ state, set, accent, onUploadImage, onDownloa
                 ? `Using the default ${state.mapPathway} background. Upload one to override it.`
                 : 'No background image selected.'}
             />
+
+            <div className="typography-controls">
+              <div className="typography-controls-head">
+                <label>Typography</label>
+                <p className="field-help">Tune each text role independently. Changes save with the card.</p>
+              </div>
+              {[
+                ['title', 'Title'],
+                ['label', 'Labels'],
+                ['value', 'Values'],
+                ['footer', 'Footer'],
+              ].map(([role, label]) => (
+                <TextStyleField
+                  key={role}
+                  role={role}
+                  label={label}
+                  value={state.mapTextStyles?.[role] ?? {}}
+                  onChange={(patch) => set({
+                    mapTextStyles: {
+                      ...(state.mapTextStyles ?? {}),
+                      [role]: { ...(state.mapTextStyles?.[role] ?? {}), ...patch },
+                    },
+                  })}
+                  onReset={() => set({
+                    mapTextStyles: {
+                      ...(state.mapTextStyles ?? {}),
+                      [role]: {},
+                    },
+                  })}
+                />
+              ))}
+            </div>
   
             <div className="actions">
               <button className="btn-dl" style={{ background: accent.c }} onClick={onDownload}>Download PNG</button>
