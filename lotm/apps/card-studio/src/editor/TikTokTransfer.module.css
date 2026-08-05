@@ -23,6 +23,14 @@
 .floating :global(.tiktok-fields input),.floating :global(.tiktok-fields textarea){width:100%;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#16161f;color:#ecebf4;font:13px/1.4 'Space Grotesk',sans-serif;padding:8px 9px}
 .floating :global(.tiktok-fields textarea){min-height:76px;resize:vertical}
 .floating :global(.tiktok-fields input:focus),.floating :global(.tiktok-fields textarea:focus){outline:none;border-color:#e8c36b;box-shadow:0 0 0 3px rgba(232,195,107,.1)}
+.floating :global(.tiktok-carousel-picker){display:grid;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
+.floating :global(.tiktok-carousel-picker-head){display:flex;align-items:center;justify-content:space-between;gap:8px;color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.floating :global(.tiktok-carousel-picker-head strong){color:#ecebf4;font-size:11px;letter-spacing:0;text-transform:none}
+.floating :global(.tiktok-carousel-preview){display:flex;gap:5px;overflow-x:auto;padding-bottom:2px}
+.floating :global(.tiktok-carousel-thumb){position:relative;flex:0 0 48px;height:64px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:5px;background:#0c0c12}
+.floating :global(.tiktok-carousel-thumb img){width:100%;height:100%;object-fit:cover}
+.floating :global(.tiktok-carousel-thumb span){position:absolute;right:3px;bottom:3px;min-width:15px;padding:1px 3px;border-radius:3px;background:rgba(0,0,0,.72);color:#fff;font:700 9px/1 'JetBrains Mono',monospace;text-align:center}
+.floating :global(.tiktok-carousel-picker .tiktok-link){margin:0}
 .floating :global(.tiktok-file){padding:10px;border:1px dashed rgba(255,255,255,.16);border-radius:8px;cursor:pointer}
 .floating :global(.tiktok-file input){display:none}
 .floating :global(.tiktok-file strong){display:block;margin-top:5px;color:#ecebf4;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

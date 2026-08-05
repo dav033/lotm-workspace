@@ -28,6 +28,7 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [photoUrls, setPhotoUrls] = useState('')
+  const [carouselSelected, setCarouselSelected] = useState(false)
   const [coverIndex, setCoverIndex] = useState('0')
   const [publishId, setPublishId] = useState<string | null>(null)
   const [status, setStatus] = useState('')
@@ -54,6 +55,14 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
 
   function useImportedImages() {
     setPhotoUrls(importedUrls.join('\n'))
+    setCarouselSelected(importedUrls.length > 0)
+    setCoverIndex('0')
+    setError('')
+  }
+
+  function clearCarouselSelection() {
+    setPhotoUrls('')
+    setCarouselSelected(false)
     setCoverIndex('0')
     setError('')
   }
@@ -179,11 +188,34 @@ export default function TikTokTransfer({ images }: { images: ImportedImage[] }) 
             <div className="tiktok-fields">
               <label><span>Title</span><input value={title} maxLength={90} onChange={(event) => setTitle(event.target.value)} /></label>
               <label><span>Description</span><textarea value={description} maxLength={4000} onChange={(event) => setDescription(event.target.value)} /></label>
-              <label><span>Public image URLs, one per line</span><textarea value={photoUrls} onChange={(event) => setPhotoUrls(event.target.value)} placeholder="https://media.example.com/01.webp" /></label>
-              {images.length ? <button type="button" className="tiktok-secondary" onClick={useImportedImages}>Use {images.length} imported image{images.length === 1 ? '' : 's'}</button> : null}
+              <div className="tiktok-carousel-picker">
+                <div className="tiktok-carousel-picker-head">
+                  <span>Current carousel</span>
+                  <strong>{images.length} image{images.length === 1 ? '' : 's'}</strong>
+                </div>
+                {images.length ? (
+                  <div className="tiktok-carousel-preview" aria-label="Current carousel preview">
+                    {images.map((image, index) => (
+                      <div className="tiktok-carousel-thumb" key={image.id} title={image.name}>
+                        <img src={image.url} alt={image.name} />
+                        <span>{index + 1}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : <p className="tiktok-muted">Import images into the current project first.</p>}
+                <button
+                  type="button"
+                  className="tiktok-secondary"
+                  disabled={busy || !images.length || images.length > 35}
+                  onClick={useImportedImages}
+                >
+                  {carouselSelected ? 'Current carousel selected' : 'Select current carousel'}
+                </button>
+                {carouselSelected ? <button type="button" className="tiktok-link" onClick={clearCarouselSelection}>Clear selection</button> : null}
+              </div>
               <label><span>Cover image number</span><input type="number" min="0" max="34" value={coverIndex} onChange={(event) => setCoverIndex(event.target.value)} /></label>
-              <p className="tiktok-muted">TikTok must fetch these images over public HTTPS URLs from a verified domain.</p>
-              <button type="button" className="tiktok-primary" disabled={busy || !photoUrls.trim()} onClick={() => void sendCarousel()}>
+              <p className="tiktok-muted">TikTok fetches the selected images from this app over public HTTPS. They arrive as a draft for final editing and publishing.</p>
+              <button type="button" className="tiktok-primary" disabled={busy || !carouselSelected || !photoUrls.trim()} onClick={() => void sendCarousel()}>
                 {busy ? 'Sending…' : 'Send carousel'}
               </button>
             </div>
