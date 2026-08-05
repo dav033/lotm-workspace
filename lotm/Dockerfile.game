@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl \
 COPY --from=build /app/package.json /app/package-lock.json /app/
 COPY --from=build /app/apps/game/package.json /app/apps/game/package.json
 COPY --from=build /app/apps/game/.next /app/apps/game/.next
+COPY --from=build /app/apps/game/public /app/apps/game/public
 COPY --from=build /app/apps/game/prisma /app/apps/game/prisma
 COPY --from=build /app/apps/game/prisma.config.ts /app/apps/game/prisma.config.ts
 COPY --from=build /app/apps/game/next.config.ts /app/apps/game/next.config.ts
