@@ -297,7 +297,7 @@ export function useEditorController() {
   const filmstrip = cards.map((card) => {
     const cardState = card.id === editingId ? state : card.state
     return {
-      id: card.id, label: labelFor(cardState), state: cardState,
+      id: card.id, position: card.position, label: labelFor(cardState), state: cardState,
       universe: card.universe, part: card.part, durationSeconds: card.durationSeconds ?? null,
     }
   })

@@ -5,6 +5,7 @@ import { fromBuilderCardState, type BuilderCardState } from '../../domain/schema
 
 type CarouselCard = {
   id: string
+  position: number
   state: BuilderCardState
   part: { id: string; name: string; number: number | null }
 }
@@ -34,6 +35,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
   const [description, setDescription] = useState('')
   const [photoUrls, setPhotoUrls] = useState('')
   const [carouselSelected, setCarouselSelected] = useState(false)
+  const [renderedCardIds, setRenderedCardIds] = useState<string[]>([])
   const [selectedPartId, setSelectedPartId] = useState('')
   const [coverIndex, setCoverIndex] = useState('0')
   const [publishId, setPublishId] = useState<string | null>(null)
@@ -53,9 +55,15 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
 
   const currentPartId = cards.find((card) => card.id === currentCardId)?.part.id ?? sections[0]?.id ?? ''
   const selectedCards = useMemo(
-    () => cards.filter((card) => card.part.id === selectedPartId),
+    () => cards
+      .filter((card) => card.part.id === selectedPartId)
+      .slice()
+      .sort((a, b) => a.position - b.position || a.id.localeCompare(b.id)),
     [cards, selectedPartId],
   )
+  const carouselOrderMatches = carouselSelected
+    && renderedCardIds.length === selectedCards.length
+    && renderedCardIds.every((id, index) => id === selectedCards[index]?.id)
 
   useEffect(() => {
     if (!selectedPartId && currentPartId) setSelectedPartId(currentPartId)
@@ -119,6 +127,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
       }
 
       setPhotoUrls(urls.join('\n'))
+      setRenderedCardIds(selectedCards.map(({ id }) => id))
       setCarouselSelected(true)
       setStatus(`Carousel ready: ${urls.length} app-generated image${urls.length === 1 ? '' : 's'}.`)
     } catch (caught) {
@@ -133,6 +142,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
     setSelectedPartId(partId)
     setPhotoUrls('')
     setCarouselSelected(false)
+    setRenderedCardIds([])
     setCoverIndex('0')
     setError('')
   }
@@ -140,6 +150,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
   function clearCarouselSelection() {
     setPhotoUrls('')
     setCarouselSelected(false)
+    setRenderedCardIds([])
     setCoverIndex('0')
     setError('')
   }
@@ -168,6 +179,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
   }
 
   async function sendCarousel() {
+    if (!carouselOrderMatches) return setError('Card order changed. Re-render the carousel before sending.')
     const urls = photoUrls.split(/\r?\n/).map((url) => url.trim()).filter(Boolean)
     await send('/api/tiktok/upload-carousel', {
       method: 'POST',
@@ -289,6 +301,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
                     ))}
                   </div>
                 ) : <p className="tiktok-muted">The selected cards will be rendered by Card Studio.</p>}
+                {carouselSelected && !carouselOrderMatches ? <p className="tiktok-muted">Card order changed. Re-render carousel to preserve the exact order.</p> : null}
                 <button
                   type="button"
                   className="tiktok-secondary"
@@ -301,7 +314,7 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
               </div>
               <label><span>Cover image number (0 = first)</span><input type="number" min="0" max={Math.max(0, selectedCards.length - 1)} value={coverIndex} onChange={(event) => setCoverIndex(event.target.value)} /></label>
               <p className="tiktok-muted">Card Studio renders the selected cards and sends those generated images. TikTok receives them as a draft for final editing and publishing.</p>
-              <button type="button" className="tiktok-primary" disabled={busy || !carouselSelected || !photoUrls.trim()} onClick={() => void sendCarousel()}>
+              <button type="button" className="tiktok-primary" disabled={busy || !carouselOrderMatches || !photoUrls.trim()} onClick={() => void sendCarousel()}>
                 {busy ? 'Sending…' : 'Send carousel'}
               </button>
             </div>
