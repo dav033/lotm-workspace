@@ -5,6 +5,7 @@ spoilers: major
 sources:
   - "[[Lord of Mysteries Wiki - Eternal Darkness Symbols, Authorities and Abilities]]"
   - "[[Eternal Darkness - Research Dossier]]"
+  - "[[Lord of Mysteries Wiki - River of Eternal Darkness]]"
 source-confidence: medium-secondary
 pathway-group: "[[Eternal Darkness Group]]"
 pathways:

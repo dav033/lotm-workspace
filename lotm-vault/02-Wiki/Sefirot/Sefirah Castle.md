@@ -5,6 +5,7 @@ spoilers: major
 sources:
   - "[[Lord of Mysteries Wiki - Symbols, Authorities and Abilities]]"
   - "[[Fool Pathway - Ability Research]]"
+  - "[[Lord of Mysteries Wiki - Kotar]]"
 source-confidence: medium-secondary
 pathway-group: "[[Lord of Mysteries Group]]"
 pathways:

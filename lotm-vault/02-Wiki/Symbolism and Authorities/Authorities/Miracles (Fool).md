@@ -8,6 +8,7 @@ sources:
   - "[[Cuttlefish WeChat - Completed Fool Authority]]"
   - "[[Web Research - Fool and Error Authorities - 2026-07-29]]"
   - "[[Lord of Mysteries Wiki - Fool Pathway Abilities]]"
+  - "[[Lord of Mysteries Wiki - Kotar]]"
 source-confidence: explicit-canon
 authority-level: pathway
 pathway: "[[Fool Pathway (disambiguation)]]"
@@ -45,3 +46,4 @@ Community shorthand often calls Miracles unrestricted reality warping. The novel
 - [[Cuttlefish WeChat - Completed Fool Authority]]
 - [[Web Research - Fool and Error Authorities - 2026-07-29]]
 - [[Lord of Mysteries Wiki - Fool Pathway Abilities]]
+- [[Lord of Mysteries Wiki - Kotar]]

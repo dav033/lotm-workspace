@@ -1,7 +1,7 @@
 ---
 tags: [project, engineering, game]
 scope: out-of-ontology
-updated: 2026-07-31
+updated: 2026-08-04
 ---
 
 # Arquitectura del Juego — Archivo de Misterios
@@ -34,7 +34,11 @@ El schema de Prisma es genérico: `Element`, `Pathway`, `Sequence`, `Recipe`, `R
 
 ## Sistema de contenido para TikTok (separado del juego)
 
-`src/cards` + `src/builder` + MCP `lotm-card-studio` (`mcp/cards-stdio.ts`, `mcp/cards-http.ts`): genera imágenes PNG 960×1280 (formato TikTok) organizadas por universo/parte, con 6 herramientas MCP (`save_card_batch`, `list_card_library`, `move_cards`, `update_card`, `save_card_image`, `delete_cards`, `export_cards_zip`). Este sistema **sí** usa nombres/branding explícito de LOTM — es marketing de contenido, no el juego en sí, y es una decisión consciente separada.
+`apps/card-studio` + MCP `lotm-card-studio`: genera imágenes PNG 960×1280 (formato TikTok) organizadas por universo/parte. El contrato MCP queda congelado en siete herramientas: `save_card_batch`, `list_card_library`, `update_card`, `save_card_image`, `move_cards`, `delete_cards` y `export_cards_zip`. Este sistema **sí** usa nombres/branding explícito de LOTM — es marketing de contenido, no el juego en sí, y es una decisión consciente separada.
+
+La carta `Map` acepta `textStyles` opcionales por rol (`title`, `label`, `value`, `footer`). Cada rol puede definir `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, `color` y `textTransform`; tanto `save_card_batch` como `update_card` pueden escribirlos. El editor ofrece el mismo control reutilizable y lo aplica al preview y al PNG exportado.
+
+La vista del Card Studio conserva en el navegador local el proyecto activo, los proyectos abiertos y la carta seleccionada para que una recarga no pierda el contexto de trabajo. El contenido de las cartas sigue persistiendo en la base SQLite y las imágenes mediante el almacenamiento de archivos documentado abajo.
 
 Almacenamiento de imágenes: `storeCardImage()` en `src/cards/images.ts` — guarda bytes en disco (`CARDS_IMAGE_DIR`, por defecto `data/card-images`), solo la ruta viaja a la base de datos (nunca binarios/base64 en la DB). Servido vía `/api/cards/images/[file]`. Este mismo mecanismo es durable en producción gracias al volumen Docker `lotm_data` — no se necesita AWS/S3 (ver decisión abajo).
 

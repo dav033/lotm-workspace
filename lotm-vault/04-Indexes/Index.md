@@ -1,7 +1,7 @@
 ---
 type: index
 status: active
-last-audited: 2026-07-29
+last-audited: 2026-08-04
 ---
 
 # LOTM Wiki
@@ -23,17 +23,17 @@ Knowledge base for *Lord of the Mysteries*.
 
 ## Status
 
-- Processed source notes: 79
+- Processed source notes: 86
 - Official high-reliability source notes: 3
-- Unofficial medium-reliability source notes: 72
+- Unofficial medium-reliability source notes: 79
 - Unofficial low-reliability source notes: 4
-- Wiki notes: 471
+- Wiki notes: 476
 - Sequence notes: 220
 - Lord of Mysteries Group Sequences: 30 of 30
 - Complete Pathway maps: 22 of 22
 - Incomplete Pathway maps: none
 - Canon knowledge notes with direct official/high evidence: 9
-- Pending review: 462 unique notes
+- Pending review: 468 unique notes
 
 Counts reflect current Markdown notes, excluding [[Sources Registry]] from processed-source totals. See [[Pending Review]].
 

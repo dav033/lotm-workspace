@@ -12,6 +12,7 @@ sources:
   - "[[Cuttlefish WeChat - Completed Fool Authority]]"
   - "[[Fool Pathway - Ability Research]]"
   - "[[Lord of Mysteries Wiki - Fool Pathway Abilities]]"
+  - "[[Lord of Mysteries Wiki - Fool Pathway List of Beyonders]]"
 source-confidence: strong-inference
 ---
 
@@ -28,6 +29,18 @@ source-confidence: strong-inference
 [[9 - Seer|Seer]] · [[8 - Clown|Clown]] · [[7 - Magician|Magician]] · [[6 - Faceless|Faceless]] · [[5 - Marionettist|Marionettist]] · [[4 - Bizarro Sorcerer|Bizarro Sorcerer]] · [[3 - Scholar of Yore|Scholar of Yore]] · [[2 - Miracle Invoker|Miracle Invoker]] · [[1 - Attendant of Mysteries|Attendant of Mysteries]] · [[0 - Fool|Fool]]
 
 Every Sequence note separates **Traits**, **Explicit Powers**, strengthened abilities and limits from **Authority → Power Mapping**. The Sequence 9-0 inventory is cross-checked against [[Lord of Mysteries Wiki - Fool Pathway Abilities]].
+
+## Beyonder Roster Snapshot
+
+The supplied roster capture separates Book One and Book Two and records the following high-level Fool Pathway positions:
+
+- Great Old One: Celestial Worthy of Heaven and Earth for Blessings in Book One; Klein Moretti as Lord of Mysteries in Book Two, with the capture marking Celestial Worthy as deceased there.
+- Half Great Old One: Klein Moretti in Book One, with Sefirah Castle, the Fool Uniqueness, and three Sequence 1 characteristics.
+- Ancient God: [[Flegrea]], with the Fool Uniqueness and one Sequence 1 characteristic.
+- Angels and high-sequence figures: [[Zaratul Senior]] as Sequence 1; Antigonus and [[Kotar]] as Sequence 2; [[Zaratul]] as Sequence 2 in Book One and deceased in the Book Two snapshot.
+- Lower-sequence entries include Rosago, Suited Clown, Loki, and Leah Bellot; their status remains tied to the roster’s book-specific snapshot.
+
+This is a secondary roster, not a canon status ledger. It preserves book separation and does not overwrite individual character evidence.
 
 ## Knowledge Map
 

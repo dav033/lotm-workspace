@@ -252,3 +252,9 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 ## 2026-08-03 — Próxima iteración: espada de hueso
 
 - El usuario pidió reservar la cadena de la espada de hueso/Kalvetua para una siguiente iteración. Anotada en [[Efecto mariposa]]: toque del arma maldita, exposición y caída de Kalvetua, Cetro del Dios del Mar, creyentes que después aportan anclas a la Iglesia del Loco. No se crean cartas todavía.
+
+## 2026-08-04 — MCP de Card Studio y persistencia del editor
+
+- Se documentó el contrato MCP vigente de `lotm-card-studio`: siete herramientas congeladas para guardar, listar, actualizar, mover, borrar, guardar imágenes y exportar cartas.
+- Las cartas `Map` ahora pueden persistir `textStyles` por rol (`title`, `label`, `value`, `footer`) desde `save_card_batch` y `update_card`, con controles de fuente, tamaño, peso, altura, espaciado, color y transformación de texto en el editor.
+- El Card Studio restaura después de una recarga el proyecto activo, los proyectos abiertos y la carta seleccionada mediante almacenamiento local del navegador; el contenido sigue en SQLite y las imágenes siguen en almacenamiento de archivos.

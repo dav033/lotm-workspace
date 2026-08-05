@@ -1,7 +1,7 @@
 ---
 type: review-index
 status: active
-last-audited: 2026-07-29
+last-audited: 2026-08-04
 spoilers: major
 ---
 
@@ -9,8 +9,8 @@ spoilers: major
 
 ## Summary
 
-- 471 unique notes match at least one review condition.
-- 471 knowledge notes use `status: interpretation` and remain discoverable through the query below.
+- 468 unique notes match at least one review condition.
+- 467 knowledge notes use `status: interpretation` and remain discoverable through the query below.
 - 0 knowledge notes use `status: canon`.
 - 0 current notes use invalid epistemic workflow statuses.
 - 0 current Pathway Hubs use `sequence-map-status: pending`.
@@ -39,6 +39,10 @@ Potion/Advancement evidence is now present in all 220 Sequence notes. The 160 ne
 ```query
 path:"02-Wiki/Pathways/Standard-Pathways" [type:sequence] [status:interpretation]
 ```
+
+## Clipping Ingest Debt
+
+- This batch contained 12 unchanged 77-byte stubs with the same sentence rather than source material: 'Antigonus.md', 'Celestial Worthy of Heaven and Earth for Blessings.md', 'Fool Pathway 1.md', 'Fool Pathway 2.md', 'Fool Pathway.md', 'Historical Void.md', 'Klein Moretti.md', 'Klein MorettiHistory.md', 'Sefirah Castle.md', 'Seven Lights.md', 'Spirit World.md', and 'Zaratul Senior.md'. No claim or wiki note was fabricated from them.
 
 ## Tracked Remaining Uncertainty
 
@@ -70,6 +74,8 @@ path:"02-Wiki/Pathways/Standard-Pathways" [type:sequence] [status:interpretation
 - Authority research batch 2 audited exactly ten targets: [[Fooling]], [[Grafting and Reassembly]], [[Miracles (Fool)]], [[Transformation (Fool)]], [[History (Fool)]], [[Fate (Fool)]], [[Anchor of Destiny (Fool)]], [[Error (Authority)]], [[Deceit (Error)]], and [[Time (Error)]]. Nine now use direct exact-URL `official/high` Cuttlefish evidence and qualify as `canon` / `explicit-canon`. [[Fate (Fool)]] remains `interpretation` / `probable-interpretation` because evidence establishes only a restricted jurisdiction. The former `Change (Fool)` node was deprecated: the author names Transformation as the Authority under Change symbolism. Web and Reddit notes remain cross-checks only.
 - [[Autocrat (Black Emperor)]], [[Distortion (Black Emperor)]], [[Disorder (Black Emperor)]], [[Order (Justiciar)]], [[Rules (Justiciar)]], [[Laws (Justiciar)]], [[Principles (Justiciar)]], [[Judgement (Justiciar)]], [[Balance (Justiciar)]], and [[Disorder (Justiciar)]]: second 10-Authority research batch now separates Autocrat from Disorder, distinguishes the two Pathways' Disorder shares, preserves the Rules/Laws/Principles translation boundary, and records indexed novel manifestations and limits. Exact chapter text and original author-post URLs were not independently inspected, so all ten remain `interpretation` / `medium-secondary`; [[Reddit - The Anarchy Authority Discussions]] is explicitly non-canonical.
 - [[0 - Moon|Moon]]: the supplied Advancement capture leaves the first Sequence 0 main ingredient blank. It is retained as a source anomaly and is not inferred in the knowledge note.
+- [[River of Eternal Darkness]]: the new Fandom capture adds distributaries, Death Imprints, the River Styx oath, and the Evernight accommodation account; all remain secondary until direct official/high evidence is indexed.
+- [[Evernight Goddess]] and [[Flegrea]]: new character notes use only unofficial/medium captures for Pathway membership, identity, and relationship claims; direct official/high verification remains pending.
 
 ## Hard Completion Gate Audit
 

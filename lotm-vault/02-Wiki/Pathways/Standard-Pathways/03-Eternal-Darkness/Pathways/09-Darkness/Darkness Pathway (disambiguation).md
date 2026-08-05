@@ -11,6 +11,7 @@ sequence-map-status: complete
 sources:
   - "[[Eternal Darkness - Research Dossier]]"
   - "[[Lord of Mysteries Wiki - Darkness Pathway Abilities]]"
+  - "[[Lord of Mysteries Wiki - Darkness Pathway List of Beyonders]]"
 source-confidence: medium-secondary
 ---
 
@@ -34,3 +35,8 @@ All ten Sequence notes preserve the supplied ability inventory and separate it f
 - Authorities: [[Darkness (Authority)]] · [[Horror (Darkness)]] · [[Spirit Body and Spirituality (Darkness)]] · [[Concealment (Darkness)]] · [[Misfortune and Catastrophe (Darkness)]]
 - Group: [[Eternal Darkness Group]] · [[Eternal Darkness Group Counters]]
 
+## Known Figures
+
+- [[Evernight Goddess]] — listed as a Sequence 0 True God of this Pathway in the supplied roster.
+- [[Flegrea]] — listed among the Ancient Gods of this Pathway; his separate note preserves his multi-Pathway composition.
+- Source roster: [[Lord of Mysteries Wiki - Darkness Pathway List of Beyonders]]

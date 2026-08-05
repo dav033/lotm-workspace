@@ -1,5 +1,14 @@
 # Change Log
 
+## [2026-08-04] | Clippings ingestion — River, Darkness roster, Evernight, Flegrea
+
+- Ingested four unique Fandom captures as immutable unofficial/medium source notes with exact URLs, page locations, major-spoiler classification, and access date 2026-08-04.
+- Expanded [[River of Eternal Darkness]], added [[Evernight Goddess]] and [[Flegrea]], linked both characters from the Darkness Pathway map, and added the Darkness roster source to affected indexes.
+- Preserved the distinction between Sefirah, Pathway, and Authority: the River capture reports conditional access and Evernight’s accommodation; it does not turn the River into a native Darkness Authority.
+- Found `Clippings/Church of the Evernight Goddess.md` byte-identical to the River capture, including River metadata. Treated it as an accidental duplicate; no Church source or wiki node was fabricated.
+- Remaining debt: new knowledge claims stay `interpretation` / `medium-secondary`; direct official/high verification and separate indexed notes for several named relations remain pending.
+- Reconciled audited totals to 83 processed sources, 473 wiki notes, 465 unique review notes, and 464 interpretation notes.
+
 ## [2026-07-29] | Sequence note format normalization
 
 - Added a Sequence template and mandatory format rules, then normalized all 220 Sequence notes across all nine groups: H1 titles, H2 names/order, H3 categories, Pathway links, indentation, raw HTML, and Sources placement.
@@ -355,3 +364,13 @@
 - Added a working interpretive rule to the Lord of Mysteries Group hub: advancement rituals have both a survival function against potion backlash and a preparatory function for the target Sequence's central power or concept.
 - Added separated ritual-logic notes to Sequence 5 Marionettist, Dream Stealer, and Traveler. Each note distinguishes source-described effects from the preparatory interpretation.
 - Added the three new uncertainty items and the group-level framework to [[Pending Review]]. No epistemic status was promoted and no source body was changed.
+
+# 2026-08-04 - Darkness Pathway timeline
+
+- Added the root research note [[darkness-timeline]] with a historical timeline of the Darkness Pathway, its Flegrea-to-Amanises succession, River of Eternal Darkness milestones, institutionalization through the Evernight Church, and a separate reconstruction of its Sequence-level inflection points. Canonical chapter evidence and secondary-vault synthesis remain explicitly separated.
+
+# 2026-08-04 - Fool Pathway character clipping ingest
+
+- Ingested three valid Clippings sources: the Fool Pathway Beyonder roster, Kotar, and Zaratul. Source bodies remain preserved with unofficial/medium provenance.
+- Added [[Kotar]], [[Zaratul]], and [[Zaratul Senior]] as interpretation notes; linked Fool, Darkness, Flegrea, Sefirah Castle, and roster relations without promoting secondary evidence to canon.
+- Left 12 identical 77-byte clipping stubs unchanged and recorded them in [[Pending Review]] instead of fabricating claims.
