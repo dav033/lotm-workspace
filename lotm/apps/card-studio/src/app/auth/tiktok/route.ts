@@ -14,7 +14,7 @@ export async function GET() {
     const state = createOAuthState()
     const params = new URLSearchParams({
       client_key: config.clientKey,
-      scope: 'video.upload',
+      scope: 'user.info.basic,video.upload',
       response_type: 'code',
       redirect_uri: config.redirectUri,
       state,
