@@ -15,6 +15,11 @@ lotm.marosconstruction.com {
       reverse_proxy card-studio:3000
     }
 
+    @cards_tiktok path /auth/tiktok /auth/tiktok/* /api/tiktok /api/tiktok/*
+    handle @cards_tiktok {
+      reverse_proxy card-studio:3000
+    }
+
     @cards_web path /cartas /cartas/* /api/cards /api/cards/*
     handle @cards_web {
       reverse_proxy card-studio:3000
