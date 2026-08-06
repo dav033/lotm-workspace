@@ -5,7 +5,9 @@
   --tier:#e8c36b; --tier-deep:#5a4416;
   --z-card-chrome:2; --z-stage-arrow:4; --z-dock:10; --z-sticky:20;
   --z-popover:40; --z-sheet:60; --z-toast:80;
+  --tap:28px;
 }
+@media (pointer:coarse){:root{--tap:44px}}
 .builder-root *{box-sizing:border-box;margin:0;padding:0}
 .builder-root{
   background:var(--bg);color:var(--text);
@@ -166,7 +168,8 @@
 .film-group-head{display:flex;align-items:center;gap:6px;min-width:0}
 .film-group-zip{flex:0 0 auto;height:16px;border-radius:4px;border:1px solid var(--line);
   background:transparent;color:var(--muted2);font-family:inherit;font-size:8px;letter-spacing:.06em;
-  line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 5px}
+  line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 5px;
+  min-width:var(--tap);min-height:var(--tap)}
 .film-group-zip:hover:not(:disabled){border-color:var(--tier);color:var(--tier)}
 .film-group-zip:disabled{opacity:.4;cursor:default}
 .film-group-label{font-size:10px;letter-spacing:.06em;text-transform:uppercase;
@@ -193,13 +196,14 @@
   justify-content:center;color:var(--muted);font-size:18px}
 .film-thumb .film-rm{position:absolute;top:2px;right:2px;z-index:2;width:17px;height:17px;
   border-radius:50%;border:none;background:rgba(0,0,0,.72);color:#fff;font-size:12px;line-height:1;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .12s}
+  cursor:pointer;display:flex;align-items:center;justify-content:center;min-width:var(--tap);min-height:var(--tap);
+  opacity:0;transition:opacity .12s}
 .film-thumb:hover .film-rm{opacity:1}
 .film-thumb .film-rm:hover{background:#c0392b}
 /* Flechas de reorden, una a cada lado. Aparecen con el raton encima como la
    equis: siempre visibles taparian la miniatura, que mide 78px. */
 .film-thumb .film-move{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
-  width:16px;height:26px;border:none;background:rgba(0,0,0,.72);color:#fff;
+  width:16px;height:26px;min-width:var(--tap);min-height:var(--tap);border:none;background:rgba(0,0,0,.72);color:#fff;
   font-family:inherit;font-size:14px;line-height:1;cursor:pointer;padding:0;
   display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .12s}
 .film-thumb .film-move.left{left:0;border-radius:0 4px 4px 0}
@@ -207,6 +211,10 @@
 .film-thumb:hover .film-move{opacity:1}
 .film-thumb .film-move:hover:not(:disabled){background:var(--tier);color:#0a0a11}
 .film-thumb .film-move:disabled{opacity:0;cursor:default}
+@media (hover:none){
+  .film-thumb .film-rm,
+  .film-thumb .film-move{opacity:1}
+}
 .film-add{flex:0 0 auto;width:78px;aspect-ratio:3/4;border-radius:7px;border:1.5px dashed var(--line2);
   background:transparent;color:var(--muted2);font-size:28px;cursor:pointer;
   display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
@@ -215,7 +223,8 @@
 .filmstrip .btn-zip{flex:0 0 auto;width:auto;padding:11px 18px}
 .film-group-video{flex:0 0 auto;height:16px;border-radius:4px;border:1px solid var(--line);
   background:transparent;color:var(--muted2);font-family:inherit;font-size:8px;letter-spacing:.06em;
-  line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 5px}
+  line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 5px;
+  min-width:var(--tap);min-height:var(--tap)}
 .film-group-video:hover:not(:disabled){border-color:var(--tier);color:var(--tier)}
 .film-group-video:disabled{opacity:.4;cursor:default}
 /* No puede encogerse: si lo hace, el boton de descarga se sale del escenario y
@@ -280,14 +289,18 @@
   background:rgba(0,0,0,.6);border-radius:3px;padding:0 4px}
 .image-rm{position:absolute;top:3px;right:3px;z-index:2;width:15px;height:15px;border:none;
   border-radius:50%;background:rgba(0,0,0,.65);color:#fff;font-size:11px;line-height:1;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;padding:0}
+  display:flex;align-items:center;justify-content:center;padding:0;min-width:var(--tap);min-height:var(--tap)}
 .image-rm:hover{background:#c0392b}
+@media (pointer:coarse){
+  .film-thumb,.film-add,.image-thumb{width:96px}
+}
 
 /* ---- Duracion por carta/imagen dentro del video ---- */
 .duration-badge{position:absolute;bottom:3px;right:3px;z-index:3;min-width:22px;height:15px;
   border:1px solid transparent;border-radius:3px;background:rgba(0,0,0,.62);color:var(--muted2);
   font-family:inherit;font-size:9px;line-height:1;cursor:pointer;padding:0 4px;
   display:flex;align-items:center;justify-content:center}
+.duration-badge::after{content:'';position:absolute;inset:calc((var(--tap) - 100%) / -2)}
 .duration-badge:hover:not(:disabled){border-color:var(--tier);color:var(--tier)}
 .duration-badge:disabled{opacity:.5;cursor:default}
 /* Con duracion propia se marca, para distinguirla de la global heredada. */
