@@ -171,10 +171,10 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
     }
   }
 
-  async function sendVideo() {
-    if (!video) return setError('Choose a video first.')
+  async function sendVideo(file = video) {
+    if (!file) return setError('Choose a video first.')
     const form = new FormData()
-    form.append('video', video)
+    form.append('video', file)
     await send('/api/tiktok/upload-video', { method: 'POST', body: form })
   }
 
@@ -265,13 +265,19 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
             <div className="tiktok-fields">
               <label className="tiktok-file">
                 <span>Video file</span>
-                <input type="file" accept="video/mp4,video/quicktime,video/webm" onChange={(event) => setVideo(event.target.files?.[0] ?? null)} />
+                <input
+                  type="file"
+                  accept="video/mp4,video/quicktime,video/webm"
+                  disabled={busy}
+                  onChange={(event) => {
+                    const file = event.target.files?.[0] ?? null
+                    setVideo(file)
+                    if (file) void sendVideo(file)
+                  }}
+                />
                 <strong>{video?.name ?? 'Choose MP4, MOV or WebM'}</strong>
               </label>
-              <p className="tiktok-muted">The video arrives in TikTok Inbox for final editing, publishing or saving as draft.</p>
-              <button type="button" className="tiktok-primary" disabled={busy || !video} onClick={() => void sendVideo()}>
-                {busy ? 'Sending…' : 'Send video'}
-              </button>
+              <p className="tiktok-muted">Selecting a video starts the TikTok transfer automatically. It arrives in TikTok Inbox for final editing, publishing or saving as draft.</p>
             </div>
           ) : (
             <div className="tiktok-fields">
