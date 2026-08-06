@@ -3,7 +3,7 @@ import type { CardContent } from './content'
 import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
   name: string
   path: string
   seq: number
@@ -92,6 +92,20 @@ export type BuilderCardState = {
   ritualUncertainty: string
   ritualFooterText: string
   ritualBackgroundImage: string | null
+  timelineVariant: 'Open' | 'Beat' | 'Turn' | 'Arc'
+  timelinePathway: string | null
+  timelineEra: string
+  timelineKicker: string
+  timelineTitle: string
+  timelineText: string
+  timelineStep: number
+  timelineTotal: number
+  timelineCertainty: 'Canon' | 'Mixed' | 'Secondary' | 'Reconstruction'
+  timelineNote: string
+  timelineMovesText: string
+  timelineGhost: string
+  timelineFooterText: string
+  timelineBackgroundImage: string | null
   backgroundOpacity: number
 }
 
@@ -185,6 +199,20 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   ritualUncertainty: '',
   ritualFooterText: '',
   ritualBackgroundImage: null,
+  timelineVariant: 'Beat',
+  timelinePathway: null,
+  timelineEra: '',
+  timelineKicker: '',
+  timelineTitle: '',
+  timelineText: '',
+  timelineStep: 1,
+  timelineTotal: 11,
+  timelineCertainty: 'Canon',
+  timelineNote: '',
+  timelineMovesText: '',
+  timelineGhost: '',
+  timelineFooterText: '',
+  timelineBackgroundImage: null,
   backgroundOpacity: 65,
 }
 
@@ -350,6 +378,26 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       ritualUncertainty: content.uncertainty ?? '',
       ritualFooterText: content.footerText ?? '',
       ritualBackgroundImage: content.backgroundImageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Timeline') {
+    return {
+      ...state,
+      timelineVariant: content.variant,
+      timelinePathway: content.pathway ?? null,
+      timelineEra: content.era ?? '',
+      timelineKicker: content.kicker ?? '',
+      timelineTitle: content.title,
+      timelineText: content.text ?? '',
+      timelineStep: content.step,
+      timelineTotal: content.total,
+      timelineCertainty: content.certainty,
+      timelineNote: content.note ?? '',
+      timelineMovesText: content.moves.join('\n'),
+      timelineGhost: content.ghost ?? '',
+      timelineFooterText: content.footerText ?? '',
+      timelineBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -523,6 +571,26 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
       ...(state.ritualUncertainty.trim() ? { uncertainty: state.ritualUncertainty.trim() } : {}),
       ...(state.ritualFooterText.trim() ? { footerText: state.ritualFooterText.trim() } : {}),
       ...(state.ritualBackgroundImage ? { backgroundImageUrl: state.ritualBackgroundImage } : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Timeline') {
+    return {
+      type: 'Timeline',
+      variant: state.timelineVariant,
+      ...(state.timelinePathway ? { pathway: state.timelinePathway } : {}),
+      ...(state.timelineEra.trim() ? { era: state.timelineEra.trim() } : {}),
+      ...(state.timelineKicker.trim() ? { kicker: state.timelineKicker.trim() } : {}),
+      title: state.timelineTitle.trim(),
+      ...(state.timelineText.trim() ? { text: state.timelineText.trim() } : {}),
+      step: state.timelineStep,
+      total: state.timelineTotal,
+      certainty: state.timelineCertainty,
+      ...(state.timelineNote.trim() ? { note: state.timelineNote.trim() } : {}),
+      moves: state.timelineMovesText.split('\n').map((move) => move.trim()).filter(Boolean).slice(0, 4),
+      ...(state.timelineGhost.trim() ? { ghost: state.timelineGhost.trim() } : {}),
+      ...(state.timelineFooterText.trim() ? { footerText: state.timelineFooterText.trim() } : {}),
+      ...(state.timelineBackgroundImage ? { backgroundImageUrl: state.timelineBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }

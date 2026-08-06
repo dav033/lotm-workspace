@@ -58,6 +58,7 @@ const IMAGE_FIELDS = [
   'tarotMemberImage',
   'corruptionImage',
   'ritualBackgroundImage',
+  'timelineBackgroundImage',
 ]
 
 const toSessionCard = (card: ServerCard): SessionCard => ({
@@ -533,6 +534,10 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('ritualText', 'What the ritual requires.')
     fill('ritualSurvival', 'What the ritual helps the aspirant survive.')
     fill('ritualPreparation', 'What the ritual rehearses before the new powers arrive.')
+  }
+  if (state.type === 'Timeline') {
+    fill('timelineTitle', 'New milestone')
+    fill('timelineText', 'What changed because of it.')
   }
   return next
 }

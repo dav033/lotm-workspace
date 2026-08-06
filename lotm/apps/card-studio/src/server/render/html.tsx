@@ -12,6 +12,7 @@ import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
 import RitualLogicCard from '../../cards-ui/RitualLogicCard'
+import TimelineCard from '../../cards-ui/TimelineCard'
 import { cardPropsFromBuilderState } from '../../cards-ui/cardProps'
 import type { CardUiProps } from '../../cards-ui/types'
 import { type RenderState } from './assets'
@@ -29,6 +30,7 @@ const StaticBreakdownCard = BreakdownCard as unknown as ComponentType<Record<str
 const StaticMapCard = MapCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTarotMemberCard = TarotMemberCard as unknown as ComponentType<Record<string, unknown>>
 const StaticRitualLogicCard = RitualLogicCard as unknown as ComponentType<Record<string, unknown>>
+const StaticTimelineCard = TimelineCard as unknown as ComponentType<Record<string, unknown>>
 
 function iconFor(icons: Record<string, string>, pathway: unknown) {
   return typeof pathway === 'string' ? icons[pathway] : undefined
@@ -50,7 +52,9 @@ function resolvedProps(state: RenderState, icons: Record<string, string>): Recor
       ? state.mapBackground
       : mapped.kind === 'Tarot Member'
         ? state.tarotMemberResolvedImage
-        : props.backgroundImage
+      : mapped.kind === 'Timeline'
+          ? state.timelineBackgroundImage
+          : props.backgroundImage
 
   return {
     ...props,
@@ -60,6 +64,7 @@ function resolvedProps(state: RenderState, icons: Record<string, string>): Recor
     ...(mapped.kind === 'General Explanation'
       ? { icon: iconFor(icons, state.explanationPath) }
       : {}),
+    ...(mapped.kind === 'Timeline' ? { icon: iconFor(icons, state.timelinePathway) } : {}),
     ...(backgroundImage !== undefined ? { backgroundImage } : {}),
     onUploadImage: () => undefined,
     onDropImages: () => undefined,
@@ -83,5 +88,6 @@ export function CardMarkup({ state, icons }: { state: RenderState; icons: Record
   if (kind === 'Map') return <StaticMapCard {...props} />
   if (kind === 'Tarot Member') return <StaticTarotMemberCard {...props} />
   if (kind === 'Ritual Logic') return <StaticRitualLogicCard {...props} />
+  if (kind === 'Timeline') return <StaticTimelineCard {...props} />
   return <StaticCard {...props} />
 }

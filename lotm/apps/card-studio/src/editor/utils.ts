@@ -58,5 +58,8 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'Ritual Logic') {
     return `ritual_logic_${state.ritualPathway || 'pathway'}_seq${state.ritualSequence}_${state.ritualVariant || 'Chain'}`.replace(/\s+/g, '_')
   }
+  if (state.type === 'Timeline') {
+    return `timeline_${state.timelineStep}_${state.timelineTitle || 'untitled'}`.replace(/\s+/g, '_')
+  }
   return `${state.name || 'card'}_seq${state.seq}`
 }

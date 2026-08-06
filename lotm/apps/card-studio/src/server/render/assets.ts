@@ -87,6 +87,12 @@ export async function resolveStateImages(
     ? state.ritualBackgroundImage
       ?? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.ritualPathway] ?? null
     : null
+  const timelineBackgroundSource = state.type === 'Timeline'
+    ? state.timelineBackgroundImage
+      ?? (state.timelinePathway
+        ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.timelinePathway] ?? null
+        : null)
+    : null
 
   return {
     ...state,
@@ -126,6 +132,9 @@ export async function resolveStateImages(
       : null,
     ritualBackgroundImage: ritualBackgroundSource
       ? await resolveImageSource(ritualBackgroundSource, publicDir)
+      : null,
+    timelineBackgroundImage: timelineBackgroundSource
+      ? await resolveImageSource(timelineBackgroundSource, publicDir)
       : null,
     pathwayExplanationBackgroundImage: pathwayExplanationSource
       ? await resolveImageSource(pathwayExplanationSource, publicDir)

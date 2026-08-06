@@ -16,6 +16,7 @@ import FullImageCoverFields from './Panel/FullImageCoverFields'
 import StandardFields from './Panel/StandardFields'
 import CorruptionFileFields from './Panel/CorruptionFileFields'
 import RitualLogicFields from './Panel/RitualLogicFields'
+import TimelineFields from './Panel/TimelineFields'
 
 export default function Panel(props) {
   const { state, set } = props
@@ -46,6 +47,7 @@ export default function Panel(props) {
       {state.type === 'Tarot Member' ? <TarotMemberFields {...fieldProps} /> : null}
       {state.type === 'Corruption File' ? <CorruptionFileFields {...fieldProps} /> : null}
       {state.type === 'Ritual Logic' ? <RitualLogicFields {...fieldProps} /> : null}
+      {state.type === 'Timeline' ? <TimelineFields {...fieldProps} /> : null}
       {state.type === 'Cover' ? <CoverFields {...fieldProps} /> : null}
       {state.type === 'Full Image Cover' ? <FullImageCoverFields {...fieldProps} /> : null}
       {state.type !== 'Tier Explanation' &&
@@ -59,6 +61,7 @@ export default function Panel(props) {
       state.type !== 'Tarot Member' &&
       state.type !== 'Corruption File' &&
       state.type !== 'Ritual Logic' &&
+      state.type !== 'Timeline' &&
       state.type !== 'Cover' &&
       state.type !== 'Full Image Cover' ? <StandardFields {...fieldProps} /> : null}
     </aside>

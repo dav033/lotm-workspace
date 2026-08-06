@@ -153,5 +153,58 @@
     "uncertainty": "Canon shows the coordinates helping navigation, but does not explain their deeper geometry.",
     "footerText": "Every journey needs a way back.",
     "backgroundOpacity": 45
+  },
+  {
+    "type": "Timeline",
+    "variant": "Open",
+    "pathway": "Fool",
+    "kicker": "Lord of Mysteries",
+    "title": "Who owns the Fool?",
+    "text": "Pre-Epoch to Book Two, in eleven turning points.",
+    "footerText": "3 owners · 1 Uniqueness · 1 castle",
+    "step": 1,
+    "total": 11,
+    "backgroundOpacity": 30
+  },
+  {
+    "type": "Timeline",
+    "variant": "Beat",
+    "pathway": "Fool",
+    "era": "Second Epoch",
+    "title": "Flegrea",
+    "text": "Fool authority already circulates inside a court of Ancient Gods.",
+    "certainty": "Secondary",
+    "note": "The connection is certain. The exact Fool assets are not.",
+    "step": 2,
+    "total": 11,
+    "backgroundOpacity": 25
+  },
+  {
+    "type": "Timeline",
+    "variant": "Turn",
+    "pathway": "Fool",
+    "era": "Ch. 1375 — 1380",
+    "title": "Sequence 0",
+    "text": "Three characteristics, one Uniqueness and Sefirah Castle: Half-Lord of Mysteries.",
+    "certainty": "Canon",
+    "note": "Chapters 1375, 1376 and 1380.",
+    "ghost": "0",
+    "step": 10,
+    "total": 11,
+    "backgroundOpacity": 50
+  },
+  {
+    "type": "Timeline",
+    "variant": "Arc",
+    "pathway": "Fool",
+    "title": "Three movements",
+    "moves": [
+      "The Celestial Worthy holds the group, and Sefirah Castle holds him.",
+      "The pathway fragments between Flegrea, Antigonus and the angelic families.",
+      "Klein reunites the Uniqueness and ascends to Half-Lord of Mysteries."
+    ],
+    "footerText": "Three states worth keeping apart: Sequence 0 Fool, Half-Lord of Mysteries, and a will that never died.",
+    "step": 11,
+    "total": 11
   }
 ]

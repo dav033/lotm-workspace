@@ -13,6 +13,7 @@ import MapCard from './MapCard'
 import TarotMemberCard from './TarotMemberCard'
 import CorruptionFileCard from './CorruptionFileCard'
 import RitualLogicCard from './RitualLogicCard'
+import TimelineCard from './TimelineCard'
 import { cardPropsFromBuilderState, type CardViewHandlers } from './cardProps'
 import type { BuilderCardState } from '../domain/schema'
 
@@ -43,6 +44,7 @@ const CardView = forwardRef<HTMLElement, CardViewProps>(function CardView(
   if (kind === 'Tarot Member') return <TarotMemberCard {...props} ref={ref} />
   if (kind === 'Corruption File') return <CorruptionFileCard {...props} ref={ref} />
   if (kind === 'Ritual Logic') return <RitualLogicCard {...props} ref={ref} />
+  if (kind === 'Timeline') return <TimelineCard {...props} ref={ref} />
   return <Card {...props} ref={ref as React.Ref<HTMLDivElement>} />
 })
 

@@ -23,6 +23,9 @@ const FAMILIES: CardKind[] = [
   'Breakdown',
   'Map',
   'Tarot Member',
+  'Corruption File',
+  'Ritual Logic',
+  'Timeline',
 ]
 
 describe('accentForState', () => {

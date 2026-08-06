@@ -12,6 +12,7 @@ export const STYLE_FILES = [
   'tarot-member.css',
   'corruption-file.css',
   'ritual-logic.css',
+  'timeline.css',
   'editor.css',
   'live.css',
 ] as const

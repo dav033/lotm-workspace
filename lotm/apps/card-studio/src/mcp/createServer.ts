@@ -52,7 +52,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
       description:
         'Crea o reutiliza un anime/universo y una parte, y agrega hasta 100 cartas. ' +
         'Acepta Character, Artifact, Cover, Full Image Cover, Tier, Pathway, Tier Explanation, ' +
-        'General Explanation, Pathway Explanation, Breakdown, Map, Tarot Member, Corruption File y Ritual Logic. ' +
+        'General Explanation, Pathway Explanation, Breakdown, Map, Tarot Member, Corruption File, Ritual Logic y Timeline. ' +
         'Las explicaciones pueden ser generales o asociarse a uno de los 22 pathways. ' +
         'Pathway Explanation es una carta corta por pathway: titulo con una palabra ' +
         'resaltada entre *asteriscos*, regla y descripcion breve; el contador "N / 22 PATHWAYS" ' +
@@ -74,6 +74,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         'Ritual Logic explica la funcion del ritual, la presion de la pocion y el poder de la nueva Secuencia que ensaya; ' +
         'puede representar la misma explicacion en cinco composiciones realmente distintas: Chain, Split, Casefile, Pressure y Timeline; el selector cambia jerarquia, ritmo y orden de lectura sin crear otra carta; ' +
         'certainty distingue canon, evidencia mixta y teoria, y uncertainty expone el limite de la evidencia. ' +
+        'Timeline cuenta una cronologia en varias cartas: una por hito, con era, titulo, una sola consecuencia y la procedencia de la evidencia; step y total gobiernan la espina de progreso. ' +
         'Las imagenes son solo URLs o rutas de /public.',
       inputSchema: SaveCardBatchSchema,
       annotations: {

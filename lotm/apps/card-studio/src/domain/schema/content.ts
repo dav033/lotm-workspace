@@ -11,6 +11,7 @@ import {
   TarotMemberCardSchema,
 } from './explanations'
 import { CorruptionFileCardSchema, RitualLogicCardSchema } from './special'
+import { TimelineCardSchema } from './timeline'
 
 export const CardContentSchema = z.discriminatedUnion('type', [
   CharacterCardSchema,
@@ -28,6 +29,7 @@ export const CardContentSchema = z.discriminatedUnion('type', [
   TarotMemberCardSchema,
   CorruptionFileCardSchema,
   RitualLogicCardSchema,
+  TimelineCardSchema,
 ])
 
 export type CardContent = z.infer<typeof CardContentSchema>

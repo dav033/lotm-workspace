@@ -47,6 +47,14 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     ritualSurvival: 'What the ritual helps the aspirant survive.',
     ritualPreparation: 'What the ritual rehearses before the new powers arrive.',
   },
+  Timeline: {
+    timelineVariant: 'Beat',
+    timelineEra: 'Fifth Epoch',
+    timelineTitle: 'New milestone',
+    timelineText: 'What changed because of it.',
+    timelineStep: 1,
+    timelineTotal: 11,
+  },
 }
 
 export const DEFAULT_STATE: BuilderCardState = {
@@ -139,6 +147,20 @@ export const DEFAULT_STATE: BuilderCardState = {
   ritualUncertainty: '',
   ritualFooterText: '',
   ritualBackgroundImage: null,
+  timelineVariant: 'Beat',
+  timelinePathway: null,
+  timelineEra: '',
+  timelineKicker: '',
+  timelineTitle: '',
+  timelineText: '',
+  timelineStep: 1,
+  timelineTotal: 11,
+  timelineCertainty: 'Canon',
+  timelineNote: '',
+  timelineMovesText: '',
+  timelineGhost: '',
+  timelineFooterText: '',
+  timelineBackgroundImage: null,
   backgroundOpacity: 65,
 }
 

@@ -30,6 +30,7 @@ export type CardKind =
   | 'Tarot Member'
   | 'Corruption File'
   | 'Ritual Logic'
+  | 'Timeline'
 
 export type CardViewHandlers = {
   onUploadImage?: (file: File | undefined, field?: string) => void
@@ -287,6 +288,25 @@ export function cardPropsFromBuilderState(
     } }
   }
 
+  if (state.type === 'Timeline') {
+    const pathway = asPathway(state.timelinePathway)
+    return { kind: 'Timeline', props: {
+      variant: state.timelineVariant, pathway, era: state.timelineEra, kicker: state.timelineKicker,
+      title: state.timelineTitle, text: state.timelineText,
+      step: state.timelineStep, total: state.timelineTotal,
+      certainty: state.timelineCertainty, note: state.timelineNote,
+      moves: state.timelineMovesText.split('\n').map((move) => move.trim()).filter(Boolean),
+      footerText: state.timelineFooterText, ghost: state.timelineGhost,
+      icon: pathway ? PATHWAY_ICONS[pathway] : null,
+      tier: pathway ? PATHWAY_COLORS[pathway] : null,
+      backgroundImage: background(
+        state.timelineBackgroundImage,
+        pathway ? PATHWAY_BACKGROUNDS[pathway] : null,
+      ),
+      backgroundOpacity: state.backgroundOpacity, onDropBackground: handlers.onDropBackground,
+    } }
+  }
+
   const sequences = [
     { path: asPathway(state.path), seq: state.seq },
     ...(state.hasSecond ? [{ path: asPathway(state.path2), seq: state.seq2 }] : []),
@@ -354,6 +374,12 @@ export function accentForState(state: BuilderCardState): CardAccent {
   if (type === 'Ritual Logic') {
     const path = state.ritualPathway in PATHWAYS ? state.ritualPathway as Pathway : 'Fool'
     return { ...PATHWAY_COLORS[path], pct: 100 }
+  }
+
+  if (type === 'Timeline') {
+    const pathway =
+      state.timelinePathway && state.timelinePathway in PATHWAYS ? (state.timelinePathway as Pathway) : null
+    return pathway ? { ...PATHWAY_COLORS[pathway], pct: 100 } : { ...COVER_ACCENT }
   }
 
   if (type === 'Corruption File') {

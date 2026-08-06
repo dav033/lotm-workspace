@@ -303,7 +303,7 @@ test('rechaza pathways no canónicos y explicaciones fuera de límite', () => {
   }))
 })
 
-test('Corruption File y Ritual Logic conservan todos sus campos', () => {
+test('Corruption File, Ritual Logic y Timeline conservan todos sus campos', () => {
   const tarotMember = CardContentSchema.parse({
     type: 'Tarot Member', variant: 'Portrait', name: 'Alger Wilson', tarotTitle: 'The Hanged Man',
     description: 'A veteran sailor.', detailText: 'Acts as the Club naval specialist.',
@@ -320,10 +320,19 @@ test('Corruption File y Ritual Logic conservan todos sus campos', () => {
     preparation: 'Rehearses control, observation and role separation.', certainty: 'Mixed',
     uncertainty: 'The causal link is inferred.', backgroundOpacity: 65,
   })
+  const timeline = CardContentSchema.parse({
+    type: 'Timeline', variant: 'Turn', pathway: 'Fool', era: 'Fifth Epoch', kicker: 'Lord of Mysteries',
+    title: 'Sequence 0', text: 'The pathway reaches its apex.', step: 10, total: 11,
+    certainty: 'Canon', note: 'Chapters 1375–1380.', moves: [], ghost: '0',
+    backgroundOpacity: 50,
+  })
 
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(tarotMember)), tarotMember)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(corruption)), corruption)
   assert.deepEqual(fromBuilderCardState(toBuilderCardState(ritual)), ritual)
+  assert.deepEqual(fromBuilderCardState(toBuilderCardState(timeline)), timeline)
   assert.equal(titleForCard(ritual), 'Fool Sequence 5 — Marionettist')
   assert.equal(filenameForCard(ritual), 'ritual-logic_fool_seq5_split')
+  assert.equal(titleForCard(timeline), 'Sequence 0 (Fifth Epoch) - 10/11')
+  assert.equal(filenameForCard(timeline), 'timeline_10_sequence-0')
 })
