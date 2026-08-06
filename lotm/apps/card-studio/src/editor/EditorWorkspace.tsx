@@ -13,7 +13,12 @@ import SectionField from './components/SectionField'
 const CARD_W = 480
 const CARD_H = 640
 const CARD_MARGIN = 16
-const MIN_FIT = 0.25
+const MIN_FIT = 0.2
+
+function cssPixels(value) {
+  const parsed = Number.parseFloat(value)
+  return Number.isFinite(parsed) ? parsed : 0
+}
 
 export default function EditorWorkspace({ controller, cards: inspectorCards, currentCardId }) {
   const canvasRef = useRef(null)
@@ -31,7 +36,21 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
     const stage = canvasRef.current
     if (!stage) return
     const fitToStage = () => {
-      const { width, height } = stage.getBoundingClientRect()
+      const stageShell = stage.parentElement
+      const canvasRect = stage.getBoundingClientRect()
+      const shellRect = stageShell?.getBoundingClientRect()
+      const shellStyle = stageShell ? window.getComputedStyle(stageShell) : null
+      const occupied = stageShell
+        ? ['.stage-top', '.stage-section', '.stage-dock'].reduce((total, selector) => {
+            const element = stageShell.querySelector(selector)
+            if (!element) return total
+            const rect = element.getBoundingClientRect()
+            const style = window.getComputedStyle(element)
+            return total + rect.height + cssPixels(style.marginTop) + cssPixels(style.marginBottom)
+          }, cssPixels(shellStyle.paddingTop) + cssPixels(shellStyle.paddingBottom))
+        : 0
+      const width = canvasRect.width
+      const height = shellRect && occupied > 0 ? Math.max(0, shellRect.height - occupied) : canvasRect.height
       const scale = Math.min((width - CARD_MARGIN) / CARD_W, (height - CARD_MARGIN) / CARD_H)
       stage.style.setProperty('--fit', String(Math.max(MIN_FIT, scale)))
     }
@@ -77,36 +96,38 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
         />
 
         <div className="stage-canvas" ref={canvasRef}>
-          {cards.length > 1 && (
-            <>
-              <button
-                className="stage-arrow prev"
-                disabled={editingIndex <= 0}
-                aria-label="Carta anterior"
-                title="Carta anterior"
-                onClick={() => onStep(-1)}
-              >‹</button>
-              <button
-                className="stage-arrow next"
-                disabled={editingIndex < 0 || editingIndex >= cards.length - 1}
-                aria-label="Carta siguiente"
-                title="Carta siguiente"
-                onClick={() => onStep(1)}
-              >›</button>
-            </>
-          )}
           {cards.length === 0 ? (
             <div className="stage-empty">
               <p>La biblioteca del servidor esta vacia.</p>
               <button className="btn-new-card" onClick={onNewCard}>Crear la primera carta</button>
             </div>
           ) : (
-            <CardView
-              state={state}
-              onUploadImage={onUploadImage}
-              onDropImages={onDropImages}
-              onDropBackground={onDropBackground}
-            />
+            <div className="stage-fit">
+              {cards.length > 1 && (
+                <>
+                  <button
+                    className="stage-arrow prev"
+                    disabled={editingIndex <= 0}
+                    aria-label="Carta anterior"
+                    title="Carta anterior"
+                    onClick={() => onStep(-1)}
+                  >‹</button>
+                  <button
+                    className="stage-arrow next"
+                    disabled={editingIndex < 0 || editingIndex >= cards.length - 1}
+                    aria-label="Carta siguiente"
+                    title="Carta siguiente"
+                    onClick={() => onStep(1)}
+                  >›</button>
+                </>
+              )}
+              <CardView
+                state={state}
+                onUploadImage={onUploadImage}
+                onDropImages={onDropImages}
+                onDropBackground={onDropBackground}
+              />
+            </div>
           )}
         </div>
 

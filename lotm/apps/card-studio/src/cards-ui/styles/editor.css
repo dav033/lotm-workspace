@@ -122,7 +122,6 @@
 }
 @media (max-width:520px){
   .stage{align-items:stretch;padding-right:12px;padding-left:12px}
-  .stage-canvas{justify-content:flex-start;overflow-x:auto;padding-bottom:8px}
   .filmstrip{flex-wrap:wrap}
   .filmstrip .btn-zip{width:100%}
   .panel{padding:18px}
