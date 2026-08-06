@@ -28,6 +28,10 @@ timeout 720 docker compose -p lotm -f "$COMPOSE_FILE" build lotm >> "$LOG" 2>&1
 docker builder prune -af >> "$LOG" 2>&1 || true
 timeout 180 docker compose -p lotm -f "$COMPOSE_FILE" up -d --no-build --force-recreate lotm >> "$LOG" 2>&1
 docker image prune -af >> "$LOG" 2>&1 || true
+timeout 60 docker compose -p lotm -f "$COMPOSE_FILE" stop card-studio cards-mcp >> "$LOG" 2>&1 || true
+timeout 60 docker compose -p lotm -f "$COMPOSE_FILE" rm -f card-studio cards-mcp >> "$LOG" 2>&1 || true
+docker image rm lotm-card-studio:latest >> "$LOG" 2>&1 || true
+docker builder prune -af >> "$LOG" 2>&1 || true
 timeout 720 docker compose -p lotm -f "$COMPOSE_FILE" build card-studio >> "$LOG" 2>&1
 docker builder prune -af >> "$LOG" 2>&1 || true
 timeout 180 docker compose -p lotm -f "$COMPOSE_FILE" up -d --force-recreate >> "$LOG" 2>&1
