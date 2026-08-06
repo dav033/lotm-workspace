@@ -140,7 +140,27 @@
 .typography-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:0 12px 12px}
 .typography-grid label{display:grid;gap:4px;color:#999;font-size:11px}
 .typography-grid input,.typography-grid select{min-width:0;width:100%;box-sizing:border-box}
-.typography-grid input[type=color]{height:34px;padding:2px}
+.typography-grid input[type=color]{height:34px;min-width:var(--tap);min-height:var(--tap);padding:2px}
 .typography-reset{grid-column:1/-1;border:0;background:transparent;color:#d39b58;text-align:left;cursor:pointer;padding:2px 0;font-size:11px}
 .typography-reset:hover{color:#f0c47b}
 .typography-controls{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08)}
+
+.type-select{display:none;width:100%;border:1px solid var(--line);border-radius:8px;background:var(--panel2);
+  color:var(--text);font:16px 'Space Grotesk',sans-serif;padding:9px 11px}
+.type-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.type-group{min-width:0;border:1px solid var(--line);border-radius:8px;padding:9px}
+.type-group legend{padding:0 5px;color:var(--muted);font-size:9px;letter-spacing:.14em;text-transform:uppercase}
+.type-group .toggle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.type-group .seg{min-width:0;font-size:12px;padding:8px 5px}
+
+@media (pointer:coarse){
+  .field input,.field select,.field textarea,
+  .film-seconds input,.film-group-input,.duration-badge.editing,
+  .typography-grid input,.typography-grid select,
+  .project-new-input,.stage-section input{font-size:16px}
+}
+
+@media (max-width:900px){
+  .type-select{display:block}
+  .type-groups{display:none}
+}

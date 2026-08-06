@@ -37,3 +37,6 @@
 .pane :global(.tiktok-muted){color:#7c7c93;font-size:11px;line-height:1.45}
 .pane :global(.tiktok-status),.pane :global(.tiktok-error){margin-top:12px;font-size:11px;line-height:1.45}
 .pane :global(.tiktok-status){color:#7ed4b8}.pane :global(.tiktok-error){color:#e08b7a}
+@media (pointer:coarse){
+  .pane :global(.tiktok-fields input),.pane :global(.tiktok-fields textarea),.pane :global(.tiktok-fields select){font-size:16px}
+}
