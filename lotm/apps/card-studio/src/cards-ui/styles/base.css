@@ -12,16 +12,16 @@
 .builder-root{
   background:var(--bg);color:var(--text);
   font-family:'Space Grotesk',system-ui,sans-serif;
-  min-height:100vh;
+  min-height:100dvh;
 }
 
 /* ================= APP LAYOUT (Canva-style) ================= */
-.app{display:flex;align-items:stretch;min-height:100vh}
+.app{display:flex;align-items:stretch;min-height:100dvh}
 /* En escritorio el editor ocupa exactamente el hueco que deja la nav del sitio,
    asi la tira y la bandeja de imagenes quedan siempre a la vista: antes caian
    bajo el pliegue y no habia nada que indicara que seguian ahi abajo.
    La nav mide lo que mide su contenido, asi que el hueco se reparte con flex; un
-   100vh fijo dejaba el editor una nav mas alto que la ventana y la bandeja se
+   100dvh fijo dejaba el editor una nav mas alto que la ventana y la bandeja se
    salia por abajo. El :has() acota esto a las paginas del editor. */
 @media (min-width:901px){
   /* Altura definida, no min-height: sin un limite firme el editor crece con su
@@ -35,7 +35,7 @@
   .stage-canvas{overflow:hidden}
   .filmstrip,.image-tray{flex:0 0 auto}
 }
-.app-loading{display:flex;align-items:center;justify-content:center;min-height:100vh;
+.app-loading{display:flex;align-items:center;justify-content:center;min-height:100dvh;
   color:var(--muted);font-size:14px;letter-spacing:.04em}
 
 /* Left: the card stage */
@@ -111,7 +111,8 @@
    seccion o los segundos de una carta lo cerraria a media escritura. */
 /* --dock-peek es lo que asoma en reposo: el tirador y un dedo de las miniaturas,
    para que se vea que hay algo ahi sin que tape la carta. */
-.stage-dock{flex:0 0 auto;width:100%;--dock-handle:30px;--dock-peek:52px}
+.stage-dock{flex:0 0 auto;width:100%;--dock-handle:30px;--dock-peek:52px;
+  padding-bottom:env(safe-area-inset-bottom)}
 /* Sin raton no hay con que desplegar, asi que el muelle se queda abierto y el
    tirador sobra: en tactil el hover es un toque pegajoso, y para abrirlo habria
    que tocar justo la barra. */
