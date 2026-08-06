@@ -74,6 +74,37 @@ export default function Filmstrip({
     setOverIndex(null)
   }
 
+  const indexAtPoint = (clientX, clientY) => {
+    const target = document.elementFromPoint(clientX, clientY)?.closest('[data-film-index]')
+    const index = Number(target?.getAttribute('data-film-index'))
+    return Number.isInteger(index) ? index : null
+  }
+
+  const startPointerDrag = (event, index) => {
+    event.preventDefault()
+    event.stopPropagation()
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+    setDragIndex(index)
+    setOverIndex(index)
+  }
+
+  const movePointerDrag = (event) => {
+    if (dragIndex === null) return
+    const index = indexAtPoint(event.clientX, event.clientY)
+    if (index !== null) setOverIndex(index)
+  }
+
+  const endPointerDrag = (event) => {
+    event.stopPropagation()
+    if (dragIndex !== null && overIndex !== null) handleDrop(overIndex)
+  }
+
+  const cancelPointerDrag = (event) => {
+    event.stopPropagation()
+    setDragIndex(null)
+    setOverIndex(null)
+  }
+
   const groups = groupBySection(batch)
   // El universo solo se nombra si hay mas de uno; con uno solo seria ruido.
   const showUniverse = new Set(batch.map((item) => item.universe.id)).size > 1
@@ -115,26 +146,18 @@ export default function Filmstrip({
                 onClick={() => onDownloadSectionVideo(group.partId, seconds)}
               >MP4</button>
             </div>
-            {/* El arrastre escribe en dataTransfer porque Firefox lo cancela si
-                nadie lo hace, y viaja por id: el indice es el de esta tira, que
-                solo lleva el proyecto activo, no el de la sesion entera. */}
             <div className="film-group-cards">
               {group.items.map(({ item, index: i }) => (
                 <div
                   key={item.id}
+                  data-film-index={i}
                   className={
                     'film-thumb' +
                     (item.id === editingId ? ' active' : '') +
                     (overIndex === i && dragIndex !== null ? ' over' : '')
                   }
                   title={item.label}
-                  draggable
                   onClick={() => onLoadCard(item.id)}
-                  onDragStart={(e) => { e.dataTransfer.setData('text/plain', item.id); setDragIndex(i) }}
-                  onDragOver={(e) => { e.preventDefault(); setOverIndex(i) }}
-                  onDragLeave={() => setOverIndex((o) => (o === i ? null : o))}
-                  onDrop={(e) => { e.preventDefault(); handleDrop(i) }}
-                  onDragEnd={() => { setDragIndex(null); setOverIndex(null) }}
                 >
                   <span className="film-no">{i + 1}</span>
                   <div className="film-preview">
@@ -160,6 +183,17 @@ export default function Filmstrip({
                       onClick={(e) => { e.stopPropagation(); onReorder(item.id, batch[i + 1].id) }}
                     >›</button>
                   )}
+                  <button
+                    className="film-drag-handle"
+                    type="button"
+                    aria-label={`Reordenar ${item.label}`}
+                    title="Arrastrar para reordenar"
+                    onClick={(e) => e.stopPropagation()}
+                    onPointerDown={(e) => startPointerDrag(e, i)}
+                    onPointerMove={movePointerDrag}
+                    onPointerUp={endPointerDrag}
+                    onPointerCancel={cancelPointerDrag}
+                  >⋮⋮</button>
                   <button
                     className="film-rm"
                     onClick={(e) => { e.stopPropagation(); onRemoveFromBatch(item.id) }}

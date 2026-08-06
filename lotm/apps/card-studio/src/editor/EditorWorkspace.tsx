@@ -31,6 +31,7 @@ function cssPixels(value) {
 
 export default function EditorWorkspace({ controller, cards: inspectorCards, currentCardId }) {
   const canvasRef = useRef(null)
+  const swipeStart = useRef(null)
   const [dockOpen, setDockOpen] = useState(() => readDockOpen())
   const [dockTab, setDockTab] = useState(() => readDockTab())
   const [mobileDestination, setMobileDestination] = useState(null)
@@ -45,6 +46,21 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
   } = controller
 
   const closeMobileSheet = useCallback(() => setMobileDestination(null), [])
+
+  const startStageSwipe = (event) => {
+    if (event.pointerType === 'mouse' || !window.matchMedia('(max-width:600px)').matches) return
+    swipeStart.current = { x: event.clientX, y: event.clientY }
+  }
+
+  const endStageSwipe = (event) => {
+    const start = swipeStart.current
+    swipeStart.current = null
+    if (!start || event.pointerType === 'mouse') return
+    const deltaX = event.clientX - start.x
+    const deltaY = event.clientY - start.y
+    if (Math.abs(deltaX) < 60 || Math.abs(deltaX) <= Math.abs(deltaY)) return
+    onStep(deltaX < 0 ? 1 : -1)
+  }
 
   useEffect(() => {
     const stage = canvasRef.current
@@ -165,7 +181,12 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
               <button className="btn-new-card" onClick={onNewCard}>Crear la primera carta</button>
             </div>
           ) : (
-            <div className="stage-fit">
+            <div
+              className="stage-fit"
+              onPointerDown={startStageSwipe}
+              onPointerUp={endStageSwipe}
+              onPointerCancel={() => { swipeStart.current = null }}
+            >
               {cards.length > 1 && (
                 <>
                   <button

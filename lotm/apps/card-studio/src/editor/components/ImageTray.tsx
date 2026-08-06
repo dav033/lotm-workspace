@@ -28,6 +28,44 @@ export default function ImageTray({
     setOverIndex(null)
   }
 
+  const indexAtPoint = (clientX, clientY) => {
+    const target = document.elementFromPoint(clientX, clientY)?.closest('[data-image-index]')
+    const index = Number(target?.getAttribute('data-image-index'))
+    return Number.isInteger(index) ? index : null
+  }
+
+  const startPointerDrag = (event, index) => {
+    event.preventDefault()
+    event.stopPropagation()
+    event.currentTarget.setPointerCapture?.(event.pointerId)
+    setDragIndex(index)
+    setOverIndex(index)
+  }
+
+  const movePointerDrag = (event) => {
+    if (dragIndex === null) return
+    const index = indexAtPoint(event.clientX, event.clientY)
+    if (index !== null) setOverIndex(index)
+  }
+
+  const endPointerDrag = (event) => {
+    event.stopPropagation()
+    if (dragIndex !== null && overIndex !== null) handleDrop(overIndex)
+  }
+
+  const cancelPointerDrag = (event) => {
+    event.stopPropagation()
+    setDragIndex(null)
+    setOverIndex(null)
+  }
+
+  const moveByOne = (from, to) => {
+    if (to < 0 || to >= images.length) return
+    const next = [...images]
+    next.splice(to, 0, ...next.splice(from, 1))
+    void onReorder(next.map((image) => image.id))
+  }
+
   return (
     <div className="image-tray">
       <div className="image-tray-head">
@@ -76,17 +114,39 @@ export default function ImageTray({
         ) : images.map((image, index) => (
           <div
             key={image.id}
+            data-image-index={index}
             className={'image-thumb' + (overIndex === index && dragIndex !== null ? ' over' : '')}
             title={image.name}
-            draggable
-            onDragStart={() => setDragIndex(index)}
-            onDragOver={(e) => { e.preventDefault(); setOverIndex(index) }}
-            onDragLeave={() => setOverIndex((o) => (o === index ? null : o))}
-            onDrop={(e) => { e.preventDefault(); handleDrop(index) }}
-            onDragEnd={() => { setDragIndex(null); setOverIndex(null) }}
           >
             <span className="image-no">{index + 1}</span>
             <img src={image.url} alt={image.name} />
+            {index > 0 ? (
+              <button
+                className="image-move left"
+                type="button"
+                aria-label={`Mover ${image.name} a la izquierda`}
+                onClick={() => moveByOne(index, index - 1)}
+              >‹</button>
+            ) : null}
+            {index < images.length - 1 ? (
+              <button
+                className="image-move right"
+                type="button"
+                aria-label={`Mover ${image.name} a la derecha`}
+                onClick={() => moveByOne(index, index + 1)}
+              >›</button>
+            ) : null}
+            <button
+              className="image-drag-handle"
+              type="button"
+              aria-label={`Reordenar ${image.name}`}
+              title="Arrastrar para reordenar"
+              onClick={(event) => event.stopPropagation()}
+              onPointerDown={(event) => startPointerDrag(event, index)}
+              onPointerMove={movePointerDrag}
+              onPointerUp={endPointerDrag}
+              onPointerCancel={cancelPointerDrag}
+            >⋮⋮</button>
             <button
               className="image-rm"
               aria-label={`Quitar ${image.name}`}
