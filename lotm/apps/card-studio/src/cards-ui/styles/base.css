@@ -3,6 +3,8 @@
   --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
   --muted:#7c7c93; --muted2:#9a9ab2; --text:#ecebf4;
   --tier:#e8c36b; --tier-deep:#5a4416;
+  --z-card-chrome:2; --z-stage-arrow:4; --z-dock:10; --z-sticky:20;
+  --z-popover:40; --z-sheet:60; --z-toast:80;
 }
 .builder-root *{box-sizing:border-box;margin:0;padding:0}
 .builder-root{

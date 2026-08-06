@@ -24,8 +24,8 @@ export default function Panel(props) {
   const defaultPathwayCardBackground = PATHWAY_BACKGROUNDS[state.pathwayCardPath] ?? null
   const fieldProps = { ...props, defaultTierBackground, defaultPathwayCardBackground }
 
-  return (
-    <aside className="panel">
+  const content = (
+    <>
       <h1>Card builder</h1>
       <p className="sub">
         Search a pathway, pick the sequence (auto-colors by tier), and your work
@@ -64,6 +64,8 @@ export default function Panel(props) {
       state.type !== 'Timeline' &&
       state.type !== 'Cover' &&
       state.type !== 'Full Image Cover' ? <StandardFields {...fieldProps} /> : null}
-    </aside>
+    </>
   )
+
+  return props.embedded ? content : <aside className="panel">{content}</aside>
 }

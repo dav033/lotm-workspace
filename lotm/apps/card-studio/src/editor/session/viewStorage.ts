@@ -1,6 +1,9 @@
 const ACTIVE_PROJECT_KEY = 'lotm-card-studio:active-project'
 const OPEN_PROJECTS_KEY = 'lotm-card-studio:open-projects'
 const EDITING_CARD_KEY = 'lotm-card-studio:editing-card'
+const INSPECTOR_TAB_KEY = 'lotm-card-studio:inspector-tab'
+
+export type InspectorTab = 'properties' | 'publish'
 
 function read(key: string): string | null {
   try {
@@ -35,6 +38,10 @@ export function readEditingCardId(): string | null {
   return read(EDITING_CARD_KEY)
 }
 
+export function readInspectorTab(): InspectorTab {
+  return read(INSPECTOR_TAB_KEY) === 'publish' ? 'publish' : 'properties'
+}
+
 export function saveViewSelection(activeProjectId: string | null, openProjectIds: string[]): void {
   if (activeProjectId) write(ACTIVE_PROJECT_KEY, activeProjectId)
   else {
@@ -48,4 +55,8 @@ export function saveEditingCardId(cardId: string | null): void {
   else {
     try { window.localStorage.removeItem(EDITING_CARD_KEY) } catch { /* ignore */ }
   }
+}
+
+export function saveInspectorTab(tab: InspectorTab): void {
+  write(INSPECTOR_TAB_KEY, tab)
 }

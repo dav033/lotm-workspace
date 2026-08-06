@@ -4,7 +4,7 @@
 
 import { useEffect, useRef } from 'react'
 import CardView from '../cards-ui/CardView'
-import Panel from './components/Panel'
+import Inspector from './components/Inspector'
 import Filmstrip from './components/Filmstrip'
 import ProjectTabs from './components/ProjectTabs'
 import ImageTray from './components/ImageTray'
@@ -15,7 +15,7 @@ const CARD_H = 640
 const CARD_MARGIN = 16
 const MIN_FIT = 0.25
 
-export default function EditorWorkspace({ controller }) {
+export default function EditorWorkspace({ controller, cards: inspectorCards, currentCardId }) {
   const canvasRef = useRef(null)
   const {
     ready, session, sessionError, saving, projects, sections, cards, images,
@@ -150,13 +150,15 @@ export default function EditorWorkspace({ controller }) {
         </div>
       </section>
 
-      <Panel
+      <Inspector
         state={state}
         set={set}
         accent={accent}
         onUploadImage={onUploadImage}
         onDownload={onDownload}
         onGenerateTierBatch={onGenerateTierBatch}
+        cards={inspectorCards}
+        currentCardId={currentCardId}
       />
     </div>
   )

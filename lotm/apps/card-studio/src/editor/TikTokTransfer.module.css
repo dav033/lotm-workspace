@@ -1,40 +1,39 @@
-.floating{position:fixed;right:24px;bottom:24px;z-index:30;width:340px;max-height:calc(100dvh - 48px);overflow-y:auto;padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#101019;box-shadow:0 18px 60px rgba(0,0,0,.42)}
-.floating :global(.tiktok-transfer){margin:0}
-.floating :global(.tiktok-transfer-head){display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:13px}
-.floating :global(.tiktok-transfer h2){font-family:'Cinzel',serif;font-size:17px;color:#fff}
-.floating :global(.tiktok-kicker){margin-bottom:4px;color:#e8c36b;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
-.floating :global(.tiktok-connected-dot){width:8px;height:8px;margin-top:7px;border-radius:50%;background:#46c2a0;box-shadow:0 0 0 4px rgba(70,194,160,.12)}
-.floating :global(.tiktok-account){display:grid;gap:3px;margin-bottom:14px;padding:10px 11px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
-.floating :global(.tiktok-account span),.floating :global(.tiktok-fields label>span){color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.floating :global(.tiktok-account strong){font-size:14px;color:#ecebf4;overflow:hidden;text-overflow:ellipsis}
-.floating :global(.tiktok-link){justify-self:start;margin-top:4px;padding:0;border:0;background:none;color:#9a9ab2;font:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
-.floating :global(.tiktok-link:hover){color:#e8c36b}
-.floating :global(.tiktok-connect),.floating :global(.tiktok-primary),.floating :global(.tiktok-secondary){display:block;width:100%;border-radius:8px;padding:10px 12px;text-align:center;font:700 12px/1.2 'Space Grotesk',sans-serif;cursor:pointer;text-decoration:none}
-.floating :global(.tiktok-connect),.floating :global(.tiktok-primary){border:1px solid #e8c36b;background:#e8c36b;color:#0a0a11}
-.floating :global(.tiktok-connect:hover),.floating :global(.tiktok-primary:hover:not(:disabled)){filter:brightness(1.08)}
-.floating :global(.tiktok-primary:disabled),.floating :global(.tiktok-secondary:disabled){cursor:default;opacity:.45}
-.floating :global(.tiktok-secondary){margin-top:9px;border:1px solid rgba(255,255,255,.16);background:#16161f;color:#ecebf4}
-.floating :global(.tiktok-secondary:hover:not(:disabled)){border-color:#e8c36b;color:#e8c36b}
-.floating :global(.tiktok-mode){display:flex;gap:6px;margin-bottom:14px}
-.floating :global(.tiktok-mode button){flex:1;border:1px solid rgba(255,255,255,.09);border-radius:7px;padding:8px 6px;background:#16161f;color:#9a9ab2;font:500 11px 'Space Grotesk',sans-serif;cursor:pointer}
-.floating :global(.tiktok-mode button.active){border-color:#e8c36b;background:rgba(232,195,107,.11);color:#e8c36b}
-.floating :global(.tiktok-fields){display:grid;gap:11px}
-.floating :global(.tiktok-fields label){display:grid;gap:5px}
-.floating :global(.tiktok-fields input),.floating :global(.tiktok-fields textarea),.floating :global(.tiktok-fields select){width:100%;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#16161f;color:#ecebf4;font:13px/1.4 'Space Grotesk',sans-serif;padding:8px 9px}
-.floating :global(.tiktok-fields textarea){min-height:76px;resize:vertical}
-.floating :global(.tiktok-fields input:focus),.floating :global(.tiktok-fields textarea:focus),.floating :global(.tiktok-fields select:focus){outline:none;border-color:#e8c36b;box-shadow:0 0 0 3px rgba(232,195,107,.1)}
-.floating :global(.tiktok-carousel-picker){display:grid;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
-.floating :global(.tiktok-carousel-picker-head){display:flex;align-items:center;justify-content:space-between;gap:8px;color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.floating :global(.tiktok-carousel-picker-head strong){color:#ecebf4;font-size:11px;letter-spacing:0;text-transform:none}
-.floating :global(.tiktok-carousel-preview){display:flex;gap:5px;overflow-x:auto;padding-bottom:2px}
-.floating :global(.tiktok-carousel-thumb){position:relative;flex:0 0 48px;height:64px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:5px;background:#0c0c12}
-.floating :global(.tiktok-carousel-thumb img){width:100%;height:100%;object-fit:cover}
-.floating :global(.tiktok-carousel-thumb span){position:absolute;right:3px;bottom:3px;min-width:15px;padding:1px 3px;border-radius:3px;background:rgba(0,0,0,.72);color:#fff;font:700 9px/1 'JetBrains Mono',monospace;text-align:center}
-.floating :global(.tiktok-carousel-picker .tiktok-link){margin:0}
-.floating :global(.tiktok-file){padding:10px;border:1px dashed rgba(255,255,255,.16);border-radius:8px;cursor:pointer}
-.floating :global(.tiktok-file input){display:none}
-.floating :global(.tiktok-file strong){display:block;margin-top:5px;color:#ecebf4;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.floating :global(.tiktok-muted){color:#7c7c93;font-size:11px;line-height:1.45}
-.floating :global(.tiktok-status),.floating :global(.tiktok-error){margin-top:12px;font-size:11px;line-height:1.45}
-.floating :global(.tiktok-status){color:#7ed4b8}.floating :global(.tiktok-error){color:#e08b7a}
-@media (max-width:520px){.floating{right:12px;bottom:12px;width:calc(100vw - 24px);max-height:calc(100dvh - 24px)}}
+.pane{display:grid;gap:14px;padding:18px;border:1px solid rgba(255,255,255,.12);border-radius:12px;background:#101019}
+.pane :global(.tiktok-transfer){margin:0}
+.pane :global(.tiktok-transfer-head){display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:13px}
+.pane :global(.tiktok-transfer h2){font-family:'Cinzel',serif;font-size:17px;color:#fff}
+.pane :global(.tiktok-kicker){margin-bottom:4px;color:#e8c36b;font:700 9px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase}
+.pane :global(.tiktok-connected-dot){width:8px;height:8px;margin-top:7px;border-radius:50%;background:#46c2a0;box-shadow:0 0 0 4px rgba(70,194,160,.12)}
+.pane :global(.tiktok-account){display:grid;gap:3px;margin-bottom:14px;padding:10px 11px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
+.pane :global(.tiktok-account span),.pane :global(.tiktok-fields label>span){color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.pane :global(.tiktok-account strong){font-size:14px;color:#ecebf4;overflow:hidden;text-overflow:ellipsis}
+.pane :global(.tiktok-link){justify-self:start;margin-top:4px;padding:0;border:0;background:none;color:#9a9ab2;font:inherit;font-size:11px;cursor:pointer;text-decoration:underline}
+.pane :global(.tiktok-link:hover){color:#e8c36b}
+.pane :global(.tiktok-connect),.pane :global(.tiktok-primary),.pane :global(.tiktok-secondary){display:block;width:100%;border-radius:8px;padding:10px 12px;text-align:center;font:700 12px/1.2 'Space Grotesk',sans-serif;cursor:pointer;text-decoration:none}
+.pane :global(.tiktok-connect),.pane :global(.tiktok-primary){border:1px solid #e8c36b;background:#e8c36b;color:#0a0a11}
+.pane :global(.tiktok-connect:hover),.pane :global(.tiktok-primary:hover:not(:disabled)){filter:brightness(1.08)}
+.pane :global(.tiktok-primary:disabled),.pane :global(.tiktok-secondary:disabled){cursor:default;opacity:.45}
+.pane :global(.tiktok-secondary){margin-top:9px;border:1px solid rgba(255,255,255,.16);background:#16161f;color:#ecebf4}
+.pane :global(.tiktok-secondary:hover:not(:disabled)){border-color:#e8c36b;color:#e8c36b}
+.pane :global(.tiktok-mode){display:flex;gap:6px;margin-bottom:14px}
+.pane :global(.tiktok-mode button){flex:1;border:1px solid rgba(255,255,255,.09);border-radius:7px;padding:8px 6px;background:#16161f;color:#9a9ab2;font:500 11px 'Space Grotesk',sans-serif;cursor:pointer}
+.pane :global(.tiktok-mode button.active){border-color:#e8c36b;background:rgba(232,195,107,.11);color:#e8c36b}
+.pane :global(.tiktok-fields){display:grid;gap:11px}
+.pane :global(.tiktok-fields label){display:grid;gap:5px}
+.pane :global(.tiktok-fields input),.pane :global(.tiktok-fields textarea),.pane :global(.tiktok-fields select){width:100%;border:1px solid rgba(255,255,255,.09);border-radius:7px;background:#16161f;color:#ecebf4;font:13px/1.4 'Space Grotesk',sans-serif;padding:8px 9px}
+.pane :global(.tiktok-fields textarea){min-height:76px;resize:vertical}
+.pane :global(.tiktok-fields input:focus),.pane :global(.tiktok-fields textarea:focus),.pane :global(.tiktok-fields select:focus){outline:none;border-color:#e8c36b;box-shadow:0 0 0 3px rgba(232,195,107,.1)}
+.pane :global(.tiktok-carousel-picker){display:grid;gap:8px;padding:10px;border:1px solid rgba(255,255,255,.09);border-radius:8px;background:#16161f}
+.pane :global(.tiktok-carousel-picker-head){display:flex;align-items:center;justify-content:space-between;gap:8px;color:#9a9ab2;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
+.pane :global(.tiktok-carousel-picker-head strong){color:#ecebf4;font-size:11px;letter-spacing:0;text-transform:none}
+.pane :global(.tiktok-carousel-preview){display:flex;gap:5px;overflow-x:auto;padding-bottom:2px}
+.pane :global(.tiktok-carousel-thumb){position:relative;flex:0 0 48px;height:64px;overflow:hidden;border:1px solid rgba(255,255,255,.12);border-radius:5px;background:#0c0c12}
+.pane :global(.tiktok-carousel-thumb img){width:100%;height:100%;object-fit:cover}
+.pane :global(.tiktok-carousel-thumb span){position:absolute;right:3px;bottom:3px;min-width:15px;padding:1px 3px;border-radius:3px;background:rgba(0,0,0,.72);color:#fff;font:700 9px/1 'JetBrains Mono',monospace;text-align:center}
+.pane :global(.tiktok-carousel-picker .tiktok-link){margin:0}
+.pane :global(.tiktok-file){padding:10px;border:1px dashed rgba(255,255,255,.16);border-radius:8px;cursor:pointer}
+.pane :global(.tiktok-file input){display:none}
+.pane :global(.tiktok-file strong){display:block;margin-top:5px;color:#ecebf4;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pane :global(.tiktok-muted){color:#7c7c93;font-size:11px;line-height:1.45}
+.pane :global(.tiktok-status),.pane :global(.tiktok-error){margin-top:12px;font-size:11px;line-height:1.45}
+.pane :global(.tiktok-status){color:#7ed4b8}.pane :global(.tiktok-error){color:#e08b7a}

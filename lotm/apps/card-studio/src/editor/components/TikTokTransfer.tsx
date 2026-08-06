@@ -27,7 +27,15 @@ const EMPTY_CONNECTION: Connection = {
   accessTokenExpiresAt: null,
 }
 
-export default function TikTokTransfer({ cards, currentCardId }: { cards: CarouselCard[]; currentCardId: string | null }) {
+export default function TikTokTransfer({
+  cards,
+  currentCardId,
+  onConnectionChange,
+}: {
+  cards: CarouselCard[]
+  currentCardId: string | null
+  onConnectionChange?: (connected: boolean) => void
+}) {
   const [connection, setConnection] = useState<Connection | null>(null)
   const [mode, setMode] = useState<'video' | 'carousel'>('video')
   const [video, setVideo] = useState<File | null>(null)
@@ -81,6 +89,10 @@ export default function TikTokTransfer({ cards, currentCardId }: { cards: Carous
     if (params.get('tiktok_connected')) setStatus('TikTok connected. Choose content to send.')
     if (params.get('tiktok_error')) setError(params.get('tiktok_error') ?? 'TikTok connection failed.')
   }, [])
+
+  useEffect(() => {
+    onConnectionChange?.(connection?.connected === true)
+  }, [connection?.connected, onConnectionChange])
 
   async function pngToJpeg(png: Blob): Promise<Blob> {
     const bitmap = await createImageBitmap(png)
