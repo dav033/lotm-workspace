@@ -259,6 +259,8 @@
 .project-new-input{border:1px solid var(--tier);border-radius:7px;background:var(--panel);
   color:var(--parchment);font-family:inherit;font-size:11px;padding:6px 10px;min-width:180px}
 .project-new-input:focus{outline:none}
+.project-tabs-mobile{display:none;width:100%;border:1px solid var(--line2);border-radius:8px;background:var(--panel2);
+  color:var(--text);font:16px 'Space Grotesk',sans-serif;padding:9px 11px}
 
 /* ---- Bandeja de imagenes importadas (solo visor: no se editan) ---- */
 /* width:100% porque el stage centra a sus hijos: sin esto la bandeja se queda en
@@ -294,6 +296,83 @@
 .image-rm:hover{background:#c0392b}
 @media (pointer:coarse){
   .film-thumb,.film-add,.image-thumb{width:96px}
+}
+
+/* ================= RESPONSIVE EDITOR SHELL ================= */
+.editor-main{display:flex;flex:1 1 auto;flex-direction:column;min-width:0;min-height:0}
+.editor-topbar{position:relative;display:flex;align-items:center;gap:14px;flex:0 0 auto;min-height:52px;
+  padding:8px 18px;border-bottom:1px solid var(--line);background:rgba(7,7,9,.94)}
+.editor-topbar-project{display:grid;gap:2px;min-width:0;margin-right:auto}
+.editor-topbar-kicker{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.editor-topbar-project strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:13px}
+.editor-topbar-nav{display:flex;align-items:center;gap:7px}
+.editor-topbar-nav .nav{width:28px;height:28px;border:1px solid var(--line2);border-radius:7px;background:var(--panel2);
+  color:var(--text);font-size:18px;line-height:1;cursor:pointer}
+.editor-topbar-nav .nav:hover{border-color:var(--tier);color:var(--tier)}
+.editor-topbar-nav .pos{min-width:50px;color:var(--muted2);font-size:11px;text-align:center;font-variant-numeric:tabular-nums}
+.editor-topbar-save{display:flex;align-items:center;gap:6px;color:var(--muted2);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.editor-topbar-save::before{content:'';width:7px;height:7px;border-radius:50%;background:#46c2a0}
+.editor-topbar-save.saving::before{background:var(--tier);animation:pulse 1s ease-in-out infinite}
+.editor-topbar-save.error{max-width:24ch;color:#e0736b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-transform:none;letter-spacing:0}
+.editor-topbar-save.error::before{background:#e0736b}
+.editor-topbar-inspector{display:none;border:1px solid var(--line2);border-radius:8px;background:var(--panel2);color:var(--text);
+  font:600 11px 'Space Grotesk',sans-serif;padding:8px 10px;cursor:pointer}
+.editor-topbar-inspector:hover{border-color:var(--tier);color:var(--tier)}
+.skip-link{position:absolute;left:12px;top:4px;z-index:var(--z-toast);padding:6px 10px;border-radius:6px;
+  background:var(--tier);color:#0a0a11;font-size:11px;transform:translateY(-160%)}
+.skip-link:focus{transform:translateY(0)}
+
+/* Dock is a single rail: cards or images, never both stacked. */
+.stage-dock-handle{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;height:var(--dock-handle,30px);
+  border:0;border-top:1px solid var(--line);background:transparent;color:var(--muted2);font:10px 'Space Grotesk',sans-serif;
+  letter-spacing:.14em;text-transform:uppercase;cursor:pointer;user-select:none}
+.stage-dock-handle:hover{color:var(--tier)}
+.stage-dock-panel.open{opacity:1;transform:translateY(0)}
+.stage-dock-panel:not(.open) .stage-dock-tabs,.stage-dock-panel:not(.open) .stage-dock-body{display:none}
+.stage-dock-tabs{display:flex;gap:6px;padding:8px 10px 0}
+.stage-dock-tabs button{flex:1;min-height:var(--tap);border:1px solid var(--line);border-radius:7px;background:var(--panel2);
+  color:var(--muted2);font:600 11px 'Space Grotesk',sans-serif;cursor:pointer}
+.stage-dock-tabs button[aria-selected=true]{border-color:var(--tier);background:rgba(232,195,107,.11);color:var(--tier)}
+@media (hover:hover) and (min-width:901px){
+  .stage-dock:hover .stage-dock-tabs,.stage-dock:focus-within .stage-dock-tabs,
+  .stage-dock:hover .stage-dock-body,.stage-dock:focus-within .stage-dock-body{display:block}
+}
+
+/* Bottom navigation and sheets exist only for the mobile shell. */
+.bottom-nav{display:none}
+.sheet-overlay{position:fixed;inset:0;z-index:var(--z-sheet);display:flex;align-items:flex-end;background:rgba(0,0,0,.58)}
+.sheet{display:flex;flex-direction:column;width:min(100%,720px);height:55dvh;margin:0 auto;border:1px solid var(--line2);
+  border-bottom:0;border-radius:16px 16px 0 0;background:var(--panel);box-shadow:0 -18px 50px rgba(0,0,0,.38);
+  transition:height .2s ease}
+.sheet.expanded{height:92dvh}
+.sheet-handle{flex:0 0 auto;width:52px;height:var(--tap);margin:4px auto 0;border:0;border-radius:99px;
+  background:transparent;cursor:grab;touch-action:none}
+.sheet-handle::before{content:'';display:block;width:42px;height:4px;margin:auto;border-radius:99px;background:var(--line2)}
+.sheet-head{display:flex;align-items:center;gap:10px;padding:8px 16px 12px;border-bottom:1px solid var(--line)}
+.sheet-head h2{margin-right:auto;font:700 16px 'Cinzel',serif;color:var(--text)}
+.sheet-close{width:var(--tap);height:var(--tap);border:1px solid var(--line);border-radius:7px;background:var(--panel2);
+  color:var(--text);font-size:20px;line-height:1;cursor:pointer}
+.sheet-body{min-height:0;overflow:auto;padding:14px 16px calc(14px + env(safe-area-inset-bottom))}
+.sheet .panel{width:auto;height:auto;position:static;border:0;padding:0;background:transparent;overflow:visible}
+
+@media (min-width:901px){
+  .project-tabs-mobile{display:none}
+}
+
+@media (max-width:900px){
+  .editor-topbar{position:sticky;top:0;z-index:var(--z-sticky);padding:8px 12px}
+  .editor-topbar-inspector{display:block}
+  .editor-topbar-save{margin-left:auto}
+  .editor-main{padding-bottom:calc(var(--tap) + env(safe-area-inset-bottom))}
+  .app>.inspector{display:none}
+  .bottom-nav{position:fixed;right:0;bottom:0;left:0;z-index:var(--z-sheet);display:grid;grid-template-columns:repeat(4,1fr);
+    min-height:var(--tap);padding:4px 8px env(safe-area-inset-bottom);background:rgba(16,16,25,.96);border-top:1px solid var(--line)}
+  .bottom-nav button{min-height:var(--tap);border:0;border-radius:7px;background:transparent;color:var(--muted2);font:600 10px 'Space Grotesk',sans-serif;cursor:pointer}
+  .bottom-nav button.active,.bottom-nav button:hover{background:rgba(232,195,107,.11);color:var(--tier)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .sheet{transition:none}
 }
 
 /* ---- Duracion por carta/imagen dentro del video ---- */

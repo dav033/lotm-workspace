@@ -2,8 +2,11 @@ const ACTIVE_PROJECT_KEY = 'lotm-card-studio:active-project'
 const OPEN_PROJECTS_KEY = 'lotm-card-studio:open-projects'
 const EDITING_CARD_KEY = 'lotm-card-studio:editing-card'
 const INSPECTOR_TAB_KEY = 'lotm-card-studio:inspector-tab'
+const DOCK_OPEN_KEY = 'lotm-card-studio:dock-open'
+const DOCK_TAB_KEY = 'lotm-card-studio:dock-tab'
 
 export type InspectorTab = 'properties' | 'publish'
+export type DockTab = 'cards' | 'images'
 
 function read(key: string): string | null {
   try {
@@ -59,4 +62,20 @@ export function saveEditingCardId(cardId: string | null): void {
 
 export function saveInspectorTab(tab: InspectorTab): void {
   write(INSPECTOR_TAB_KEY, tab)
+}
+
+export function readDockOpen(): boolean {
+  return read(DOCK_OPEN_KEY) === 'true'
+}
+
+export function saveDockOpen(open: boolean): void {
+  write(DOCK_OPEN_KEY, String(open))
+}
+
+export function readDockTab(): DockTab {
+  return read(DOCK_TAB_KEY) === 'images' ? 'images' : 'cards'
+}
+
+export function saveDockTab(tab: DockTab): void {
+  write(DOCK_TAB_KEY, tab)
 }

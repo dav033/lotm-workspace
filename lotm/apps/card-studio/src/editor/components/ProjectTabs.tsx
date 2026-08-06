@@ -27,8 +27,9 @@ export default function ProjectTabs({
   }
 
   return (
-    <div className="project-tabs">
-      {open.map((project) => (
+    <>
+      <div className="project-tabs project-tabs-desktop">
+        {open.map((project) => (
         <div
           key={project.id}
           className={'project-tab' + (project.id === activeId ? ' active' : '')}
@@ -50,10 +51,10 @@ export default function ProjectTabs({
             >×</button>
           ) : null}
         </div>
-      ))}
+        ))}
 
       {/* Un proyecto cerrado no se borra: sigue en la base y se reabre aqui. */}
-      {closed.length && !full ? (
+        {closed.length && !full ? (
         <select
           className="project-open"
           value=""
@@ -65,9 +66,9 @@ export default function ProjectTabs({
             <option key={project.id} value={project.id}>{project.name}</option>
           ))}
         </select>
-      ) : null}
+        ) : null}
 
-      {creating ? (
+        {creating ? (
         <input
           className="project-new-input"
           autoFocus
@@ -80,15 +81,34 @@ export default function ProjectTabs({
             if (e.key === 'Escape') { setCreating(false); setDraft('') }
           }}
         />
-      ) : (
+        ) : (
         <button
           className="project-new"
           disabled={busy || full}
           title={full ? `Maximo ${MAX_OPEN_PROJECTS} proyectos abiertos` : 'Nuevo proyecto'}
           onClick={() => setCreating(true)}
         >+ Proyecto</button>
-      )}
-    </div>
+        )}
+      </div>
+      <select
+        className="project-tabs-mobile"
+        value={activeId ?? ''}
+        disabled={busy}
+        aria-label="Active project"
+        onChange={(event) => {
+          const id = event.target.value
+          if (openIds.includes(id)) onActivate(id)
+          else if (id && !full) onOpen(id)
+        }}
+      >
+        {open.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
+        {closed.length && !full ? (
+          <optgroup label="Open project">
+            {closed.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
+          </optgroup>
+        ) : null}
+      </select>
+    </>
   )
 }
 // @ts-nocheck

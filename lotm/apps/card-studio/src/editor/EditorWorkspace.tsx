@@ -2,13 +2,22 @@
 // @ts-nocheck
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import CardView from '../cards-ui/CardView'
+import BottomNav from './components/BottomNav'
+import EditorTopBar from './components/EditorTopBar'
 import Inspector from './components/Inspector'
 import Filmstrip from './components/Filmstrip'
 import ProjectTabs from './components/ProjectTabs'
 import ImageTray from './components/ImageTray'
 import SectionField from './components/SectionField'
+import Sheet from './components/Sheet'
+import {
+  readDockOpen,
+  readDockTab,
+  saveDockOpen,
+  saveDockTab,
+} from './session/viewStorage'
 
 const CARD_W = 480
 const CARD_H = 640
@@ -22,6 +31,9 @@ function cssPixels(value) {
 
 export default function EditorWorkspace({ controller, cards: inspectorCards, currentCardId }) {
   const canvasRef = useRef(null)
+  const [dockOpen, setDockOpen] = useState(() => readDockOpen())
+  const [dockTab, setDockTab] = useState(() => readDockTab())
+  const [mobileDestination, setMobileDestination] = useState(null)
   const {
     ready, session, sessionError, saving, projects, sections, cards, images,
     openProjectIds, activeProjectId, editingId, editingIndex, state, accent,
@@ -31,6 +43,8 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
     onDropImages, onDropBackground, onDownload, onDownloadZip, onDownloadSection,
     onDownloadSectionVideo, onExportImagesVideo, onGenerateTierBatch, set,
   } = controller
+
+  const closeMobileSheet = useCallback(() => setMobileDestination(null), [])
 
   useEffect(() => {
     const stage = canvasRef.current
@@ -60,11 +74,73 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
     return () => observer.disconnect()
   }, [ready])
 
+  const renderFilmstrip = () => (
+    <Filmstrip
+      batch={filmstrip}
+      editingId={editingId}
+      accent={accent}
+      busy={busy}
+      onLoadCard={onLoadCard}
+      onNewCard={onNewCard}
+      onRemoveFromBatch={onRemoveFromBatch}
+      onReorder={onReorder}
+      onDownloadZip={onDownloadZip}
+      onRenameSection={(partId, name) => session.renameSection(partId, { name })}
+      onDownloadSection={onDownloadSection}
+      onDownloadSectionVideo={onDownloadSectionVideo}
+      videoError={videoError}
+      seconds={seconds}
+      onSeconds={setSeconds}
+      onCardDuration={(id, value) => session.setDuration('card', id, value)}
+    />
+  )
+
+  const renderImageTray = () => (
+    <ImageTray
+      images={images}
+      busy={busy}
+      seconds={seconds}
+      onImport={(files) => session.importImages(activeProjectId, files)}
+      onDelete={session.deleteImage}
+      onReorder={(imageIds) => session.reorderImages(activeProjectId, imageIds)}
+      onExportVideo={onExportImagesVideo}
+      onImageDuration={(id, value) => session.setDuration('image', id, value)}
+    />
+  )
+
+  const inspectorProps = {
+    state,
+    set,
+    accent,
+    onUploadImage,
+    onDownload,
+    onGenerateTierBatch,
+    cards: inspectorCards,
+    currentCardId,
+  }
+
+  const mobileTitle = {
+    card: 'Carta',
+    cards: 'Cartas',
+    images: 'Imágenes',
+    publish: 'Publicar',
+  }[mobileDestination] ?? ''
+
   if (!ready) return <div className="app-loading">Loading your cards…</div>
 
   return (
     <div className="app">
-      <section className="stage">
+      <div className="editor-main">
+        <EditorTopBar
+          projectName={projects.find((project) => project.id === activeProjectId)?.name}
+          editingIndex={editingIndex}
+          cardCount={cards.length}
+          saving={saving}
+          sessionError={sessionError}
+          onStep={onStep}
+          onOpenInspector={() => setMobileDestination('card')}
+        />
+      <main className="stage" id="main-content">
         <ProjectTabs
           projects={projects}
           openIds={openProjectIds}
@@ -75,19 +151,6 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
           onClose={onCloseProject}
           onCreate={onCreateProject}
         />
-        <div className="stage-top">
-          <div className="stage-nav">
-            <button className="nav" onClick={() => onStep(-1)} aria-label="Previous">‹</button>
-            <span className="pos">{editingIndex >= 0 ? editingIndex + 1 : '–'} / {cards.length}</span>
-            <button className="nav" onClick={() => onStep(1)} aria-label="Next">›</button>
-          </div>
-          <span
-            className={'save-status ' + (sessionError ? 'error' : saving ? 'saving' : 'saved')}
-            title={sessionError ?? undefined}
-          >
-            {sessionError ?? (saving ? 'Saving…' : 'All changes saved')}
-          </span>
-        </div>
 
         <SectionField
           section={cards.find((card) => card.id === editingId)?.part ?? null}
@@ -132,55 +195,53 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
         </div>
 
         <div className="stage-dock">
-          <div className="stage-dock-panel">
-            <div className="stage-dock-handle">
+          <div className={'stage-dock-panel' + (dockOpen ? ' open' : '')}>
+            <button
+              className="stage-dock-handle"
+              type="button"
+              aria-expanded={dockOpen}
+              onClick={() => {
+                setDockOpen((value) => {
+                  saveDockOpen(!value)
+                  return !value
+                })
+              }}
+            >
               {filmstrip.length} cartas · {sectionCount} {sectionCount === 1 ? 'sección' : 'secciones'}
               {images.length ? ` · ${images.length} imágenes` : ''}
+            </button>
+            <div className="stage-dock-tabs" role="tablist" aria-label="Editor dock">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={dockTab === 'cards'}
+                className={dockTab === 'cards' ? 'active' : ''}
+                onClick={() => { setDockTab('cards'); saveDockTab('cards'); setDockOpen(true); saveDockOpen(true) }}
+              >Cartas ({filmstrip.length})</button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={dockTab === 'images'}
+                className={dockTab === 'images' ? 'active' : ''}
+                onClick={() => { setDockTab('images'); saveDockTab('images'); setDockOpen(true); saveDockOpen(true) }}
+              >Imágenes ({images.length})</button>
             </div>
             <div className="stage-dock-body">
-              <Filmstrip
-                batch={filmstrip}
-                editingId={editingId}
-                accent={accent}
-                busy={busy}
-                onLoadCard={onLoadCard}
-                onNewCard={onNewCard}
-                onRemoveFromBatch={onRemoveFromBatch}
-                onReorder={onReorder}
-                onDownloadZip={onDownloadZip}
-                onRenameSection={(partId, name) => session.renameSection(partId, { name })}
-                onDownloadSection={onDownloadSection}
-                onDownloadSectionVideo={onDownloadSectionVideo}
-                videoError={videoError}
-                seconds={seconds}
-                onSeconds={setSeconds}
-                onCardDuration={(id, value) => session.setDuration('card', id, value)}
-              />
-              <ImageTray
-                images={images}
-                busy={busy}
-                seconds={seconds}
-                onImport={(files) => session.importImages(activeProjectId, files)}
-                onDelete={session.deleteImage}
-                onReorder={(imageIds) => session.reorderImages(activeProjectId, imageIds)}
-                onExportVideo={onExportImagesVideo}
-                onImageDuration={(id, value) => session.setDuration('image', id, value)}
-              />
+              {dockTab === 'cards' ? renderFilmstrip() : renderImageTray()}
             </div>
           </div>
         </div>
-      </section>
+      </main>
+      </div>
 
-      <Inspector
-        state={state}
-        set={set}
-        accent={accent}
-        onUploadImage={onUploadImage}
-        onDownload={onDownload}
-        onGenerateTierBatch={onGenerateTierBatch}
-        cards={inspectorCards}
-        currentCardId={currentCardId}
-      />
+      <Inspector {...inspectorProps} />
+
+      <BottomNav active={mobileDestination} onSelect={setMobileDestination} />
+      <Sheet open={mobileDestination !== null} title={mobileTitle} onClose={closeMobileSheet}>
+        {mobileDestination === 'cards' ? renderFilmstrip() : null}
+        {mobileDestination === 'images' ? renderImageTray() : null}
+        {mobileDestination === 'card' || mobileDestination === 'publish' ? <Inspector {...inspectorProps} /> : null}
+      </Sheet>
     </div>
   )
 }

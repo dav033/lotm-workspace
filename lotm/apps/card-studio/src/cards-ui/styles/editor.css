@@ -117,6 +117,8 @@
 
 @media (max-width:900px){
   .app{flex-direction:column}
+  .project-tabs-desktop{display:none}
+  .project-tabs-mobile{display:block;margin-bottom:10px}
   .panel{position:static;width:100%;height:auto;align-self:stretch;
     border-top:1px solid var(--line);border-left:0}
 }
