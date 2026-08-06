@@ -66,10 +66,10 @@
 .timeline-card.turn .timeline-era{margin-top:0}
 .timeline-title{flex:0 0 auto;margin:18px 0 0;font-family:'Playfair Display',serif;font-weight:900;
   line-height:.9;color:#faf7f0;overflow-wrap:anywhere}
-.timeline-title.xl{font-size:74px}
-.timeline-title.lg{font-size:62px}
-.timeline-title.md{font-size:52px}
-.timeline-title.sm{font-size:44px}
+.timeline-title.xl{font-size:68px}
+.timeline-title.lg{font-size:56px}
+.timeline-title.md{font-size:48px}
+.timeline-title.sm{font-size:40px}
 .timeline-rule{flex:0 0 auto;width:46px;height:3px;margin:18px 0 0;background:var(--tier)}
 .timeline-text{flex:0 0 auto;margin:18px 0 0;max-width:340px;font-size:19px;font-weight:600;
   line-height:1.36;color:#e8e4da;text-wrap:pretty;overflow-wrap:anywhere}
