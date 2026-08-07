@@ -76,6 +76,20 @@ test('Ritual Logic produce cinco composiciones distintas', () => {
   assert.notEqual(pressure, timeline)
 })
 
+test('Ritual Logic pinta el fondo propio en el render principal', () => {
+  const html = renderToStaticMarkup(React.createElement(RitualLogic, {
+    pathway: 'Moon', sequence: 5, sequenceName: 'Scarlet Scholar', variant: 'Chain',
+    ritual: 'Prepare the lunar rite.',
+    survival: 'The potion tests the body.',
+    preparation: 'Rehearse the new authority.',
+    certainty: 'Mixed', uncertainty: 'The link is inferred.',
+    backgroundImage: '/api/cards/images/moon.jpg', backgroundOpacity: 58,
+  }))
+  assert.match(html, /ritual-logic-background[^>]*background-image:url\(&quot;\/api\/cards\/images\/moon\.jpg&quot;\)/)
+  assert.match(html, /ritual-logic-background-overlay/)
+  assert.match(html, /--background-opacity:0\.58/)
+})
+
 test('Ritual Logic marks short content as sparse so the layout can use the card height', () => {
   const html = renderToStaticMarkup(React.createElement(RitualLogic, {
     pathway: 'Door', sequence: 5, sequenceName: 'Traveler', variant: 'Chain',

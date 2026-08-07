@@ -1,4 +1,10 @@
 .ritual-logic-card{padding:28px 34px;display:flex;flex-direction:column;background:#090a0d;overflow:hidden}
+.ritual-logic-background{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;
+  opacity:var(--background-opacity,.65);filter:saturate(1.05) contrast(1.08)}
+.ritual-logic-background-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
+  opacity:calc(1 - var(--background-opacity,.65));
+  background:linear-gradient(180deg,rgba(8,9,12,.24),rgba(8,9,12,.72))}
+.ritual-logic-card:has(>.ritual-logic-background){text-shadow:0 2px 14px rgba(0,0,0,.76)}
 .ritual-logic-content{position:relative;z-index:3;display:flex;flex-direction:column;height:100%;min-height:0;text-align:left}
 .ritual-logic-ghost{position:absolute;z-index:0;right:-42px;top:52px;font-family:'Playfair Display',serif;font-size:360px;font-weight:900;line-height:.72;color:var(--tier);opacity:.045}
 .ritual-logic-head{display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#969186}

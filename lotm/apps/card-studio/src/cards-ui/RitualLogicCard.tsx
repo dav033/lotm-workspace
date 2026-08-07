@@ -26,7 +26,7 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
     <article className={`ficha ritual-logic-card certainty-${certainty.toLowerCase()}${dense ? ' dense' : ''}${sparse ? ' sparse' : ''}${dragging ? ' dragover' : ''}`} id="card" ref={ref}
       style={{ '--tier': tier?.c || '#d9b869', '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
       aria-label={`${pathway} Sequence ${sequence} ${sequenceName} advancement ritual`} {...dropProps}>
-      {backgroundImage && <><div className="tier-background" style={{ backgroundImage: `url("${backgroundImage}")` }} aria-hidden="true" /><div className="tier-background-overlay" aria-hidden="true" /></>}
+      {backgroundImage && <><div className="ritual-logic-background" style={{ backgroundImage: `url("${backgroundImage}")` }} aria-hidden="true" /><div className="ritual-logic-background-overlay" aria-hidden="true" /></>}
       <div className="ritual-logic-ghost" aria-hidden="true">{sequence}</div>
       <div className="ritual-logic-content">
         <header className="ritual-logic-head"><span>Advancement ritual</span><span className="ritual-logic-sequence">Sequence {sequence}</span></header>
