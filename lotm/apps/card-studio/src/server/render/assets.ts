@@ -148,7 +148,10 @@ export async function resolveStateImages(
 async function resolveImageSource(source: string, publicDir: string): Promise<string> {
   // Las imagenes subidas desde el editor viven junto a la base, no en /public.
   if (isStoredCardImage(source)) {
-    const file = resolveCardImageFile(source.slice(CARD_IMAGE_URL_PREFIX.length))
+    // Stored image URLs may carry a cache-busting query string. Resolve only
+    // the pathname so the query never becomes part of the filename.
+    const pathname = new URL(source, 'http://cards.local').pathname
+    const file = resolveCardImageFile(pathname.slice(CARD_IMAGE_URL_PREFIX.length))
     const buffer = await fs.readFile(file)
     if (buffer.byteLength > MAX_IMAGE_BYTES) throw new Error(`La imagen ${source} supera 15 MB.`)
     return `data:${mimeFor(file)};base64,${buffer.toString('base64')}`
