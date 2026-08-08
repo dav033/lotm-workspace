@@ -5,13 +5,25 @@ import { PATHWAYS, PATH_NAMES, TIER_RANKS, TIER_RANK_NAMES } from '../../../doma
 import { PATHWAY_BACKGROUNDS } from '../../../domain/pathwayBackgrounds'
 import { BackgroundField, PathwayCombo, SeqSelect } from './primitives'
 
-export default function ExplanationFields({ state, set, accent, onUploadImage, onDownload, onGenerateTierBatch, defaultTierBackground, defaultPathwayCardBackground }) {
+export default function ExplanationFields({ state, set, accent, onUploadImage, onDownload, onGenerateTierBatch, defaultTierBackground, defaultPathwayCardBackground, cards = [], currentCardId, onLoadCard }) {
   const isGeneralExplanation = state.type === 'General Explanation'
   const isTierExplanation = state.type === 'Tier Explanation'
+  const linkedCard = state.pairId
+    ? cards.find((card) => card.id !== currentCardId && card.state?.pairId === state.pairId)
+    : null
   return (
           <div key="explanation-fields">
             {isGeneralExplanation && (
               <>
+                {state.pairRole === 'explanation' && linkedCard ? (
+                  <div className="linked-card-box">
+                    <div className="linked-card-title">Linked assignment</div>
+                    <p className="field-help">This card stores the evidence and reasoning for the subject card.</p>
+                    <button type="button" className="btn-img" onClick={() => onLoadCard(linkedCard.id)}>
+                      Open subject card
+                    </button>
+                  </div>
+                ) : null}
                 <div className="field">
                   <label>Explanation scope</label>
                   <div className="toggle">

@@ -16,6 +16,8 @@ export type BuilderCardState = {
   mod: string
   dom: string
   image: string | null
+  pairId: string | null
+  pairRole: 'subject' | 'explanation' | null
   coverImage1: string | null
   coverImage2: string | null
   coverTitle: string
@@ -124,6 +126,8 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   mod: '',
   dom: 'None',
   image: null,
+  pairId: null,
+  pairRole: null,
   coverImage1: null,
   coverImage2: null,
   coverTitle: '',
@@ -285,6 +289,8 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       generalExplanationText: content.description,
       generalExplanationSequence: content.sequence ?? null,
       generalExplanationBackgroundImage: content.backgroundImageUrl ?? null,
+      pairId: content.pairId ?? null,
+      pairRole: content.pairRole ?? null,
     }
   }
 
@@ -418,6 +424,8 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
     mod: content.modifier ?? '',
     dom: content.alterDomain ?? 'None',
     image: content.imageUrl ?? null,
+    pairId: content.pairId ?? null,
+    pairRole: content.pairRole ?? null,
   }
 }
 
@@ -477,6 +485,8 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
       ...(state.generalExplanationBackgroundImage
         ? { backgroundImageUrl: state.generalExplanationBackgroundImage }
         : {}),
+      ...(state.pairId ? { pairId: state.pairId } : {}),
+      ...(state.pairRole ? { pairRole: state.pairRole } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }
@@ -606,6 +616,8 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
     ...(state.mod.trim() ? { modifier: state.mod.trim() } : {}),
     ...(state.dom.trim() && state.dom !== 'None' ? { alterDomain: state.dom.trim() } : {}),
     ...(state.image ? { imageUrl: state.image } : {}),
+    ...(state.pairId ? { pairId: state.pairId } : {}),
+    ...(state.pairRole ? { pairRole: state.pairRole } : {}),
   }
   if (state.type === 'Character') return { ...standard, type: 'Character', power: state.power }
   return { ...standard, type: 'Artifact', grade: state.grade as '0' | '1' | '2' | '3' | '4' | '5' }

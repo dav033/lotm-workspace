@@ -40,7 +40,7 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
     openProjectIds, activeProjectId, editingId, editingIndex, state, accent,
     filmstrip, sectionCount, busy, videoError, seconds, setSeconds,
     setActiveProjectId, onOpenProject, onCloseProject, onCreateProject, onStep,
-    onNewCard, onLoadCard, onRemoveFromBatch, onReorder, onUploadImage,
+    onNewCard, onCreateCardPair, onLoadCard, onRemoveFromBatch, onReorder, onUploadImage,
     onDropImages, onDropBackground, onDownload, onDownloadZip, onDownloadSection,
     onDownloadSectionVideo, onExportImagesVideo, onGenerateTierBatch, set,
   } = controller
@@ -131,6 +131,8 @@ export default function EditorWorkspace({ controller, cards: inspectorCards, cur
     onUploadImage,
     onDownload,
     onGenerateTierBatch,
+    onCreateCardPair,
+    onLoadCard,
     cards: inspectorCards,
     currentCardId,
   }

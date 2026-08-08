@@ -2,6 +2,7 @@ import { z } from 'zod'
 import {
   BackgroundOpacitySchema,
   ImageSourceSchema,
+  LinkedCardFields,
   MapEntrySchema,
   PathwayNameSchema,
 } from './base'
@@ -23,6 +24,7 @@ export const GeneralExplanationCardSchema = z
       'Imagen de fondo propia. Si se omite y hay pathway, la carta usa el arte de ese pathway.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...LinkedCardFields,
     ...FontSizeOverridesField,
   })
   .strict()

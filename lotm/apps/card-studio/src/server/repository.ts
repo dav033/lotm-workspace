@@ -4,10 +4,14 @@ import { randomUUID } from 'node:crypto'
 import Database from 'better-sqlite3'
 import {
   CardContentSchema,
+  LinkCardPairSchema,
   SaveCardBatchSchema,
+  SaveCardPairSchema,
   type CardContent,
   type CardFilter,
+  type LinkCardPairInput,
   type SaveCardBatchInput,
+  type SaveCardPairInput,
   slugify,
   titleForCard,
 } from '../domain/schema'
@@ -248,6 +252,86 @@ export class CardRepository {
     const ids = save()
     this.localWrites += 1
     return ids.map((id) => this.getCard(id) as StoredCard)
+  }
+
+  saveCardPair(rawInput: SaveCardPairInput): StoredCard[] {
+    const input = SaveCardPairSchema.parse(rawInput)
+    const pairId = randomUUID()
+    return this.saveBatch({
+      universe: input.universe,
+      part: input.part,
+      cards: [
+        { ...input.subject, pairId, pairRole: 'subject' },
+        { type: 'General Explanation', ...input.explanation, pairId, pairRole: 'explanation' },
+      ],
+    })
+  }
+
+  linkCardPair(rawInput: LinkCardPairInput): StoredCard[] {
+    const input = LinkCardPairSchema.parse(rawInput)
+    const subjectCard = this.getCard(input.cardId)
+    if (!subjectCard || (subjectCard.content.type !== 'Character' && subjectCard.content.type !== 'Artifact')) {
+      throw new Error('Solo se pueden enlazar cartas Character o Artifact.')
+    }
+    if ('pairId' in subjectCard.content && subjectCard.content.pairId) {
+      throw new Error('La carta ya tiene una explicacion enlazada.')
+    }
+    if (input.subject && input.subject.type !== subjectCard.content.type) {
+      throw new Error('El tipo enviado no coincide con la carta que se va a enlazar.')
+    }
+
+    const pairId = randomUUID()
+    const subject = { ...(input.subject ?? subjectCard.content), pairId, pairRole: 'subject' as const }
+    const explanation = {
+      type: 'General Explanation' as const,
+      ...input.explanation,
+      pairId,
+      pairRole: 'explanation' as const,
+    }
+    const save = this.db.transaction(() => {
+      const now = new Date().toISOString()
+      this.db
+        .prepare(`
+          UPDATE cards
+          SET type = ?, title = ?, data_json = ?, updated_at = ?
+          WHERE id = ?
+        `)
+        .run(subject.type, titleForCard(subject), JSON.stringify(subject), now, subjectCard.id)
+
+      const maxPosition = this.db
+        .prepare('SELECT COALESCE(MAX(position), 0) AS value FROM cards WHERE part_id = ?')
+        .get(subjectCard.part.id) as { value: number }
+      const explanationPosition = subjectCard.position < maxPosition.value
+        ? subjectCard.position + 1
+        : maxPosition.value + 1
+      if (explanationPosition <= maxPosition.value) {
+        this.db
+          .prepare('UPDATE cards SET position = position + 1 WHERE part_id = ? AND position > ?')
+          .run(subjectCard.part.id, subjectCard.position)
+      }
+      const explanationId = randomUUID()
+      this.db
+        .prepare(`
+          INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `)
+        .run(
+          explanationId,
+          subjectCard.part.id,
+          explanationPosition,
+          explanation.type,
+          titleForCard(explanation),
+          JSON.stringify(explanation),
+          now,
+          now,
+        )
+      return explanationId
+    })()
+
+    this.localWrites += 1
+    return [this.getCard(subjectCard.id), this.getCard(save) as StoredCard].filter(
+      (card): card is StoredCard => Boolean(card),
+    )
   }
 
   getCard(id: string): StoredCard | null {

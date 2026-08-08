@@ -39,6 +39,15 @@ export const BackgroundOpacitySchema = z
   .optional()
   .describe('Visibilidad de la imagen de fondo, de 0 (oculta) a 100 (maxima). Por defecto, 65.')
 
+export const LinkedCardRoleSchema = z.enum(['subject', 'explanation']).describe(
+  'Rol dentro de un par: carta principal (subject) o carta que explica su fundamento (explanation).',
+)
+
+export const LinkedCardFields = {
+  pairId: z.uuid().optional().describe('Identificador compartido por las dos cartas enlazadas.'),
+  pairRole: LinkedCardRoleSchema.optional().describe('Rol de esta carta dentro del par enlazado.'),
+}
+
 export const SequenceSchema = z.object({
   pathway: PathwayNameSchema,
   sequence: z.int().min(0).max(9).describe('Secuencia entre 0 y 9.'),
@@ -54,6 +63,7 @@ export const SharedStandardCardSchema = z.object({
   modifier: z.string().trim().max(80).optional().describe('Modificador opcional del poder o grado.'),
   alterDomain: z.string().trim().max(120).optional().describe('Dominio alternativo; por defecto, None.'),
   imageUrl: ImageSourceSchema.optional().describe('Ilustracion principal opcional.'),
+  ...LinkedCardFields,
   ...FontSizeOverridesField,
 })
 

@@ -188,6 +188,51 @@ export function useCardSession() {
     }
   }, [])
 
+  const createCardPair = useCallback(async (
+    state: BuilderCardState,
+    _target?: CreateCardTarget,
+    cardId?: string,
+  ): Promise<{ subjectId: string; explanationId: string } | null> => {
+    if (!cardId || (state.type !== 'Character' && state.type !== 'Artifact')) {
+      setError('Selecciona una carta de personaje o artefacto guardada.')
+      return null
+    }
+    const name = state.name.trim() || 'this assignment'
+    try {
+      const response = await fetch('/api/cards/pair/link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          cardId,
+          subject: fromBuilderCardState(state),
+          explanation: {
+            title: `Why ${name} belongs here`,
+            description: 'Add the canonical evidence, the mechanism, and the limit that justify this assignment.',
+            sequence: state.seq,
+            pathway: state.path,
+            backgroundOpacity: state.backgroundOpacity,
+          },
+        }),
+      })
+      if (!response.ok) {
+        setError(await readError(response, 'No se pudo crear el par de cartas'))
+        return null
+      }
+      const { cards: created } = await response.json()
+      setError(null)
+      setCards((previous) => {
+        const createdById = new Map(created.map((card) => [card.id, toSessionCard(card)]))
+        const updated = previous.map((card) => createdById.get(card.id) ?? card)
+        const existingIds = new Set(previous.map((card) => card.id))
+        return [...updated, ...created.filter((card) => !existingIds.has(card.id)).map(toSessionCard)]
+      })
+      return { subjectId: created[0].id, explanationId: created[1].id }
+    } catch {
+      setError(OFFLINE_MESSAGE)
+      return null
+    }
+  }, [])
+
   const deleteCard = useCallback(async (id: string) => {
     clearTimeout(timers.current.get(id))
     clearPending(id)
@@ -475,6 +520,7 @@ export function useCardSession() {
     saving: savingIds.length > 0,
     isPending: useCallback((id: string) => pending.current.has(id), []),
     createCard,
+    createCardPair,
     updateCard,
     deleteCard,
     reorder,

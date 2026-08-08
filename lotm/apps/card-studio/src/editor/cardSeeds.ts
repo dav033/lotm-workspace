@@ -70,6 +70,8 @@ export const DEFAULT_STATE: BuilderCardState = {
   mod: '',
   dom: 'None',
   image: null,
+  pairId: null,
+  pairRole: null,
   coverImage1: null,
   coverImage2: null,
   coverTitle: 'Fate',

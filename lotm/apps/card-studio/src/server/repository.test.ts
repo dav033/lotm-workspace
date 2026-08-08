@@ -97,6 +97,43 @@ test('crea cards.db v12 y guarda las familias de producción', async (t) => {
   inspection.close()
 })
 
+test('enlaza una carta existente sin duplicarla y deja su fundamento junto a ella', async (t) => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-pair-'))
+  const repository = new CardRepository(path.join(directory, 'cards.db'))
+  t.after(async () => {
+    repository.close()
+    await fs.rm(directory, { recursive: true, force: true })
+  })
+
+  const [subject] = repository.saveBatch({
+    universe: { name: 'LOTM' },
+    part: { name: 'Assignments', number: 1 },
+    cards: [
+      { type: 'Artifact', name: 'Scepter', pathway: 'Error', sequence: 3, grade: '1' },
+      { type: 'General Explanation', title: 'Existing next card', description: 'Already in the sequence.' },
+    ],
+  })
+  const linked = repository.linkCardPair({
+    cardId: subject.id,
+    explanation: {
+      title: 'Why Scepter fits Error',
+      description: 'The evidence and mechanism justify the assignment.',
+      pathway: 'Error',
+      sequence: 3,
+    },
+  })
+
+  assert.equal(linked.length, 2)
+  assert.equal(linked[0].id, subject.id)
+  const subjectContent = linked[0].content as { pairId?: string; pairRole?: string }
+  const explanationContent = linked[1].content as { pairId?: string; pairRole?: string }
+  assert.equal(subjectContent.pairId, explanationContent.pairId)
+  assert.equal(subjectContent.pairRole, 'subject')
+  assert.equal(explanationContent.pairRole, 'explanation')
+  assert.equal(linked[1].position, 2)
+  assert.deepEqual(repository.listCards().map(({ position }) => position), [1, 2, 3])
+})
+
 test('migra cards.db v1 a v3 sin perder cartas', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v1-'))
   const dbPath = path.join(directory, 'cards.db')

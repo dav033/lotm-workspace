@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { ArtifactCardSchema, CharacterCardSchema } from './standard'
+import { GeneralExplanationCardSchema } from './explanations'
 import { CardContentSchema } from './content'
 
 export const UniverseInputSchema = z
@@ -21,6 +23,38 @@ export const SaveCardBatchSchema = z
     universe: UniverseInputSchema,
     part: PartInputSchema,
     cards: z.array(CardContentSchema).min(1).max(100).describe('Cartas que se agregaran en orden.'),
+  })
+  .strict()
+
+const PairSubjectSchema = z.discriminatedUnion('type', [
+  CharacterCardSchema.omit({ pairId: true, pairRole: true }),
+  ArtifactCardSchema.omit({ pairId: true, pairRole: true }),
+])
+
+const PairExplanationSchema = GeneralExplanationCardSchema.omit({
+  type: true,
+  pairId: true,
+  pairRole: true,
+})
+
+export const SaveCardPairSchema = z
+  .object({
+    universe: UniverseInputSchema,
+    part: PartInputSchema,
+    subject: PairSubjectSchema.describe('Personaje o artefacto que recibira una carta de fundamento.'),
+    explanation: PairExplanationSchema.describe(
+      'Carta enlazada que explica la evidencia y el razonamiento del sujeto; no una opinion sin respaldo.',
+    ),
+  })
+  .strict()
+
+export const LinkCardPairSchema = z
+  .object({
+    cardId: z.uuid().describe('ID de la carta Character o Artifact que recibira el fundamento.'),
+    subject: PairSubjectSchema.optional().describe('Estado mas reciente del sujeto enviado por el editor.'),
+    explanation: PairExplanationSchema.describe(
+      'Contenido de la nueva carta que explica la evidencia y el razonamiento del sujeto.',
+    ),
   })
   .strict()
 
@@ -88,4 +122,6 @@ export const ExportCardsSchema = CardFilterSchema.extend({
 })
 
 export type SaveCardBatchInput = z.infer<typeof SaveCardBatchSchema>
+export type SaveCardPairInput = z.infer<typeof SaveCardPairSchema>
+export type LinkCardPairInput = z.infer<typeof LinkCardPairSchema>
 export type CardFilter = z.infer<typeof CardFilterSchema>

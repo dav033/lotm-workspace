@@ -34,6 +34,7 @@ export function useEditorController() {
   const [seconds, setSeconds] = useState(4)
   const stateRef = useRef(state)
   const editingIdRef = useRef(editingId)
+  const pendingEditingId = useRef(null)
   stateRef.current = state
   editingIdRef.current = editingId
 
@@ -96,7 +97,11 @@ export function useEditorController() {
 
   useEffect(() => {
     if (!ready) return
-    if (editingId && cards.some((card) => card.id === editingId)) return
+    if (editingId && cards.some((card) => card.id === editingId)) {
+      if (pendingEditingId.current === editingId) pendingEditingId.current = null
+      return
+    }
+    if (pendingEditingId.current === editingId) return
     const fallback = cards[0] ?? null
     setEditingId(fallback?.id ?? null)
     if (fallback) {
@@ -148,6 +153,16 @@ export function useEditorController() {
     setEditingId(id)
     stateRef.current = fresh
     setState(fresh)
+  }
+
+  const onCreateCardPair = async () => {
+    const current = stateRef.current
+    if (current.type !== 'Character' && current.type !== 'Artifact') return
+    if (current.pairId) return
+    const result = await session.createCardPair(current, targetForNewCard(), editingIdRef.current)
+    if (!result) return
+    pendingEditingId.current = result.explanationId
+    setEditingId(result.explanationId)
   }
 
   const onLoadCard = (id) => {
@@ -307,7 +322,7 @@ export function useEditorController() {
     openProjectIds, activeProjectId, editingId, editingIndex, state, accent: accentForState(state),
     filmstrip, sectionCount: new Set(cards.map((card) => card.part.id)).size,
     busy, videoError, seconds, setSeconds, set, setActiveProjectId: projectTabs.setActiveId,
-    onOpenProject, onCloseProject, onCreateProject, onStep, onNewCard, onLoadCard,
+    onOpenProject, onCloseProject, onCreateProject, onStep, onNewCard, onCreateCardPair, onLoadCard,
     onRemoveFromBatch, onReorder, onUploadImage, onDropImages, onDropBackground,
     onDownload, onDownloadZip, onDownloadSection, onDownloadSectionVideo, onExportImagesVideo,
     onGenerateTierBatch,

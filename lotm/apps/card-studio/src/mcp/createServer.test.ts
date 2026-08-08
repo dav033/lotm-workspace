@@ -25,7 +25,7 @@ test('expone herramientas MCP para guardar y consultar cartas', async (t) => {
   const tools = await client.listTools()
   assert.deepEqual(
     tools.tools.map(({ name }) => name).sort(),
-    ['delete_cards', 'export_cards_zip', 'list_card_library', 'move_cards', 'save_card_batch', 'save_card_image', 'update_card'],
+    ['delete_cards', 'export_cards_zip', 'list_card_library', 'move_cards', 'save_card_batch', 'save_card_image', 'save_card_pair', 'update_card'],
   )
 
   const saved = await client.callTool({
@@ -111,4 +111,31 @@ test('expone herramientas MCP para guardar y consultar cartas', async (t) => {
     },
   })
   assert.equal(inline.isError, true, 'el base64 en linea se rechaza')
+
+  const pair = await client.callTool({
+    name: 'save_card_pair',
+    arguments: {
+      universe: { name: 'LOTM' },
+      part: { name: 'Character rationale', number: 1 },
+      subject: {
+        type: 'Character',
+        name: 'Amon',
+        pathway: 'Error',
+        sequence: 0,
+        power: 'True God',
+      },
+      explanation: {
+        title: 'Why Amon fits Error',
+        description: 'The canon evidence and pathway mechanics support the assignment.',
+        sequence: 0,
+        pathway: 'Error',
+      },
+    },
+  })
+  assert.equal(pair.isError, undefined)
+  const pairResult = readText(pair)
+  assert.equal(pairResult.saved, 2)
+  assert.equal(pairResult.cards[0].pairRole, 'subject')
+  assert.equal(pairResult.cards[1].pairRole, 'explanation')
+  assert.equal(pairResult.cards[0].pairId, pairResult.cards[1].pairId)
 })

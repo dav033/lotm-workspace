@@ -6,6 +6,7 @@ import {
   ListCardLibrarySchema,
   MoveCardsSchema,
   SaveCardBatchSchema,
+  SaveCardPairSchema,
   SaveCardImageSchema,
   UpdateCardSchema,
 } from '../domain/schema'
@@ -38,6 +39,8 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         '(las "partes"), que son los grupos en que se divide un universo. ' +
         'Guarda contenido textual y referencias de imagen en un SQLite separado; nunca guarda binarios en la base. ' +
         'Flujo recomendado: save_card_batch, list_card_library y export_cards_zip. ' +
+        'Para crear una asignacion con su fundamento en una sola operacion usa save_card_pair: guarda una carta ' +
+        'Character o Artifact seguida por una General Explanation enlazada mediante el mismo pairId. ' +
         'Para dividir o reagrupar cartas que ya existen usa move_cards: crea la seccion destino si hace falta y ' +
         'conserva los ids, asi que nunca hay que borrar y volver a crear para reorganizar. ' +
         'Para usar una imagen propia (generada o local) llama antes a save_card_image y pon la ruta que ' +
@@ -93,6 +96,29 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         saved: cards.length,
         cards: cards.map(cardSummary),
       }
+    }),
+  )
+
+  server.registerTool(
+    'save_card_pair',
+    {
+      title: 'Guardar carta y fundamento enlazados',
+      description:
+        'Crea dos cartas consecutivas y enlazadas: un Character o Artifact y una General Explanation. ' +
+        'La segunda debe explicar la evidencia, la logica y el alcance de la asignacion, no limitarse a una opinion. ' +
+        'Ambas cartas reciben el mismo pairId y los roles subject y explanation, respectivamente.',
+      inputSchema: SaveCardPairSchema,
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: false,
+      },
+    },
+    async (input) => runTool(() => {
+      const cards = repository.saveCardPair(input)
+      openLiveViewOnce()
+      return { saved: cards.length, cards: cards.map(cardSummary) }
     }),
   )
 
@@ -268,6 +294,7 @@ async function runTool(work: () => unknown | Promise<unknown>): Promise<CallTool
 }
 
 function cardSummary(card: StoredCard) {
+  const linkedContent = 'pairId' in card.content && card.content.pairId ? card.content : null
   return {
     id: card.id,
     position: card.position,
@@ -275,5 +302,11 @@ function cardSummary(card: StoredCard) {
     title: card.title,
     universe: card.universe.name,
     part: card.part.name,
+    ...(linkedContent
+      ? {
+          pairId: linkedContent.pairId,
+          pairRole: linkedContent.pairRole,
+        }
+      : {}),
   }
 }

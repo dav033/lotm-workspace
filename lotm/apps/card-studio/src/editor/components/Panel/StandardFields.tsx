@@ -5,8 +5,11 @@ import { PATHWAYS, PATH_NAMES, TIER_RANKS, TIER_RANK_NAMES } from '../../../doma
 import { PATHWAY_BACKGROUNDS } from '../../../domain/pathwayBackgrounds'
 import { BackgroundField, PathwayCombo, SeqSelect } from './primitives'
 
-export default function StandardFields({ state, set, accent, onUploadImage, onDownload, onGenerateTierBatch, defaultTierBackground, defaultPathwayCardBackground }) {
+export default function StandardFields({ state, set, accent, onUploadImage, onDownload, onGenerateTierBatch, defaultTierBackground, defaultPathwayCardBackground, onCreateCardPair, onLoadCard, cards = [], currentCardId }) {
   const fileRef = useRef(null)
+  const linkedCard = state.pairId
+    ? cards.find((card) => card.id !== currentCardId && card.state?.pairId === state.pairId)
+    : null
   return (
           <div key="stat-fields">
             <div className="field">
@@ -94,6 +97,22 @@ export default function StandardFields({ state, set, accent, onUploadImage, onDo
               <div className="lrow"><span className="sw" style={{ background: '#46c2a0' }} />Seq 6–4 · Mid</div>
               <div className="lrow"><span className="sw" style={{ background: '#b07ce0' }} />Seq 3–1 · High (Angel)</div>
               <div className="lrow"><span className="sw" style={{ background: '#e8c36b' }} />Seq 0 · Apex (God)</div>
+            </div>
+
+            <div className="linked-card-box">
+              <div className="linked-card-title">Assignment rationale</div>
+              <p className="field-help">
+                Keep the subject card and a second card with the canon, mechanism, and limits behind the assignment.
+              </p>
+              {linkedCard ? (
+                <button type="button" className="btn-img" onClick={() => onLoadCard(linkedCard.id)}>
+                  Open linked explanation
+                </button>
+              ) : (
+                <button type="button" className="btn-img" onClick={onCreateCardPair} disabled={Boolean(state.pairId)}>
+                  Create linked explanation
+                </button>
+              )}
             </div>
   
             <div className="actions">
