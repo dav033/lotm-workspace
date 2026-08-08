@@ -42,6 +42,7 @@ export const SimpleExplanationCardSchema = z
     position: z.enum(['top', 'center', 'bottom']).default('center').describe(
       'Distribucion vertical del texto dentro de la carta.',
     ),
+    ...FontSizeOverridesField,
   })
   .refine((card) => card.fontSizeMin <= card.fontSizeMax, {
     path: ['fontSizeMin'],
@@ -108,6 +109,7 @@ export const MapCardSchema = z
       'Imagen de fondo propia. Tiene prioridad sobre el fondo que aporta el pathway.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 

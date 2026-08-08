@@ -29,5 +29,8 @@ export function fontSizeCss(
   role: string,
 ): CSSProperties | undefined {
   const fontSize = sizes?.[role]
-  return fontSize === undefined ? undefined : { fontSize: `${fontSize}px` }
+  if (fontSize !== undefined) return { fontSize: `${fontSize}px` }
+
+  const scale = sizes?.all
+  return scale === undefined || scale === 100 ? undefined : { zoom: scale / 100 }
 }

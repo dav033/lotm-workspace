@@ -1,5 +1,6 @@
 import React, { forwardRef } from 'react'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 export type SimpleExplanationPosition = 'top' | 'center' | 'bottom'
 
@@ -23,7 +24,7 @@ export function simpleExplanationFontSize(
 }
 
 const SimpleExplanationCard = forwardRef<HTMLElement, CardUiProps>(function SimpleExplanationCard(
-  { text, fontSizeMin, fontSizeMax, position },
+  { text, fontSizeMin, fontSizeMax, position, fontSizes },
   ref,
 ) {
   const displayText = text || 'Add the explanation in the editor panel.'
@@ -41,7 +42,7 @@ const SimpleExplanationCard = forwardRef<HTMLElement, CardUiProps>(function Simp
       <div className="frame" aria-hidden="true" />
       <div className="scanlines" aria-hidden="true" />
       <div className="simple-explanation-content">
-        <p className="simple-explanation-text">{displayText}</p>
+        <p className="simple-explanation-text" style={fontSizeCss(fontSizes, 'body')}>{displayText}</p>
       </div>
     </article>
   )

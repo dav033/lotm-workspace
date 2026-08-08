@@ -613,11 +613,7 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
 
 export function fromBuilderCardState(state: BuilderCardState): CardContent {
   const content = fromBuilderCardStateBase(state)
-  if (
-    content.type === 'Map' ||
-    content.type === 'Simple Explanation' ||
-    Object.keys(state.fontSizes).length === 0
-  ) return content
+  if (Object.keys(state.fontSizes).length === 0) return content
 
   return { ...content, fontSizes: state.fontSizes } as CardContent
 }
