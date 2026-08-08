@@ -34,7 +34,7 @@ El schema de Prisma es genérico: `Element`, `Pathway`, `Sequence`, `Recipe`, `R
 
 ## Sistema de contenido para TikTok (separado del juego)
 
-`apps/card-studio` + MCP `lotm-card-studio`: genera imágenes PNG 960×1280 (formato TikTok) organizadas por universo/parte. El contrato MCP queda congelado en siete herramientas: `save_card_batch`, `list_card_library`, `update_card`, `save_card_image`, `move_cards`, `delete_cards` y `export_cards_zip`. Este sistema **sí** usa nombres/branding explícito de LOTM — es marketing de contenido, no el juego en sí, y es una decisión consciente separada.
+`apps/card-studio` + MCP `lotm-card-studio`: genera imágenes PNG 960×1280 (formato TikTok) organizadas por universo/parte. El contrato MCP actual tiene ocho herramientas: `save_card_batch`, `save_card_pair`, `list_card_library`, `update_card`, `save_card_image`, `move_cards`, `delete_cards` y `export_cards_zip`. `save_card_pair` crea una carta `Character` o `Artifact` y su `General Explanation` enlazada mediante un `pairId` común. El editor también puede enlazar una carta existente sin duplicarla. El detalle editorial y el flujo están en [[Guía de pares de cartas]]. Este sistema **sí** usa nombres/branding explícito de LOTM, es marketing de contenido, no el juego en sí, y es una decisión consciente separada.
 
 La carta `Map` acepta `textStyles` opcionales por rol (`title`, `label`, `value`, `footer`). Cada rol puede definir `fontFamily`, `fontSize`, `fontWeight`, `lineHeight`, `letterSpacing`, `color` y `textTransform`; tanto `save_card_batch` como `update_card` pueden escribirlos. El editor ofrece el mismo control reutilizable y lo aplica al preview y al PNG exportado.
 

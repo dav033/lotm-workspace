@@ -258,3 +258,10 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Se documentó el contrato MCP vigente de `lotm-card-studio`: siete herramientas congeladas para guardar, listar, actualizar, mover, borrar, guardar imágenes y exportar cartas.
 - Las cartas `Map` ahora pueden persistir `textStyles` por rol (`title`, `label`, `value`, `footer`) desde `save_card_batch` y `update_card`, con controles de fuente, tamaño, peso, altura, espaciado, color y transformación de texto en el editor.
 - El Card Studio restaura después de una recarga el proyecto activo, los proyectos abiertos y la carta seleccionada mediante almacenamiento local del navegador; el contenido sigue en SQLite y las imágenes siguen en almacenamiento de archivos.
+
+## 2026-08-08 — Pares de cartas para justificar asignaciones
+
+- Se fijó el patrón `subject` + `explanation` para las asignaciones de personajes y artefactos. La carta principal conserva la identidad, pathway y sequence; la segunda explica la evidencia, el mecanismo y los límites de la lectura.
+- Card Studio enlaza una carta existente sin duplicarla. La explicación se inserta justo después, comparte pathway, sequence y `backgroundOpacity`, y el editor ofrece navegación en ambos sentidos.
+- El vínculo se guarda con un `pairId` común y un `pairRole` (`subject` o `explanation`) dentro del contenido JSON. MCP expone `save_card_pair` para crear un par nuevo en una sola operación.
+- El contrato y el uso quedan documentados en [[Guía de pares de cartas]].
