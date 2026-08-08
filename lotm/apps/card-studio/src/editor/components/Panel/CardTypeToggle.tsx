@@ -32,9 +32,10 @@ const CARD_TYPE_GROUPS = [
   { label: 'Cover', types: [CARD_TYPES[2], CARD_TYPES[3]] },
 ]
 
-function selectType(cardType: BuilderCardState['type'], set: Props['set']) {
+function selectType(cardType: BuilderCardState['type'], currentType: BuilderCardState['type'], set: Props['set']) {
   set({
     type: cardType,
+    ...(cardType === currentType ? {} : { fontSizes: {} }),
     ...(cardType === 'Tier Explanation' ? { explanationPath: null } : {}),
   })
 }
@@ -42,7 +43,7 @@ function selectType(cardType: BuilderCardState['type'], set: Props['set']) {
 export default function CardTypeToggle({ type, set }: Props) {
   return (
     <>
-      <select className="type-select" value={type} onChange={(event) => selectType(event.target.value as BuilderCardState['type'], set)}>
+      <select className="type-select" value={type} onChange={(event) => selectType(event.target.value as BuilderCardState['type'], type, set)}>
         {CARD_TYPE_GROUPS.map((group) => (
           <optgroup key={group.label} label={group.label}>
             {group.types.map((cardType) => <option key={cardType} value={cardType}>{cardType}</option>)}
@@ -59,7 +60,7 @@ export default function CardTypeToggle({ type, set }: Props) {
                   key={cardType}
                   type="button"
                   className={'seg' + (type === cardType ? ' sel' : '')}
-                  onClick={() => selectType(cardType, set)}
+                  onClick={() => selectType(cardType, type, set)}
                 >
                   {cardType}
                 </button>

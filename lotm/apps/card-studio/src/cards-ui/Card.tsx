@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { forwardRef } from 'react'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const Card = forwardRef<HTMLDivElement, CardUiProps>(function Card(
-  { name, image, accent, sequences, pathLabel, dom, powerLabel, powerValue, onUploadImage, onDropImages }: CardUiProps,
+  { name, image, accent, sequences, pathLabel, dom, powerLabel, powerValue, fontSizes, onUploadImage, onDropImages }: CardUiProps,
   ref
 ) {
   const cardStyle = { '--tier': accent.c, '--tier-deep': accent.d }
@@ -23,7 +24,7 @@ const Card = forwardRef<HTMLDivElement, CardUiProps>(function Card(
       <div className="frame" />
       <div className="scanlines" />
       <div className="content">
-        <div className="name">{(name || ' ').toUpperCase()}</div>
+        <div className="name" style={fontSizeCss(fontSizes, 'name')}>{(name || ' ').toUpperCase()}</div>
 
         <div
           className={'imgwrap' + (image ? '' : ' empty')}
@@ -33,7 +34,7 @@ const Card = forwardRef<HTMLDivElement, CardUiProps>(function Card(
           onDrop={handleDrop}
         >
           {!image && (
-            <span className="ph">
+            <span className="ph" style={fontSizeCss(fontSizes, 'placeholder')}>
               Drop or upload image — drop several to batch-create cards
             </span>
           )}
@@ -43,19 +44,19 @@ const Card = forwardRef<HTMLDivElement, CardUiProps>(function Card(
         <div className={'seqhero' + (dual ? ' dual' : '')}>
           {sequences.map((s: any, i: number) => (
             <div className="seqitem" key={i}>
-              <div className="num" style={{ color: s.tier.c, textShadow: `0 0 26px ${s.tier.d}` }}>
+              <div className="num" style={{ color: s.tier.c, textShadow: `0 0 26px ${s.tier.d}`, ...fontSizeCss(fontSizes, 'sequenceNumber') }}>
                 {s.seq}
               </div>
               <img className="seqicon" src={s.icon} alt={s.path} />
-              <div className="seqname">{s.rank}</div>
+              <div className="seqname" style={fontSizeCss(fontSizes, 'sequenceName')}>{s.rank}</div>
             </div>
           ))}
         </div>
 
         <div className="stats">
-          <div className="row"><span className="k">Pathway</span><span className="v">{pathLabel}</span></div>
-          <div className="row"><span className="k">Alter Domain</span><span className="v">{dom}</span></div>
-          <div className="row"><span className="k">{powerLabel}</span><span className="v">{powerValue}</span></div>
+          <div className="row"><span className="k" style={fontSizeCss(fontSizes, 'label')}>Pathway</span><span className="v" style={fontSizeCss(fontSizes, 'value')}>{pathLabel}</span></div>
+          <div className="row"><span className="k" style={fontSizeCss(fontSizes, 'label')}>Alter Domain</span><span className="v" style={fontSizeCss(fontSizes, 'value')}>{dom}</span></div>
+          <div className="row"><span className="k" style={fontSizeCss(fontSizes, 'label')}>{powerLabel}</span><span className="v" style={fontSizeCss(fontSizes, 'value')}>{powerValue}</span></div>
         </div>
 
         <div className="progress">

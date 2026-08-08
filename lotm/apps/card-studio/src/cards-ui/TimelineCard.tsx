@@ -1,6 +1,8 @@
 import React, { forwardRef } from 'react'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
+import type { FontSizeOverrides } from '../domain/schema'
+import { fontSizeCss } from './textStyle'
 
 // Alto util de la espina: la carta mide 640 y el contenido reserva 26 arriba y
 // 22 abajo. Si cambia el padding de .timeline-content, cambia esta constante.
@@ -27,6 +29,7 @@ type TimelineCardProps = {
   icon?: string
   tier?: { c: string; d: string }
   backgroundImage?: string | null
+  fontSizes?: FontSizeOverrides
   backgroundOpacity?: number
   onDropBackground?: (file: File) => void
 }
@@ -36,7 +39,7 @@ const pad = (value: number) => String(value).padStart(2, '0')
 const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function TimelineCard({
   variant = 'Beat', pathway, era, kicker, title, text, step = 1, total = 11,
   certainty = 'Canon', note, moves = [], footerText, ghost, icon, tier,
-  backgroundImage, backgroundOpacity = 25, onDropBackground,
+  fontSizes, backgroundImage, backgroundOpacity = 25, onDropBackground,
 }, ref) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const mode: TimelineVariant = VARIANTS.includes(variant) ? variant : 'Beat'
@@ -81,7 +84,7 @@ const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function Timelin
         </div>
       )}
       <div className="timeline-content">
-        <header className="timeline-head">
+        <header className="timeline-head" style={fontSizeCss(fontSizes, 'meta')}>
           <span>{pathway ? pathway + ' pathway' : 'Timeline'}</span>
           <span className="timeline-step">
             {mode === 'Open' ? 'Timeline' : mode === 'Arc' ? 'Summary' : pad(current) + ' / ' + pad(steps)}
@@ -92,44 +95,44 @@ const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function Timelin
           <>
             <div className="timeline-hero">
               {icon && <div className="timeline-medallion"><img src={icon} alt="" /></div>}
-              {kicker && <span className="timeline-kicker">{kicker}</span>}
-              <h2 className={'timeline-title ' + size}>{title}</h2>
+              {kicker && <span className="timeline-kicker" style={fontSizeCss(fontSizes, 'kicker')}>{kicker}</span>}
+              <h2 className={'timeline-title ' + size} style={fontSizeCss(fontSizes, 'title')}>{title}</h2>
               <div className="timeline-rule" aria-hidden="true" />
-              {text && <p className="timeline-text">{text}</p>}
+              {text && <p className="timeline-text" style={fontSizeCss(fontSizes, 'body')}>{text}</p>}
             </div>
-            {footerText && <span className="timeline-foot">{footerText}</span>}
+            {footerText && <span className="timeline-foot" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</span>}
           </>
         )}
 
         {withSpine && (
           <>
             {mode === 'Turn' && <div className="timeline-spacer" />}
-            {era && <span className="timeline-era">{era}</span>}
-            <h2 className={'timeline-title ' + size}>{title}</h2>
+            {era && <span className="timeline-era" style={fontSizeCss(fontSizes, 'era')}>{era}</span>}
+            <h2 className={'timeline-title ' + size} style={fontSizeCss(fontSizes, 'title')}>{title}</h2>
             <div className="timeline-rule" aria-hidden="true" />
-            {text && <p className="timeline-text">{text}</p>}
+            {text && <p className="timeline-text" style={fontSizeCss(fontSizes, 'body')}>{text}</p>}
             {mode === 'Beat' && <div className="timeline-spacer" />}
             <div className="timeline-source">
-              <span className="timeline-certainty">{certainty}</span>
-              {note && <p className="timeline-note">{note}</p>}
+              <span className="timeline-certainty" style={fontSizeCss(fontSizes, 'meta')}>{certainty}</span>
+              {note && <p className="timeline-note" style={fontSizeCss(fontSizes, 'note')}>{note}</p>}
             </div>
           </>
         )}
 
         {mode === 'Arc' && (
           <>
-            <h2 className={'timeline-title ' + size}>{title}</h2>
+            <h2 className={'timeline-title ' + size} style={fontSizeCss(fontSizes, 'title')}>{title}</h2>
             <div className="timeline-rule" aria-hidden="true" />
             <div className="timeline-moves">
               {moves.slice(0, 4).map((move, index) => (
                 <section className="timeline-move" key={move}>
-                  <span className="timeline-move-node" aria-hidden="true">{ROMAN[index]}</span>
-                  <p>{move}</p>
+                  <span className="timeline-move-node" aria-hidden="true" style={fontSizeCss(fontSizes, 'meta')}>{ROMAN[index]}</span>
+                  <p style={fontSizeCss(fontSizes, 'move')}>{move}</p>
                 </section>
               ))}
             </div>
             <div className="timeline-spacer" />
-            {footerText && <p className="timeline-footer">{footerText}</p>}
+            {footerText && <p className="timeline-footer" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>}
           </>
         )}
       </div>

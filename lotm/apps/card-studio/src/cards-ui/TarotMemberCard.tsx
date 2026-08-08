@@ -2,11 +2,12 @@ import React, { forwardRef } from 'react'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const TarotMemberCard = forwardRef<HTMLElement, CardUiProps>(function TarotMemberCard(
   {
     variant = 'Portrait', name, tarotTitle, description, detailLabel, detailText,
-    footerText, image = null, backgroundOpacity = 65, tier = null, onDropBackground,
+    footerText, fontSizes, image = null, backgroundOpacity = 65, tier = null, onDropBackground,
   }: CardUiProps,
   ref,
 ) {
@@ -32,41 +33,41 @@ const TarotMemberCard = forwardRef<HTMLElement, CardUiProps>(function TarotMembe
 
       <div className="tarot-member-content">
         <header className="tarot-member-head">
-          <span className="tarot-member-chip">Tarot Club</span>
-          <span className="tarot-member-mode">{mode}</span>
+          <span className="tarot-member-chip" style={fontSizeCss(fontSizes, 'meta')}>Tarot Club</span>
+          <span className="tarot-member-mode" style={fontSizeCss(fontSizes, 'meta')}>{mode}</span>
         </header>
 
-        {mode === 'Dossier' && <span className="tarot-member-stamp">Restricted</span>}
+        {mode === 'Dossier' && <span className="tarot-member-stamp" style={fontSizeCss(fontSizes, 'meta')}>Restricted</span>}
 
         <div className="tarot-member-title-block">
-          <p className="tarot-member-tarot">{tarotTitle || 'Tarot title'}</p>
-          <h2 className={`ficha-name tarot-member-name ${titleSizeClass(name || 'Member name')}`}>{name || 'Member name'}</h2>
+          <p className="tarot-member-tarot" style={fontSizeCss(fontSizes, 'tarotTitle')}>{tarotTitle || 'Tarot title'}</p>
+          <h2 className={`ficha-name tarot-member-name ${titleSizeClass(name || 'Member name')}`} style={fontSizeCss(fontSizes, 'name')}>{name || 'Member name'}</h2>
         </div>
 
         {mode === 'Contrast' ? (
           <div className="tarot-member-contrast-grid">
             <section>
-              <span className="tarot-member-label">What the Club sees</span>
-              <p>{description || 'The public impression.'}</p>
+              <span className="tarot-member-label" style={fontSizeCss(fontSizes, 'label')}>What the Club sees</span>
+              <p style={fontSizeCss(fontSizes, 'body')}>{description || 'The public impression.'}</p>
             </section>
             <section>
-              <span className="tarot-member-label">{detailLabel || 'What is actually happening'}</span>
-              <p>{detailText || 'The truth behind the performance.'}</p>
+              <span className="tarot-member-label" style={fontSizeCss(fontSizes, 'label')}>{detailLabel || 'What is actually happening'}</span>
+              <p style={fontSizeCss(fontSizes, 'detail')}>{detailText || 'The truth behind the performance.'}</p>
             </section>
           </div>
         ) : (
           <div className="tarot-member-copy">
-            <p className="tarot-member-description">{description || 'A concise, accurate character description.'}</p>
+            <p className="tarot-member-description" style={fontSizeCss(fontSizes, 'body')}>{description || 'A concise, accurate character description.'}</p>
             {detailText && (
               <div className="tarot-member-detail">
-                <span className="tarot-member-label">{detailLabel || 'Club function'}</span>
-                <p>{detailText}</p>
+                <span className="tarot-member-label" style={fontSizeCss(fontSizes, 'label')}>{detailLabel || 'Club function'}</span>
+                <p style={fontSizeCss(fontSizes, 'detail')}>{detailText}</p>
               </div>
             )}
           </div>
         )}
 
-        {footerText && <p className="tarot-member-footer">{footerText}</p>}
+        {footerText && <p className="tarot-member-footer" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>}
       </div>
     </article>
   )

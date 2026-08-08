@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 // El texto entre *asteriscos* se resalta en el color del tier; el resto queda
 // en blanco. Solo una palabra o frase clave lleva color.
@@ -14,7 +15,7 @@ function renderHighlightedTitle(title: string) {
 }
 
 const PathwayExplanationCard = forwardRef<HTMLElement, CardUiProps>(function PathwayExplanationCard(
-  { pathway, index, total, title, description, backgroundImage = null, backgroundOpacity = 65, tier = null, onDropBackground }: CardUiProps,
+  { pathway, index, total, title, description, fontSizes, backgroundImage = null, backgroundOpacity = 65, tier = null, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -46,13 +47,13 @@ const PathwayExplanationCard = forwardRef<HTMLElement, CardUiProps>(function Pat
       )}
       <div className="pathway-explanation-content">
         <header className="pathway-explanation-head">
-          <span className="pathway-explanation-chip">{pathway}</span>
-          <span className="pathway-explanation-counter">{index} / {total} PATHWAYS</span>
+          <span className="pathway-explanation-chip" style={fontSizeCss(fontSizes, 'meta')}>{pathway}</span>
+          <span className="pathway-explanation-counter" style={fontSizeCss(fontSizes, 'meta')}>{index} / {total} PATHWAYS</span>
         </header>
-        <h2 className={`ficha-name pathway-explanation-title ${size}`}>
+        <h2 className={`ficha-name pathway-explanation-title ${size}`} style={fontSizeCss(fontSizes, 'title')}>
           {renderHighlightedTitle(shown)}
         </h2>
-        <p className="pathway-explanation-description">
+        <p className="pathway-explanation-description" style={fontSizeCss(fontSizes, 'body')}>
           {description || 'Add the explanation in the editor panel.'}
         </p>
         <div className="pathway-explanation-rule" aria-hidden="true" />

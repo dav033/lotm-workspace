@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import type { TextStyle } from '../domain/schema'
+import type { FontSizeOverrides, TextStyle } from '../domain/schema'
 
 const FONT_FALLBACKS: Record<NonNullable<TextStyle['fontFamily']>, string> = {
   Archivo: 'Arial, sans-serif',
@@ -22,4 +22,12 @@ export function textStyleCss(style?: TextStyle): CSSProperties {
   if (style.color) css.color = style.color
   if (style.textTransform) css.textTransform = style.textTransform
   return css
+}
+
+export function fontSizeCss(
+  sizes: FontSizeOverrides | undefined,
+  role: string,
+): CSSProperties | undefined {
+  const fontSize = sizes?.[role]
+  return fontSize === undefined ? undefined : { fontSize: `${fontSize}px` }
 }

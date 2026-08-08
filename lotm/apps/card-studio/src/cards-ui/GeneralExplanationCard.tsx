@@ -1,10 +1,11 @@
 import React, { forwardRef } from 'react'
 import { useBackgroundDrop } from './useBackgroundDrop'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const GeneralExplanationCard = forwardRef<HTMLElement, CardUiProps>(function GeneralExplanationCard(
   {
-    title, description, scope, pathway = null, icon = null,
+    title, description, scope, pathway = null, icon = null, fontSizes,
     backgroundImage = null, backgroundOpacity = 65, onDropBackground,
   }: CardUiProps,
   ref,
@@ -53,14 +54,14 @@ const GeneralExplanationCard = forwardRef<HTMLElement, CardUiProps>(function Gen
                 height="44"
               />
             )}
-            <span className="general-explanation-pathname">{pathway}</span>
+            <span className="general-explanation-pathname" style={fontSizeCss(fontSizes, 'pathway')}>{pathway}</span>
           </header>
         )}
-        <h2 className="general-explanation-title">{title || 'Explanation title'}</h2>
+        <h2 className="general-explanation-title" style={fontSizeCss(fontSizes, 'title')}>{title || 'Explanation title'}</h2>
         <div className="general-explanation-rule" aria-hidden="true" />
         <div className="general-explanation-body">
           {paragraphs.map((block: string, index: number) => (
-            <p className="general-explanation-description" key={index}>{block}</p>
+            <p className="general-explanation-description" key={index} style={fontSizeCss(fontSizes, 'body')}>{block}</p>
           ))}
         </div>
       </div>

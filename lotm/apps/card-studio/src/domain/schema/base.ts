@@ -4,6 +4,7 @@ import {
   POWER_LEVELS,
   TIER_RANK_NAMES,
 } from '../pathways'
+import { FontSizeOverridesField } from './fontSizes'
 
 const enumFrom = (values: string[]) => z.enum(values as [string, ...string[]])
 
@@ -53,6 +54,7 @@ export const SharedStandardCardSchema = z.object({
   modifier: z.string().trim().max(80).optional().describe('Modificador opcional del poder o grado.'),
   alterDomain: z.string().trim().max(120).optional().describe('Dominio alternativo; por defecto, None.'),
   imageUrl: ImageSourceSchema.optional().describe('Ilustracion principal opcional.'),
+  ...FontSizeOverridesField,
 })
 
 export const MapEntrySchema = z

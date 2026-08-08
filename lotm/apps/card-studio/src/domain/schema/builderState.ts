@@ -1,6 +1,7 @@
 import { parseMapEntries } from '../mapEntries'
 import type { CardContent } from './content'
 import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
+import type { FontSizeOverrides } from './fontSizes'
 
 export type BuilderCardState = {
   type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
@@ -106,6 +107,7 @@ export type BuilderCardState = {
   timelineGhost: string
   timelineFooterText: string
   timelineBackgroundImage: string | null
+  fontSizes: FontSizeOverrides
   backgroundOpacity: number
 }
 
@@ -213,6 +215,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   timelineGhost: '',
   timelineFooterText: '',
   timelineBackgroundImage: null,
+  fontSizes: {},
   backgroundOpacity: 65,
 }
 
@@ -220,6 +223,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
   const state = {
     ...DEFAULT_BUILDER_STATE,
     type: content.type,
+    fontSizes: 'fontSizes' in content ? content.fontSizes ?? {} : {},
     backgroundOpacity: 'backgroundOpacity' in content ? content.backgroundOpacity ?? 65 : 65,
   }
 
@@ -417,7 +421,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
   }
 }
 
-export function fromBuilderCardState(state: BuilderCardState): CardContent {
+function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
   if (state.type === 'Cover') {
     return {
       type: 'Cover',
@@ -605,4 +609,15 @@ export function fromBuilderCardState(state: BuilderCardState): CardContent {
   }
   if (state.type === 'Character') return { ...standard, type: 'Character', power: state.power }
   return { ...standard, type: 'Artifact', grade: state.grade as '0' | '1' | '2' | '3' | '4' | '5' }
+}
+
+export function fromBuilderCardState(state: BuilderCardState): CardContent {
+  const content = fromBuilderCardStateBase(state)
+  if (
+    content.type === 'Map' ||
+    content.type === 'Simple Explanation' ||
+    Object.keys(state.fontSizes).length === 0
+  ) return content
+
+  return { ...content, fontSizes: state.fontSizes } as CardContent
 }

@@ -6,6 +6,7 @@ import {
   PathwayNameSchema,
 } from './base'
 import { MapTextStylesSchema } from './textStyles'
+import { FontSizeOverridesField } from './fontSizes'
 
 export const GeneralExplanationCardSchema = z
   .object({
@@ -22,6 +23,7 @@ export const GeneralExplanationCardSchema = z
       'Imagen de fondo propia. Si se omite y hay pathway, la carta usa el arte de ese pathway.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 
@@ -59,6 +61,7 @@ export const PathwayExplanationCardSchema = z
       'Imagen de fondo propia. Si se omite, la carta usa el arte de su pathway.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 
@@ -81,6 +84,7 @@ export const BreakdownCardSchema = z
       'Imagen de fondo opcional, mostrada bajo un velo oscuro.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 
@@ -129,5 +133,6 @@ export const TarotMemberCardSchema = z
     ),
     imageUrl: ImageSourceSchema.optional().describe('Retrato o arte de fondo opcional.'),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()

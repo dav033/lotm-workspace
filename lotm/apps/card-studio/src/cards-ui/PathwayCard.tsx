@@ -1,11 +1,12 @@
 import React, { forwardRef } from 'react'
 import { parseTierText } from '../domain/tierText'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 // Same layout as TierCard, minus the tier-rank signaling: no "Tier" label, no
 // rank letter. Accent color comes from PATHWAY_COLORS instead of TIER_RANKS.
 const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
-  { path, icon, sequence, sequenceName, text, footerText = '', backgroundImage = null, backgroundOpacity = 65, tier }: CardUiProps,
+  { path, icon, sequence, sequenceName, text, footerText = '', fontSizes, backgroundImage = null, backgroundOpacity = 65, tier }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
@@ -50,10 +51,10 @@ const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
             />
           </div>
           <div className="tier-identity">
-            <span className="tier-pathlabel">Pathway</span>
-            <p className="tier-path">{path}</p>
+            <span className="tier-pathlabel" style={fontSizeCss(fontSizes, 'pathwayLabel')}>Pathway</span>
+            <p className="tier-path" style={fontSizeCss(fontSizes, 'pathway')}>{path}</p>
             {sequence !== null && (
-              <p className="tier-sequence">Seq {sequence} · {sequenceName}</p>
+              <p className="tier-sequence" style={fontSizeCss(fontSizes, 'sequence')}>Seq {sequence} · {sequenceName}</p>
             )}
           </div>
         </header>
@@ -65,15 +66,15 @@ const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
           >
             {points.length ? (
               <ul className="tier-points">
-                {points.map((point, index) => <li key={index}>{point}</li>)}
+                {points.map((point, index) => <li key={index} style={fontSizeCss(fontSizes, 'points')}>{point}</li>)}
               </ul>
             ) : (
-              <p className="tier-empty">Add one explanation point per line in the panel.</p>
+              <p className="tier-empty" style={fontSizeCss(fontSizes, 'empty')}>Add one explanation point per line in the panel.</p>
             )}
           </section>
 
           {footerText && (
-            <p className={'tier-footer-text' + footerDensity}>{footerText}</p>
+            <p className={'tier-footer-text' + footerDensity} style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>
           )}
         </div>
 

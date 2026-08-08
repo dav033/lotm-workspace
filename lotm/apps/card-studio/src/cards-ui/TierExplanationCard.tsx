@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const TierExplanationCard = forwardRef<HTMLElement, CardUiProps>(function TierExplanationCard(
-  { rank, tier, description, scope, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
+  { rank, tier, description, scope, fontSizes, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
   ref,
 ) {
   const cardStyle = {
@@ -31,9 +32,9 @@ const TierExplanationCard = forwardRef<HTMLElement, CardUiProps>(function TierEx
       <div className="frame" aria-hidden="true" />
       <div className="scanlines" aria-hidden="true" />
       <div className="explanation-content tier-explanation-content">
-        <strong className="explanation-tier">{rank}</strong>
+        <strong className="explanation-tier" style={fontSizeCss(fontSizes, 'rank')}>{rank}</strong>
         <div className="tier-explanation-rule" aria-hidden="true" />
-        <p className="tier-explanation-description">
+        <p className="tier-explanation-description" style={fontSizeCss(fontSizes, 'body')}>
           {description || 'Add a short explanation for this tier.'}
         </p>
       </div>

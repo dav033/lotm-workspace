@@ -3,6 +3,7 @@ import { parseSequenceReach } from '../domain/sequencePips'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const SEQUENCES = 10
 
@@ -14,17 +15,17 @@ function splitKicker(kicker: string) {
   return { chip: head.trim(), aside: rest.join('·').trim() }
 }
 
-function Section({ label, text, highlight }: CardUiProps) {
+function Section({ label, text, highlight, fontSizes }: CardUiProps) {
   return (
     <div className={'breakdown-section' + (highlight ? ' breakdown-edge' : '')}>
-      <span className="breakdown-label">{label}</span>
-      <p className="breakdown-text">{text}</p>
+      <span className="breakdown-label" style={fontSizeCss(fontSizes, 'label')}>{label}</span>
+      <p className="breakdown-text" style={fontSizeCss(fontSizes, 'body')}>{text}</p>
     </div>
   )
 }
 
 const BreakdownCard = forwardRef<HTMLElement, CardUiProps>(function BreakdownCard(
-  { kicker, title, does, doesNot, edgeLabel, edgeText, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
+  { kicker, title, does, doesNot, edgeLabel, edgeText, fontSizes, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -56,16 +57,16 @@ const BreakdownCard = forwardRef<HTMLElement, CardUiProps>(function BreakdownCar
       {reach && <div className="breakdown-ghost" aria-hidden="true">{reach.full}</div>}
       <div className="breakdown-content">
         <header className="breakdown-head">
-          {chip && <span className="breakdown-chip">{chip}</span>}
-          {aside && <span className="breakdown-aside">{aside}</span>}
+          {chip && <span className="breakdown-chip" style={fontSizeCss(fontSizes, 'meta')}>{chip}</span>}
+          {aside && <span className="breakdown-aside" style={fontSizeCss(fontSizes, 'meta')}>{aside}</span>}
         </header>
-        <h2 className={`ficha-name breakdown-title ${titleSizeClass(title || 'Concept name')}`}>
+        <h2 className={`ficha-name breakdown-title ${titleSizeClass(title || 'Concept name')}`} style={fontSizeCss(fontSizes, 'title')}>
           {title || 'Concept name'}
         </h2>
         <div className="breakdown-sections">
-          <Section label="Does" text={does || 'What this does.'} />
-          <Section label="Doesn't" text={doesNot || "What this doesn't do."} />
-          <Section label={edgeLabel || 'Edge'} text={edgeText || 'The key nuance.'} highlight />
+          <Section label="Does" text={does || 'What this does.'} fontSizes={fontSizes} />
+          <Section label="Doesn't" text={doesNot || "What this doesn't do."} fontSizes={fontSizes} />
+          <Section label={edgeLabel || 'Edge'} text={edgeText || 'The key nuance.'} highlight fontSizes={fontSizes} />
         </div>
         {reach && (
           <div className="breakdown-pips" aria-hidden="true">

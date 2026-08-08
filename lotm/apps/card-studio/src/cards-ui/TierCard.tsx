@@ -1,11 +1,12 @@
 import React, { forwardRef } from 'react'
 import { parseTierText } from '../domain/tierText'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 // Tierlist slide: one pathway per slide, with a compact identity summary and
 // the remaining space reserved for explanation points.
 const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
-  { path, icon, sequence, sequenceName, rank, tier, text, footerText = '', backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
+  { path, icon, sequence, sequenceName, rank, tier, text, footerText = '', fontSizes, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
@@ -50,15 +51,15 @@ const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
             />
           </div>
           <div className="tier-identity">
-            <span className="tier-pathlabel">Pathway</span>
-            <p className="tier-path">{path}</p>
+            <span className="tier-pathlabel" style={fontSizeCss(fontSizes, 'pathwayLabel')}>Pathway</span>
+            <p className="tier-path" style={fontSizeCss(fontSizes, 'pathway')}>{path}</p>
             {sequence !== null && (
-              <p className="tier-sequence">Seq {sequence} · {sequenceName}</p>
+              <p className="tier-sequence" style={fontSizeCss(fontSizes, 'sequence')}>Seq {sequence} · {sequenceName}</p>
             )}
           </div>
           <p className="tier-rankwrap">
-            <span className="tier-ranklabel">Tier</span>
-            <strong className="tier-rank">{rank}</strong>
+            <span className="tier-ranklabel" style={fontSizeCss(fontSizes, 'rankLabel')}>Tier</span>
+            <strong className="tier-rank" style={fontSizeCss(fontSizes, 'rank')}>{rank}</strong>
           </p>
         </header>
 
@@ -67,18 +68,18 @@ const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
             className={'tier-text' + (points.length ? '' : ' empty') + pointDensity}
             aria-label="Explanation"
           >
-            <p className="tier-text-label">Explanation</p>
+            <p className="tier-text-label" style={fontSizeCss(fontSizes, 'sectionLabel')}>Explanation</p>
             {points.length ? (
               <ul className="tier-points">
-                {points.map((point, index) => <li key={index}>{point}</li>)}
+                {points.map((point, index) => <li key={index} style={fontSizeCss(fontSizes, 'points')}>{point}</li>)}
               </ul>
             ) : (
-              <p className="tier-empty">Add one explanation point per line in the panel.</p>
+              <p className="tier-empty" style={fontSizeCss(fontSizes, 'empty')}>Add one explanation point per line in the panel.</p>
             )}
           </section>
 
           {footerText && (
-            <p className={'tier-footer-text' + footerDensity}>{footerText}</p>
+            <p className={'tier-footer-text' + footerDensity} style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>
           )}
         </div>
 

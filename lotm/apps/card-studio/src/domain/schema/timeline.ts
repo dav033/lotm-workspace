@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
+import { FontSizeOverridesField } from './fontSizes'
 
 export const TimelineCardSchema = z.object({
   type: z.literal('Timeline'),
@@ -22,4 +23,5 @@ export const TimelineCardSchema = z.object({
   ghost: z.string().trim().max(4).optional().describe('Solo para Turn: numeral o cifra de fondo, por ejemplo IV o 0.'),
   backgroundImageUrl: ImageSourceSchema.optional(),
   backgroundOpacity: BackgroundOpacitySchema,
+  ...FontSizeOverridesField,
 }).strict()

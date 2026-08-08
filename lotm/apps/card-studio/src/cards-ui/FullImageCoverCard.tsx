@@ -1,8 +1,9 @@
 import React, { forwardRef } from 'react'
 import type { CardUiProps } from './types'
+import { fontSizeCss } from './textStyle'
 
 const FullImageCoverCard = forwardRef<HTMLElement, CardUiProps>(function FullImageCoverCard(
-  { image, title, onUploadImage }: CardUiProps,
+  { image, title, fontSizes, onUploadImage }: CardUiProps,
   ref,
 ) {
   const upload = (file: File | undefined) => {
@@ -24,7 +25,7 @@ const FullImageCoverCard = forwardRef<HTMLElement, CardUiProps>(function FullIma
           upload([...event.dataTransfer.files].find((file) => file.type.startsWith('image/')))
         }}
       >
-        {!image && <span>Drop or click to upload image</span>}
+        {!image && <span style={fontSizeCss(fontSizes, 'placeholder')}>Drop or click to upload image</span>}
       </button>
       <input
         type="file"
@@ -33,7 +34,7 @@ const FullImageCoverCard = forwardRef<HTMLElement, CardUiProps>(function FullIma
         hidden
         onChange={(event) => upload(event.target.files?.[0])}
       />
-      <footer className="full-cover-title">{title || 'Cover title'}</footer>
+      <footer className="full-cover-title" style={fontSizeCss(fontSizes, 'title')}>{title || 'Cover title'}</footer>
     </article>
   )
 })

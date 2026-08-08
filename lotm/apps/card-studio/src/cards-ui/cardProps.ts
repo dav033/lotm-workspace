@@ -58,7 +58,7 @@ function darkenHex(color: string, factor = 0.34): string {
   return `#${channel(0)}${channel(2)}${channel(4)}`
 }
 
-export function cardPropsFromBuilderState(
+function cardPropsFromBuilderStateBase(
   state: BuilderCardState,
   handlers: CardViewHandlers = {},
 ): CardPropsResult {
@@ -336,6 +336,17 @@ export function cardPropsFromBuilderState(
       onUploadImage: handlers.onUploadImage,
       onDropImages: handlers.onDropImages,
     },
+  }
+}
+
+export function cardPropsFromBuilderState(
+  state: BuilderCardState,
+  handlers: CardViewHandlers = {},
+): CardPropsResult {
+  const result = cardPropsFromBuilderStateBase(state, handlers)
+  return {
+    ...result,
+    props: { ...result.props, fontSizes: state.fontSizes },
   }
 }
 

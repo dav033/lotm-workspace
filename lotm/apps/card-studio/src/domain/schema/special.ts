@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
+import { FontSizeOverridesField } from './fontSizes'
 
 export const CorruptionFileCardSchema = z.object({
   type: z.literal('Corruption File'),
@@ -15,6 +16,7 @@ export const CorruptionFileCardSchema = z.object({
   accentColor: z.string().regex(/^#[0-9a-f]{6}$/i).optional(),
   imageUrl: ImageSourceSchema.optional(),
   backgroundOpacity: BackgroundOpacitySchema,
+  ...FontSizeOverridesField,
 }).strict()
 
 export const RitualLogicCardSchema = z.object({
@@ -33,4 +35,5 @@ export const RitualLogicCardSchema = z.object({
   footerText: z.string().trim().max(180).optional(),
   backgroundImageUrl: ImageSourceSchema.optional(),
   backgroundOpacity: BackgroundOpacitySchema,
+  ...FontSizeOverridesField,
 }).strict()

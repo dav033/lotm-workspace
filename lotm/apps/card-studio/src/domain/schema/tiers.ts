@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema, TierRankSchema } from './base'
+import { FontSizeOverridesField } from './fontSizes'
 
 export const TierCardSchema = z
   .object({
@@ -20,6 +21,7 @@ export const TierCardSchema = z
       'Imagen de fondo opcional, mostrada bajo un overlay oscuro.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 
@@ -41,6 +43,7 @@ export const PathwayCardSchema = z
       'Imagen de fondo opcional, mostrada bajo un overlay oscuro.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()
 
@@ -53,5 +56,6 @@ export const TierExplanationCardSchema = z
       'Imagen de fondo opcional, mostrada bajo un overlay oscuro.',
     ),
     backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
   })
   .strict()

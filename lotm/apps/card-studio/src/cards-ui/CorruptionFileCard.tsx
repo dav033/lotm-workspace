@@ -1,6 +1,8 @@
 import React, { forwardRef } from 'react'
 import { titleSizeClass } from '../domain/titleFit'
 import { useBackgroundDrop } from './useBackgroundDrop'
+import type { FontSizeOverrides } from '../domain/schema'
+import { fontSizeCss } from './textStyle'
 
 function colorWithAlpha(color: string, alpha: number) {
   const match = /^#([0-9a-f]{6})$/i.exec(color || '')
@@ -14,13 +16,14 @@ type CorruptionFileCardProps = {
   explanation?: string; reactionLabel?: string; reaction?: string; footerText?: string
   corruptionLevel?: 'Low' | 'Moderate' | 'Severe' | 'Catastrophic'; accentColor?: string
   image?: string | null; showIncidentNumber?: boolean; backgroundOpacity?: number
+  fontSizes?: FontSizeOverrides
   onDropBackground?: (file: File) => void
 }
 
 const CorruptionFileCard = forwardRef<HTMLElement, CorruptionFileCardProps>(function CorruptionFileCard({
   variant = 'Warning', incident, caseLabel, explanation, reactionLabel, reaction, footerText,
   corruptionLevel = 'Severe', accentColor = '#d84a4a', image = null,
-  showIncidentNumber = false, backgroundOpacity = 45, onDropBackground,
+  showIncidentNumber = false, backgroundOpacity = 45, fontSizes, onDropBackground,
 }, ref) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const mode = variant
@@ -41,10 +44,10 @@ const CorruptionFileCard = forwardRef<HTMLElement, CorruptionFileCardProps>(func
       <div className="corruption-file-veil" aria-hidden="true" /><div className="corruption-file-grid" aria-hidden="true" />
       {showIncidentNumber && <div className="corruption-file-index" aria-hidden="true">{incidentNumber}</div>}<div className="corruption-file-tape" aria-hidden="true" />
       <div className="corruption-file-content">
-        <header className="corruption-file-head"><div><span className="corruption-file-kicker">LOTM context damage unit</span><strong>INCIDENT FILE{showIncidentNumber ? ` / ${incidentNumber}` : ''}</strong></div><span className="corruption-file-level">{corruptionLevel} corruption</span></header>
-        {mode === 'Warning' && <div className="corruption-warning-mark" aria-hidden="true">!</div>}{mode === 'Evidence' && <span className="corruption-evidence-tag">MEME AUTOPSY / CONTEXT COMPROMISED</span>}{mode === 'Quote' && <span className="corruption-quote-mark" aria-hidden="true">“</span>}
-        <main className="corruption-file-main"><h2 className={`corruption-file-title ${titleSizeClass(incident || 'Unknown incident')}`}>{incident || 'Unknown incident'}</h2><div className="corruption-file-panels"><section className="corruption-file-panel corruption-file-explanation"><span>{caseLabel || 'Normal explanation'}</span><p>{explanation || 'A perfectly reasonable explanation should appear here.'}</p></section><section className="corruption-file-panel corruption-file-reaction"><span>{reactionLabel || 'Fandom reaction'}</span><p>{reaction || 'The reasonable response was immediately abandoned.'}</p></section></div></main>
-        <footer className="corruption-file-footer"><span>{footerText || 'Exposure confirmed. Context permanently damaged.'}</span><b>{formatLabel}</b></footer>
+        <header className="corruption-file-head"><div><span className="corruption-file-kicker" style={fontSizeCss(fontSizes, 'meta')}>LOTM context damage unit</span><strong style={fontSizeCss(fontSizes, 'meta')}>INCIDENT FILE{showIncidentNumber ? ` / ${incidentNumber}` : ''}</strong></div><span className="corruption-file-level" style={fontSizeCss(fontSizes, 'meta')}>{corruptionLevel} corruption</span></header>
+        {mode === 'Warning' && <div className="corruption-warning-mark" aria-hidden="true">!</div>}{mode === 'Evidence' && <span className="corruption-evidence-tag" style={fontSizeCss(fontSizes, 'meta')}>MEME AUTOPSY / CONTEXT COMPROMISED</span>}{mode === 'Quote' && <span className="corruption-quote-mark" aria-hidden="true">“</span>}
+        <main className="corruption-file-main"><h2 className={`corruption-file-title ${titleSizeClass(incident || 'Unknown incident')}`} style={fontSizeCss(fontSizes, 'title')}>{incident || 'Unknown incident'}</h2><div className="corruption-file-panels"><section className="corruption-file-panel corruption-file-explanation"><span style={fontSizeCss(fontSizes, 'label')}>{caseLabel || 'Normal explanation'}</span><p style={fontSizeCss(fontSizes, 'body')}>{explanation || 'A perfectly reasonable explanation should appear here.'}</p></section><section className="corruption-file-panel corruption-file-reaction"><span style={fontSizeCss(fontSizes, 'label')}>{reactionLabel || 'Fandom reaction'}</span><p style={fontSizeCss(fontSizes, 'body')}>{reaction || 'The reasonable response was immediately abandoned.'}</p></section></div></main>
+        <footer className="corruption-file-footer"><span style={fontSizeCss(fontSizes, 'footer')}>{footerText || 'Exposure confirmed. Context permanently damaged.'}</span><b style={fontSizeCss(fontSizes, 'footer')}>{formatLabel}</b></footer>
       </div>
     </article>
   )

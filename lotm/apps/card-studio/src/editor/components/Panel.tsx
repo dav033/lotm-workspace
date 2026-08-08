@@ -17,6 +17,7 @@ import StandardFields from './Panel/StandardFields'
 import CorruptionFileFields from './Panel/CorruptionFileFields'
 import RitualLogicFields from './Panel/RitualLogicFields'
 import TimelineFields from './Panel/TimelineFields'
+import FontSizeControls from './Panel/FontSizeControls'
 
 export default function Panel(props) {
   const { state, set } = props
@@ -64,6 +65,7 @@ export default function Panel(props) {
       state.type !== 'Timeline' &&
       state.type !== 'Cover' &&
       state.type !== 'Full Image Cover' ? <StandardFields {...fieldProps} /> : null}
+      <FontSizeControls state={state} set={set} />
     </>
   )
 

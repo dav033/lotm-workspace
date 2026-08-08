@@ -161,6 +161,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   timelineGhost: '',
   timelineFooterText: '',
   timelineBackgroundImage: null,
+  fontSizes: {},
   backgroundOpacity: 65,
 }
 
