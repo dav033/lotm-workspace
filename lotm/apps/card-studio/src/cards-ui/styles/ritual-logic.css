@@ -1,4 +1,4 @@
-.ritual-logic-card{padding:28px 34px;display:flex;flex-direction:column;background:#090a0d;overflow:hidden}
+.ritual-logic-card{padding:28px 24px 26px 28px;display:flex;flex-direction:column;background:#090a0d;overflow:hidden}
 .ritual-logic-background{position:absolute;inset:0;z-index:0;background:center/cover no-repeat;
   opacity:var(--background-opacity,.65);filter:saturate(1.05) contrast(1.08)}
 .ritual-logic-background-overlay{position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -33,13 +33,13 @@
 .ritual-logic-casefile section:last-child{border-bottom:0}
 .ritual-logic-casefile p{margin:4px 0 0;font-size:13px;font-weight:600;line-height:1.3;color:#f0ede5;text-wrap:pretty;overflow-wrap:anywhere}
 .ritual-logic-casefile section:last-child p{color:var(--tier)}
-.ritual-logic-pressure-layout{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;gap:12px}
-.ritual-logic-threat{position:relative;flex:1 1 auto;min-height:0;padding:22px 20px 24px;border:1px solid var(--tier);background:linear-gradient(135deg,rgba(7,8,10,.92),rgba(80,57,23,.34));overflow:hidden}
+.ritual-logic-pressure-layout{display:flex;flex:1 1 auto;min-height:0;flex-direction:column;gap:10px}
+.ritual-logic-threat{position:relative;flex:1 1 auto;min-height:0;padding:20px 16px 20px;border:1px solid var(--tier);background:linear-gradient(135deg,rgba(7,8,10,.92),rgba(80,57,23,.34));overflow:hidden}
 .ritual-logic-threat::after{content:'!';position:absolute;right:14px;top:-22px;font-family:'Playfair Display',serif;font-size:170px;font-weight:900;line-height:1;color:var(--tier);opacity:.1}
 .ritual-logic-threat .ritual-logic-label{color:var(--tier)}
-.ritual-logic-threat p{position:relative;z-index:1;margin:10px 35px 0 0;font-family:'Playfair Display',serif;font-size:25px;line-height:1.08;color:#f5eee0;text-wrap:pretty;overflow-wrap:anywhere}
-.ritual-logic-pressure-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.ritual-logic-pressure-notes section{min-height:126px;padding:14px;border-top:2px solid rgba(255,255,255,.22);background:rgba(7,8,10,.72)}
+.ritual-logic-threat p{position:relative;z-index:1;margin:8px 28px 0 0;font-family:'Playfair Display',serif;font-size:24px;line-height:1.1;color:#f5eee0;text-wrap:pretty;overflow-wrap:anywhere}
+.ritual-logic-pressure-notes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ritual-logic-pressure-notes section{min-height:118px;padding:13px;border-top:2px solid rgba(255,255,255,.22);background:rgba(7,8,10,.72)}
 .ritual-logic-pressure-notes p{margin:7px 0 0;font-size:13px;font-weight:600;line-height:1.3;color:#f0ede5;text-wrap:pretty;overflow-wrap:anywhere}
 .ritual-logic-pressure-notes section:last-child{border-top-color:var(--tier)}
 .ritual-logic-timeline{position:relative;display:flex;flex:1 1 auto;min-height:0;flex-direction:column;gap:8px;padding:5px 0 0 0}
