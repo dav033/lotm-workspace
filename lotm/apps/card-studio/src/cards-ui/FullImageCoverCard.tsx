@@ -34,7 +34,7 @@ const FullImageCoverCard = forwardRef<HTMLElement, CardUiProps>(function FullIma
         hidden
         onChange={(event) => upload(event.target.files?.[0])}
       />
-      <footer className="full-cover-title" style={fontSizeCss(fontSizes, 'title')}>{title || 'Cover title'}</footer>
+      <h2 className="full-cover-title" style={fontSizeCss(fontSizes, 'title')}>{title || 'Cover title'}</h2>
     </article>
   )
 })

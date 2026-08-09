@@ -11,6 +11,8 @@ import FullImageCoverCard from '../../cards-ui/FullImageCoverCard'
 import TierCard from '../../cards-ui/TierCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
+import CorruptionFileCard from '../../cards-ui/CorruptionFileCard'
+import TimelineCard from '../../cards-ui/TimelineCard'
 import RitualLogicCard from '../../cards-ui/RitualLogicCard'
 import Panel from './Panel'
 import { CardContentSchema, toBuilderCardState } from '../../domain/schema'
@@ -24,6 +26,8 @@ const FullImageCover = FullImageCoverCard as ComponentType<Record<string, unknow
 const Tier = TierCard as ComponentType<Record<string, unknown>>
 const Pathway = PathwayCard as ComponentType<Record<string, unknown>>
 const TarotMember = TarotMemberCard as ComponentType<Record<string, unknown>>
+const CorruptionFile = CorruptionFileCard as ComponentType<Record<string, unknown>>
+const Timeline = TimelineCard as ComponentType<Record<string, unknown>>
 const RitualLogic = RitualLogicCard as ComponentType<Record<string, unknown>>
 const Panel_ = Panel as unknown as ComponentType<Record<string, unknown>>
 
@@ -40,6 +44,9 @@ test('Tarot Member produce composiciones distintas para retrato, expediente y co
   assert.match(dossier, /Restricted/)
   assert.match(contrast, /tarot-member-contrast/)
   assert.match(contrast, /What the Club sees/)
+  assert.doesNotMatch(portrait, /tarot-member-footer|Praise the Fool\./)
+  assert.doesNotMatch(dossier, /tarot-member-footer|Praise the Fool\./)
+  assert.doesNotMatch(contrast, /tarot-member-footer|Praise the Fool\./)
 })
 
 test('Ritual Logic produce cinco composiciones distintas', () => {
@@ -223,7 +230,7 @@ test('Breakdown sin kicker no reserva espacio para él', () => {
   assert.match(html, /breakdown-edge">[\s\S]*?Caps at/)
 })
 
-test('Map muestra el título, las filas con y sin etiquetas, y el footer opcional', () => {
+test('Map muestra el título y las filas, e ignora footer legado', () => {
   const html = renderToStaticMarkup(React.createElement(Map_, {
     title: 'Where the powers come from',
     entriesText: 'Door · Change · King of Space-Time -> Door, Space, Seals, Alternate Worlds\nSolo un valor',
@@ -233,7 +240,7 @@ test('Map muestra el título, las filas con y sin etiquetas, y el footer opciona
   assert.match(html, /map-entry-tags">Door · Change · King of Space-Time/)
   assert.match(html, /map-entry-value">Door, Space, Seals, Alternate Worlds/)
   assert.match(html, /map-entry-value">Solo un valor/)
-  assert.match(html, /map-footer-text">Three roots\. Seven powers\./)
+  assert.doesNotMatch(html, /map-footer-text|Three roots\. Seven powers\./)
 })
 
 test('Map oculta footer que repite el pathway', () => {
@@ -316,7 +323,7 @@ test('todas las familias de fondo usan el mismo porcentaje y el panel ofrece pre
   }
 })
 
-test('Full Image Cover muestra la imagen a cuerpo completo y el título al pie', () => {
+test('Full Image Cover muestra la imagen a cuerpo completo y el título superpuesto', () => {
   const html = renderToStaticMarkup(React.createElement(FullImageCover, {
     image: '/cover.jpg',
     title: 'The Fool Returns',
@@ -325,6 +332,7 @@ test('Full Image Cover muestra la imagen a cuerpo completo y el título al pie',
   assert.match(html, /full-cover-image/)
   assert.match(html, /cover\.jpg/)
   assert.match(html, /full-cover-title[^>]*>The Fool Returns/)
+  assert.doesNotMatch(html, /<footer/)
 })
 
 test('Tier muestra una secuencia específica del pathway', () => {
@@ -341,7 +349,31 @@ test('Tier muestra una secuencia específica del pathway', () => {
   }))
   assert.match(html, /Seq 9/)
   assert.match(html, /Seer/)
-  assert.match(html, /A powerful information specialist/)
+  assert.doesNotMatch(html, /tier-footer-text|A powerful information specialist/)
   assert.match(html, /background\.jpg/)
   assert.match(html, /tier-body/)
+})
+
+test('Corruption File y Timeline ignoran footer legado', () => {
+  const corruption = renderToStaticMarkup(React.createElement(CorruptionFile, {
+    variant: 'Warning', incident: 'A corrupted explanation', explanation: 'The explanation.',
+    reaction: 'The reaction.', footerText: 'Legacy footer should not render.',
+  }))
+  const timelineOpen = renderToStaticMarkup(React.createElement(Timeline, {
+    variant: 'Open', title: 'The opening', text: 'The consequence.',
+    footerText: 'Legacy footer should not render.',
+  }))
+  const timelineArc = renderToStaticMarkup(React.createElement(Timeline, {
+    variant: 'Arc', title: 'The arc', moves: ['First move'],
+    footerText: 'Legacy footer should not render.',
+  }))
+  const pathway = renderToStaticMarkup(React.createElement(Pathway, {
+    path: 'Door', icon: '/door.png', sequence: null, sequenceName: null,
+    tier: { c: '#fff', d: '#333' }, text: 'Opens passage.',
+    footerText: 'Legacy footer should not render.',
+  }))
+
+  for (const html of [corruption, timelineOpen, timelineArc, pathway]) {
+    assert.doesNotMatch(html, /corruption-file-footer|timeline-foot|timeline-footer|tier-footer-text|Legacy footer should not render\./)
+  }
 })

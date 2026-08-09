@@ -6,13 +6,12 @@ import { fontSizeCss } from './textStyle'
 // Tierlist slide: one pathway per slide, with a compact identity summary and
 // the remaining space reserved for explanation points.
 const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
-  { path, icon, sequence, sequenceName, rank, tier, text, footerText = '', fontSizes, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
+  { path, icon, sequence, sequenceName, rank, tier, text, fontSizes, backgroundImage = null, backgroundOpacity = 65 }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
   const estimatedLines = points.reduce((total, point) => total + Math.max(1, Math.ceil(point.length / 44)), 0)
   const pointDensity = estimatedLines <= 5 ? ' sparse' : estimatedLines >= 11 ? ' dense' : ''
-  const footerDensity = footerText.length <= 70 ? ' sparse' : footerText.length > 160 ? ' dense' : ''
   const cardStyle = {
     '--tier': tier.c,
     '--tier-deep': tier.d,
@@ -78,9 +77,6 @@ const TierCard = forwardRef<HTMLElement, CardUiProps>(function TierCard(
             )}
           </section>
 
-          {footerText && (
-            <p className={'tier-footer-text' + footerDensity} style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>
-          )}
         </div>
 
         <div className="progress tier-progress" aria-hidden="true">

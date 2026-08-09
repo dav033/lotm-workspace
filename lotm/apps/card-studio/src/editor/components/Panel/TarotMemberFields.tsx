@@ -54,8 +54,6 @@ export default function TarotMemberFields({ state, set, accent, onUploadImage, o
             <div className="field"><label>{state.tarotMemberVariant === 'Contrast' ? 'What the Club sees' : 'Description'}</label><textarea rows={4} maxLength={360} value={state.tarotMemberDescription ?? ''} onChange={(e) => set({ tarotMemberDescription: e.target.value })} /></div>
             <div className="field"><label>Second section label</label><input maxLength={36} value={state.tarotMemberDetailLabel ?? ''} placeholder="What is actually happening" onChange={(e) => set({ tarotMemberDetailLabel: e.target.value })} /></div>
             <div className="field"><label>Second section</label><textarea rows={4} maxLength={280} value={state.tarotMemberDetailText ?? ''} onChange={(e) => set({ tarotMemberDetailText: e.target.value })} /></div>
-            <div className="field"><label>Footer punchline (optional)</label><textarea rows={2} maxLength={180} value={state.tarotMemberFooterText ?? ''} onChange={(e) => set({ tarotMemberFooterText: e.target.value })} /></div>
-  
             <BackgroundField
               value={state.tarotMemberImage}
               field="tarotMemberImage"

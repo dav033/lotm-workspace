@@ -24,9 +24,6 @@
 .tarot-member-detail{border-left:3px solid var(--tier);padding-left:14px}
 .tarot-member-label{display:block;color:var(--tier);margin-bottom:6px}
 .tarot-member-detail p{font-size:15px;line-height:1.4;color:#c9c5bb}
-.tarot-member-footer{margin-top:auto;padding-top:15px;border-top:1px solid color-mix(in srgb,var(--tier) 45%,transparent);
-  font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;line-height:1.4;color:var(--tier)}
-
 /* Portrait spends its boldness on the image and oversized name. */
 .tarot-member-portrait .tarot-member-title-block{margin-top:auto}
 .tarot-member-portrait .tarot-member-copy{max-width:390px}

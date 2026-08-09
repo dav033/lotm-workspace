@@ -64,15 +64,15 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         'o compuesto como "Authority · From Bizarreness" ya que es texto libre), ' +
         'titulo y tres secciones: does, doesNot y una tercera con etiqueta libre (edgeLabel, ' +
         'p. ej. "Edge" o "Caps at") resaltada en color tier. ' +
-        'Map es una carta resumen: titulo, hasta 8 filas (entries) con etiquetas opcionales ' +
-        '(tags, unidas por " · ") y un valor en negrita, mas un footerText opcional bajo una regla; ' +
+        'Map es una carta resumen: titulo y hasta 8 filas (entries) con etiquetas opcionales ' +
+        '(tags, unidas por " · ") y un valor en negrita; footerText legado se conserva por compatibilidad, pero no se muestra. ' +
         'con un pathway opcional toma el color y el fondo de ese camino. ' +
         'Las cartas con arte de fondo aceptan backgroundOpacity de 0 a 100 para controlar su visibilidad. ' +
         'Pathway Explanation, Breakdown y Map aceptan ademas backgroundImageUrl propio; ' +
         'en Map tiene prioridad sobre el fondo del pathway. ' +
         'Todas las cartas aceptan una escala tipografica general opcional en fontSizes.all, de 60 a 160 por ciento. ' +
         'Map conserva ademas textStyles por rol y Simple Explanation su rango automatico minimo/maximo. ' +
-        'Map acepta textStyles opcionales por rol (title, label, value y footer) para ajustar fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, color y textTransform. ' +
+        'Map acepta textStyles opcionales por rol (title, label y value) para ajustar fontFamily, fontSize, fontWeight, lineHeight, letterSpacing, color y textTransform. ' +
         'Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: ' +
         'Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. ' +
         'Corruption File explica chistes internos en formatos Warning, Evidence y Quote. ' +

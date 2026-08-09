@@ -103,9 +103,6 @@
 .timeline-card.open .timeline-title{margin-top:16px;line-height:.95}
 .timeline-card.open .timeline-rule{margin:24px auto 0}
 .timeline-card.open .timeline-text{margin-top:24px;max-width:310px;font-size:17px;color:#d8d2c4}
-.timeline-foot{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--tier)}
-
 /* ---- Arc ---- */
 .timeline-card.arc{background:
   radial-gradient(120% 75% at 50% -8%,rgba(255,255,255,.045),transparent 60%),
@@ -118,9 +115,6 @@
   font-size:11px;font-weight:900;color:var(--tier)}
 .timeline-move p{margin:0;font-size:17px;font-weight:600;line-height:1.38;color:#e8e4da;
   text-wrap:pretty;overflow-wrap:anywhere}
-.timeline-footer{flex:0 0 auto;margin:0;padding-top:14px;border-top:1px solid var(--tier-deep);
-  font-family:'Playfair Display',serif;font-style:italic;font-size:15px;line-height:1.4;color:#d8d2c4}
-
 /* El filo y los bordes translucidos usan el color del pathway cuando el motor
    soporta color-mix; si no, se quedan en el tono profundo, que ya es del tema. */
 @supports (color:color-mix(in srgb,red,blue)){
@@ -128,5 +122,4 @@
   .timeline-era{border-color:color-mix(in srgb,var(--tier) 42%,transparent)}
   .timeline-move-node{border-color:color-mix(in srgb,var(--tier) 55%,transparent);
     background:color-mix(in srgb,var(--tier) 10%,transparent)}
-  .timeline-footer{border-top-color:color-mix(in srgb,var(--tier) 40%,transparent)}
 }

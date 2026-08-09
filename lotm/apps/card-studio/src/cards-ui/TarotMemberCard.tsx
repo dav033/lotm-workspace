@@ -7,7 +7,7 @@ import { fontSizeCss } from './textStyle'
 const TarotMemberCard = forwardRef<HTMLElement, CardUiProps>(function TarotMemberCard(
   {
     variant = 'Portrait', name, tarotTitle, description, detailLabel, detailText,
-    footerText, fontSizes, image = null, backgroundOpacity = 65, tier = null, onDropBackground,
+    fontSizes, image = null, backgroundOpacity = 65, tier = null, onDropBackground,
   }: CardUiProps,
   ref,
 ) {
@@ -67,7 +67,6 @@ const TarotMemberCard = forwardRef<HTMLElement, CardUiProps>(function TarotMembe
           </div>
         )}
 
-        {footerText && <p className="tarot-member-footer" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>}
       </div>
     </article>
   )

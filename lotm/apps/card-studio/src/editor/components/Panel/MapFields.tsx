@@ -67,19 +67,6 @@ export default function MapFields({ state, set, accent, onUploadImage, onDownloa
               />
             </div>
   
-            <div className="field">
-              <label htmlFor="map-footer-text">Footer tagline (optional)</label>
-              <textarea
-                id="map-footer-text"
-                rows={2}
-                maxLength={160}
-                value={state.mapFooterText ?? ''}
-                placeholder="e.g. Three roots. Seven powers."
-                autoComplete="off"
-                onChange={(e) => set({ mapFooterText: e.target.value })}
-              />
-            </div>
-  
             <BackgroundField
               value={state.mapBackgroundImage}
               field="mapBackgroundImage"
@@ -100,7 +87,6 @@ export default function MapFields({ state, set, accent, onUploadImage, onDownloa
                 ['title', 'Title'],
                 ['label', 'Labels'],
                 ['value', 'Values'],
-                ['footer', 'Footer'],
               ].map(([role, label]) => (
                 <TextStyleField
                   key={role}

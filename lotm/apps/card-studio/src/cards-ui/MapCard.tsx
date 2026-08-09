@@ -6,17 +6,13 @@ import { fontSizeCss, textStyleCss } from './textStyle'
 import type { CardUiProps } from './types'
 
 const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
-  { title, entriesText, footerText, textStyles, fontSizes, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
+  { title, entriesText, textStyles, fontSizes, pathway = null, tier = null, backgroundImage = null, backgroundOpacity = 65, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const entries = parseMapEntries(entriesText || '')
   const dense = entries.length > 3 || entries.some((entry) => entry.value.length > 44)
   const extraDense = entries.length > 5
-  const normalizedFooter = footerText?.trim() || ''
-  const visibleFooter = normalizedFooter && normalizedFooter.toLocaleLowerCase() !== pathway?.toLocaleLowerCase()
-    ? normalizedFooter
-    : ''
   // Sin pathway la ficha se queda con el dorado que trae .ficha por defecto.
   const cardStyle = {
     ...(tier ? { '--tier': tier.c, '--tier-deep': tier.d } : {}),
@@ -67,7 +63,6 @@ const MapCard = forwardRef<HTMLElement, CardUiProps>(function MapCard(
         ) : (
           <p className="map-empty" style={fontSizeCss(fontSizes, 'value')}>Add one row per line as &quot;tags -&gt; value&quot; in the editor panel.</p>
         )}
-        {visibleFooter && <p className="map-footer-text" style={{ ...textStyleCss(textStyles?.footer), ...fontSizeCss(fontSizes, 'footer') }}>{visibleFooter}</p>}
       </div>
     </article>
   )

@@ -74,21 +74,6 @@ export default function PathwayFields({ state, set, accent, onUploadImage, onDow
               />
             </div>
   
-            <div className="field">
-              <label htmlFor="pathway-card-footer-text">Large bottom text</label>
-              <textarea
-                id="pathway-card-footer-text"
-                name="pathwayCardFooterText"
-                rows={3}
-                maxLength={240}
-                value={state.pathwayCardFooterText ?? ''}
-                placeholder="Add a final highlighted statement…"
-                autoComplete="off"
-                onChange={(event) => set({ pathwayCardFooterText: event.target.value })}
-              />
-              <p className="field-help">{(state.pathwayCardFooterText ?? '').length}/240 characters</p>
-            </div>
-  
             <div className="actions">
               <button className="btn-dl" style={{ background: accent.c }} onClick={onDownload}>Download PNG</button>
             </div>

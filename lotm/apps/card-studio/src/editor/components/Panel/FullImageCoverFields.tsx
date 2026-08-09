@@ -20,7 +20,7 @@ export default function FullImageCoverFields({ state, set, accent, onUploadImage
               />
             </div>
             <p className="hint">
-              Click or drop an image onto the card. It fills the body while the title stays in the footer.
+              Click or drop an image onto the card. It fills the card while the title overlays the image.
             </p>
             <div className="actions">
               <button className="btn-dl" style={{ background: accent.c }} onClick={onDownload}>Download PNG</button>

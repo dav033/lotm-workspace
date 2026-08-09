@@ -6,13 +6,12 @@ import { fontSizeCss } from './textStyle'
 // Same layout as TierCard, minus the tier-rank signaling: no "Tier" label, no
 // rank letter. Accent color comes from PATHWAY_COLORS instead of TIER_RANKS.
 const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
-  { path, icon, sequence, sequenceName, text, footerText = '', fontSizes, backgroundImage = null, backgroundOpacity = 65, tier }: CardUiProps,
+  { path, icon, sequence, sequenceName, text, fontSizes, backgroundImage = null, backgroundOpacity = 65, tier }: CardUiProps,
   ref,
 ) {
   const points = parseTierText(text)
   const estimatedLines = points.reduce((total, point) => total + Math.max(1, Math.ceil(point.length / 44)), 0)
   const pointDensity = estimatedLines <= 5 ? ' sparse' : estimatedLines >= 11 ? ' dense' : ''
-  const footerDensity = footerText.length <= 70 ? ' sparse' : footerText.length > 160 ? ' dense' : ''
   const cardStyle = {
     '--tier': tier.c,
     '--tier-deep': tier.d,
@@ -73,9 +72,6 @@ const PathwayCard = forwardRef<HTMLElement, CardUiProps>(function PathwayCard(
             )}
           </section>
 
-          {footerText && (
-            <p className={'tier-footer-text' + footerDensity} style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>
-          )}
         </div>
 
         <div className="progress tier-progress" aria-hidden="true">

@@ -38,7 +38,7 @@ const pad = (value: number) => String(value).padStart(2, '0')
 
 const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function TimelineCard({
   variant = 'Beat', pathway, era, kicker, title, text, step = 1, total = 11,
-  certainty = 'Canon', note, moves = [], footerText, ghost, icon, tier,
+  certainty = 'Canon', note, moves = [], ghost, icon, tier,
   fontSizes, backgroundImage, backgroundOpacity = 25, onDropBackground,
 }, ref) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
@@ -100,7 +100,6 @@ const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function Timelin
               <div className="timeline-rule" aria-hidden="true" />
               {text && <p className="timeline-text" style={fontSizeCss(fontSizes, 'body')}>{text}</p>}
             </div>
-            {footerText && <span className="timeline-foot" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</span>}
           </>
         )}
 
@@ -132,7 +131,6 @@ const TimelineCard = forwardRef<HTMLElement, TimelineCardProps>(function Timelin
               ))}
             </div>
             <div className="timeline-spacer" />
-            {footerText && <p className="timeline-footer" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>}
           </>
         )}
       </div>

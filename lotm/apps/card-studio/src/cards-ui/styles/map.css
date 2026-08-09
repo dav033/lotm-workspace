@@ -1,4 +1,4 @@
-/* ================= MAP CARD (ficha: title + tagged entry cells + footer) ================= */
+/* ================= MAP CARD (ficha: title + tagged entry cells) ================= */
 .map-card{padding:24px 24px 26px;display:flex;flex-direction:column}
 .map-content{position:relative;z-index:3;display:flex;flex-direction:column;
   height:100%;min-height:0;text-align:left}
@@ -13,7 +13,7 @@
 .map-card .ficha-name.md{font-size:44px}
 .map-card .ficha-name.sm{font-size:38px}
 .map-card.dense .ficha-name{font-size:44px}
-/* Las filas quedan centradas entre el titulo y el pie, como los campos de la ficha. */
+/* Las filas ocupan espacio libre bajo el titulo, como campos de la ficha. */
 .map-entries{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;
   justify-content:center;gap:10px;overflow:hidden}
 .map-entry{flex:0 0 auto;display:flex;flex-direction:column;gap:5px;
@@ -24,9 +24,6 @@
   overflow-wrap:anywhere;text-wrap:pretty}
 .map-empty{flex:1 1 auto;display:flex;align-items:center;max-width:30ch;color:#8a8579;
   font-size:14px;line-height:1.5}
-.map-footer-text{flex:0 0 auto;font-family:'JetBrains Mono',monospace;font-size:13px;
-  font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tier);
-  white-space:pre-line;overflow-wrap:anywhere}
 .map-card.dense .map-entries{gap:7px}
 .map-card.dense .map-entry{padding:9px 11px;gap:3px}
 .map-card.dense .map-entry-tags{font-size:10px}

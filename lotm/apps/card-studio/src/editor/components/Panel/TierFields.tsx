@@ -92,21 +92,6 @@ export default function TierFields({ state, set, accent, onUploadImage, onDownlo
               />
             </div>
   
-            <div className="field">
-              <label htmlFor="tier-footer-text">Large bottom text</label>
-              <textarea
-                id="tier-footer-text"
-                name="tierFooterText"
-                rows={3}
-                maxLength={240}
-                value={state.tierFooterText ?? ''}
-                placeholder="Add a final highlighted statement…"
-                autoComplete="off"
-                onChange={(event) => set({ tierFooterText: event.target.value })}
-              />
-              <p className="field-help">{(state.tierFooterText ?? '').length}/240 characters</p>
-            </div>
-  
             <button className="batch-add" onClick={onGenerateTierBatch}>
               Generate all 22 pathway slides
             </button>
