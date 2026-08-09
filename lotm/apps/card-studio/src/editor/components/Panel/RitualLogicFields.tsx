@@ -17,7 +17,6 @@ export default function RitualLogicFields({ state, set, accent, onUploadImage, o
       <div className="field"><label>Sequence rehearsal</label><textarea rows={5} maxLength={420} value={state.ritualPreparation ?? ''} onChange={(e) => set({ ritualPreparation: e.target.value })} /></div>
       <div className="field"><label>Explanation certainty</label><div className="toggle">{['Canon', 'Mixed', 'Theory'].map((certainty) => <button key={certainty} className={'seg' + (state.ritualCertainty === certainty ? ' sel' : '')} onClick={() => set({ ritualCertainty: certainty })}>{certainty}</button>)}</div></div>
       <div className="field"><label>Evidence limit (optional)</label><textarea rows={3} maxLength={240} value={state.ritualUncertainty ?? ''} onChange={(e) => set({ ritualUncertainty: e.target.value })} /></div>
-      <div className="field"><label>Footer (optional)</label><textarea rows={2} maxLength={180} value={state.ritualFooterText ?? ''} onChange={(e) => set({ ritualFooterText: e.target.value })} /></div>
       <BackgroundField value={state.ritualBackgroundImage} field="ritualBackgroundImage" opacity={state.backgroundOpacity} set={set} onUploadImage={onUploadImage} help={`Using the default ${pathway} background.`} />
       <div className="actions"><button className="btn-dl" style={{ background: accent.c }} onClick={onDownload}>Download PNG</button></div>
     </div>

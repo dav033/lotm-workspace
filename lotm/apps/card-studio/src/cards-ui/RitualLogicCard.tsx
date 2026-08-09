@@ -16,14 +16,14 @@ type RitualLogicCardProps = {
 
 const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function RitualLogicCard({
   variant = 'Chain', pathway, sequence, sequenceName, ritual, survival, preparation, certainty = 'Mixed',
-  uncertainty, footerText, tier, fontSizes, backgroundImage, backgroundOpacity = 65, onDropBackground,
+  uncertainty, tier, fontSizes, backgroundImage, backgroundOpacity = 65, onDropBackground,
 }, ref) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
   const mode = ['Chain', 'Split', 'Casefile', 'Pressure', 'Timeline'].includes(variant) ? variant : 'Chain'
   const steps = [ritual, survival, preparation]
-  const contentLength = steps.join('').length + (uncertainty || '').length + (footerText || '').length
+  const contentLength = steps.join('').length + (uncertainty || '').length
   const dense = contentLength > 620
-  // Pressure keeps its frozen visual baseline; other short layouts can redistribute the spare height.
+  // The content layouts can use the full card height now that Ritual Logic has no footer.
   const sparse = mode !== 'Pressure' && contentLength < 360
   return (
     <article className={`ficha ritual-logic-card certainty-${certainty.toLowerCase()}${dense ? ' dense' : ''}${sparse ? ' sparse' : ''}${dragging ? ' dragover' : ''}`} id="card" ref={ref}
@@ -64,7 +64,6 @@ const RitualLogicCard = forwardRef<HTMLElement, RitualLogicCardProps>(function R
           <section aria-label="Sequence rehearsal"><span className="ritual-logic-time" style={fontSizeCss(fontSizes, 'meta')}>AFTER</span><h3 style={fontSizeCss(fontSizes, 'heading')}>Carry the idea</h3><p style={fontSizeCss(fontSizes, 'body')}>{preparation}</p></section>
         </div>}
         <div className="ritual-logic-verdict"><span className="ritual-logic-certainty" style={fontSizeCss(fontSizes, 'meta')}>{certainty}</span><p style={fontSizeCss(fontSizes, 'note')}>{uncertainty || 'The causal reading is supported by the ritual and the resulting powers, but is not stated outright.'}</p></div>
-        {footerText && <p className="ritual-logic-footer" style={fontSizeCss(fontSizes, 'footer')}>{footerText}</p>}
       </div>
     </article>
   )

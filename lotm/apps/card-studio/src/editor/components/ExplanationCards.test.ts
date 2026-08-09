@@ -48,7 +48,7 @@ test('Ritual Logic produce cinco composiciones distintas', () => {
     ritual: 'A mermaid sings while the potion is consumed.',
     survival: 'The potion strains Spirit Body Threads.',
     preparation: 'The aspirant rehearses control without losing self.',
-    certainty: 'Mixed', uncertainty: 'The causal link is inferred.',
+    certainty: 'Mixed', uncertainty: 'The causal link is inferred.', footerText: 'Legacy footer should not render.',
   }
   const chain = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Chain' }))
   const split = renderToStaticMarkup(React.createElement(RitualLogic, { ...common, variant: 'Split' }))
@@ -70,6 +70,11 @@ test('Ritual Logic produce cinco composiciones distintas', () => {
   assert.match(timeline, /ritual-logic-timeline/)
   assert.match(timeline, /aria-label="Ritual function"/)
   assert.match(timeline, /BEFORE/)
+  assert.doesNotMatch(chain, /ritual-logic-footer|Legacy footer should not render/)
+  assert.doesNotMatch(split, /ritual-logic-footer|Legacy footer should not render/)
+  assert.doesNotMatch(casefile, /ritual-logic-footer|Legacy footer should not render/)
+  assert.doesNotMatch(pressure, /ritual-logic-footer|Legacy footer should not render/)
+  assert.doesNotMatch(timeline, /ritual-logic-footer|Legacy footer should not render/)
   assert.notEqual(chain, split)
   assert.notEqual(split, casefile)
   assert.notEqual(casefile, pressure)
