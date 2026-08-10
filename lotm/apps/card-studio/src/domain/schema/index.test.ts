@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 import { CardContentSchema, filenameForCard, fromBuilderCardState, titleForCard, toBuilderCardState } from './index'
+import { TIER_RANK_NAMES } from '../pathways'
 
 test('Tarot Member conserva sus tres composiciones y campos al ida y vuelta', () => {
   for (const variant of ['Portrait', 'Dossier', 'Contrast'] as const) {
@@ -52,6 +53,19 @@ test('convierte una Tierlist independiente sin pathway', () => {
   assert.deepEqual(fromBuilderCardState(state), content)
   assert.equal(titleForCard(content), 'Klein Duos - Tier S')
   assert.equal(filenameForCard(content), 'tierlist-s_klein-duos')
+})
+
+test('acepta variantes plus y minus en cualquier carta de tier', () => {
+  assert.deepEqual(TIER_RANK_NAMES.slice(0, 3), ['S+', 'S', 'S-'])
+  const content = CardContentSchema.parse({
+    type: 'Tierlist',
+    title: 'Klein Duos',
+    rank: 'A+',
+    points: ['A narrow edge over the next rank.'],
+  })
+
+  assert.equal(titleForCard(content), 'Klein Duos - Tier A+')
+  assert.equal(filenameForCard(content), 'tierlist-a-plus_klein-duos')
 })
 
 test('convierte una carta Pathway (sin rank) al estado que consume el renderer actual', () => {

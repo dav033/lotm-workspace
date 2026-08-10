@@ -17,7 +17,7 @@ export const PowerLevelSchema = enumFrom(POWER_LEVELS.map(({ key }) => key)).des
 )
 
 export const TierRankSchema = enumFrom(TIER_RANK_NAMES).describe(
-  'Rango de tier: S, A, B, C, D o F.',
+  'Rango de tier con variantes: S+/S/S-, A+/A/A-, B+/B/B-, C+/C/C-, D+/D/D- o F+/F/F-.',
 )
 
 export const ImageSourceSchema = z

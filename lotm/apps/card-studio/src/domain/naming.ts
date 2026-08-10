@@ -42,6 +42,10 @@ export function titleForCard(content: CardContent): string {
   return content.name
 }
 
+function tierRankSlug(rank: string): string {
+  return rank.toLowerCase().replace(/-/g, '-minus').replace(/\+/g, '-plus')
+}
+
 export function filenameForCard(content: CardContent): string {
   if (content.type === 'Ritual Logic') {
     const suffix = content.variant === 'Chain' ? '' : `_${slugify(content.variant)}`
@@ -54,16 +58,16 @@ export function filenameForCard(content: CardContent): string {
   if (content.type === 'Cover') return slugify(content.title) + '_part-' + slugify(content.partNumber)
   if (content.type === 'Full Image Cover') return 'full-cover_' + slugify(content.title)
   if (content.type === 'Tier') {
-    const base = 'tier-' + content.rank.toLowerCase() + '_' + slugify(content.pathway)
+    const base = 'tier-' + tierRankSlug(content.rank) + '_' + slugify(content.pathway)
     return content.sequence === undefined ? base : base + '_seq-' + content.sequence
   }
-  if (content.type === 'Tierlist') return 'tierlist-' + content.rank.toLowerCase() + '_' + slugify(content.title)
+  if (content.type === 'Tierlist') return 'tierlist-' + tierRankSlug(content.rank) + '_' + slugify(content.title)
   if (content.type === 'Pathway') {
     const base = 'pathway_' + slugify(content.pathway)
     return content.sequence === undefined ? base : base + '_seq-' + content.sequence
   }
   if (content.type === 'Tier Explanation') {
-    return 'tier-explanation-' + content.rank.toLowerCase()
+    return 'tier-explanation-' + tierRankSlug(content.rank)
   }
   if (content.type === 'General Explanation') {
     const base = 'general-explanation_' + slugify(content.title)

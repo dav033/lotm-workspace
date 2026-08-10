@@ -58,14 +58,27 @@ const GRADE_LEVELS: Record<number, { c: string; d: string }> = {
   0: { c: "#f25f6b", d: "#5a1c24" },
   };
 
-// Tierlist ranks (best -> worst), aligned to the app's existing color ramp.
+// Tierlist ranks (best -> worst). Variants keep the same family while adding
+// a little editorial range for cards that sit between two letter grades.
 export const TIER_RANKS = {
-  S: { c: "#e8c36b", d: "#5a4416" },  // gold — apex
-  A: { c: "#f25f6b", d: "#5a1c24" },  // crimson
-  B: { c: "#b07ce0", d: "#3d2557" },  // purple
-  C: { c: "#46c2a0", d: "#15473a" },  // teal
-  D: { c: "#6e8bc0", d: "#22324f" },  // blue
-  F: { c: "#6b6b80", d: "#2a2a36" },  // gray
+  "S+": { c: "#f5d889", d: "#6b531d" },
+  S: { c: "#e8c36b", d: "#5a4416" },
+  "S-": { c: "#cba555", d: "#4a3813" },
+  "A+": { c: "#ff7b84", d: "#6a232b" },
+  A: { c: "#f25f6b", d: "#5a1c24" },
+  "A-": { c: "#cf4652", d: "#47161d" },
+  "B+": { c: "#c996ed", d: "#4a3269" },
+  B: { c: "#b07ce0", d: "#3d2557" },
+  "B-": { c: "#9365bd", d: "#302044" },
+  "C+": { c: "#69d2b3", d: "#1c584a" },
+  C: { c: "#46c2a0", d: "#15473a" },
+  "C-": { c: "#34967b", d: "#10352d" },
+  "D+": { c: "#86a4d3", d: "#2d4469" },
+  D: { c: "#6e8bc0", d: "#22324f" },
+  "D-": { c: "#57709c", d: "#1c2a43" },
+  "F+": { c: "#85859b", d: "#353544" },
+  F: { c: "#6b6b80", d: "#2a2a36" },
+  "F-": { c: "#505060", d: "#20202a" },
   } as const;
 export type TierRank = keyof typeof TIER_RANKS
 export const TIER_RANK_NAMES = Object.keys(TIER_RANKS) as TierRank[]
