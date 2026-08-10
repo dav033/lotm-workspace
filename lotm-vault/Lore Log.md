@@ -374,3 +374,9 @@
 - Ingested three valid Clippings sources: the Fool Pathway Beyonder roster, Kotar, and Zaratul. Source bodies remain preserved with unofficial/medium provenance.
 - Added [[Kotar]], [[Zaratul]], and [[Zaratul Senior]] as interpretation notes; linked Fool, Darkness, Flegrea, Sefirah Castle, and roster relations without promoting secondary evidence to canon.
 - Left 12 identical 77-byte clipping stubs unchanged and recorded them in [[Pending Review]] instead of fabricating claims.
+
+# 2026-08-09 - Fandom clipping source ingest
+
+- Ingested 13 distinct Lord of Mysteries Wiki captures as immutable `unofficial/medium` source notes: Abyss Pathway roster, Artificial Death, Azik Eggers, Evernight Goddess snapshot, Farbauti, Gregrace, Haiter, Haoli Sect Master, Mother Tree of Desire, Primordial God Almighty, Salinger, Sia Palenque Eggers, and Underworld Daoist.
+- Preserved every supplied source body byte-for-byte while replacing only clipping metadata with required source metadata. Updated [[Sources]] from 86 to 99 processed source notes.
+- Kept new Evernight Goddess capture as a dated source because it differs from existing source body. Removed only identical second Farbauti capture. No factual claim was promoted from Fandom evidence.

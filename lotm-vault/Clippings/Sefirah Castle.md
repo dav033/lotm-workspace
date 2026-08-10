@@ -1,1 +1,0 @@
-	Evita el conflicto directo con él. Con terceros lo procesa hablando con él

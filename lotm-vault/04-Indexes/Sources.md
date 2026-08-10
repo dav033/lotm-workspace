@@ -1,7 +1,7 @@
 ---
 type: index
 status: active
-last-audited: 2026-07-29
+last-audited: 2026-08-09
 ---
 
 # Sources
@@ -95,6 +95,19 @@ These are original author posts with exact WeChat URLs and publication scope.
 - [[Lord of Mysteries Wiki - Father of Devils Symbols, Authorities and Abilities]]
 - [[Lord of Mysteries Wiki - Eternal Darkness Symbols, Authorities and Abilities]]
 - [[Lord of Mysteries Wiki - Evernight Goddess]]
+- [[Lord of Mysteries Wiki - Evernight Goddess - 2026-08-09]]
+- [[Lord of Mysteries Wiki - Abyss Pathway List of Beyonders]]
+- [[Lord of Mysteries Wiki - Artificial Death]]
+- [[Lord of Mysteries Wiki - Azik Eggers]]
+- [[Lord of Mysteries Wiki - Farbauti]]
+- [[Lord of Mysteries Wiki - Gregrace]]
+- [[Lord of Mysteries Wiki - Haiter]]
+- [[Lord of Mysteries Wiki - Haoli Sect Master]]
+- [[Lord of Mysteries Wiki - Mother Tree of Desire]]
+- [[Lord of Mysteries Wiki - Primordial God Almighty]]
+- [[Lord of Mysteries Wiki - Salinger]]
+- [[Lord of Mysteries Wiki - Sia Palenque Eggers]]
+- [[Lord of Mysteries Wiki - Underworld Daoist]]
 - [[Lord of Mysteries Wiki - Flegrea]]
 - [[Lord of Mysteries Wiki - River of Eternal Darkness]]
 - [[Lord of Mysteries Wiki - Demon of Knowledge Symbols, Authorities and Abilities]]
@@ -107,5 +120,5 @@ These are original author posts with exact WeChat URLs and publication scope.
 - [[Reddit - Hanged Man Degeneration Discussions]]
 - [[Reddit - The Anarchy Authority Discussions]]
 
-Total: 86 processed source notes. Fandom, research dossiers, and Reddit support navigation or interpretation; they do not establish canon alone. Five of these ([[Lord of Mysteries Wiki - Error Pathway Advancement]], [[Lord of Mysteries Wiki - Door Pathway]], [[Lord of Mysteries Wiki - Door Pathway Advancement]], [[Lord of Mysteries Wiki - Visionary Pathway Advancement]], [[Lord of Mysteries Wiki - Sun Pathway Advancement]]) have pattern-inferred rather than independently fetched URLs; see [[Pending Review]]. The 16 Advancement pages added on 2026-07-29 were independently located and captured through indexed page results because direct Fandom fetches returned HTTP 402 or timed out. [[Web Research - Advancement Original Source Candidates - 2026-07-29]] records 16 exact WeChat candidates covering 15 Pathways, but direct WeChat inspection was blocked and the record remains unofficial/medium. The Fool/Error Authority batch relies on the existing exact-URL official/high Cuttlefish notes; its new web and Reddit notes are cross-checks only.
+Total: 99 processed source notes. Fandom, research dossiers, and Reddit support navigation or interpretation; they do not establish canon alone. Thirteen Fandom clippings were ingested on 2026-08-09; their bodies are immutable and their claims remain secondary evidence. Five of these ([[Lord of Mysteries Wiki - Error Pathway Advancement]], [[Lord of Mysteries Wiki - Door Pathway]], [[Lord of Mysteries Wiki - Door Pathway Advancement]], [[Lord of Mysteries Wiki - Visionary Pathway Advancement]], [[Lord of Mysteries Wiki - Sun Pathway Advancement]]) have pattern-inferred rather than independently fetched URLs; see [[Pending Review]]. The 16 Advancement pages added on 2026-07-29 were independently located and captured through indexed page results because direct Fandom fetches returned HTTP 402 or timed out. [[Web Research - Advancement Original Source Candidates - 2026-07-29]] records 16 exact WeChat candidates covering 15 Pathways, but direct WeChat inspection was blocked and the record remains unofficial/medium. The Fool/Error Authority batch relies on the existing exact-URL official/high Cuttlefish notes; its new web and Reddit notes are cross-checks only.
 
