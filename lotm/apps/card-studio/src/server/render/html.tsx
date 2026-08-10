@@ -3,6 +3,7 @@ import Card from '../../cards-ui/Card'
 import CoverCard from '../../cards-ui/CoverCard'
 import FullImageCoverCard from '../../cards-ui/FullImageCoverCard'
 import TierCard from '../../cards-ui/TierCard'
+import TierlistCard from '../../cards-ui/TierlistCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TierExplanationCard from '../../cards-ui/TierExplanationCard'
 import GeneralExplanationCard from '../../cards-ui/GeneralExplanationCard'
@@ -21,6 +22,7 @@ const StaticCard = Card as unknown as ComponentType<Record<string, unknown>>
 const StaticCoverCard = CoverCard as unknown as ComponentType<Record<string, unknown>>
 const StaticFullImageCoverCard = FullImageCoverCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTierCard = TierCard as unknown as ComponentType<Record<string, unknown>>
+const StaticTierlistCard = TierlistCard as unknown as ComponentType<Record<string, unknown>>
 const StaticPathwayCard = PathwayCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTierExplanationCard = TierExplanationCard as unknown as ComponentType<Record<string, unknown>>
 const StaticGeneralExplanationCard = GeneralExplanationCard as unknown as ComponentType<Record<string, unknown>>
@@ -48,6 +50,8 @@ function resolvedProps(state: RenderState, icons: Record<string, string>): Recor
 
   const backgroundImage = mapped.kind === 'General Explanation'
     ? state.generalExplanationBackground
+    : mapped.kind === 'Tierlist'
+      ? state.tierlistBackgroundImage
     : mapped.kind === 'Map'
       ? state.mapBackground
       : mapped.kind === 'Tarot Member'
@@ -79,6 +83,7 @@ export function CardMarkup({ state, icons }: { state: RenderState; icons: Record
   if (kind === 'Cover') return <StaticCoverCard {...props} />
   if (kind === 'Full Image Cover') return <StaticFullImageCoverCard {...props} />
   if (kind === 'Tier') return <StaticTierCard {...props} />
+  if (kind === 'Tierlist') return <StaticTierlistCard {...props} />
   if (kind === 'Pathway') return <StaticPathwayCard {...props} />
   if (kind === 'Tier Explanation') return <StaticTierExplanationCard {...props} />
   if (kind === 'General Explanation') return <StaticGeneralExplanationCard {...props} />

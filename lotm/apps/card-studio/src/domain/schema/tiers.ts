@@ -25,6 +25,27 @@ export const TierCardSchema = z
   })
   .strict()
 
+/** Standalone tierlist card. Unlike Tier, it has no pathway or sequence scope. */
+export const TierlistCardSchema = z
+  .object({
+    type: z.literal('Tierlist'),
+    title: z.string().trim().min(1).max(120).describe('Titulo visible de la tierlist.'),
+    rank: TierRankSchema,
+    points: z
+      .array(z.string().trim().min(1).max(180))
+      .max(14)
+      .describe('Puntos de explicacion, uno por linea en la carta.'),
+    footerText: z.string().trim().max(240).optional().describe(
+      'Texto destacado opcional mostrado al pie de la carta.',
+    ),
+    backgroundImageUrl: ImageSourceSchema.optional().describe(
+      'Imagen de fondo opcional, mostrada bajo un overlay oscuro.',
+    ),
+    backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
+  })
+  .strict()
+
 export const PathwayCardSchema = z
   .object({
     type: z.literal('Pathway'),

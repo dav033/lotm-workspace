@@ -74,7 +74,7 @@ test('guarda y consulta cartas agrupadas en un SQLite separado', async (t) => {
   assert.equal(repository.listCards().length, 5)
 })
 
-test('crea cards.db v12 y guarda las familias de producción', async (t) => {
+test('crea cards.db v13 y guarda las familias de producción', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v12-'))
   const dbPath = path.join(directory, 'cards.db')
   const repository = new CardRepository(dbPath)
@@ -93,7 +93,7 @@ test('crea cards.db v12 y guarda las familias de producción', async (t) => {
   })
   assert.deepEqual(saved.map((card) => card.type), ['Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'])
   const inspection = new Database(dbPath, { readonly: true })
-  assert.equal(inspection.pragma('user_version', { simple: true }), 12)
+  assert.equal(inspection.pragma('user_version', { simple: true }), 13)
   inspection.close()
 })
 

@@ -16,6 +16,7 @@ export function titleForCard(content: CardContent): string {
   if (content.type === 'Tier') {
     return content.pathway + (content.sequence === undefined ? '' : ' Sequence ' + content.sequence) + ' - Tier ' + content.rank
   }
+  if (content.type === 'Tierlist') return content.title + ' - Tier ' + content.rank
   if (content.type === 'Pathway') {
     return content.pathway + (content.sequence === undefined ? '' : ' Sequence ' + content.sequence) + ' - Pathway'
   }
@@ -56,6 +57,7 @@ export function filenameForCard(content: CardContent): string {
     const base = 'tier-' + content.rank.toLowerCase() + '_' + slugify(content.pathway)
     return content.sequence === undefined ? base : base + '_seq-' + content.sequence
   }
+  if (content.type === 'Tierlist') return 'tierlist-' + content.rank.toLowerCase() + '_' + slugify(content.title)
   if (content.type === 'Pathway') {
     const base = 'pathway_' + slugify(content.pathway)
     return content.sequence === undefined ? base : base + '_seq-' + content.sequence

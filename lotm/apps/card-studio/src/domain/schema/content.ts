@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { ArtifactCardSchema, CharacterCardSchema } from './standard'
 import { CoverCardSchema, FullImageCoverCardSchema } from './covers'
-import { PathwayCardSchema, TierCardSchema, TierExplanationCardSchema } from './tiers'
+import { PathwayCardSchema, TierCardSchema, TierExplanationCardSchema, TierlistCardSchema } from './tiers'
 import {
   BreakdownCardSchema,
   GeneralExplanationCardSchema,
@@ -19,6 +19,7 @@ export const CardContentSchema = z.discriminatedUnion('type', [
   CoverCardSchema,
   FullImageCoverCardSchema,
   TierCardSchema,
+  TierlistCardSchema,
   PathwayCardSchema,
   TierExplanationCardSchema,
   GeneralExplanationCardSchema,

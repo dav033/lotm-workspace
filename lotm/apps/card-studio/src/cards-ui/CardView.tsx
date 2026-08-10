@@ -3,6 +3,7 @@ import Card from './Card'
 import CoverCard from './CoverCard'
 import FullImageCoverCard from './FullImageCoverCard'
 import TierCard from './TierCard'
+import TierlistCard from './TierlistCard'
 import PathwayCard from './PathwayCard'
 import TierExplanationCard from './TierExplanationCard'
 import GeneralExplanationCard from './GeneralExplanationCard'
@@ -34,6 +35,7 @@ const CardView = forwardRef<HTMLElement, CardViewProps>(function CardView(
   if (kind === 'Cover') return <CoverCard {...props} ref={ref as React.Ref<HTMLDivElement>} />
   if (kind === 'Full Image Cover') return <FullImageCoverCard {...props} ref={ref} />
   if (kind === 'Tier') return <TierCard {...props} ref={ref} />
+  if (kind === 'Tierlist') return <TierlistCard {...props} ref={ref} />
   if (kind === 'Pathway') return <PathwayCard {...props} ref={ref} />
   if (kind === 'Tier Explanation') return <TierExplanationCard {...props} ref={ref} />
   if (kind === 'General Explanation') return <GeneralExplanationCard {...props} ref={ref} />

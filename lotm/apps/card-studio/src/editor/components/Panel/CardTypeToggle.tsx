@@ -7,6 +7,7 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
   'Cover',
   'Full Image Cover',
   'Tier',
+  'Tierlist',
   'Pathway',
   'Tier Explanation',
   'General Explanation',
@@ -26,11 +27,11 @@ type Props = {
 }
 
 const CARD_TYPE_GROUPS = [
-  { label: 'Explanation', types: [CARD_TYPES[6], CARD_TYPES[7], CARD_TYPES[8], CARD_TYPES[9]] },
-  { label: 'Pathway', types: [CARD_TYPES[4], CARD_TYPES[5], CARD_TYPES[11], CARD_TYPES[15]] },
-  { label: 'Card', types: [CARD_TYPES[0], CARD_TYPES[1], CARD_TYPES[12], CARD_TYPES[13], CARD_TYPES[14], CARD_TYPES[10]] },
-  { label: 'Cover', types: [CARD_TYPES[2], CARD_TYPES[3]] },
-]
+  { label: 'Explanation', types: ['Tier Explanation', 'General Explanation', 'Simple Explanation', 'Pathway Explanation'] },
+  { label: 'Ranking', types: ['Tierlist', 'Tier', 'Pathway', 'Map', 'Ritual Logic', 'Timeline'] },
+  { label: 'Card', types: ['Character', 'Artifact', 'Tarot Member', 'Corruption File', 'Breakdown'] },
+  { label: 'Cover', types: ['Cover', 'Full Image Cover'] },
+] as const
 
 function selectType(cardType: BuilderCardState['type'], currentType: BuilderCardState['type'], set: Props['set']) {
   set({

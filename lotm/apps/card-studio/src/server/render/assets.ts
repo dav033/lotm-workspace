@@ -79,6 +79,9 @@ export async function resolveStateImages(
     ?? (state.type === 'Tier'
       ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.tierPath] ?? null
       : null)
+  const tierlistBackgroundSource = state.type === 'Tierlist'
+    ? state.tierlistBackgroundImage
+    : null
   const pathwayCardBackgroundSource = state.pathwayCardBackgroundImage
     ?? (state.type === 'Pathway'
       ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.pathwayCardPath] ?? null
@@ -108,6 +111,9 @@ export async function resolveStateImages(
       : null,
     tierBackgroundImage: tierBackgroundSource
       ? await resolveImageSource(tierBackgroundSource, publicDir)
+      : null,
+    tierlistBackgroundImage: tierlistBackgroundSource
+      ? await resolveImageSource(tierlistBackgroundSource, publicDir)
       : null,
     tierExplanationBackgroundImage: state.tierExplanationBackgroundImage
       ? await resolveImageSource(state.tierExplanationBackgroundImage, publicDir)

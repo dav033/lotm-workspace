@@ -35,6 +35,25 @@ test('convierte una carta Tier al estado que consume el renderer actual', () => 
   assert.equal(filenameForCard(content), 'tier-s_fool_seq-9')
 })
 
+test('convierte una Tierlist independiente sin pathway', () => {
+  const content = CardContentSchema.parse({
+    type: 'Tierlist',
+    title: 'Klein Duos',
+    rank: 'S',
+    points: ['Azik: deepest bond', 'Leonard: clearest friend'],
+    footerText: 'No pathway required.',
+    backgroundImageUrl: '/cover-default.jpg',
+    backgroundOpacity: 65,
+  })
+  const state = toBuilderCardState(content)
+  assert.equal(state.tierlistTitle, 'Klein Duos')
+  assert.equal(state.tierlistText, 'Azik: deepest bond\nLeonard: clearest friend')
+  assert.equal(state.tierlistBackgroundImage, '/cover-default.jpg')
+  assert.deepEqual(fromBuilderCardState(state), content)
+  assert.equal(titleForCard(content), 'Klein Duos - Tier S')
+  assert.equal(filenameForCard(content), 'tierlist-s_klein-duos')
+})
+
 test('convierte una carta Pathway (sin rank) al estado que consume el renderer actual', () => {
   const wholePathway = CardContentSchema.parse({
     type: 'Pathway',

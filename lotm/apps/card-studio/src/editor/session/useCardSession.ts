@@ -555,6 +555,10 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
   if (state.type === 'Character' || state.type === 'Artifact') fill('name')
   if (state.type === 'Cover') { fill('coverTitle'); fill('coverPartNum', '1') }
   if (state.type === 'Full Image Cover') fill('fullCoverTitle')
+  if (state.type === 'Tierlist') {
+    fill('tierlistTitle')
+    fill('tierlistText')
+  }
   if (state.type === 'Tier Explanation') fill('tierExplanationText')
   if (state.type === 'General Explanation') {
     fill('generalExplanationTitle')

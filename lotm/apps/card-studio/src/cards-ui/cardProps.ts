@@ -20,6 +20,7 @@ export type CardKind =
   | 'Cover'
   | 'Full Image Cover'
   | 'Tier'
+  | 'Tierlist'
   | 'Pathway'
   | 'Tier Explanation'
   | 'General Explanation'
@@ -105,6 +106,22 @@ function cardPropsFromBuilderStateBase(
         text: state.tierText || '',
         footerText: state.tierFooterText || '',
         backgroundImage: background(state.tierBackgroundImage, PATHWAY_BACKGROUNDS[path]),
+        backgroundOpacity: state.backgroundOpacity,
+      },
+    }
+  }
+
+  if (state.type === 'Tierlist') {
+    const rank = state.tierlistRank in TIER_RANKS ? state.tierlistRank : 'S'
+    return {
+      kind: 'Tierlist',
+      props: {
+        title: state.tierlistTitle || 'Tierlist',
+        rank,
+        tier: TIER_RANKS[rank as keyof typeof TIER_RANKS],
+        text: state.tierlistText || '',
+        footerText: state.tierlistFooterText || '',
+        backgroundImage: state.tierlistBackgroundImage,
         backgroundOpacity: state.backgroundOpacity,
       },
     }
@@ -372,8 +389,9 @@ export function accentForState(state: BuilderCardState): CardAccent {
 
   if (type === 'Cover' || type === 'Full Image Cover') return { ...COVER_ACCENT }
 
-  if (type === 'Tier' || type === 'Tier Explanation') {
-    const rank = state.tierRank in TIER_RANKS ? (state.tierRank as keyof typeof TIER_RANKS) : 'S'
+  if (type === 'Tier' || type === 'Tierlist' || type === 'Tier Explanation') {
+    const rawRank = type === 'Tierlist' ? state.tierlistRank : state.tierRank
+    const rank = rawRank in TIER_RANKS ? (rawRank as keyof typeof TIER_RANKS) : 'S'
     return { ...TIER_RANKS[rank], pct: 100 }
   }
 

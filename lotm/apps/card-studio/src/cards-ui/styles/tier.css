@@ -64,3 +64,9 @@
 
 .tier-toggle .seg{font-weight:700}
 .tier-background-actions{margin-bottom:7px}
+
+/* Standalone tierlist: same visual grammar, no pathway/icon column. */
+.tierlist-card .tier-summary{grid-template-columns:minmax(0,1fr) 60px}
+.tierlist-identity{padding-left:4px}
+.tierlist-title{max-width:12ch;overflow-wrap:anywhere}
+.tierlist-card .tier-footer{flex:0 0 auto;margin:12px 0 0;color:var(--tier);font-size:11px;line-height:1.35;text-align:center}

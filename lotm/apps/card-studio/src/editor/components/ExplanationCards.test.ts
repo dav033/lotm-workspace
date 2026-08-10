@@ -9,6 +9,7 @@ import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
 import FullImageCoverCard from '../../cards-ui/FullImageCoverCard'
 import TierCard from '../../cards-ui/TierCard'
+import TierlistCard from '../../cards-ui/TierlistCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
 import CorruptionFileCard from '../../cards-ui/CorruptionFileCard'
@@ -24,6 +25,7 @@ const Breakdown = BreakdownCard as ComponentType<Record<string, unknown>>
 const Map_ = MapCard as ComponentType<Record<string, unknown>>
 const FullImageCover = FullImageCoverCard as ComponentType<Record<string, unknown>>
 const Tier = TierCard as ComponentType<Record<string, unknown>>
+const Tierlist = TierlistCard as ComponentType<Record<string, unknown>>
 const Pathway = PathwayCard as ComponentType<Record<string, unknown>>
 const TarotMember = TarotMemberCard as ComponentType<Record<string, unknown>>
 const CorruptionFile = CorruptionFileCard as ComponentType<Record<string, unknown>>
@@ -352,6 +354,17 @@ test('Tier muestra una secuencia específica del pathway', () => {
   assert.doesNotMatch(html, /tier-footer-text|A powerful information specialist/)
   assert.match(html, /background\.jpg/)
   assert.match(html, /tier-body/)
+})
+
+test('Tierlist no muestra pathway ni secuencia', () => {
+  const html = renderToStaticMarkup(React.createElement(Tierlist, {
+    title: 'Klein Duos', rank: 'S', tier: { c: '#fff', d: '#333' },
+    text: 'Azik: deepest bond', footerText: 'No pathway required.',
+  }))
+  assert.match(html, /tierlist-card/)
+  assert.match(html, /Klein Duos/)
+  assert.match(html, /Azik: deepest bond/)
+  assert.doesNotMatch(html, /Pathway|Seq /)
 })
 
 test('Corruption File y Timeline ignoran footer legado', () => {

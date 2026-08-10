@@ -35,6 +35,9 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'Tier') {
     return `tier_${state.tierRank || 'S'}_${state.tierPath || 'pathway'}${Number.isInteger(state.tierSeq) ? `_seq${state.tierSeq}` : ''}`.replace(/\s+/g, '_')
   }
+  if (state.type === 'Tierlist') {
+    return `tierlist_${state.tierlistRank || 'S'}_${state.tierlistTitle || 'untitled'}`.replace(/\s+/g, '_')
+  }
   if (state.type === 'Pathway') {
     return `pathway_${state.pathwayCardPath || 'pathway'}${Number.isInteger(state.pathwayCardSeq) ? `_seq${state.pathwayCardSeq}` : ''}`.replace(/\s+/g, '_')
   }

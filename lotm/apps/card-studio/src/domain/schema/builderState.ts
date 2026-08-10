@@ -4,7 +4,7 @@ import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 import type { FontSizeOverrides } from './fontSizes'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
   name: string
   path: string
   seq: number
@@ -30,6 +30,11 @@ export type BuilderCardState = {
   tierText: string
   tierFooterText: string
   tierBackgroundImage: string | null
+  tierlistTitle: string
+  tierlistRank: string
+  tierlistText: string
+  tierlistFooterText: string
+  tierlistBackgroundImage: string | null
   pathwayCardPath: string
   pathwayCardSeq: number | null
   pathwayCardText: string
@@ -140,6 +145,11 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tierText: '',
   tierFooterText: '',
   tierBackgroundImage: null,
+  tierlistTitle: '',
+  tierlistRank: 'S',
+  tierlistText: '',
+  tierlistFooterText: '',
+  tierlistBackgroundImage: null,
   pathwayCardPath: 'Fool',
   pathwayCardSeq: null,
   pathwayCardText: '',
@@ -258,6 +268,17 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       tierText: content.points.join('\n'),
       tierFooterText: content.footerText ?? '',
       tierBackgroundImage: content.backgroundImageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Tierlist') {
+    return {
+      ...state,
+      tierlistTitle: content.title,
+      tierlistRank: content.rank,
+      tierlistText: content.points.join('\n'),
+      tierlistFooterText: content.footerText ?? '',
+      tierlistBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -453,6 +474,17 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
       points: state.tierText.split('\n').map((point) => point.trim()).filter(Boolean),
       ...(state.tierFooterText.trim() ? { footerText: state.tierFooterText.trim() } : {}),
       ...(state.tierBackgroundImage ? { backgroundImageUrl: state.tierBackgroundImage } : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Tierlist') {
+    return {
+      type: 'Tierlist',
+      title: state.tierlistTitle.trim(),
+      rank: state.tierlistRank as CardContent & { rank: string }['rank'],
+      points: state.tierlistText.split('\n').map((point) => point.trim()).filter(Boolean),
+      ...(state.tierlistFooterText.trim() ? { footerText: state.tierlistFooterText.trim() } : {}),
+      ...(state.tierlistBackgroundImage ? { backgroundImageUrl: state.tierlistBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }
