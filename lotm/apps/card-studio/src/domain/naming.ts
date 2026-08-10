@@ -11,7 +11,7 @@ export function titleForCard(content: CardContent): string {
     return content.era ? content.title + ' (' + content.era + ') - ' + position : content.title + ' - ' + position
   }
   if (content.type === 'Corruption File') return `Corruption File: ${content.incident}`
-  if (content.type === 'Cover') return 'Pathways in ' + content.title + ' - Part ' + content.partNumber
+  if (content.type === 'Cover') return content.title + ' - Part ' + content.partNumber
   if (content.type === 'Full Image Cover') return content.title
   if (content.type === 'Tier') {
     return content.pathway + (content.sequence === undefined ? '' : ' Sequence ' + content.sequence) + ' - Tier ' + content.rank

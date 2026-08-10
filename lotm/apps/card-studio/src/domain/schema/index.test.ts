@@ -301,6 +301,16 @@ test('valida un cover de imagen completa con título al pie', () => {
   assert.equal(filenameForCard(cover), 'full-cover_the-fool-returns')
 })
 
+test('nombra cover normal sin inventar contexto de pathway', () => {
+  const cover = CardContentSchema.parse({
+    type: 'Cover',
+    title: 'Klein Duos — Reddit Consensus',
+    partNumber: '1',
+  })
+
+  assert.equal(titleForCard(cover), 'Klein Duos — Reddit Consensus - Part 1')
+})
+
 test('rechaza pathways no canónicos y explicaciones fuera de límite', () => {
   assert.throws(() => CardContentSchema.parse({
     type: 'Tier Explanation',
