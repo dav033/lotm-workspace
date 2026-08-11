@@ -265,3 +265,10 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Card Studio enlaza una carta existente sin duplicarla. La explicación se inserta justo después, comparte pathway, sequence y `backgroundOpacity`, y el editor ofrece navegación en ambos sentidos.
 - El vínculo se guarda con un `pairId` común y un `pairRole` (`subject` o `explanation`) dentro del contenido JSON. MCP expone `save_card_pair` para crear un par nuevo en una sola operación.
 - El contrato y el uso quedan documentados en [[Guía de pares de cartas]].
+
+## 2026-08-11 — Registro de hazañas para futuros vídeos
+
+- Se creó [[Feats]] para persistir la investigación editorial de hazañas por grupo.
+- Se fijó el filtro: nombre y apellido, contexto y resultado; fuera autoridades inherentes, situaciones sin logro, conspiraciones como núcleo y artefactos que hagan todo el trabajo.
+- Se fijó el límite de una sola hazaña procedente de *Circle of Inevitability* por grupo.
+- Se documentaron Lord of Mysteries, Eternal Darkness, Wheel of Fortune, Demon of Knowledge y Father of Devils. Los candidatos débiles quedan marcados para revisión, no forzados dentro del top.
