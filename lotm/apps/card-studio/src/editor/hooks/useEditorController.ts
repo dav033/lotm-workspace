@@ -305,8 +305,8 @@ export function useEditorController() {
           ? 'breakdownBackgroundImage'
       : stateRef.current.type === 'Map'
         ? 'mapBackgroundImage'
-        : stateRef.current.type === 'Fraud File'
-          ? 'fraudBackgroundImage'
+        : stateRef.current.type === 'Dossier'
+          ? 'dossierBackgroundImage'
         : 'tarotMemberImage'
     void onUploadImage(file, field)
   }

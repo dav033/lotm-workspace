@@ -2,14 +2,14 @@ import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
 import { FontSizeOverridesField } from './fontSizes'
 
-export const FraudFileCardSchema = z.object({
-  type: z.literal('Fraud File'),
+export const DossierCardSchema = z.object({
+  type: z.literal('Dossier'),
   name: z.string().trim().min(1).max(80),
-  allegation: z.string().trim().min(1).max(140),
+  headline: z.string().trim().min(1).max(140),
   evidence: z.string().trim().min(1).max(420),
   counterpoint: z.string().trim().min(1).max(280),
-  verdict: z.string().trim().min(1).max(120),
-  sourceLabel: z.string().trim().max(80).default('Reddit take'),
+  takeaway: z.string().trim().min(1).max(120),
+  sourceLabel: z.string().trim().max(80).default('Source note'),
   backgroundImageUrl: ImageSourceSchema.optional(),
   backgroundOpacity: BackgroundOpacitySchema,
   ...FontSizeOverridesField,

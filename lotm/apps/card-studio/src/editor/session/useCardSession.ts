@@ -572,13 +572,13 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('tarotMemberDetailLabel', 'Club function')
     fill('tarotMemberDetailText', 'What is actually happening.')
   }
-  if (state.type === 'Fraud File') {
-    fill('fraudName', 'New subject')
-    fill('fraudAllegation', 'The accusation goes here.')
-    fill('fraudEvidence', 'The receipts go here.')
-    fill('fraudCounterpoint', 'The counterpoint goes here.')
-    fill('fraudVerdict', 'The verdict goes here.')
-    fill('fraudSourceLabel', 'Reddit take')
+  if (state.type === 'Dossier') {
+    fill('dossierName', 'New subject')
+    fill('dossierHeadline', 'The central idea goes here.')
+    fill('dossierEvidence', 'The context goes here.')
+    fill('dossierCounterpoint', 'The alternate reading goes here.')
+    fill('dossierTakeaway', 'The bottom line goes here.')
+    fill('dossierSourceLabel', 'Source note')
   }
   if (state.type === 'Corruption File') {
     fill('corruptionIncident', 'New incident')

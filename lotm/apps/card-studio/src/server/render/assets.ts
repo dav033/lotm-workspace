@@ -26,7 +26,7 @@ export type RenderState = BuilderCardState & {
   generalExplanationBackground: string | null
   mapBackground: string | null
   tarotMemberResolvedImage: string | null
-  fraudFileBackground: string | null
+  dossierBackground: string | null
 }
 
 export async function createRenderAssets(projectRoot: string): Promise<RenderAssets> {
@@ -97,8 +97,8 @@ export async function resolveStateImages(
         ? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.timelinePathway] ?? null
         : null)
     : null
-  const fraudFileBackgroundSource = state.type === 'Fraud File'
-    ? state.fraudBackgroundImage
+  const dossierBackgroundSource = state.type === 'Dossier'
+    ? state.dossierBackgroundImage
     : null
 
   return {
@@ -129,8 +129,8 @@ export async function resolveStateImages(
       ? await resolveImageSource(generalExplanationSource, publicDir)
       : null,
     mapBackground: mapSource ? await resolveImageSource(mapSource, publicDir) : null,
-    fraudFileBackground: fraudFileBackgroundSource
-      ? await resolveImageSource(fraudFileBackgroundSource, publicDir)
+    dossierBackground: dossierBackgroundSource
+      ? await resolveImageSource(dossierBackgroundSource, publicDir)
       : null,
     tarotMemberResolvedImage: state.tarotMemberImage
       ? await resolveImageSource(state.tarotMemberImage, publicDir)

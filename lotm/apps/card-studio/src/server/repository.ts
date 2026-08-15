@@ -37,6 +37,18 @@ type PartRow = {
   updated_at: string
 }
 
+type RebuildCardRow = {
+  id: string
+  part_id: string
+  position: number
+  type: string
+  title: string
+  data_json: string
+  created_at: string
+  updated_at: string
+  duration_seconds: number | null
+}
+
 type JoinedCardRow = {
   id: string
   position: number
@@ -144,11 +156,23 @@ export class CardRepository {
     this.db = new Database(dbPath)
     this.db.pragma('foreign_keys = ON')
     this.db.pragma('journal_mode = WAL')
-    this.migrate()
+    this.db.pragma('busy_timeout = 5000')
+    this.migrateWithLock()
   }
 
   close(): void {
     this.db.close()
+  }
+
+  private migrateWithLock(): void {
+    this.db.exec('BEGIN IMMEDIATE')
+    try {
+      this.migrate()
+      this.db.exec('COMMIT')
+    } catch (error) {
+      try { this.db.exec('ROLLBACK') } catch { /* preserve the migration error */ }
+      throw error
+    }
   }
 
   // Identifica el estado actual de la biblioteca sin leerla entera. `data_version`
@@ -619,7 +643,17 @@ export class CardRepository {
 
   private migrate(): void {
     const version = this.db.pragma('user_version', { simple: true }) as number
-    if (version > 14) throw new Error(`La version ${version} de cards.db no es compatible.`)
+    if (version > 15) throw new Error(`La version ${version} de cards.db no es compatible.`)
+    // SQLite can expose the freshly-created tables to a second connection
+    // before that connection sees the header pragma. Treat that state as the
+    // current schema instead of trying to create the tables a second time.
+    const hasCardsTable = Boolean(this.db
+      .prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'cards'")
+      .get())
+    if (version === 0 && hasCardsTable) {
+      this.db.pragma('user_version = 15')
+      return
+    }
 
     if (version === 11) {
       this.rebuildCardsTable(['Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'], 12)
@@ -632,11 +666,37 @@ export class CardRepository {
     }
 
     if (version === 13) {
-      this.rebuildCardsTable(['Fraud File', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Tierlist'], 14)
+      this.rebuildCardsTable(['Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Tierlist'], 15)
       return
     }
 
-    if (version === 14) return
+    if (version === 14) {
+      this.rebuildCardsTable(
+        ['Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Tierlist'],
+        15,
+        (row) => {
+          if (row.type !== 'Fraud File') return row
+          const legacy = JSON.parse(row.data_json) as Record<string, unknown>
+          const dossier = {
+            ...legacy,
+            type: 'Dossier',
+            headline: legacy.allegation,
+            takeaway: legacy.verdict,
+          } as Record<string, unknown>
+          delete dossier.allegation
+          delete dossier.verdict
+          return {
+            ...row,
+            type: 'Dossier',
+            title: `Dossier: ${typeof legacy.name === 'string' ? legacy.name : 'Untitled'}`,
+            data_json: JSON.stringify(dossier),
+          }
+        },
+      )
+      return
+    }
+
+    if (version === 15) return
 
     if (version === 10) {
       this.rebuildCardsTable(['Corruption File', 'Ritual Logic', 'Simple Explanation'], 11)
@@ -828,7 +888,7 @@ export class CardRepository {
         type TEXT NOT NULL CHECK (type IN (
           'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Tierlist', 'Pathway',
           'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
-          'Fraud File', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'
+          'Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'
         )),
         title TEXT NOT NULL,
         data_json TEXT NOT NULL,
@@ -840,11 +900,15 @@ export class CardRepository {
       CREATE INDEX parts_universe_id_idx ON parts(universe_id);
       ${IMPORTED_IMAGES_SCHEMA}
       ${DURATION_COLUMNS}
-      PRAGMA user_version = 14;
+      PRAGMA user_version = 15;
     `)
   }
 
-  private rebuildCardsTable(extraTypes: string[], targetVersion: number): void {
+  private rebuildCardsTable(
+    extraTypes: string[],
+    targetVersion: number,
+    transform?: (row: RebuildCardRow) => RebuildCardRow,
+  ): void {
     const types = [
       'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Pathway',
       'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
@@ -863,12 +927,30 @@ export class CardRepository {
         updated_at TEXT NOT NULL,
         duration_seconds REAL CHECK (duration_seconds IS NULL OR (duration_seconds >= 0.5 AND duration_seconds <= 60))
       );
-      INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds)
+      ${transform ? '' : `INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds)
         SELECT id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds FROM cards_previous;
       DROP TABLE cards_previous;
       CREATE INDEX cards_part_id_idx ON cards(part_id);
-      PRAGMA user_version = ${targetVersion};
+      PRAGMA user_version = ${targetVersion};`}
     `)
+
+    if (transform) {
+      const rows = this.db
+        .prepare('SELECT id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds FROM cards_previous')
+        .all() as RebuildCardRow[]
+      const insert = this.db.prepare(`
+        INSERT INTO cards (id, part_id, position, type, title, data_json, created_at, updated_at, duration_seconds)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `)
+      for (const row of rows.map(transform)) {
+        insert.run(row.id, row.part_id, row.position, row.type, row.title, row.data_json, row.created_at, row.updated_at, row.duration_seconds)
+      }
+      this.db.exec(`
+        DROP TABLE cards_previous;
+        CREATE INDEX cards_part_id_idx ON cards(part_id);
+        PRAGMA user_version = ${targetVersion};
+      `)
+    }
     this.migrate()
   }
 }

@@ -29,7 +29,7 @@ export type CardKind =
   | 'Breakdown'
   | 'Map'
   | 'Tarot Member'
-  | 'Fraud File'
+  | 'Dossier'
   | 'Corruption File'
   | 'Ritual Logic'
   | 'Timeline'
@@ -282,17 +282,17 @@ function cardPropsFromBuilderStateBase(
     }
   }
 
-  if (state.type === 'Fraud File') {
+  if (state.type === 'Dossier') {
     return {
-      kind: 'Fraud File',
+      kind: 'Dossier',
       props: {
-        name: state.fraudName,
-        allegation: state.fraudAllegation,
-        evidence: state.fraudEvidence,
-        counterpoint: state.fraudCounterpoint,
-        verdict: state.fraudVerdict,
-        sourceLabel: state.fraudSourceLabel,
-        backgroundImage: state.fraudBackgroundImage,
+        name: state.dossierName,
+        headline: state.dossierHeadline,
+        evidence: state.dossierEvidence,
+        counterpoint: state.dossierCounterpoint,
+        takeaway: state.dossierTakeaway,
+        sourceLabel: state.dossierSourceLabel,
+        backgroundImage: state.dossierBackgroundImage,
         backgroundOpacity: state.backgroundOpacity,
         onDropBackground: handlers.onDropBackground,
       },
@@ -434,7 +434,7 @@ export function accentForState(state: BuilderCardState): CardAccent {
     return { c: color, d: '#351317', pct: 100 }
   }
 
-  if (type === 'Fraud File') return { ...COVER_ACCENT }
+  if (type === 'Dossier') return { ...COVER_ACCENT }
 
   if (type === 'Map') {
     const pathway =

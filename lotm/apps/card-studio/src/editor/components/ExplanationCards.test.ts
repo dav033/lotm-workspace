@@ -12,7 +12,7 @@ import TierCard from '../../cards-ui/TierCard'
 import TierlistCard from '../../cards-ui/TierlistCard'
 import PathwayCard from '../../cards-ui/PathwayCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
-import FraudFileCard from '../../cards-ui/FraudFileCard'
+import DossierCard from '../../cards-ui/DossierCard'
 import CorruptionFileCard from '../../cards-ui/CorruptionFileCard'
 import TimelineCard from '../../cards-ui/TimelineCard'
 import RitualLogicCard from '../../cards-ui/RitualLogicCard'
@@ -29,7 +29,7 @@ const Tier = TierCard as ComponentType<Record<string, unknown>>
 const Tierlist = TierlistCard as ComponentType<Record<string, unknown>>
 const Pathway = PathwayCard as ComponentType<Record<string, unknown>>
 const TarotMember = TarotMemberCard as ComponentType<Record<string, unknown>>
-const FraudFile = FraudFileCard as ComponentType<Record<string, unknown>>
+const Dossier = DossierCard as ComponentType<Record<string, unknown>>
 const CorruptionFile = CorruptionFileCard as ComponentType<Record<string, unknown>>
 const Timeline = TimelineCard as ComponentType<Record<string, unknown>>
 const RitualLogic = RitualLogicCard as ComponentType<Record<string, unknown>>
@@ -53,19 +53,19 @@ test('Tarot Member produce composiciones distintas para retrato, expediente y co
   assert.doesNotMatch(contrast, /tarot-member-footer|Praise the Fool\./)
 })
 
-test('Fraud File concentra acusacion, receipts, counterpoint y veredicto', () => {
-  const markup = renderToStaticMarkup(React.createElement(FraudFile, {
+test('Dossier concentra idea, contexto, counterpoint y conclusion', () => {
+  const markup = renderToStaticMarkup(React.createElement(Dossier, {
     name: 'Edwina',
-    allegation: 'GREAT SETUP. THEN NOTHING?',
+    headline: 'GREAT SETUP. THEN NOTHING?',
     evidence: 'Reader Pathway potential and unresolved story weight.',
     counterpoint: 'Not every strong side character needed a Tarot Club seat.',
-    verdict: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
-    sourceLabel: 'Reddit take',
+    takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
+    sourceLabel: 'Source note',
   }))
 
-  assert.match(markup, /fraud-file-card/)
-  assert.match(markup, /The charge/)
-  assert.match(markup, /Receipts/)
+  assert.match(markup, /dossier-card/)
+  assert.match(markup, /The point/)
+  assert.match(markup, /Evidence \/ context/)
   assert.match(markup, /Counterpoint/)
   assert.match(markup, /DISAPPOINTMENT, NOT INCOMPETENCE\./)
   assert.match(markup, /LOTM/)

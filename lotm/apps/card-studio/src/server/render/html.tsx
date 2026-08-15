@@ -12,7 +12,7 @@ import PathwayExplanationCard from '../../cards-ui/PathwayExplanationCard'
 import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
 import TarotMemberCard from '../../cards-ui/TarotMemberCard'
-import FraudFileCard from '../../cards-ui/FraudFileCard'
+import DossierCard from '../../cards-ui/DossierCard'
 import RitualLogicCard from '../../cards-ui/RitualLogicCard'
 import TimelineCard from '../../cards-ui/TimelineCard'
 import { cardPropsFromBuilderState } from '../../cards-ui/cardProps'
@@ -32,7 +32,7 @@ const StaticPathwayExplanationCard = PathwayExplanationCard as unknown as Compon
 const StaticBreakdownCard = BreakdownCard as unknown as ComponentType<Record<string, unknown>>
 const StaticMapCard = MapCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTarotMemberCard = TarotMemberCard as unknown as ComponentType<Record<string, unknown>>
-const StaticFraudFileCard = FraudFileCard as unknown as ComponentType<Record<string, unknown>>
+const StaticDossierCard = DossierCard as unknown as ComponentType<Record<string, unknown>>
 const StaticRitualLogicCard = RitualLogicCard as unknown as ComponentType<Record<string, unknown>>
 const StaticTimelineCard = TimelineCard as unknown as ComponentType<Record<string, unknown>>
 
@@ -58,8 +58,8 @@ function resolvedProps(state: RenderState, icons: Record<string, string>): Recor
       ? state.mapBackground
       : mapped.kind === 'Tarot Member'
         ? state.tarotMemberResolvedImage
-      : mapped.kind === 'Fraud File'
-        ? state.fraudFileBackground
+      : mapped.kind === 'Dossier'
+        ? state.dossierBackground
       : mapped.kind === 'Timeline'
           ? state.timelineBackgroundImage
           : props.backgroundImage
@@ -96,7 +96,7 @@ export function CardMarkup({ state, icons }: { state: RenderState; icons: Record
   if (kind === 'Breakdown') return <StaticBreakdownCard {...props} />
   if (kind === 'Map') return <StaticMapCard {...props} />
   if (kind === 'Tarot Member') return <StaticTarotMemberCard {...props} />
-  if (kind === 'Fraud File') return <StaticFraudFileCard {...props} />
+  if (kind === 'Dossier') return <StaticDossierCard {...props} />
   if (kind === 'Ritual Logic') return <StaticRitualLogicCard {...props} />
   if (kind === 'Timeline') return <StaticTimelineCard {...props} />
   return <StaticCard {...props} />

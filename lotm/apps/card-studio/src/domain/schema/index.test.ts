@@ -36,26 +36,26 @@ test('convierte una carta Tier al estado que consume el renderer actual', () => 
   assert.equal(filenameForCard(content), 'tier-s_fool_seq-9')
 })
 
-test('Fraud File conserva expediente, fuente y fondo al ida y vuelta', () => {
+test('Dossier conserva idea, contexto, fuente y fondo al ida y vuelta', () => {
   const content = CardContentSchema.parse({
-    type: 'Fraud File',
+    type: 'Dossier',
     name: 'Edwina',
-    allegation: 'GREAT SETUP. THEN NOTHING?',
+    headline: 'GREAT SETUP. THEN NOTHING?',
     evidence: 'Reader Pathway potential, good chemistry with Gehrman, and the fandom still asking where the rest of her story went.',
     counterpoint: 'Not every strong side character needed a Tarot Club seat.',
-    verdict: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
-    sourceLabel: 'Reddit take',
+    takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
+    sourceLabel: 'Source note',
     backgroundImageUrl: '/covers/edwina.webp',
     backgroundOpacity: 52,
   })
 
   const state = toBuilderCardState(content)
-  assert.equal(state.type, 'Fraud File')
-  assert.equal(state.fraudName, 'Edwina')
-  assert.equal(state.fraudBackgroundImage, '/covers/edwina.webp')
+  assert.equal(state.type, 'Dossier')
+  assert.equal(state.dossierName, 'Edwina')
+  assert.equal(state.dossierBackgroundImage, '/covers/edwina.webp')
   assert.deepEqual(fromBuilderCardState(state), content)
-  assert.equal(titleForCard(content), 'Fraud File: Edwina')
-  assert.equal(filenameForCard(content), 'fraud-file_edwina')
+  assert.equal(titleForCard(content), 'Dossier: Edwina')
+  assert.equal(filenameForCard(content), 'dossier_edwina')
 })
 
 test('convierte una Tierlist independiente sin pathway', () => {

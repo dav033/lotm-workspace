@@ -58,7 +58,7 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'Tarot Member') {
     return `tarot_member_${state.tarotMemberTitle || 'arcana'}_${state.tarotMemberName || 'member'}`.replace(/\s+/g, '_')
   }
-  if (state.type === 'Fraud File') return `fraud_file_${state.fraudName || 'untitled'}`.replace(/\s+/g, '_')
+  if (state.type === 'Dossier') return `dossier_${state.dossierName || 'untitled'}`.replace(/\s+/g, '_')
   if (state.type === 'Ritual Logic') {
     return `ritual_logic_${state.ritualPathway || 'pathway'}_seq${state.ritualSequence}_${state.ritualVariant || 'Chain'}`.replace(/\s+/g, '_')
   }

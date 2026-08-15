@@ -4,7 +4,7 @@ import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 import type { FontSizeOverrides } from './fontSizes'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Fraud File' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Dossier' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
   name: string
   path: string
   seq: number
@@ -78,13 +78,13 @@ export type BuilderCardState = {
   tarotMemberPathway: string | null
   tarotMemberAccentColor: string | null
   tarotMemberImage: string | null
-  fraudName: string
-  fraudAllegation: string
-  fraudEvidence: string
-  fraudCounterpoint: string
-  fraudVerdict: string
-  fraudSourceLabel: string
-  fraudBackgroundImage: string | null
+  dossierName: string
+  dossierHeadline: string
+  dossierEvidence: string
+  dossierCounterpoint: string
+  dossierTakeaway: string
+  dossierSourceLabel: string
+  dossierBackgroundImage: string | null
   corruptionVariant: 'Warning' | 'Evidence' | 'Quote'
   corruptionIncident: string
   corruptionCaseLabel: string
@@ -200,13 +200,13 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tarotMemberPathway: null,
   tarotMemberAccentColor: null,
   tarotMemberImage: null,
-  fraudName: '',
-  fraudAllegation: '',
-  fraudEvidence: '',
-  fraudCounterpoint: '',
-  fraudVerdict: '',
-  fraudSourceLabel: 'Reddit take',
-  fraudBackgroundImage: null,
+  dossierName: '',
+  dossierHeadline: '',
+  dossierEvidence: '',
+  dossierCounterpoint: '',
+  dossierTakeaway: '',
+  dossierSourceLabel: 'Source note',
+  dossierBackgroundImage: null,
   corruptionVariant: 'Warning',
   corruptionIncident: '',
   corruptionCaseLabel: 'Normal explanation',
@@ -392,16 +392,16 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
     }
   }
 
-  if (content.type === 'Fraud File') {
+  if (content.type === 'Dossier') {
     return {
       ...state,
-      fraudName: content.name,
-      fraudAllegation: content.allegation,
-      fraudEvidence: content.evidence,
-      fraudCounterpoint: content.counterpoint,
-      fraudVerdict: content.verdict,
-      fraudSourceLabel: content.sourceLabel,
-      fraudBackgroundImage: content.backgroundImageUrl ?? null,
+      dossierName: content.name,
+      dossierHeadline: content.headline,
+      dossierEvidence: content.evidence,
+      dossierCounterpoint: content.counterpoint,
+      dossierTakeaway: content.takeaway,
+      dossierSourceLabel: content.sourceLabel,
+      dossierBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -613,16 +613,16 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
       backgroundOpacity: state.backgroundOpacity,
     }
   }
-  if (state.type === 'Fraud File') {
+  if (state.type === 'Dossier') {
     return {
-      type: 'Fraud File',
-      name: state.fraudName.trim(),
-      allegation: state.fraudAllegation.trim(),
-      evidence: state.fraudEvidence.trim(),
-      counterpoint: state.fraudCounterpoint.trim(),
-      verdict: state.fraudVerdict.trim(),
-      sourceLabel: state.fraudSourceLabel.trim() || 'Reddit take',
-      ...(state.fraudBackgroundImage ? { backgroundImageUrl: state.fraudBackgroundImage } : {}),
+      type: 'Dossier',
+      name: state.dossierName.trim(),
+      headline: state.dossierHeadline.trim(),
+      evidence: state.dossierEvidence.trim(),
+      counterpoint: state.dossierCounterpoint.trim(),
+      takeaway: state.dossierTakeaway.trim(),
+      sourceLabel: state.dossierSourceLabel.trim() || 'Source note',
+      ...(state.dossierBackgroundImage ? { backgroundImageUrl: state.dossierBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }

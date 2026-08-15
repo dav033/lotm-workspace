@@ -23,7 +23,7 @@ const FAMILIES: CardKind[] = [
   'Breakdown',
   'Map',
   'Tarot Member',
-  'Fraud File',
+  'Dossier',
   'Corruption File',
   'Ritual Logic',
   'Timeline',
