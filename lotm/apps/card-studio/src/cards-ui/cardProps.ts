@@ -29,6 +29,7 @@ export type CardKind =
   | 'Breakdown'
   | 'Map'
   | 'Tarot Member'
+  | 'Fraud File'
   | 'Corruption File'
   | 'Ritual Logic'
   | 'Timeline'
@@ -281,6 +282,23 @@ function cardPropsFromBuilderStateBase(
     }
   }
 
+  if (state.type === 'Fraud File') {
+    return {
+      kind: 'Fraud File',
+      props: {
+        name: state.fraudName,
+        allegation: state.fraudAllegation,
+        evidence: state.fraudEvidence,
+        counterpoint: state.fraudCounterpoint,
+        verdict: state.fraudVerdict,
+        sourceLabel: state.fraudSourceLabel,
+        backgroundImage: state.fraudBackgroundImage,
+        backgroundOpacity: state.backgroundOpacity,
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
   if (state.type === 'Corruption File') {
     return { kind: 'Corruption File', props: {
       variant: state.corruptionVariant, incident: state.corruptionIncident,
@@ -415,6 +433,8 @@ export function accentForState(state: BuilderCardState): CardAccent {
     const color = state.corruptionAccentColor || '#d84a4a'
     return { c: color, d: '#351317', pct: 100 }
   }
+
+  if (type === 'Fraud File') return { ...COVER_ACCENT }
 
   if (type === 'Map') {
     const pathway =

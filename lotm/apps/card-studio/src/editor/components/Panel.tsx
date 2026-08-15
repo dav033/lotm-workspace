@@ -12,6 +12,7 @@ import PathwayExplanationFields from './Panel/PathwayExplanationFields'
 import BreakdownFields from './Panel/BreakdownFields'
 import MapFields from './Panel/MapFields'
 import TarotMemberFields from './Panel/TarotMemberFields'
+import FraudFileFields from './Panel/FraudFileFields'
 import CoverFields from './Panel/CoverFields'
 import FullImageCoverFields from './Panel/FullImageCoverFields'
 import StandardFields from './Panel/StandardFields'
@@ -48,6 +49,7 @@ export default function Panel(props) {
       {state.type === 'Breakdown' ? <BreakdownFields {...fieldProps} /> : null}
       {state.type === 'Map' ? <MapFields {...fieldProps} /> : null}
       {state.type === 'Tarot Member' ? <TarotMemberFields {...fieldProps} /> : null}
+      {state.type === 'Fraud File' ? <FraudFileFields {...fieldProps} /> : null}
       {state.type === 'Corruption File' ? <CorruptionFileFields {...fieldProps} /> : null}
       {state.type === 'Ritual Logic' ? <RitualLogicFields {...fieldProps} /> : null}
       {state.type === 'Timeline' ? <TimelineFields {...fieldProps} /> : null}
@@ -63,6 +65,7 @@ export default function Panel(props) {
       state.type !== 'Breakdown' &&
       state.type !== 'Map' &&
       state.type !== 'Tarot Member' &&
+      state.type !== 'Fraud File' &&
       state.type !== 'Corruption File' &&
       state.type !== 'Ritual Logic' &&
       state.type !== 'Timeline' &&

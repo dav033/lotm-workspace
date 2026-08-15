@@ -36,6 +36,28 @@ test('convierte una carta Tier al estado que consume el renderer actual', () => 
   assert.equal(filenameForCard(content), 'tier-s_fool_seq-9')
 })
 
+test('Fraud File conserva expediente, fuente y fondo al ida y vuelta', () => {
+  const content = CardContentSchema.parse({
+    type: 'Fraud File',
+    name: 'Edwina',
+    allegation: 'GREAT SETUP. THEN NOTHING?',
+    evidence: 'Reader Pathway potential, good chemistry with Gehrman, and the fandom still asking where the rest of her story went.',
+    counterpoint: 'Not every strong side character needed a Tarot Club seat.',
+    verdict: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
+    sourceLabel: 'Reddit take',
+    backgroundImageUrl: '/covers/edwina.webp',
+    backgroundOpacity: 52,
+  })
+
+  const state = toBuilderCardState(content)
+  assert.equal(state.type, 'Fraud File')
+  assert.equal(state.fraudName, 'Edwina')
+  assert.equal(state.fraudBackgroundImage, '/covers/edwina.webp')
+  assert.deepEqual(fromBuilderCardState(state), content)
+  assert.equal(titleForCard(content), 'Fraud File: Edwina')
+  assert.equal(filenameForCard(content), 'fraud-file_edwina')
+})
+
 test('convierte una Tierlist independiente sin pathway', () => {
   const content = CardContentSchema.parse({
     type: 'Tierlist',

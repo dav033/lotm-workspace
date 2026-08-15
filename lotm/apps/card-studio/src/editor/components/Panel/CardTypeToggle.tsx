@@ -16,6 +16,7 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
   'Breakdown',
   'Map',
   'Tarot Member',
+  'Fraud File',
   'Corruption File',
   'Ritual Logic',
   'Timeline',
@@ -29,7 +30,7 @@ type Props = {
 const CARD_TYPE_GROUPS = [
   { label: 'Explanation', types: ['Tier Explanation', 'General Explanation', 'Simple Explanation', 'Pathway Explanation'] },
   { label: 'Ranking', types: ['Tierlist', 'Tier', 'Pathway', 'Map', 'Ritual Logic', 'Timeline'] },
-  { label: 'Card', types: ['Character', 'Artifact', 'Tarot Member', 'Corruption File', 'Breakdown'] },
+  { label: 'Card', types: ['Character', 'Artifact', 'Tarot Member', 'Fraud File', 'Corruption File', 'Breakdown'] },
   { label: 'Cover', types: ['Cover', 'Full Image Cover'] },
 ] as const
 

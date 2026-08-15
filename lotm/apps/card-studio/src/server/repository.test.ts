@@ -74,7 +74,7 @@ test('guarda y consulta cartas agrupadas en un SQLite separado', async (t) => {
   assert.equal(repository.listCards().length, 5)
 })
 
-test('crea cards.db v13 y guarda las familias de producción', async (t) => {
+test('crea cards.db v14 y guarda las familias de producción', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v12-'))
   const dbPath = path.join(directory, 'cards.db')
   const repository = new CardRepository(dbPath)
@@ -85,15 +85,16 @@ test('crea cards.db v13 y guarda las familias de producción', async (t) => {
 
   const saved = repository.saveBatch({
     universe: { name: 'LOTM' }, part: { name: 'Rituals', number: 1 }, cards: [
+      { type: 'Fraud File', name: 'Edwina', allegation: 'GREAT SETUP. THEN NOTHING?', evidence: 'Reader Pathway potential.', counterpoint: 'Not every strong side character needed a Tarot Club seat.', verdict: 'DISAPPOINTMENT, NOT INCOMPETENCE.', sourceLabel: 'Reddit take' },
       { type: 'Corruption File', variant: 'Warning', incident: 'Monocle', caseLabel: 'Normal explanation', explanation: 'Context.', reactionLabel: 'Fandom reaction', reaction: 'Panic.', corruptionLevel: 'Severe', showIncidentNumber: false },
       { type: 'Ritual Logic', variant: 'Chain', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
       { type: 'Simple Explanation', text: 'Centered text.', fontSizeMin: 14, fontSizeMax: 28, position: 'center' },
       { type: 'Timeline', variant: 'Beat', pathway: 'Fool', title: 'A new milestone', step: 1, total: 3, certainty: 'Canon', moves: [] },
     ],
   })
-  assert.deepEqual(saved.map((card) => card.type), ['Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'])
+  assert.deepEqual(saved.map((card) => card.type), ['Fraud File', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'])
   const inspection = new Database(dbPath, { readonly: true })
-  assert.equal(inspection.pragma('user_version', { simple: true }), 13)
+  assert.equal(inspection.pragma('user_version', { simple: true }), 14)
   inspection.close()
 })
 

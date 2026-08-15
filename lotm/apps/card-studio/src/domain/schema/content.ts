@@ -10,7 +10,7 @@ import {
   SimpleExplanationCardSchema,
   TarotMemberCardSchema,
 } from './explanations'
-import { CorruptionFileCardSchema, RitualLogicCardSchema } from './special'
+import { CorruptionFileCardSchema, FraudFileCardSchema, RitualLogicCardSchema } from './special'
 import { TimelineCardSchema } from './timeline'
 
 export const CardContentSchema = z.discriminatedUnion('type', [
@@ -28,6 +28,7 @@ export const CardContentSchema = z.discriminatedUnion('type', [
   BreakdownCardSchema,
   MapCardSchema,
   TarotMemberCardSchema,
+  FraudFileCardSchema,
   CorruptionFileCardSchema,
   RitualLogicCardSchema,
   TimelineCardSchema,

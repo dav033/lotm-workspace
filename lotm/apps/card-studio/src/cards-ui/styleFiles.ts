@@ -10,6 +10,7 @@ export const STYLE_FILES = [
   'breakdown.css',
   'map.css',
   'tarot-member.css',
+  'fraud-file.css',
   'corruption-file.css',
   'ritual-logic.css',
   'timeline.css',

@@ -12,6 +12,7 @@ import PathwayExplanationCard from './PathwayExplanationCard'
 import BreakdownCard from './BreakdownCard'
 import MapCard from './MapCard'
 import TarotMemberCard from './TarotMemberCard'
+import FraudFileCard from './FraudFileCard'
 import CorruptionFileCard from './CorruptionFileCard'
 import RitualLogicCard from './RitualLogicCard'
 import TimelineCard from './TimelineCard'
@@ -44,6 +45,7 @@ const CardView = forwardRef<HTMLElement, CardViewProps>(function CardView(
   if (kind === 'Breakdown') return <BreakdownCard {...props} ref={ref} />
   if (kind === 'Map') return <MapCard {...props} ref={ref} />
   if (kind === 'Tarot Member') return <TarotMemberCard {...props} ref={ref} />
+  if (kind === 'Fraud File') return <FraudFileCard {...props} ref={ref} />
   if (kind === 'Corruption File') return <CorruptionFileCard {...props} ref={ref} />
   if (kind === 'Ritual Logic') return <RitualLogicCard {...props} ref={ref} />
   if (kind === 'Timeline') return <TimelineCard {...props} ref={ref} />

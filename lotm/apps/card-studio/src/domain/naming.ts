@@ -11,6 +11,7 @@ export function titleForCard(content: CardContent): string {
     return content.era ? content.title + ' (' + content.era + ') - ' + position : content.title + ' - ' + position
   }
   if (content.type === 'Corruption File') return `Corruption File: ${content.incident}`
+  if (content.type === 'Fraud File') return `Fraud File: ${content.name}`
   if (content.type === 'Cover') return content.title + ' - Part ' + content.partNumber
   if (content.type === 'Full Image Cover') return content.title
   if (content.type === 'Tier') {
@@ -55,6 +56,7 @@ export function filenameForCard(content: CardContent): string {
     return 'timeline_' + String(content.step).padStart(2, '0') + '_' + slugify(content.title)
   }
   if (content.type === 'Corruption File') return `corruption-file_${slugify(content.incident)}`
+  if (content.type === 'Fraud File') return `fraud-file_${slugify(content.name)}`
   if (content.type === 'Cover') return slugify(content.title) + '_part-' + slugify(content.partNumber)
   if (content.type === 'Full Image Cover') return 'full-cover_' + slugify(content.title)
   if (content.type === 'Tier') {

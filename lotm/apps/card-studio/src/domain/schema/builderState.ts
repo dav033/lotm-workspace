@@ -4,7 +4,7 @@ import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 import type { FontSizeOverrides } from './fontSizes'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Fraud File' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
   name: string
   path: string
   seq: number
@@ -78,6 +78,13 @@ export type BuilderCardState = {
   tarotMemberPathway: string | null
   tarotMemberAccentColor: string | null
   tarotMemberImage: string | null
+  fraudName: string
+  fraudAllegation: string
+  fraudEvidence: string
+  fraudCounterpoint: string
+  fraudVerdict: string
+  fraudSourceLabel: string
+  fraudBackgroundImage: string | null
   corruptionVariant: 'Warning' | 'Evidence' | 'Quote'
   corruptionIncident: string
   corruptionCaseLabel: string
@@ -193,6 +200,13 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tarotMemberPathway: null,
   tarotMemberAccentColor: null,
   tarotMemberImage: null,
+  fraudName: '',
+  fraudAllegation: '',
+  fraudEvidence: '',
+  fraudCounterpoint: '',
+  fraudVerdict: '',
+  fraudSourceLabel: 'Reddit take',
+  fraudBackgroundImage: null,
   corruptionVariant: 'Warning',
   corruptionIncident: '',
   corruptionCaseLabel: 'Normal explanation',
@@ -375,6 +389,19 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       tarotMemberPathway: content.pathway ?? null,
       tarotMemberAccentColor: content.accentColor ?? null,
       tarotMemberImage: content.imageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Fraud File') {
+    return {
+      ...state,
+      fraudName: content.name,
+      fraudAllegation: content.allegation,
+      fraudEvidence: content.evidence,
+      fraudCounterpoint: content.counterpoint,
+      fraudVerdict: content.verdict,
+      fraudSourceLabel: content.sourceLabel,
+      fraudBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -583,6 +610,19 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
       ...(state.tarotMemberPathway ? { pathway: state.tarotMemberPathway } : {}),
       ...(state.tarotMemberAccentColor ? { accentColor: state.tarotMemberAccentColor } : {}),
       ...(state.tarotMemberImage ? { imageUrl: state.tarotMemberImage } : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Fraud File') {
+    return {
+      type: 'Fraud File',
+      name: state.fraudName.trim(),
+      allegation: state.fraudAllegation.trim(),
+      evidence: state.fraudEvidence.trim(),
+      counterpoint: state.fraudCounterpoint.trim(),
+      verdict: state.fraudVerdict.trim(),
+      sourceLabel: state.fraudSourceLabel.trim() || 'Reddit take',
+      ...(state.fraudBackgroundImage ? { backgroundImageUrl: state.fraudBackgroundImage } : {}),
       backgroundOpacity: state.backgroundOpacity,
     }
   }
