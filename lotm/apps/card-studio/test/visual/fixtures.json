@@ -128,6 +128,7 @@
   },
   {
     "type": "Dossier",
+    "variant": "Impact",
     "name": "Edwina",
     "headline": "GREAT SETUP. THEN NOTHING?",
     "evidence": "Reader Pathway potential, good chemistry with Gehrman, and the fandom still asking where the rest of her story went.",
@@ -135,6 +136,50 @@
     "takeaway": "DISAPPOINTMENT, NOT INCOMPETENCE.",
     "sourceLabel": "Source note",
     "backgroundOpacity": 52
+  },
+  {
+    "type": "Dossier",
+    "variant": "Verdict",
+    "name": "Edwina — verdict",
+    "headline": "The setup promised a larger role than the story delivered.",
+    "evidence": "Her pathway clues and chemistry with Gehrman created a strong expectation before the thread went quiet.",
+    "counterpoint": "A compelling setup can still be a complete side story.",
+    "takeaway": "MISSED PAYOFF, NOT A BAD CHARACTER.",
+    "sourceLabel": "Fandom reading",
+    "backgroundOpacity": 48
+  },
+  {
+    "type": "Dossier",
+    "variant": "Contrast",
+    "name": "Edwina — contrast",
+    "headline": "The missing chapter is the whole debate.",
+    "evidence": "The premise leaves enough room for a bigger arc and makes the absence feel intentional.",
+    "counterpoint": "Not every unresolved thread is a promise from the author.",
+    "takeaway": "BOTH READINGS SURVIVE.",
+    "sourceLabel": "Two readings",
+    "backgroundOpacity": 44
+  },
+  {
+    "type": "Dossier",
+    "variant": "Evidence",
+    "name": "Edwina — evidence",
+    "headline": "The clues did more work than the conclusion.",
+    "evidence": "Reader Pathway potential, a memorable dynamic with Gehrman, and a fandom still asking where the story went.",
+    "counterpoint": "The clues may have been texture, not a hidden route.",
+    "takeaway": "THE RECEIPTS ARE REAL.",
+    "sourceLabel": "Reader notes",
+    "backgroundOpacity": 50
+  },
+  {
+    "type": "Dossier",
+    "variant": "Comment",
+    "name": "Edwina — comment",
+    "headline": "What do you do with a character who feels larger than her page time?",
+    "evidence": "The setup lingers because the chemistry and possibility are easy to imagine beyond the text.",
+    "counterpoint": "Maybe the restraint is exactly what made the character memorable.",
+    "takeaway": "WOULD YOU BRING HER BACK?",
+    "sourceLabel": "Open thread",
+    "backgroundOpacity": 46
   },
   {
     "type": "Ritual Logic",

@@ -76,7 +76,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
         'Tarot Member describe una identidad del Tarot Club y ofrece tres composiciones realmente distintas: ' +
         'Portrait, Dossier y Contrast; acepta nombre, arcano, descripcion, segunda idea y remate. ' +
         'Corruption File explica chistes internos en formatos Warning, Evidence y Quote. ' +
-        'Dossier concentra una idea central, su contexto, una lectura alternativa y una conclusion en una sola composicion editorial. ' +
+        'Dossier concentra una idea central, su contexto, una lectura alternativa y una conclusion; ofrece Auto, Impact, Verdict, Contrast, Evidence y Comment para cambiar la jerarquia y el ritmo de lectura sin duplicar contenido. ' +
         'Ritual Logic explica la funcion del ritual, la presion de la pocion y el poder de la nueva Secuencia que ensaya; ' +
         'puede representar la misma explicacion en cinco composiciones realmente distintas: Chain, Split, Casefile, Pressure y Timeline; el selector cambia jerarquia, ritmo y orden de lectura sin crear otra carta; ' +
         'certainty distingue canon, evidencia mixta y teoria, y uncertainty expone el limite de la evidencia. ' +

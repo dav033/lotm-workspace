@@ -573,6 +573,7 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('tarotMemberDetailText', 'What is actually happening.')
   }
   if (state.type === 'Dossier') {
+    fill('dossierVariant', 'Auto')
     fill('dossierName', 'New subject')
     fill('dossierHeadline', 'The central idea goes here.')
     fill('dossierEvidence', 'The context goes here.')

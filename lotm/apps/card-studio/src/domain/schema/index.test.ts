@@ -51,6 +51,7 @@ test('Dossier conserva idea, contexto, fuente y fondo al ida y vuelta', () => {
 
   const state = toBuilderCardState(content)
   assert.equal(state.type, 'Dossier')
+  assert.equal(state.dossierVariant, 'Auto')
   assert.equal(state.dossierName, 'Edwina')
   assert.equal(state.dossierBackgroundImage, '/covers/edwina.webp')
   assert.deepEqual(fromBuilderCardState(state), content)

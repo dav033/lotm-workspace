@@ -85,7 +85,7 @@ test('crea cards.db v15 y guarda las familias de producción', async (t) => {
 
   const saved = repository.saveBatch({
     universe: { name: 'LOTM' }, part: { name: 'Rituals', number: 1 }, cards: [
-      { type: 'Dossier', name: 'Edwina', headline: 'GREAT SETUP. THEN NOTHING?', evidence: 'Reader Pathway potential.', counterpoint: 'Not every strong side character needed a Tarot Club seat.', takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.', sourceLabel: 'Source note' },
+      { type: 'Dossier', variant: 'Auto', name: 'Edwina', headline: 'GREAT SETUP. THEN NOTHING?', evidence: 'Reader Pathway potential.', counterpoint: 'Not every strong side character needed a Tarot Club seat.', takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.', sourceLabel: 'Source note' },
       { type: 'Corruption File', variant: 'Warning', incident: 'Monocle', caseLabel: 'Normal explanation', explanation: 'Context.', reactionLabel: 'Fandom reaction', reaction: 'Panic.', corruptionLevel: 'Severe', showIncidentNumber: false },
       { type: 'Ritual Logic', variant: 'Chain', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
       { type: 'Simple Explanation', text: 'Centered text.', fontSizeMin: 14, fontSizeMax: 28, position: 'center' },

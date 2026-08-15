@@ -7,8 +7,24 @@ export default function DossierFields({ state, set, onUploadImage, onDownload, a
   return (
     <div key="dossier-fields">
       <p className="field-help">
-        Dossier keeps one central idea, its context, an alternate reading, and a bottom line in one editorial composition.
+        Same content, different rhythm. Pick a composition for the platform or leave Auto to vary it by subject.
       </p>
+
+      <div className="field">
+        <label htmlFor="dossier-variant">Composition</label>
+        <select
+          id="dossier-variant"
+          value={state.dossierVariant ?? 'Auto'}
+          onChange={(event) => set({ dossierVariant: event.target.value })}
+        >
+          <option value="Auto">Auto — vary by subject</option>
+          <option value="Impact">Impact — hook first</option>
+          <option value="Verdict">Verdict — payoff first</option>
+          <option value="Contrast">Contrast — two readings</option>
+          <option value="Evidence">Evidence — receipt first</option>
+          <option value="Comment">Comment — open thread</option>
+        </select>
+      </div>
 
       <div className="field">
         <label htmlFor="dossier-name">Subject</label>

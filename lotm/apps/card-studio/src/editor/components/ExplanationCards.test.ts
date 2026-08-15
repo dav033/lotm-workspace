@@ -53,22 +53,27 @@ test('Tarot Member produce composiciones distintas para retrato, expediente y co
   assert.doesNotMatch(contrast, /tarot-member-footer|Praise the Fool\./)
 })
 
-test('Dossier concentra idea, contexto, counterpoint y conclusion', () => {
-  const markup = renderToStaticMarkup(React.createElement(Dossier, {
+test('Dossier cambia la jerarquia visual sin perder los cinco campos editoriales', () => {
+  const common = {
     name: 'Edwina',
     headline: 'GREAT SETUP. THEN NOTHING?',
     evidence: 'Reader Pathway potential and unresolved story weight.',
     counterpoint: 'Not every strong side character needed a Tarot Club seat.',
     takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
     sourceLabel: 'Source note',
-  }))
+  }
+  const variants = ['Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment'] as const
+  const markups = variants.map((variant) => renderToStaticMarkup(React.createElement(Dossier, { ...common, variant })))
 
-  assert.match(markup, /dossier-card/)
-  assert.match(markup, /The point/)
-  assert.match(markup, /Evidence \/ context/)
-  assert.match(markup, /Counterpoint/)
-  assert.match(markup, /DISAPPOINTMENT, NOT INCOMPETENCE\./)
-  assert.match(markup, /LOTM/)
+  for (const [index, variant] of variants.entries()) {
+    assert.match(markups[index], new RegExp(`dossier-${variant.toLowerCase()}`))
+    assert.match(markups[index], /GREAT SETUP\. THEN NOTHING\?/)
+    assert.match(markups[index], /Reader Pathway potential and unresolved story weight\./)
+    assert.match(markups[index], /Not every strong side character needed a Tarot Club seat\./)
+    assert.match(markups[index], /DISAPPOINTMENT, NOT INCOMPETENCE\./)
+  }
+  assert.equal(new Set(markups).size, variants.length)
+  assert.doesNotMatch(markups[0], /Context dossier|The point|Evidence \/ context/)
 })
 
 test('Ritual Logic produce cinco composiciones distintas', () => {

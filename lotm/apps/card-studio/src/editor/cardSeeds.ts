@@ -37,6 +37,7 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     tarotMemberDetailText: 'What is actually happening.',
   },
   Dossier: {
+    dossierVariant: 'Auto',
     dossierName: 'New subject',
     dossierHeadline: 'A strong setup left an unfinished thread.',
     dossierEvidence: 'Write the context behind the central idea.',
@@ -141,6 +142,7 @@ export const DEFAULT_STATE: BuilderCardState = {
   tarotMemberPathway: null,
   tarotMemberAccentColor: null,
   tarotMemberImage: null,
+  dossierVariant: 'Auto',
   dossierName: '',
   dossierHeadline: '',
   dossierEvidence: '',

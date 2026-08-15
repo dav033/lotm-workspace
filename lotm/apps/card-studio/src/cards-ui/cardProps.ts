@@ -286,6 +286,7 @@ function cardPropsFromBuilderStateBase(
     return {
       kind: 'Dossier',
       props: {
+        variant: state.dossierVariant,
         name: state.dossierName,
         headline: state.dossierHeadline,
         evidence: state.dossierEvidence,

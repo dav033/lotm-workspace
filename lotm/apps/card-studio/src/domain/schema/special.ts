@@ -2,8 +2,14 @@ import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
 import { FontSizeOverridesField } from './fontSizes'
 
+export const DOSSIER_VARIANTS = ['Auto', 'Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment'] as const
+export type DossierVariant = typeof DOSSIER_VARIANTS[number]
+
 export const DossierCardSchema = z.object({
   type: z.literal('Dossier'),
+  variant: z.enum(DOSSIER_VARIANTS).default('Auto').describe(
+    'Composicion visual: Auto reparte el ritmo por sujeto; Impact pone el hook al frente; Verdict pone el remate al frente; Contrast separa dos lecturas; Evidence prioriza la prueba; Comment deja una pregunta abierta.',
+  ),
   name: z.string().trim().min(1).max(80),
   headline: z.string().trim().min(1).max(140),
   evidence: z.string().trim().min(1).max(420),

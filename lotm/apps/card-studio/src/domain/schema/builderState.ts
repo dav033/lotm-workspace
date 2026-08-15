@@ -2,6 +2,7 @@ import { parseMapEntries } from '../mapEntries'
 import type { CardContent } from './content'
 import { DEFAULT_MAP_TEXT_STYLES, type MapTextStyles } from './textStyles'
 import type { FontSizeOverrides } from './fontSizes'
+import type { DossierVariant } from './special'
 
 export type BuilderCardState = {
   type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Dossier' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
@@ -78,6 +79,7 @@ export type BuilderCardState = {
   tarotMemberPathway: string | null
   tarotMemberAccentColor: string | null
   tarotMemberImage: string | null
+  dossierVariant: DossierVariant
   dossierName: string
   dossierHeadline: string
   dossierEvidence: string
@@ -200,6 +202,7 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   tarotMemberPathway: null,
   tarotMemberAccentColor: null,
   tarotMemberImage: null,
+  dossierVariant: 'Auto',
   dossierName: '',
   dossierHeadline: '',
   dossierEvidence: '',
@@ -395,6 +398,7 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
   if (content.type === 'Dossier') {
     return {
       ...state,
+      dossierVariant: content.variant,
       dossierName: content.name,
       dossierHeadline: content.headline,
       dossierEvidence: content.evidence,
@@ -616,6 +620,7 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
   if (state.type === 'Dossier') {
     return {
       type: 'Dossier',
+      variant: state.dossierVariant,
       name: state.dossierName.trim(),
       headline: state.dossierHeadline.trim(),
       evidence: state.dossierEvidence.trim(),
