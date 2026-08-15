@@ -21,7 +21,9 @@ log "Deploy start: $LOCAL -> $REMOTE"
 docker builder prune -af >> "$LOG" 2>&1 || true
 docker image prune -af >> "$LOG" 2>&1 || true
 
-git pull --ff-only origin main >> "$LOG" 2>&1
+# The fetch above already updated origin/main. Merging that local ref avoids a
+# second network fetch while another deployment trigger may be updating it.
+git merge --ff-only origin/main >> "$LOG" 2>&1
 
 cd "$APP_DIR"
 timeout 720 docker compose -p lotm -f "$COMPOSE_FILE" build lotm >> "$LOG" 2>&1
