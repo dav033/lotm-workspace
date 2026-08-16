@@ -25,9 +25,9 @@
 .dossier-impact-mark{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid rgba(217,184,105,.32);color:var(--dossier-muted);font-family:'JetBrains Mono',monospace;font-size:11px}
 .dossier-impact-mark span{font-size:22px;color:var(--dossier-gold);font-family:'Cinzel',Georgia,serif}
 .dossier-impact-hero{padding:46px 0 26px;border-bottom:1px solid rgba(255,255,255,.15)}
-.dossier-impact-hero h2{margin-top:13px;font-size:46px;line-height:.96;letter-spacing:-.05em;max-width:8ch}
+.dossier-impact-hero h2{margin-top:13px;font-size:46px;line-height:.96;letter-spacing:-.05em;max-width:11ch}
 .dossier-impact-headline{margin-top:26px!important;max-width:23ch;font-size:25px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:#fff}
-.dossier-impact-context{flex:1;padding:24px 0 20px;max-width:36ch}
+.dossier-impact-context{flex:1;min-height:0;padding:24px 0 20px;max-width:36ch}
 .dossier-impact-context p{margin-top:12px;font-size:16px;line-height:1.48;color:#e5dfd6}
 .dossier-impact-footer{display:grid;grid-template-columns:.7fr 1.15fr .85fr;align-items:end;gap:12px;padding-top:14px;border-top:1px solid rgba(217,184,105,.32)}
 .dossier-impact-footer span{max-width:34%;font:10px/1.35 'JetBrains Mono',monospace;text-transform:uppercase;color:var(--dossier-muted)}
@@ -41,7 +41,7 @@
 .dossier-verdict-stamp{position:relative;padding:26px 18px 30px;border:1px solid var(--dossier-red);background:rgba(111,29,39,.2);transform:rotate(-1.5deg)}
 .dossier-verdict-stamp::after{content:'✓';position:absolute;right:17px;top:18px;font-size:40px;color:rgba(217,184,105,.35);font-family:Georgia,serif}
 .dossier-verdict-stamp strong{display:block;max-width:11ch;margin-top:14px;font-size:31px;line-height:.98;letter-spacing:-.04em;color:#fff}
-.dossier-verdict-reading{flex:1;padding:29px 0 20px}.dossier-verdict-reading>p:first-child{max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-verdict-evidence{margin-top:16px!important;max-width:37ch;font-size:15px;line-height:1.46;color:#d0c9c3}
+.dossier-verdict-reading{flex:1;min-height:0;padding:29px 0 20px}.dossier-verdict-reading>p:first-child{max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-verdict-evidence{margin-top:16px!important;max-width:37ch;font-size:15px;line-height:1.46;color:#d0c9c3}
 .dossier-verdict-foot{padding-top:14px;border-top:1px solid rgba(217,184,105,.3)}.dossier-verdict-foot p{margin-top:8px;max-width:38ch;font-size:13px;line-height:1.35;color:#d4c29c}
 
 /* Contrast: two readings, deliberately split. */
@@ -54,7 +54,7 @@
 /* Evidence: quote/receipt first. */
 .dossier-content-evidence{padding:18px 14px 14px}.dossier-evidence-head{display:flex;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(217,184,105,.32)}.dossier-evidence-head>span{font-size:19px;color:var(--dossier-gold)}.dossier-evidence-name{margin:26px 0 20px!important;font:700 19px/1.1 'Space Grotesk',Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#fff}
 .dossier-content-evidence blockquote{position:relative;margin:0;padding:3px 0 22px 24px;border-left:3px solid var(--dossier-gold);font:italic 22px/1.2 Georgia,serif;color:#f1e4c2}.dossier-content-evidence blockquote::before{content:'“';position:absolute;left:8px;top:-11px;font:40px/1 Georgia,serif;color:var(--dossier-gold)}
-.dossier-evidence-meaning{flex:1;padding-top:25px}.dossier-evidence-meaning p{margin-top:12px;max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-evidence-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end;padding-top:16px;border-top:1px solid rgba(255,255,255,.17)}.dossier-evidence-bottom p{font-size:13px;line-height:1.35;color:#cbc3c0}.dossier-evidence-bottom strong{font-size:14px;line-height:1.15;text-align:right;color:var(--dossier-gold)}
+.dossier-evidence-meaning{flex:1;min-height:0;padding-top:25px}.dossier-evidence-meaning p{margin-top:12px;max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-evidence-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end;padding-top:16px;border-top:1px solid rgba(255,255,255,.17)}.dossier-evidence-bottom p{font-size:13px;line-height:1.35;color:#cbc3c0}.dossier-evidence-bottom strong{font-size:14px;line-height:1.15;text-align:right;color:var(--dossier-gold)}
 
 /* Comment: open thread / social hook. */
 .dossier-content-comment{padding:19px 14px 14px}.dossier-comment-head{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.16)}.dossier-comment-dot{width:9px;height:9px;border-radius:50%;background:var(--dossier-red);box-shadow:0 0 0 5px rgba(143,52,60,.18)}.dossier-comment-name{margin:25px 0 24px!important;font:700 18px/1.1 'Space Grotesk',Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#fff}

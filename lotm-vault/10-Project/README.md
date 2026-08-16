@@ -32,6 +32,7 @@ Nada de lo que vive en `10-Project/` es lore de la novela. Es el registro de un 
 - [[Feats]] — registro editorial de hazañas por grupo para futuros vídeos, con fuentes, límites y regla de máximo un feat de COI por grupo.
 - [[Efecto mariposa|Efecto mariposa]] — investigación de cadenas causales pequeñas que producen cambios grandes en la historia de LOTM, para convertirlas en contenido.
 - [[Estrategia de TikTok y Validación|Estrategia de TikTok y Validación]] — tracción del canal, plan de prueba de valor del juego.
+- [[Lord of the Frauds - Reddit Video]] — brief editorial y guion modular para video de fraudes, decepciones y potencial desperdiciado con voz Reddit.
 - [[Deliberacion del Consejo - Ronda 9|Deliberación del Consejo — Ronda 9]] — transcripción completa de la sesión donde se replanteó (y revirtió) la decisión de genericar nombres canónicos.
 - [[Deliberacion del Consejo - Ronda 10|Deliberación del Consejo — Ronda 10]] — dos preguntas cerradas para el abogado de IP: escala/viralidad y si TikTok es exposición legal separada del fangame.
 - [[Deliberacion del Consejo - Ronda 11|Deliberación del Consejo — Ronda 11]] — respuesta completa del abogado sobre escala y TikTok; comparación con la wiki de Fandom; rechazo confirmado al "motor white-label".
