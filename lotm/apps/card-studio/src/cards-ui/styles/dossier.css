@@ -66,4 +66,22 @@
 .dossier-comment-question{padding:26px 0 31px;border-top:1px solid var(--dossier-gold);border-bottom:1px solid var(--dossier-gold)}.dossier-comment-question h2{margin-top:16px!important;max-width:22ch;font-size:29px;line-height:1.05;letter-spacing:-.035em}.dossier-comment-notes{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;flex:1;padding:24px 0}.dossier-comment-notes p{font-size:14px;line-height:1.45;color:#ded6d2}.dossier-comment-notes p+ p{padding-left:17px;border-left:1px solid rgba(217,184,105,.5);color:#d6bf94}
 .dossier-comment-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:15px;border-top:1px solid rgba(255,255,255,.17)}.dossier-comment-footer span{font:700 10px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--dossier-muted)}.dossier-comment-footer strong{max-width:62%;font-size:14px;line-height:1.2;text-align:right;color:var(--dossier-gold)}
 
+/* Longform: dense reading without shrinking the whole card into a caption. */
+.dossier-content-longform{padding:14px 14px 12px}
+.dossier-longform-kicker{display:flex;justify-content:space-between;gap:14px;padding-bottom:12px;border-bottom:1px solid rgba(217,184,105,.34);font:10px/1.25 'JetBrains Mono',monospace;text-transform:uppercase;color:var(--dossier-muted)}
+.dossier-longform-kicker span:last-child{max-width:42%;text-align:right;overflow-wrap:anywhere}
+.dossier-longform-heading{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:18px;padding:18px 0 17px;border-bottom:1px solid rgba(255,255,255,.16)}
+.dossier-longform-heading h2{margin-top:9px;font-size:34px;line-height:.98;letter-spacing:-.045em;overflow-wrap:anywhere}
+.dossier-longform-heading>p{align-self:end;font:700 18px/1.16 'Space Grotesk',Arial,sans-serif;color:#fff;overflow-wrap:anywhere}
+.dossier-longform-body{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:18px;flex:1;min-height:0;padding:18px 0 14px;overflow:hidden}
+.dossier-longform-evidence{min-width:0;min-height:0;padding-right:17px;border-right:1px solid rgba(217,184,105,.42)}
+.dossier-longform-evidence p{margin-top:12px;font-size:14px;line-height:1.42;color:#e8e0d6;overflow-wrap:anywhere}
+.dossier-longform-side{display:flex;flex-direction:column;gap:18px;min-width:0;min-height:0}
+.dossier-longform-counterpoint{min-height:0}
+.dossier-longform-counterpoint p{margin-top:12px;font-size:12.5px;line-height:1.4;color:#d2c8c5;overflow-wrap:anywhere}
+.dossier-longform-takeaway{margin-top:auto;padding:13px 13px 14px;border-top:2px solid var(--dossier-gold);background:rgba(217,184,105,.1)}
+.dossier-longform-takeaway strong{display:block;margin-top:10px;font-size:15px;line-height:1.12;color:var(--dossier-gold);overflow-wrap:anywhere}
+.dossier-longform-footer{display:flex;justify-content:space-between;gap:14px;padding-top:11px;border-top:1px solid rgba(255,255,255,.17);font:700 9px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--dossier-muted)}
+.dossier-longform-footer span:last-child{color:var(--dossier-gold);text-align:right}
+
 @media (prefers-reduced-motion:reduce){.dossier-card *{transition:none!important;animation:none!important}}

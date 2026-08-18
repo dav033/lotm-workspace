@@ -154,6 +154,42 @@ const DossierCard = forwardRef<HTMLElement, DossierCardProps>(function DossierCa
             <footer className="dossier-comment-footer"><span>YOUR TAKE?</span><strong style={fontSizeCss(fontSizes, 'takeaway')}>{displayTakeaway}</strong></footer>
           </div>
         )
+      case 'Longform':
+        return (
+          <div className="dossier-content dossier-content-longform">
+            <header className="dossier-longform-kicker">
+              <DossierMeta>FIELD ARCHIVE / LONGFORM</DossierMeta>
+              <span>{displaySource}</span>
+            </header>
+            <section className="dossier-longform-heading">
+              <div>
+                <DossierMeta>SUBJECT / CASE FILE</DossierMeta>
+                <h2 style={fontSizeCss(fontSizes, 'title')}>{displayName}</h2>
+              </div>
+              <p style={fontSizeCss(fontSizes, 'headline')}>{displayHeadline}</p>
+            </section>
+            <div className="dossier-longform-body">
+              <section className="dossier-longform-evidence">
+                <DossierMeta>EVIDENCE / WHAT HAPPENED</DossierMeta>
+                <p style={fontSizeCss(fontSizes, 'body')}>{displayEvidence}</p>
+              </section>
+              <aside className="dossier-longform-side">
+                <section className="dossier-longform-counterpoint">
+                  <DossierMeta>COUNTER-READ</DossierMeta>
+                  <p style={fontSizeCss(fontSizes, 'counterpoint')}>{displayCounterpoint}</p>
+                </section>
+                <section className="dossier-longform-takeaway">
+                  <DossierMeta>THE LINE THAT SURVIVES</DossierMeta>
+                  <strong style={fontSizeCss(fontSizes, 'takeaway')}>{displayTakeaway}</strong>
+                </section>
+              </aside>
+            </div>
+            <footer className="dossier-longform-footer">
+              <span>LOTM / GREATEST FEATS</span>
+              <span>READ THE RECEIPTS</span>
+            </footer>
+          </div>
+        )
     }
   }
 

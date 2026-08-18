@@ -2,19 +2,19 @@ import { z } from 'zod'
 import { BackgroundOpacitySchema, ImageSourceSchema, PathwayNameSchema } from './base'
 import { FontSizeOverridesField } from './fontSizes'
 
-export const DOSSIER_VARIANTS = ['Auto', 'Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment'] as const
+export const DOSSIER_VARIANTS = ['Auto', 'Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment', 'Longform'] as const
 export type DossierVariant = typeof DOSSIER_VARIANTS[number]
 
 export const DossierCardSchema = z.object({
   type: z.literal('Dossier'),
   variant: z.enum(DOSSIER_VARIANTS).default('Auto').describe(
-    'Composicion visual: Auto reparte el ritmo por sujeto; Impact pone el hook al frente; Verdict pone el remate al frente; Contrast separa dos lecturas; Evidence prioriza la prueba; Comment deja una pregunta abierta.',
+    'Composicion visual: Auto reparte el ritmo por sujeto; Impact pone el hook al frente; Verdict pone el remate al frente; Contrast separa dos lecturas; Evidence prioriza la prueba; Comment deja una pregunta abierta; Longform abre una lectura editorial para contenido denso.',
   ),
   name: z.string().trim().min(1).max(80),
-  headline: z.string().trim().min(1).max(140),
-  evidence: z.string().trim().min(1).max(420),
-  counterpoint: z.string().trim().min(1).max(280),
-  takeaway: z.string().trim().min(1).max(120),
+  headline: z.string().trim().min(1).max(180),
+  evidence: z.string().trim().min(1).max(720),
+  counterpoint: z.string().trim().min(1).max(480),
+  takeaway: z.string().trim().min(1).max(180),
   sourceLabel: z.string().trim().max(80).default('Source note'),
   backgroundImageUrl: ImageSourceSchema.optional(),
   backgroundOpacity: BackgroundOpacitySchema,

@@ -62,7 +62,7 @@ test('Dossier cambia la jerarquia visual sin perder los cinco campos editoriales
     takeaway: 'DISAPPOINTMENT, NOT INCOMPETENCE.',
     sourceLabel: 'Source note',
   }
-  const variants = ['Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment'] as const
+  const variants = ['Impact', 'Verdict', 'Contrast', 'Evidence', 'Comment', 'Longform'] as const
   const markups = variants.map((variant) => renderToStaticMarkup(React.createElement(Dossier, { ...common, variant })))
 
   for (const [index, variant] of variants.entries()) {
@@ -73,6 +73,8 @@ test('Dossier cambia la jerarquia visual sin perder los cinco campos editoriales
     assert.match(markups[index], /DISAPPOINTMENT, NOT INCOMPETENCE\./)
   }
   assert.equal(new Set(markups).size, variants.length)
+  assert.match(markups[5], /dossier-longform-evidence/)
+  assert.match(markups[5], /COUNTER-READ/)
   assert.doesNotMatch(markups[0], /Context dossier|The point|Evidence \/ context/)
 
   const maxVisibility = renderToStaticMarkup(React.createElement(Dossier, {

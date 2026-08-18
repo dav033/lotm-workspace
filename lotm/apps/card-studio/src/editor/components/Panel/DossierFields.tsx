@@ -23,6 +23,7 @@ export default function DossierFields({ state, set, onUploadImage, onDownload, a
           <option value="Contrast">Contrast — two readings</option>
           <option value="Evidence">Evidence — receipt first</option>
           <option value="Comment">Comment — open thread</option>
+          <option value="Longform">Longform — dense reading</option>
         </select>
       </div>
 
@@ -42,7 +43,7 @@ export default function DossierFields({ state, set, onUploadImage, onDownload, a
         <label htmlFor="dossier-headline">The point</label>
         <input
           id="dossier-headline"
-          maxLength={140}
+          maxLength={180}
           value={state.dossierHeadline ?? ''}
           placeholder="A strong setup left an unfinished thread."
           autoComplete="off"
@@ -55,12 +56,12 @@ export default function DossierFields({ state, set, onUploadImage, onDownload, a
         <textarea
           id="dossier-evidence"
           rows={6}
-          maxLength={420}
+          maxLength={720}
           value={state.dossierEvidence ?? ''}
           placeholder="What supports or explains the point?"
           onChange={(event) => set({ dossierEvidence: event.target.value })}
         />
-        <p className="field-help">{(state.dossierEvidence ?? '').length}/420 characters</p>
+        <p className="field-help">{(state.dossierEvidence ?? '').length}/720 characters</p>
       </div>
 
       <div className="field">
@@ -68,19 +69,19 @@ export default function DossierFields({ state, set, onUploadImage, onDownload, a
         <textarea
           id="dossier-counterpoint"
           rows={4}
-          maxLength={280}
+          maxLength={480}
           value={state.dossierCounterpoint ?? ''}
           placeholder="Give the strongest alternate reading."
           onChange={(event) => set({ dossierCounterpoint: event.target.value })}
         />
-        <p className="field-help">{(state.dossierCounterpoint ?? '').length}/280 characters</p>
+        <p className="field-help">{(state.dossierCounterpoint ?? '').length}/480 characters</p>
       </div>
 
       <div className="field">
         <label htmlFor="dossier-takeaway">Bottom line</label>
         <input
           id="dossier-takeaway"
-          maxLength={120}
+          maxLength={180}
           value={state.dossierTakeaway ?? ''}
           placeholder="Interesting, but not fully developed."
           autoComplete="off"

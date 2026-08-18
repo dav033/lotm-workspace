@@ -59,6 +59,22 @@ test('Dossier conserva idea, contexto, fuente y fondo al ida y vuelta', () => {
   assert.equal(filenameForCard(content), 'dossier_edwina')
 })
 
+test('Dossier Longform acepta la carga textual amplia para feats', () => {
+  const content = CardContentSchema.parse({
+    type: 'Dossier',
+    variant: 'Longform',
+    name: 'Hermit',
+    headline: 'H'.repeat(180),
+    evidence: 'E'.repeat(720),
+    counterpoint: 'C'.repeat(480),
+    takeaway: 'T'.repeat(180),
+    backgroundOpacity: 65,
+  })
+
+  const roundTripped = fromBuilderCardState(toBuilderCardState(content))
+  assert.deepEqual(roundTripped, content)
+})
+
 test('convierte una Tierlist independiente sin pathway', () => {
   const content = CardContentSchema.parse({
     type: 'Tierlist',
