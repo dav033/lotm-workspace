@@ -39,6 +39,7 @@ Nada de lo que vive en `10-Project/` es lore de la novela. Es el registro de un 
 - [[Deliberacion del Consejo - Ronda 12|Deliberación del Consejo — Ronda 12]] — auditoría de la regla de combinación/Beyonders: hueco abierto sobre la dirección de "Secuencia 5 para arriba" y otras brechas sin resolver.
 - [[Deliberacion del Consejo - Ronda 13|Deliberación del Consejo — Ronda 13]] — misma regla, auditada con el skill `llm-council` (5 asesores + revisión cruzada + síntesis). Veredicto: implementable sin defecto estructural; pendiente confirmar si Avance/Ritual de avance se consumen y si están atados a un camino específico.
 - [[Deliberacion del Consejo - Ronda 14|Deliberación del Consejo — Ronda 14]] — cómo debe estructurarse el vault para que una sesión de LLM futura lo navegue sin escanearlo completo. Resultado: [[../NAVIGATION|NAVIGATION.md]] en la raíz del vault.
+- [[Card Studio Server Ingest/README|Card Studio Server Ingest]] — snapshot de los 22 proyectos y 361 cards recuperados desde n8n-maros, con Lord of the Frauds y Greatest Feats marcados como preservados.
 
 ## Convención mínima (no las reglas de AGENTS.md)
 

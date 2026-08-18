@@ -172,17 +172,7 @@ Vías: Abyss y Chained.
 
 Fuentes: [Farbauti](https://lordofthemysteries.fandom.com/wiki/Farbauti) y [Ancient Sun God](https://lordofthemysteries.fandom.com/wiki/Ancient_Sun_God).
 
-### 2. Reinette hiere a Shanks y sobrevive al ataque de Suah
-
-**Resultado:** en Chaos on Bayam Mountain, Reinette —Sequence 2 de Chained— combate mientras Suah, un Abomination de Sequence 1, persigue a Klein. Reinette hiere gravemente a Shanks y contribuye a que el grupo sobreviva a la destrucción de la montaña; Suah termina retirándose con Shanks herido.
-
-**Por qué pasa con reservas:** sí hay oponente, contribución y resultado, pero es un combate grupal y Reinette no derrota a Suah.
-
-**Estado:** revisión. Es el candidato de nivel angelical más concreto de Chained en el libro 1, pero puede quedarse como mención honorable si exigimos una victoria individual.
-
-Fuente: [Chaos on Bayam Mountain](https://lordofthemysteries.fandom.com/wiki/Chaos_on_Bayam_Mountain).
-
-### 3. Pitch-Black Fiend hiere gravemente a Inextinguishable Ravings
+### 2. Pitch-Black Fiend hiere gravemente a Inextinguishable Ravings
 
 **COI — única hazaña COI usada en este grupo.** Farbauti y el Master of the Shadow Cottage, fusionados con el Tenebrous World, atraen a Inextinguishable Ravings hacia su propia conciencia y se maldicen a sí mismos. La maldición convierte a la entidad en una especie de conejo con conciencia alterada; con la intervención del Golden Buddha sobre el River of Fate, Ravings no puede escapar y recibe un daño de maldición mucho mayor.
 
@@ -200,4 +190,4 @@ Mother Tree of Desire robando el Tenebrous World es una hazaña enorme, pero per
 
 ## Próximo filtro
 
-Antes de convertir las propuestas en guion: decidir si los feats marcados «revisión» sobreviven al estándar de victoria/resultado limpio. Si no, el grupo conserva dos feats fuertes y una mención honorable; no se rellenará el top con situaciones débiles.
+Father of Devils queda con dos feats fuertes. La búsqueda del tercer puesto sigue abierta; no se rellenará el top con una situación débil.

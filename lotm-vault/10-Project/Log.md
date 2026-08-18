@@ -272,3 +272,51 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Se fijó el filtro: nombre y apellido, contexto y resultado; fuera autoridades inherentes, situaciones sin logro, conspiraciones como núcleo y artefactos que hagan todo el trabajo.
 - Se fijó el límite de una sola hazaña procedente de *Circle of Inevitability* por grupo.
 - Se documentaron Lord of Mysteries, Eternal Darkness, Wheel of Fortune, Demon of Knowledge y Father of Devils. Los candidatos débiles quedan marcados para revisión, no forzados dentro del top.
+
+## 2026-08-11 — Revisión del segundo feat de Father of Devils
+
+- Se retiró la candidatura de Reinette en Chaos on Bayam Mountain por depender demasiado de un combate grupal sin victoria limpia.
+- Se sustituyó por la contribución de Sharron en la cacería de Klarman: rompe su defensa y permite el remate de Emlyn. El resultado es más claro y conserva la asignación estricta a Chained.
+
+## 2026-08-11 — Detalle del feat de Sharron contra Klarman
+
+- Se precisó la cadena de acciones: conexión de posesión, `Source of Curses`, bloqueo de la invocación de Barranca, pérdida de `Moonlight Transformation` y teletransporte, herida reflejada mediante la marioneta y apertura para el `Unshadowed Spear`.
+- Se sustituyó la fórmula vaga «rompe la defensa» por una descripción verificable y se mantuvo el límite: es una victoria grupal, no un duelo individual.
+
+## 2026-08-11 — Descarte definitivo de Sharron contra Klarman
+
+- Se eliminó el feat de Sharron del grupo Father of Devils: era un enfrentamiento Sequence 4 contra Sequence 4, con apoyo decisivo de Emlyn, Klein y otros aliados, y sin remate de Sharron.
+- Father of Devils queda temporalmente con dos feats fuertes mientras continúa la búsqueda de una hazaña Abyss/Chained que tenga peso propio.
+
+## 2026-08-12 — Proyecto Lord of the Frauds con voz Reddit
+
+- Se creó [[Lord of the Frauds - Reddit Video]] como brief editorial modular para un video de fraudes, decepciones y potencial desperdiciado.
+- Se retiró Lanevus del elenco principal, se incorporó Edwina y se elevó Ouroboros al grupo principal.
+- Se fijó Reddit como termómetro de opinión, no como prueba de canon. Cada acusación llevará razón concreta y counterpoint.
+- Se aplicó humanizer al tono: frases cortas, humor de fandom, sin voz corporativa ni estructura rígida.
+
+## 2026-08-16 — Lord of the Frauds adopta tono de rankings de rituales
+
+- Se compararon los proyectos de rankings de rituales de Sequence 0 y Sequence 1 con Lord of the Frauds.
+- Se fijó el patrón editorial que mejor funciona: ranking explícito, razones concretas, counterpoint y remate corto al final.
+- Se bajó el slang gratuito. Reddit queda como marco y fuente de opinión, no como una lluvia de insultos.
+- Se actualizó el lote real de Card Studio: las diez cartas ahora usan formato Dossier, incluida Edwina, que había quedado como una carta vacía de Fool Pathway.
+- Hook y cierre ahora siguen el tono de ranking: "BIGGEST LOTM FRAUDS", "THINK WE RANKED ONE WRONG?" y llamada abierta a teorías en comentarios.
+
+## 2026-08-16 — Revisión visual y ajuste de exportación
+
+- Se revisó el proyecto en el navegador integrado y se compararon ritmo, densidad y jerarquía con las cartas de ranking de rituales.
+- La plantilla Dossier tenía desborde real en 960×1280: el footer podía quedar cortado en Impact y Verdict. Se corrigió el reparto vertical de las secciones flexibles.
+- Se amplió el ancho útil del título Impact para evitar cortes artificiales como `OUROBOR / OS`.
+- El hook se redujo a `BIGGEST LOTM FRAUDS`, con evidencia y counterpoint de una línea corta. La exportación ahora deja visibles hook, prueba, lectura alternativa y remate.
+
+## 2026-08-17 — Ingesta de proyectos de Card Studio
+
+- Se inventariaron 22 proyectos en n8n-maros y se capturaron 361 cards con contenido completo en [[Card Studio Server Ingest/README|Card Studio Server Ingest]].
+- Se dejó explícito el alcance: [[Card Studio Server Ingest/lord-of-the-frauds|Lord of the Frauds]] y [[Card Studio Server Ingest/lotm-greatest-feats|LOTM — Greatest Feats]] quedan preservados en el servidor; los demás proyectos quedan preparados para limpieza.
+
+## 2026-08-17 — Limpieza de proyectos del servidor
+
+- Se eliminaron 20 proyectos y sus cards de Card Studio después de verificar el snapshot en el vault.
+- Se conservaron exactamente [[Card Studio Server Ingest/lord-of-the-frauds|Lord of the Frauds]] (9 cards) y [[Card Studio Server Ingest/lotm-greatest-feats|LOTM — Greatest Feats]] (25 cards).
+- Se restauraron los UUID originales de Lord of the Frauds desde el snapshot antes de cerrar la limpieza.
