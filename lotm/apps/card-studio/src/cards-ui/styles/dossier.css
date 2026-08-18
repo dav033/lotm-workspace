@@ -10,6 +10,11 @@
   radial-gradient(90% 60% at 5% 0%,rgba(217,184,105,.16),transparent 68%),
   radial-gradient(80% 70% at 100% 100%,rgba(111,29,39,.25),transparent 70%),
   linear-gradient(145deg,rgba(8,8,12,.84),rgba(10,9,14,.96) 65%,rgba(12,8,11,.98));}
+/* At max visibility, image opacity alone is not enough: the fixed near-black veil hides it. */
+.dossier-card.dossier-background-boosted .dossier-overlay{background:
+  radial-gradient(90% 60% at 5% 0%,rgba(217,184,105,.12),transparent 68%),
+  radial-gradient(80% 70% at 100% 100%,rgba(111,29,39,.18),transparent 70%),
+  linear-gradient(145deg,rgba(8,8,12,.30),rgba(10,9,14,.36) 65%,rgba(12,8,11,.40));}
 .dossier-frame{position:absolute;inset:14px;z-index:-1;border:1px solid rgba(217,184,105,.32);pointer-events:none}
 .dossier-frame::before,.dossier-frame::after{content:'';position:absolute;width:34px;height:34px;border-color:var(--dossier-gold);border-style:solid;opacity:.7}
 .dossier-frame::before{left:-1px;top:-1px;border-width:2px 0 0 2px}.dossier-frame::after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}

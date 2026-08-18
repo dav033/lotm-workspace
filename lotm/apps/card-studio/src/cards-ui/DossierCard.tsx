@@ -57,6 +57,8 @@ const DossierCard = forwardRef<HTMLElement, DossierCardProps>(function DossierCa
   const displayCounterpoint = counterpoint || 'Add the strongest alternate reading.'
   const displayTakeaway = takeaway || 'Add the bottom line.'
   const displaySource = sourceLabel || 'Source note'
+  const normalizedBackgroundOpacity = Math.min(100, Math.max(0, backgroundOpacity)) / 100
+  const backgroundVisibilityClass = normalizedBackgroundOpacity >= 0.9 ? ' dossier-background-boosted' : ''
 
   function renderVariant() {
     switch (resolvedVariant) {
@@ -157,7 +159,7 @@ const DossierCard = forwardRef<HTMLElement, DossierCardProps>(function DossierCa
 
   return (
     <article
-      className={`dossier-card dossier-${resolvedVariant.toLowerCase()}${dragging ? ' dragover' : ''}`}
+      className={`dossier-card dossier-${resolvedVariant.toLowerCase()}${backgroundVisibilityClass}${dragging ? ' dragover' : ''}`}
       data-variant={resolvedVariant}
       id="card"
       ref={ref}

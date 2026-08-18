@@ -74,6 +74,22 @@ test('Dossier cambia la jerarquia visual sin perder los cinco campos editoriales
   }
   assert.equal(new Set(markups).size, variants.length)
   assert.doesNotMatch(markups[0], /Context dossier|The point|Evidence \/ context/)
+
+  const maxVisibility = renderToStaticMarkup(React.createElement(Dossier, {
+    ...common,
+    variant: 'Evidence',
+    backgroundImage: '/covers/edwina.jpg',
+    backgroundOpacity: 100,
+  }))
+  assert.match(maxVisibility, /dossier-background-boosted/)
+
+  const regularVisibility = renderToStaticMarkup(React.createElement(Dossier, {
+    ...common,
+    variant: 'Evidence',
+    backgroundImage: '/covers/edwina.jpg',
+    backgroundOpacity: 52,
+  }))
+  assert.doesNotMatch(regularVisibility, /dossier-background-boosted/)
 })
 
 test('Ritual Logic produce cinco composiciones distintas', () => {
