@@ -92,6 +92,16 @@ test('Dossier cambia la jerarquia visual sin perder los cinco campos editoriales
     backgroundOpacity: 52,
   }))
   assert.doesNotMatch(regularVisibility, /dossier-background-boosted/)
+
+  const veilValue = (markup: string, name: string) => {
+    const match = markup.match(new RegExp(`${name}:([0-9.]+)`))
+    assert.ok(match, `missing ${name}`)
+    return Number(match[1])
+  }
+  assert.ok(
+    veilValue(regularVisibility, '--dossier-veil-top') > veilValue(maxVisibility, '--dossier-veil-top'),
+    'lower visibility should use a stronger veil without a threshold jump',
+  )
 })
 
 test('Ritual Logic produce cinco composiciones distintas', () => {

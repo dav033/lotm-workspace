@@ -57,7 +57,16 @@ const DossierCard = forwardRef<HTMLElement, DossierCardProps>(function DossierCa
   const displayCounterpoint = counterpoint || 'Add the strongest alternate reading.'
   const displayTakeaway = takeaway || 'Add the bottom line.'
   const displaySource = sourceLabel || 'Source note'
-  const normalizedBackgroundOpacity = Math.min(100, Math.max(0, backgroundOpacity)) / 100
+  const clampedBackgroundOpacity = Math.min(100, Math.max(0, Number.isFinite(backgroundOpacity) ? backgroundOpacity : 65))
+  const normalizedBackgroundOpacity = clampedBackgroundOpacity / 100
+  // Keep image visibility and the readability veil on one continuous scale.
+  // A fixed near-black veil made every value below 88% look almost identical.
+  const dossierStyle = {
+    '--background-opacity': normalizedBackgroundOpacity,
+    '--dossier-veil-top': 0.62 - normalizedBackgroundOpacity * 0.38,
+    '--dossier-veil-mid': 0.78 - normalizedBackgroundOpacity * 0.38,
+    '--dossier-veil-bottom': 0.9 - normalizedBackgroundOpacity * 0.32,
+  } as React.CSSProperties
   const backgroundVisibilityClass = normalizedBackgroundOpacity >= 0.9 ? ' dossier-background-boosted' : ''
 
   function renderVariant() {
@@ -199,7 +208,7 @@ const DossierCard = forwardRef<HTMLElement, DossierCardProps>(function DossierCa
       data-variant={resolvedVariant}
       id="card"
       ref={ref}
-      style={{ '--background-opacity': backgroundOpacity / 100 } as React.CSSProperties}
+      style={dossierStyle}
       aria-label={`${resolvedVariant} dossier for ${displayName}`}
       {...dropProps}
     >

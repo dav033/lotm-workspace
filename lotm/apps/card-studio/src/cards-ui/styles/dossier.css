@@ -1,6 +1,7 @@
 /* ================= DOSSIER VARIANTS ================= */
 .dossier-card{
   --dossier-gold:#d9b869;--dossier-red:#8f343c;--dossier-ink:#f4f0e6;--dossier-muted:#a8a2ad;
+  --dossier-veil-top:.37;--dossier-veil-mid:.53;--dossier-veil-bottom:.69;
   position:relative;width:480px;height:640px;flex:0 0 auto;overflow:hidden;padding:26px 28px;
   color:var(--dossier-ink);background:#0b0a0f;isolation:isolate;
 }
@@ -9,12 +10,7 @@
 .dossier-overlay{position:absolute;inset:0;z-index:-2;background:
   radial-gradient(90% 60% at 5% 0%,rgba(217,184,105,.16),transparent 68%),
   radial-gradient(80% 70% at 100% 100%,rgba(111,29,39,.25),transparent 70%),
-  linear-gradient(145deg,rgba(8,8,12,.84),rgba(10,9,14,.96) 65%,rgba(12,8,11,.98));}
-/* At max visibility, image opacity alone is not enough: the fixed near-black veil hides it. */
-.dossier-card.dossier-background-boosted .dossier-overlay{background:
-  radial-gradient(90% 60% at 5% 0%,rgba(217,184,105,.12),transparent 68%),
-  radial-gradient(80% 70% at 100% 100%,rgba(111,29,39,.18),transparent 70%),
-  linear-gradient(145deg,rgba(8,8,12,.30),rgba(10,9,14,.36) 65%,rgba(12,8,11,.40));}
+  linear-gradient(145deg,rgba(8,8,12,var(--dossier-veil-top)),rgba(10,9,14,var(--dossier-veil-mid)) 65%,rgba(12,8,11,var(--dossier-veil-bottom)));}
 .dossier-frame{position:absolute;inset:14px;z-index:-1;border:1px solid rgba(217,184,105,.32);pointer-events:none}
 .dossier-frame::before,.dossier-frame::after{content:'';position:absolute;width:34px;height:34px;border-color:var(--dossier-gold);border-style:solid;opacity:.7}
 .dossier-frame::before{left:-1px;top:-1px;border-width:2px 0 0 2px}.dossier-frame::after{right:-1px;bottom:-1px;border-width:0 2px 2px 0}
@@ -32,10 +28,10 @@
 .dossier-impact-hero{padding:46px 0 26px;border-bottom:1px solid rgba(255,255,255,.15)}
 .dossier-impact-hero h2{margin-top:13px;font-size:46px;line-height:.96;letter-spacing:-.05em;max-width:11ch}
 .dossier-impact-headline{margin-top:26px!important;max-width:23ch;font-size:25px;font-weight:700;line-height:1.1;letter-spacing:-.02em;color:#fff}
-.dossier-impact-context{flex:1;min-height:0;padding:24px 0 20px;max-width:36ch}
+.dossier-impact-context{display:flex;flex:1;min-height:0;flex-direction:column;justify-content:center;padding:24px 0 20px;max-width:36ch}
 .dossier-impact-context p{margin-top:12px;font-size:16px;line-height:1.48;color:#e5dfd6}
-.dossier-impact-footer{display:grid;grid-template-columns:.7fr 1.15fr .85fr;align-items:end;gap:12px;padding-top:14px;border-top:1px solid rgba(217,184,105,.32)}
-.dossier-impact-footer span{max-width:34%;font:10px/1.35 'JetBrains Mono',monospace;text-transform:uppercase;color:var(--dossier-muted)}
+.dossier-impact-footer{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.25fr) minmax(0,.95fr);align-items:end;gap:12px;padding-top:14px;border-top:1px solid rgba(217,184,105,.32)}
+.dossier-impact-footer span{font:10px/1.35 'JetBrains Mono',monospace;text-transform:uppercase;color:var(--dossier-muted)}
 .dossier-impact-footer p{font-size:12px;line-height:1.25;color:#d6cbc0}
 .dossier-impact-footer strong{font-size:13px;line-height:1.15;text-align:right;color:var(--dossier-gold)}
 
@@ -46,24 +42,24 @@
 .dossier-verdict-stamp{position:relative;padding:26px 18px 30px;border:1px solid var(--dossier-red);background:rgba(111,29,39,.2);transform:rotate(-1.5deg)}
 .dossier-verdict-stamp::after{content:'✓';position:absolute;right:17px;top:18px;font-size:40px;color:rgba(217,184,105,.35);font-family:Georgia,serif}
 .dossier-verdict-stamp strong{display:block;max-width:11ch;margin-top:14px;font-size:31px;line-height:.98;letter-spacing:-.04em;color:#fff}
-.dossier-verdict-reading{flex:1;min-height:0;padding:29px 0 20px}.dossier-verdict-reading>p:first-child{max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-verdict-evidence{margin-top:16px!important;max-width:37ch;font-size:15px;line-height:1.46;color:#d0c9c3}
+.dossier-verdict-reading{display:flex;flex:1;min-height:0;flex-direction:column;justify-content:center;padding:29px 0 20px}.dossier-verdict-reading>p:first-child{max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-verdict-evidence{margin-top:16px!important;max-width:37ch;font-size:15px;line-height:1.46;color:#d0c9c3}
 .dossier-verdict-foot{padding-top:14px;border-top:1px solid rgba(217,184,105,.3)}.dossier-verdict-foot p{margin-top:8px;max-width:38ch;font-size:13px;line-height:1.35;color:#d4c29c}
 
 /* Contrast: two readings, deliberately split. */
 .dossier-content-contrast{padding:18px 14px 14px}
-.dossier-contrast-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;padding-bottom:16px}.dossier-contrast-head h2{font-size:34px;line-height:.98;letter-spacing:-.045em;max-width:12ch}.dossier-contrast-head .dossier-meta{max-width:14ch;text-align:right;color:var(--dossier-muted)}
+.dossier-contrast-head{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;padding-bottom:16px}.dossier-contrast-head h2{min-width:0;font-size:34px;line-height:.98;letter-spacing:-.045em;max-width:12ch}.dossier-contrast-head .dossier-meta{max-width:14ch;text-align:right;color:var(--dossier-muted)}
 .dossier-contrast-hook{padding:20px 0 25px;max-width:25ch;font-size:24px;line-height:1.1;font-weight:700;color:#fff}
-.dossier-contrast-grid{display:grid;grid-template-columns:1fr 1fr;flex:1;min-height:0}.dossier-contrast-grid section{padding:18px 14px}.dossier-contrast-grid p{margin-top:17px;font-size:15px;line-height:1.44}.dossier-contrast-case{background:rgba(217,184,105,.11);border-top:2px solid var(--dossier-gold)}.dossier-contrast-case p{color:#f1e5bf}.dossier-contrast-other{border-top:2px solid rgba(255,255,255,.23);border-left:1px solid rgba(255,255,255,.18)}.dossier-contrast-other .dossier-meta{color:#d18a8f}.dossier-contrast-other p{color:#d0c8c8}
+.dossier-contrast-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);flex:1;min-height:0}.dossier-contrast-grid section{display:flex;min-width:0;flex-direction:column;justify-content:center;padding:18px 14px}.dossier-contrast-grid p{margin-top:17px;font-size:15px;line-height:1.44}.dossier-contrast-case{background:rgba(217,184,105,.11);border-top:2px solid var(--dossier-gold)}.dossier-contrast-case p{color:#f1e5bf}.dossier-contrast-other{border-top:2px solid rgba(255,255,255,.23);border-left:1px solid rgba(255,255,255,.18)}.dossier-contrast-other .dossier-meta{color:#d18a8f}.dossier-contrast-other p{color:#d0c8c8}
 .dossier-contrast-footer{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;padding-top:20px}.dossier-contrast-footer span{font:700 10px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--dossier-muted)}.dossier-contrast-footer strong{max-width:62%;font-size:14px;line-height:1.18;text-align:right;color:var(--dossier-gold)}
 
 /* Evidence: quote/receipt first. */
 .dossier-content-evidence{padding:18px 14px 14px}.dossier-evidence-head{display:flex;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid rgba(217,184,105,.32)}.dossier-evidence-head>span{font-size:19px;color:var(--dossier-gold)}.dossier-evidence-name{margin:26px 0 20px!important;font:700 19px/1.1 'Space Grotesk',Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#fff}
 .dossier-content-evidence blockquote{position:relative;margin:0;padding:3px 0 22px 24px;border-left:3px solid var(--dossier-gold);font:italic 22px/1.2 Georgia,serif;color:#f1e4c2}.dossier-content-evidence blockquote::before{content:'“';position:absolute;left:8px;top:-11px;font:40px/1 Georgia,serif;color:var(--dossier-gold)}
-.dossier-evidence-meaning{flex:1;min-height:0;padding-top:25px}.dossier-evidence-meaning p{margin-top:12px;max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-evidence-bottom{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:end;padding-top:16px;border-top:1px solid rgba(255,255,255,.17)}.dossier-evidence-bottom p{font-size:13px;line-height:1.35;color:#cbc3c0}.dossier-evidence-bottom strong{font-size:14px;line-height:1.15;text-align:right;color:var(--dossier-gold)}
+.dossier-evidence-meaning{display:flex;flex:1;min-height:0;flex-direction:column;justify-content:center;padding-top:25px}.dossier-evidence-meaning p{margin-top:12px;max-width:25ch;font-size:23px;line-height:1.12;font-weight:700;color:#fff}.dossier-evidence-bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:end;padding-top:16px;border-top:1px solid rgba(255,255,255,.17)}.dossier-evidence-bottom p{font-size:13px;line-height:1.35;color:#cbc3c0}.dossier-evidence-bottom strong{font-size:14px;line-height:1.15;text-align:right;color:var(--dossier-gold)}
 
 /* Comment: open thread / social hook. */
 .dossier-content-comment{padding:19px 14px 14px}.dossier-comment-head{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,.16)}.dossier-comment-dot{width:9px;height:9px;border-radius:50%;background:var(--dossier-red);box-shadow:0 0 0 5px rgba(143,52,60,.18)}.dossier-comment-name{margin:25px 0 24px!important;font:700 18px/1.1 'Space Grotesk',Arial,sans-serif;text-transform:uppercase;letter-spacing:.06em;color:#fff}
-.dossier-comment-question{padding:26px 0 31px;border-top:1px solid var(--dossier-gold);border-bottom:1px solid var(--dossier-gold)}.dossier-comment-question h2{margin-top:16px!important;max-width:22ch;font-size:29px;line-height:1.05;letter-spacing:-.035em}.dossier-comment-notes{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;flex:1;padding:24px 0}.dossier-comment-notes p{font-size:14px;line-height:1.45;color:#ded6d2}.dossier-comment-notes p+ p{padding-left:17px;border-left:1px solid rgba(217,184,105,.5);color:#d6bf94}
+.dossier-comment-question{padding:26px 0 31px;border-top:1px solid var(--dossier-gold);border-bottom:1px solid var(--dossier-gold)}.dossier-comment-question h2{margin-top:16px!important;max-width:22ch;font-size:29px;line-height:1.05;letter-spacing:-.035em}.dossier-comment-notes{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:18px;flex:1;min-height:0;padding:24px 0}.dossier-comment-notes p{display:flex;min-width:0;align-items:center;font-size:14px;line-height:1.45;color:#ded6d2}.dossier-comment-notes p+ p{padding-left:17px;border-left:1px solid rgba(217,184,105,.5);color:#d6bf94}
 .dossier-comment-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding-top:15px;border-top:1px solid rgba(255,255,255,.17)}.dossier-comment-footer span{font:700 10px/1.2 'JetBrains Mono',monospace;letter-spacing:.12em;color:var(--dossier-muted)}.dossier-comment-footer strong{max-width:62%;font-size:14px;line-height:1.2;text-align:right;color:var(--dossier-gold)}
 
 /* Longform: dense reading without shrinking the whole card into a caption. */
