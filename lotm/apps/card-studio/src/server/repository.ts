@@ -643,7 +643,7 @@ export class CardRepository {
 
   private migrate(): void {
     const version = this.db.pragma('user_version', { simple: true }) as number
-    if (version > 15) throw new Error(`La version ${version} de cards.db no es compatible.`)
+    if (version > 16) throw new Error(`La version ${version} de cards.db no es compatible.`)
     // SQLite can expose the freshly-created tables to a second connection
     // before that connection sees the header pragma. Treat that state as the
     // current schema instead of trying to create the tables a second time.
@@ -651,7 +651,7 @@ export class CardRepository {
       .prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'cards'")
       .get())
     if (version === 0 && hasCardsTable) {
-      this.db.pragma('user_version = 15')
+      this.db.pragma('user_version = 16')
       return
     }
 
@@ -696,7 +696,15 @@ export class CardRepository {
       return
     }
 
-    if (version === 15) return
+    if (version === 16) return
+
+    if (version === 15) {
+      this.rebuildCardsTable(
+        ['Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Tierlist', 'Pathway List'],
+        16,
+      )
+      return
+    }
 
     if (version === 10) {
       this.rebuildCardsTable(['Corruption File', 'Ritual Logic', 'Simple Explanation'], 11)
@@ -888,7 +896,7 @@ export class CardRepository {
         type TEXT NOT NULL CHECK (type IN (
           'Character', 'Artifact', 'Cover', 'Full Image Cover', 'Tier', 'Tierlist', 'Pathway',
           'Tier Explanation', 'General Explanation', 'Pathway Explanation', 'Breakdown', 'Map', 'Tarot Member',
-          'Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'
+          'Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Pathway List'
         )),
         title TEXT NOT NULL,
         data_json TEXT NOT NULL,
@@ -900,7 +908,7 @@ export class CardRepository {
       CREATE INDEX parts_universe_id_idx ON parts(universe_id);
       ${IMPORTED_IMAGES_SCHEMA}
       ${DURATION_COLUMNS}
-      PRAGMA user_version = 15;
+      PRAGMA user_version = 16;
     `)
   }
 

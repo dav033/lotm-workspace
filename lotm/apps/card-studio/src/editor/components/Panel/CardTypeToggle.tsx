@@ -13,6 +13,7 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
   'General Explanation',
   'Simple Explanation',
   'Pathway Explanation',
+  'Pathway List',
   'Breakdown',
   'Map',
   'Tarot Member',
@@ -28,7 +29,7 @@ type Props = {
 }
 
 const CARD_TYPE_GROUPS = [
-  { label: 'Explanation', types: ['Tier Explanation', 'General Explanation', 'Simple Explanation', 'Pathway Explanation'] },
+  { label: 'Explanation', types: ['Tier Explanation', 'General Explanation', 'Simple Explanation', 'Pathway Explanation', 'Pathway List'] },
   { label: 'Ranking', types: ['Tierlist', 'Tier', 'Pathway', 'Map', 'Ritual Logic', 'Timeline'] },
   { label: 'Card', types: ['Character', 'Artifact', 'Tarot Member', 'Dossier', 'Corruption File', 'Breakdown'] },
   { label: 'Cover', types: ['Cover', 'Full Image Cover'] },

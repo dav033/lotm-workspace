@@ -5,7 +5,7 @@ import type { FontSizeOverrides } from './fontSizes'
 import type { DossierVariant } from './special'
 
 export type BuilderCardState = {
-  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Dossier' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
+  type: 'Character' | 'Artifact' | 'Cover' | 'Full Image Cover' | 'Tier' | 'Tierlist' | 'Pathway' | 'Tier Explanation' | 'General Explanation' | 'Simple Explanation' | 'Pathway Explanation' | 'Pathway List' | 'Breakdown' | 'Map' | 'Tarot Member' | 'Dossier' | 'Corruption File' | 'Ritual Logic' | 'Timeline'
   name: string
   path: string
   seq: number
@@ -56,6 +56,10 @@ export type BuilderCardState = {
   pathwayExplanationTitle: string
   pathwayExplanationText: string
   pathwayExplanationBackgroundImage: string | null
+  pathwayListPath: string
+  pathwayListTitle: string
+  pathwayListItemsText: string
+  pathwayListBackgroundImage: string | null
   breakdownKicker: string
   breakdownTitle: string
   breakdownDoes: string
@@ -179,6 +183,10 @@ const DEFAULT_BUILDER_STATE: BuilderCardState = {
   pathwayExplanationTitle: '',
   pathwayExplanationText: '',
   pathwayExplanationBackgroundImage: null,
+  pathwayListPath: 'Fool',
+  pathwayListTitle: '',
+  pathwayListItemsText: '',
+  pathwayListBackgroundImage: null,
   breakdownKicker: '',
   breakdownTitle: '',
   breakdownDoes: '',
@@ -349,6 +357,16 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       pathwayExplanationTitle: content.title,
       pathwayExplanationText: content.description,
       pathwayExplanationBackgroundImage: content.backgroundImageUrl ?? null,
+    }
+  }
+
+  if (content.type === 'Pathway List') {
+    return {
+      ...state,
+      pathwayListPath: content.pathway,
+      pathwayListTitle: content.title,
+      pathwayListItemsText: content.items.join('\n'),
+      pathwayListBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }
 
@@ -570,6 +588,22 @@ function fromBuilderCardStateBase(state: BuilderCardState): CardContent {
       description: state.pathwayExplanationText.trim(),
       ...(state.pathwayExplanationBackgroundImage
         ? { backgroundImageUrl: state.pathwayExplanationBackgroundImage }
+        : {}),
+      backgroundOpacity: state.backgroundOpacity,
+    }
+  }
+  if (state.type === 'Pathway List') {
+    return {
+      type: 'Pathway List',
+      pathway: state.pathwayListPath,
+      title: state.pathwayListTitle.trim(),
+      items: state.pathwayListItemsText
+        .split('\n')
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .slice(0, 8),
+      ...(state.pathwayListBackgroundImage
+        ? { backgroundImageUrl: state.pathwayListBackgroundImage }
         : {}),
       backgroundOpacity: state.backgroundOpacity,
     }

@@ -7,7 +7,7 @@ import { accentForState } from './cardProps'
 // El editor tiñe su cromo con el acento de la carta abierta, sea del tipo que
 // sea. Cuando el mapper solo lo emitia para la familia estandar, abrir
 // cualquier otra carta rompia el editor entero con "reading 'c'" y ni el
-// typecheck ni los goldens lo veian. Esta prueba cubre las doce familias.
+// typecheck ni los goldens lo veian. Esta prueba cubre todas las familias.
 
 const FAMILIES: CardKind[] = [
   'Character',
@@ -20,6 +20,7 @@ const FAMILIES: CardKind[] = [
   'General Explanation',
   'Simple Explanation',
   'Pathway Explanation',
+  'Pathway List',
   'Breakdown',
   'Map',
   'Tarot Member',

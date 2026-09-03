@@ -53,6 +53,9 @@ export function labelFor(state: Record<string, unknown>) {
   if (state.type === 'Pathway Explanation') {
     return `pathway_explanation_${state.pathwayExplanationPath || 'pathway'}`.replace(/\s+/g, '_')
   }
+  if (state.type === 'Pathway List') {
+    return `pathway_list_${state.pathwayListPath || 'pathway'}`.replace(/\s+/g, '_')
+  }
   if (state.type === 'Breakdown') return `breakdown_${state.breakdownTitle || 'untitled'}`.replace(/\s+/g, '_')
   if (state.type === 'Map') return `map_${state.mapTitle || 'untitled'}`.replace(/\s+/g, '_')
   if (state.type === 'Tarot Member') {

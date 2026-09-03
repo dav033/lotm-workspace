@@ -187,6 +187,24 @@ test('valida una Pathway Explanation con titulo resaltado entre asteriscos', () 
   assert.equal(filenameForCard(explanation), 'pathway-explanation_door')
 })
 
+test('convierte una Pathway List en items separados y conserva su imagen', () => {
+  const list = CardContentSchema.parse({
+    type: 'Pathway List',
+    pathway: 'Door',
+    title: 'The local hazards.',
+    items: ['Locked doors', 'People asking for favors', 'A suspicious amount of paperwork'],
+    backgroundImageUrl: '/covers/door-list.jpg',
+    backgroundOpacity: 38,
+  })
+
+  const state = toBuilderCardState(list)
+  assert.equal(state.pathwayListPath, 'Door')
+  assert.equal(state.pathwayListItemsText, 'Locked doors\nPeople asking for favors\nA suspicious amount of paperwork')
+  assert.deepEqual(fromBuilderCardState(state), list)
+  assert.equal(titleForCard(list), 'Door - The local hazards.')
+  assert.equal(filenameForCard(list), 'pathway-list_door')
+})
+
 test('valida una Breakdown con kicker opcional y etiqueta libre de la tercera seccion', () => {
   const withKicker = CardContentSchema.parse({
     type: 'Breakdown',
@@ -265,6 +283,7 @@ test('todas las cartas con fondo heredan 65 y conservan una opacidad propia', ()
     { type: 'Tier Explanation', rank: 'A', description: 'Text' },
     { type: 'General Explanation', title: 'Title', description: 'Text', pathway: 'Door' },
     { type: 'Pathway Explanation', pathway: 'Door', title: 'Title', description: 'Text' },
+    { type: 'Pathway List', pathway: 'Door', title: 'Title', items: ['One', 'Two'] },
     { type: 'Breakdown', title: 'Door', does: 'a', doesNot: 'b', edgeText: 'c' },
     { type: 'Map', title: 'Map', entries: [{ tags: 'Door', value: 'Space' }], pathway: 'Door' },
   ]
@@ -278,7 +297,7 @@ test('todas las cartas con fondo heredan 65 y conservan una opacidad propia', ()
   }
 })
 
-test('las tres cartas nuevas aceptan una imagen de fondo propia', () => {
+test('las cartas con fondo propio conservan su imagen', () => {
   const explicacion = CardContentSchema.parse({
     type: 'Pathway Explanation', pathway: 'Door', title: 'Un *gancho*.', description: 'Texto.',
     backgroundImageUrl: '/covers/door.jpg',
@@ -291,10 +310,15 @@ test('las tres cartas nuevas aceptan una imagen de fondo propia', () => {
     type: 'Map', title: 'The chain', entries: [{ tags: 'Means', value: 'Door' }],
     pathway: 'Door', backgroundImageUrl: '/covers/custom.jpg',
   })
+  const lista = CardContentSchema.parse({
+    type: 'Pathway List', pathway: 'Door', title: 'The hazards', items: ['One', 'Two'],
+    backgroundImageUrl: '/covers/list.jpg',
+  })
 
   assert.equal(toBuilderCardState(explicacion).pathwayExplanationBackgroundImage, '/covers/door.jpg')
   assert.equal(toBuilderCardState(breakdown).breakdownBackgroundImage, '/covers/seals.jpg')
   assert.equal(toBuilderCardState(mapa).mapBackgroundImage, '/covers/custom.jpg')
+  assert.equal(toBuilderCardState(lista).pathwayListBackgroundImage, '/covers/list.jpg')
   // Ida y vuelta: la ruta sobrevive al paso por el estado del editor.
   const ida = fromBuilderCardState(toBuilderCardState(breakdown))
   assert.equal(ida.type === 'Breakdown' && ida.backgroundImageUrl, '/covers/seals.jpg')

@@ -9,6 +9,7 @@ import TierFields from './Panel/TierFields'
 import TierlistFields from './Panel/TierlistFields'
 import PathwayFields from './Panel/PathwayFields'
 import PathwayExplanationFields from './Panel/PathwayExplanationFields'
+import PathwayListFields from './Panel/PathwayListFields'
 import BreakdownFields from './Panel/BreakdownFields'
 import MapFields from './Panel/MapFields'
 import TarotMemberFields from './Panel/TarotMemberFields'
@@ -46,6 +47,7 @@ export default function Panel(props) {
       {state.type === 'Tierlist' ? <TierlistFields {...fieldProps} /> : null}
       {state.type === 'Pathway' ? <PathwayFields {...fieldProps} /> : null}
       {state.type === 'Pathway Explanation' ? <PathwayExplanationFields {...fieldProps} /> : null}
+      {state.type === 'Pathway List' ? <PathwayListFields {...fieldProps} /> : null}
       {state.type === 'Breakdown' ? <BreakdownFields {...fieldProps} /> : null}
       {state.type === 'Map' ? <MapFields {...fieldProps} /> : null}
       {state.type === 'Tarot Member' ? <TarotMemberFields {...fieldProps} /> : null}
@@ -62,6 +64,7 @@ export default function Panel(props) {
       state.type !== 'Tierlist' &&
       state.type !== 'Pathway' &&
       state.type !== 'Pathway Explanation' &&
+      state.type !== 'Pathway List' &&
       state.type !== 'Breakdown' &&
       state.type !== 'Map' &&
       state.type !== 'Tarot Member' &&

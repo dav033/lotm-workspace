@@ -74,7 +74,7 @@ test('guarda y consulta cartas agrupadas en un SQLite separado', async (t) => {
   assert.equal(repository.listCards().length, 5)
 })
 
-test('crea cards.db v15 y guarda las familias de producción', async (t) => {
+test('crea cards.db v16 y guarda las familias de producción', async (t) => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'lotm-cards-v12-'))
   const dbPath = path.join(directory, 'cards.db')
   const repository = new CardRepository(dbPath)
@@ -90,11 +90,12 @@ test('crea cards.db v15 y guarda las familias de producción', async (t) => {
       { type: 'Ritual Logic', variant: 'Chain', pathway: 'Fool', sequence: 5, sequenceName: 'Marionettist', ritual: 'Act.', survival: 'Survive.', preparation: 'Rehearse.', certainty: 'Mixed' },
       { type: 'Simple Explanation', text: 'Centered text.', fontSizeMin: 14, fontSizeMax: 28, position: 'center' },
       { type: 'Timeline', variant: 'Beat', pathway: 'Fool', title: 'A new milestone', step: 1, total: 3, certainty: 'Canon', moves: [] },
+      { type: 'Pathway List', pathway: 'Door', title: 'The local hazards.', items: ['Locked doors', 'Unpaid favors'] },
     ],
   })
-  assert.deepEqual(saved.map((card) => card.type), ['Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline'])
+  assert.deepEqual(saved.map((card) => card.type), ['Dossier', 'Corruption File', 'Ritual Logic', 'Simple Explanation', 'Timeline', 'Pathway List'])
   const inspection = new Database(dbPath, { readonly: true })
-  assert.equal(inspection.pragma('user_version', { simple: true }), 15)
+  assert.equal(inspection.pragma('user_version', { simple: true }), 16)
   inspection.close()
 })
 

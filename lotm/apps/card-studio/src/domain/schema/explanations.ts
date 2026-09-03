@@ -68,6 +68,22 @@ export const PathwayExplanationCardSchema = z
   })
   .strict()
 
+export const PathwayListCardSchema = z
+  .object({
+    type: z.literal('Pathway List'),
+    pathway: PathwayNameSchema,
+    title: z.string().trim().min(1).max(100).describe('Titulo compacto de la lista.'),
+    items: z.array(z.string().trim().min(1).max(180)).min(1).max(8).describe(
+      'Items separados que la carta numera y muestra con espacio entre ellos.',
+    ),
+    backgroundImageUrl: ImageSourceSchema.optional().describe(
+      'Imagen de fondo propia. Si se omite, la carta usa el arte de su pathway.',
+    ),
+    backgroundOpacity: BackgroundOpacitySchema,
+    ...FontSizeOverridesField,
+  })
+  .strict()
+
 export const BreakdownCardSchema = z
   .object({
     type: z.literal('Breakdown'),

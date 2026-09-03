@@ -1,0 +1,29 @@
+/* ================= PATHWAY LIST (itemized ficha variant) ================= */
+.pathway-list-card{position:relative;width:480px;height:640px;flex:0 0 auto;overflow:hidden;
+  border:1px solid var(--line2);padding:32px 30px 36px;box-sizing:border-box;
+  background:
+    radial-gradient(110% 70% at 50% -5%,rgba(255,255,255,.055),transparent 62%),
+    radial-gradient(130% 85% at 50% 112%,var(--tier-deep,#3f351d),transparent 58%),
+    #0a0a11;box-shadow:0 0 0 1px rgba(0,0,0,.6),0 30px 70px -30px rgba(0,0,0,.9)}
+.pathway-list-content{position:relative;z-index:3;display:flex;flex-direction:column;
+  height:100%;min-height:0;text-align:left}
+.pathway-list-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;
+  gap:12px}
+.pathway-list-chip{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#0a0a0b;background:var(--tier,#d9b869);
+  padding:6px 10px;border-radius:4px;white-space:nowrap}
+.pathway-list-counter{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;color:#8a8579;font-variant-numeric:tabular-nums}
+.pathway-list-title{flex:0 0 auto;margin:30px 0 16px;max-width:25ch;font-family:'Cinzel',serif;
+  font-size:24px;font-weight:800;line-height:1.12;letter-spacing:-.035em;color:#fff;
+  overflow-wrap:anywhere;text-wrap:balance}
+.pathway-list-highlight{color:var(--tier,#d9b869)}
+.pathway-list-rule{flex:0 0 auto;width:106px;height:4px;margin-bottom:16px;background:var(--tier,#d9b869)}
+.pathway-list-items{list-style:none;display:flex;flex:1;flex-direction:column;justify-content:space-between;
+  min-height:0;margin:0;padding:0}
+.pathway-list-items li{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:start;
+  padding:14px 0 15px;border-top:1px solid rgba(255,255,255,.16);font-size:25px;font-weight:600;
+  line-height:1.22;color:#eeeae0;overflow-wrap:anywhere;text-wrap:pretty}
+.pathway-list-items li:first-child{border-top-color:rgba(255,255,255,.32)}
+.pathway-list-index{padding-top:6px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+  line-height:1;letter-spacing:.14em;color:var(--tier,#d9b869)}

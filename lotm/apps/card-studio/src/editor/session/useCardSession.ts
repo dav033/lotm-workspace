@@ -53,6 +53,7 @@ const IMAGE_FIELDS = [
   'tierExplanationBackgroundImage',
   'generalExplanationBackgroundImage',
   'pathwayExplanationBackgroundImage',
+  'pathwayListBackgroundImage',
   'breakdownBackgroundImage',
   'mapBackgroundImage',
   'tarotMemberImage',
@@ -565,6 +566,10 @@ function withPlaceholders(state: BuilderCardState): BuilderCardState {
     fill('generalExplanationText')
   }
   if (state.type === 'Simple Explanation') fill('simpleExplanationText')
+  if (state.type === 'Pathway List') {
+    fill('pathwayListTitle')
+    fill('pathwayListItemsText', 'First item')
+  }
   if (state.type === 'Tarot Member') {
     fill('tarotMemberName', 'New member')
     fill('tarotMemberTitle', 'The Unknown')

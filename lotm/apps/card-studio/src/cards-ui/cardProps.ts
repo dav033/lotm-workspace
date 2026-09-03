@@ -26,6 +26,7 @@ export type CardKind =
   | 'General Explanation'
   | 'Simple Explanation'
   | 'Pathway Explanation'
+  | 'Pathway List'
   | 'Breakdown'
   | 'Map'
   | 'Tarot Member'
@@ -212,6 +213,27 @@ function cardPropsFromBuilderStateBase(
         description: state.pathwayExplanationText || '',
         backgroundImage: background(
           state.pathwayExplanationBackgroundImage,
+          PATHWAY_BACKGROUNDS[pathway],
+        ),
+        backgroundOpacity: state.backgroundOpacity,
+        tier: PATHWAY_COLORS[pathway],
+        onDropBackground: handlers.onDropBackground,
+      },
+    }
+  }
+
+  if (state.type === 'Pathway List') {
+    const pathway = asPathway(state.pathwayListPath) ?? 'Fool'
+    return {
+      kind: 'Pathway List',
+      props: {
+        pathway,
+        index: PATH_NAMES.indexOf(pathway) + 1,
+        total: PATH_NAMES.length,
+        title: state.pathwayListTitle || '',
+        items: state.pathwayListItemsText.split('\n').map((item) => item.trim()).filter(Boolean),
+        backgroundImage: background(
+          state.pathwayListBackgroundImage,
           PATHWAY_BACKGROUNDS[pathway],
         ),
         backgroundOpacity: state.backgroundOpacity,
@@ -416,6 +438,11 @@ export function accentForState(state: BuilderCardState): CardAccent {
 
   if (type === 'Pathway') {
     const path = state.pathwayCardPath in PATHWAYS ? (state.pathwayCardPath as Pathway) : 'Fool'
+    return { ...PATHWAY_COLORS[path], pct: 100 }
+  }
+
+  if (type === 'Pathway List') {
+    const path = state.pathwayListPath in PATHWAYS ? (state.pathwayListPath as Pathway) : 'Fool'
     return { ...PATHWAY_COLORS[path], pct: 100 }
   }
 

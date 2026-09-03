@@ -20,6 +20,10 @@ export const NEW_CARD_SEEDS: Partial<Record<BuilderCardState['type'], Partial<Bu
     pathwayExplanationTitle: 'Nueva explicacion',
     pathwayExplanationText: 'Nueva explicacion',
   },
+  'Pathway List': {
+    pathwayListTitle: 'New pathway list',
+    pathwayListItemsText: 'First item\nSecond item\nThird item',
+  },
   Breakdown: {
     breakdownTitle: 'Nuevo concepto',
     breakdownDoes: 'Que hace.',
@@ -119,6 +123,10 @@ export const DEFAULT_STATE: BuilderCardState = {
   pathwayExplanationTitle: '',
   pathwayExplanationText: '',
   pathwayExplanationBackgroundImage: null,
+  pathwayListPath: 'Fool',
+  pathwayListTitle: '',
+  pathwayListItemsText: '',
+  pathwayListBackgroundImage: null,
   breakdownKicker: '',
   breakdownTitle: '',
   breakdownDoes: '',

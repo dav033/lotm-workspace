@@ -141,6 +141,7 @@ export function useEditorController() {
       generalExplanationTitle: '', generalExplanationText: '', generalExplanationBackgroundImage: null,
       simpleExplanationText: '',
       pathwayExplanationTitle: '', pathwayExplanationText: '', pathwayExplanationBackgroundImage: null,
+      pathwayListTitle: '', pathwayListItemsText: '', pathwayListBackgroundImage: null,
       breakdownKicker: '', breakdownTitle: '', breakdownDoes: '', breakdownDoesNot: '',
       breakdownEdgeText: '', breakdownBackgroundImage: null,
       mapTitle: '', mapEntriesText: '', mapFooterText: '',
@@ -301,6 +302,8 @@ export function useEditorController() {
       ? 'generalExplanationBackgroundImage'
       : stateRef.current.type === 'Pathway Explanation'
         ? 'pathwayExplanationBackgroundImage'
+        : stateRef.current.type === 'Pathway List'
+          ? 'pathwayListBackgroundImage'
         : stateRef.current.type === 'Breakdown'
           ? 'breakdownBackgroundImage'
       : stateRef.current.type === 'Map'

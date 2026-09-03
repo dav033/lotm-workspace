@@ -32,7 +32,7 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
   }
 
   const server = new McpServer(
-    { name: 'lotm-card-studio', version: '1.3.0' },
+    { name: 'lotm-card-studio', version: '1.4.0' },
     {
       instructions:
         'Este servidor solo administra y exporta cartas. Organiza cada lote por anime/universo y por secciones ' +
@@ -55,11 +55,13 @@ export function createCardsMcpServer({ repository, downloadBaseUrl, liveViewUrl 
       description:
         'Crea o reutiliza un anime/universo y una parte, y agrega hasta 100 cartas. ' +
         'Acepta Character, Artifact, Cover, Full Image Cover, Tier, Tierlist, Pathway, Tier Explanation, ' +
-        'General Explanation, Pathway Explanation, Breakdown, Map, Tarot Member, Dossier, Corruption File, Ritual Logic y Timeline. ' +
+        'General Explanation, Pathway Explanation, Pathway List, Breakdown, Map, Tarot Member, Dossier, Corruption File, Ritual Logic y Timeline. ' +
         'Las explicaciones pueden ser generales o asociarse a uno de los 22 pathways. ' +
         'Pathway Explanation es una carta corta por pathway: titulo con una palabra ' +
         'resaltada entre *asteriscos*, regla y descripcion breve; el contador "N / 22 PATHWAYS" ' +
         'se calcula solo a partir del pathway, no se guarda. ' +
+        'Pathway List es la variante itemizable: titulo compacto y de 1 a 8 items, uno por linea; ' +
+        'la carta los numera y deja espacio entre ellos, y el contador del pathway se calcula igual. ' +
         'Breakdown es una carta de concepto o autoridad con kicker opcional (p. ej. "Authority", ' +
         'o compuesto como "Authority · From Bizarreness" ya que es texto libre), ' +
         'titulo y tres secciones: does, doesNot y una tercera con etiqueta libre (edgeLabel, ' +

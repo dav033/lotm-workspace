@@ -272,3 +272,10 @@ Registro cronológico. Ver [[README]] para el porqué de esta carpeta. No es lo 
 - Se fijó el filtro: nombre y apellido, contexto y resultado; fuera autoridades inherentes, situaciones sin logro, conspiraciones como núcleo y artefactos que hagan todo el trabajo.
 - Se fijó el límite de una sola hazaña procedente de *Circle of Inevitability* por grupo.
 - Se documentaron Lord of Mysteries, Eternal Darkness, Wheel of Fortune, Demon of Knowledge y Father of Devils. Los candidatos débiles quedan marcados para revisión, no forzados dentro del top.
+
+## 2026-09-02 — Variante itemizable para el carrusel de pathways
+
+- Se añadió el tipo `Pathway List` a Card Studio: título compacto, items reales numerados y separación amplia entre observaciones.
+- Se creó la variante MCP `LOTM | What You Will Find in Each Pathway | Spaced List`: tres secciones, 25 slides, 22 cartas itemizadas y tres portadas.
+- La variante reutiliza el orden, el copy y las referencias de arte del proyecto base; `Pathway Explanation` queda intacta para textos de párrafo.
+- El contrato queda en [[Pathway List Card]] y el proyecto en [[LOTM Pathway Encounters - Spaced List]].

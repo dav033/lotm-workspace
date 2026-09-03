@@ -5,6 +5,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import TierExplanationCard from '../../cards-ui/TierExplanationCard'
 import GeneralExplanationCard from '../../cards-ui/GeneralExplanationCard'
 import PathwayExplanationCard from '../../cards-ui/PathwayExplanationCard'
+import PathwayListCard from '../../cards-ui/PathwayListCard'
 import BreakdownCard from '../../cards-ui/BreakdownCard'
 import MapCard from '../../cards-ui/MapCard'
 import FullImageCoverCard from '../../cards-ui/FullImageCoverCard'
@@ -22,6 +23,7 @@ import { CardContentSchema, toBuilderCardState } from '../../domain/schema'
 const TierExplanation = TierExplanationCard as ComponentType<Record<string, unknown>>
 const GeneralExplanation = GeneralExplanationCard as ComponentType<Record<string, unknown>>
 const PathwayExplanation = PathwayExplanationCard as ComponentType<Record<string, unknown>>
+const PathwayList = PathwayListCard as ComponentType<Record<string, unknown>>
 const Breakdown = BreakdownCard as ComponentType<Record<string, unknown>>
 const Map_ = MapCard as ComponentType<Record<string, unknown>>
 const FullImageCover = FullImageCoverCard as ComponentType<Record<string, unknown>>
@@ -215,6 +217,17 @@ test('Pathway Explanation muestra el contador, el título con la palabra resalta
   assert.match(html, /pathway-explanation-highlight">teleport</)
   assert.match(html, /It&#x27;s access and exclusion\./)
   assert.doesNotMatch(html, /\*/)
+})
+
+test('Pathway List muestra una lista semántica con items espaciados', () => {
+  const html = renderToStaticMarkup(React.createElement(PathwayList, {
+    pathway: 'Door', index: 2, total: 22, title: 'The local hazards.',
+    items: ['Locked doors', 'Unpaid favors', 'Paperwork with teeth'],
+  }))
+  assert.match(html, /pathway-list-title[^>]*>The local hazards\.</)
+  assert.equal((html.match(/<li>/g) ?? []).length, 3)
+  assert.match(html, /pathway-list-index[^>]*>01</)
+  assert.match(html, /Paperwork with teeth/)
 })
 
 test('Breakdown muestra el kicker, el título y las tres secciones con la etiqueta libre resaltada', () => {

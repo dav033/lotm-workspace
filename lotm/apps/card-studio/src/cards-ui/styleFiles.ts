@@ -6,6 +6,7 @@ export const STYLE_FILES = [
   'tier.css',
   'pathway.css',
   'explanation.css',
+  'pathway-list.css',
   'ficha.css',
   'breakdown.css',
   'map.css',

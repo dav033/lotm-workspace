@@ -33,6 +33,9 @@ export function titleForCard(content: CardContent): string {
   if (content.type === 'Pathway Explanation') {
     return content.pathway + ' - ' + content.title.replace(/\*/g, '')
   }
+  if (content.type === 'Pathway List') {
+    return content.pathway + ' - ' + content.title
+  }
   if (content.type === 'Breakdown') {
     return content.kicker ? content.kicker + ': ' + content.title : content.title
   }
@@ -80,6 +83,9 @@ export function filenameForCard(content: CardContent): string {
   }
   if (content.type === 'Pathway Explanation') {
     return 'pathway-explanation_' + slugify(content.pathway)
+  }
+  if (content.type === 'Pathway List') {
+    return 'pathway-list_' + slugify(content.pathway)
   }
   if (content.type === 'Breakdown') {
     return 'breakdown_' + slugify(content.title)

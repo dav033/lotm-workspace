@@ -71,6 +71,10 @@ export async function resolveStateImages(
     ? state.pathwayExplanationBackgroundImage
       ?? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.pathwayExplanationPath] ?? null
     : null
+  const pathwayListBackgroundSource = state.type === 'Pathway List'
+    ? state.pathwayListBackgroundImage
+      ?? (PATHWAY_BACKGROUNDS as Record<string, string>)[state.pathwayListPath] ?? null
+    : null
   // En un Map la imagen propia manda sobre la que aporta el pathway.
   const mapSource = state.type === 'Map'
     ? state.mapBackgroundImage
@@ -151,6 +155,9 @@ export async function resolveStateImages(
       : null,
     pathwayExplanationBackgroundImage: pathwayExplanationSource
       ? await resolveImageSource(pathwayExplanationSource, publicDir)
+      : null,
+    pathwayListBackgroundImage: pathwayListBackgroundSource
+      ? await resolveImageSource(pathwayListBackgroundSource, publicDir)
       : null,
     breakdownBackgroundImage: state.breakdownBackgroundImage
       ? await resolveImageSource(state.breakdownBackgroundImage, publicDir)

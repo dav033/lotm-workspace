@@ -30,6 +30,8 @@ Nada de lo que vive en `10-Project/` es lore de la novela. Es el registro de un 
 - [[Sesión 2026-08-02 - Fondos automáticos y cartas de ritual|Sesión 2026-08-02 — Fondos automáticos y cartas de ritual]] — decisiones de esta sesión sobre fallback por pathway, fondos de Secuencia, rutas públicas y estado del deploy.
 - [[Combinaciones del Juego|Combinaciones del Juego]] — registro de trabajo de las combinaciones Concepto+Concepto → Beyonder de Secuencia 9, grupo por grupo: tabla maestra de estado, conceptos ya usados, detalle y "por qué" de cada camino confirmado.
 - [[Feats]] — registro editorial de hazañas por grupo para futuros vídeos, con fuentes, límites y regla de máximo un feat de COI por grupo.
+- [[Pathway List Card]] — contrato del nuevo tipo itemizable para cartas de pathway, con título compacto y items espaciados.
+- [[LOTM Pathway Encounters - Spaced List|LOTM Pathway Encounters — Spaced List]] — variante MCP de 25 slides en tres secciones usando `Pathway List`.
 - [[Efecto mariposa|Efecto mariposa]] — investigación de cadenas causales pequeñas que producen cambios grandes en la historia de LOTM, para convertirlas en contenido.
 - [[Estrategia de TikTok y Validación|Estrategia de TikTok y Validación]] — tracción del canal, plan de prueba de valor del juego.
 - [[Lord of the Frauds - Reddit Video]] — brief editorial y guion modular para video de fraudes, decepciones y potencial desperdiciado con voz Reddit.
