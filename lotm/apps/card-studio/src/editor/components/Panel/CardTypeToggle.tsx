@@ -25,6 +25,7 @@ export const CARD_TYPES: BuilderCardState['type'][] = [
 
 type Props = {
   type: BuilderCardState['type']
+  state: BuilderCardState
   set: (patch: Partial<BuilderCardState>) => void
 }
 
@@ -35,18 +36,40 @@ const CARD_TYPE_GROUPS = [
   { label: 'Cover', types: ['Cover', 'Full Image Cover'] },
 ] as const
 
-function selectType(cardType: BuilderCardState['type'], currentType: BuilderCardState['type'], set: Props['set']) {
+function selectType(
+  cardType: BuilderCardState['type'],
+  currentType: BuilderCardState['type'],
+  state: BuilderCardState,
+  set: Props['set'],
+) {
+  const migrated = cardType === 'Pathway List' && currentType === 'Pathway Explanation'
+    ? {
+        pathwayListPath: state.pathwayExplanationPath,
+        pathwayListTitle: state.pathwayExplanationTitle,
+        pathwayListItemsText: state.pathwayExplanationText,
+        pathwayListBackgroundImage: state.pathwayExplanationBackgroundImage,
+      }
+    : cardType === 'Pathway Explanation' && currentType === 'Pathway List'
+      ? {
+          pathwayExplanationPath: state.pathwayListPath,
+          pathwayExplanationTitle: state.pathwayListTitle,
+          pathwayExplanationText: state.pathwayListItemsText,
+          pathwayExplanationBackgroundImage: state.pathwayListBackgroundImage,
+        }
+      : {}
+
   set({
     type: cardType,
     ...(cardType === currentType ? {} : { fontSizes: {} }),
     ...(cardType === 'Tier Explanation' ? { explanationPath: null } : {}),
+    ...migrated,
   })
 }
 
-export default function CardTypeToggle({ type, set }: Props) {
+export default function CardTypeToggle({ type, state, set }: Props) {
   return (
     <>
-      <select className="type-select" value={type} onChange={(event) => selectType(event.target.value as BuilderCardState['type'], type, set)}>
+      <select className="type-select" value={type} onChange={(event) => selectType(event.target.value as BuilderCardState['type'], type, state, set)}>
         {CARD_TYPE_GROUPS.map((group) => (
           <optgroup key={group.label} label={group.label}>
             {group.types.map((cardType) => <option key={cardType} value={cardType}>{cardType}</option>)}
@@ -63,7 +86,7 @@ export default function CardTypeToggle({ type, set }: Props) {
                   key={cardType}
                   type="button"
                   className={'seg' + (type === cardType ? ' sel' : '')}
-                  onClick={() => selectType(cardType, type, set)}
+                  onClick={() => selectType(cardType, type, state, set)}
                 >
                   {cardType}
                 </button>

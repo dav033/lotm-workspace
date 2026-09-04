@@ -38,7 +38,7 @@ export default function Panel(props) {
 
       <div className="field">
         <label>Type</label>
-        <CardTypeToggle type={state.type} set={set} />
+        <CardTypeToggle type={state.type} state={state} set={set} />
       </div>
 
       {state.type === 'Tier Explanation' || state.type === 'General Explanation' ? <ExplanationFields {...fieldProps} /> : null}
