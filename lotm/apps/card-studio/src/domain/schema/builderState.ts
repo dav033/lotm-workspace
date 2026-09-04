@@ -365,7 +365,10 @@ export function toBuilderCardState(content: CardContent): BuilderCardState {
       ...state,
       pathwayListPath: content.pathway,
       pathwayListTitle: content.title,
-      pathwayListItemsText: content.items.join('\n'),
+      pathwayListItemsText: content.items
+        .map((item) => item.replace(/^\s*\d+\s*[.)]\s*/, '').trim())
+        .filter(Boolean)
+        .join('\n'),
       pathwayListBackgroundImage: content.backgroundImageUrl ?? null,
     }
   }

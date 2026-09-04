@@ -46,7 +46,11 @@ function selectType(
     ? {
         pathwayListPath: state.pathwayExplanationPath,
         pathwayListTitle: state.pathwayExplanationTitle,
-        pathwayListItemsText: state.pathwayExplanationText,
+        pathwayListItemsText: state.pathwayExplanationText
+          .split('\n')
+          .map((item) => item.replace(/^\s*\d+\s*[.)]\s*/, '').trim())
+          .filter(Boolean)
+          .join('\n'),
         pathwayListBackgroundImage: state.pathwayExplanationBackgroundImage,
       }
     : cardType === 'Pathway Explanation' && currentType === 'Pathway List'

@@ -11,12 +11,16 @@ function renderTitle(title: string) {
   ))
 }
 
+function cleanItem(item: string) {
+  return String(item).replace(/^\s*\d+\s*[.)]\s*/, '').trim()
+}
+
 const PathwayListCard = forwardRef<HTMLElement, CardUiProps>(function PathwayListCard(
   { pathway, index, total, title, items, fontSizes, backgroundImage = null, backgroundOpacity = 65, tier = null, onDropBackground }: CardUiProps,
   ref,
 ) {
   const { dragging, dropProps } = useBackgroundDrop(onDropBackground)
-  const shownItems = Array.isArray(items) ? items.filter((item) => String(item).trim()) : []
+  const shownItems = Array.isArray(items) ? items.map(cleanItem).filter(Boolean) : []
   const shownTitle = title || 'Things you will find here.'
 
   return (
