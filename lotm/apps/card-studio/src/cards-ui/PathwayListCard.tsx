@@ -57,7 +57,7 @@ const PathwayListCard = forwardRef<HTMLElement, CardUiProps>(function PathwayLis
         <ul className="pathway-list-items" aria-label="Pathway observations">
           {shownItems.map((item, itemIndex) => (
             <li key={`${itemIndex}-${item}`} style={fontSizeCss(fontSizes, 'body')}>
-              <span className="pathway-list-index" aria-hidden="true">{String(itemIndex + 1).padStart(2, '0')}</span>
+              <span className="pathway-list-index" aria-hidden="true">{String(itemIndex + 1).padStart(2, '0')}.</span>
               <span>{item}</span>
             </li>
           ))}

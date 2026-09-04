@@ -226,7 +226,7 @@ test('Pathway List muestra una lista semántica con items espaciados', () => {
   }))
   assert.match(html, /pathway-list-title[^>]*>The local hazards\.</)
   assert.equal((html.match(/<li>/g) ?? []).length, 3)
-  assert.match(html, /pathway-list-index[^>]*>01</)
+  assert.match(html, /pathway-list-index[^>]*>01\.</)
   assert.match(html, /Paperwork with teeth/)
 })
 
