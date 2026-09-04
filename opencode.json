@@ -3,7 +3,7 @@
   "mcp": {
     "lotm": {
       "type": "remote",
-      "url": "https://lotm.marosconstruction.com/mcp",
+      "url": "https://lotm.52-54-205-188.sslip.io/mcp",
       "enabled": true
     },
     "obsidian": {

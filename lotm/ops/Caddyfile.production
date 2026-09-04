@@ -2,7 +2,7 @@ api.marosconstruction.com {
   reverse_proxy api:3000
 }
 
-lotm.marosconstruction.com {
+lotm.marosconstruction.com lotm.52-54-205-188.sslip.io {
   route {
     @deploy path /deploy/github
     handle @deploy {
